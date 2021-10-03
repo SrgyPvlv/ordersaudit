@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Добавление ТЦП</title>
+</head>
+<body>
+<h3>Добавление нового пункта ТЦП</h3>
+<fieldset style="border-color:#FFEBCD;text-align: center">
+<form th:action="@{/admin/newItemCreate}" th:method="post">
+<label>№ пп</label><br>
+<input type="number" name="pp" style="text-align: center" required ><br><br>
+<label>Наименование работ</label><br>
+<input type="text" name="workname" style="text-align: center" required ><br><br>
+<label>Ед. изм.</label><br>
+<input type="text" name="unitmeasure" style="text-align: center" required ><br><br>
+<label>Цена за ед., руб. без НДС</label><br>
+<input type="number" name="price" style="text-align: center" required ><br><br>
+<label>Описание позиции</label><br>
+<input type="text" name="comment" style="text-align: center" required ><br><br>
+<input type="submit" value="Создать" autofocus style="width: 100px; height: 40px; background-color: #98FB98;">
+</form>
+</fieldset>
+</body>
+</html>

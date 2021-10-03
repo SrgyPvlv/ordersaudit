@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+<title>Список ТЦП</title>
+</head>
+<body>
+<a th:href="@{/admin/newItem}">Добавить пункт ТЦП</a> <br><br>
+<form th:action="@{/findByNumber}" th:method="get" style="display:inline;">
+<label>Поиск по № п/п</label><br>
+<input type="number" name="ppsearch" min="0" value="0">
+<input type="submit" value="Найти" >
+</form> <br><br>
+<form th:action="@{/showCart}" th:method="get" style="display:inline;">
+<label>Корзина Заказа</label><br>
+<input type="submit" value="Перейти" >
+</form>
+<br><br>
+<table class="listItems">
+<tr>
+<th></th><th>№ пп</th><th>Наименование работ</th><th>Ед. изм.</th><th>Цена за ед., руб. без НДС</th><th>Описание позиции</th>
+</tr>
+<tr th:each="listitem: ${listitems}">
+<td>
+<form th:action="@{/addInOrder}" method="get" style="display:inline;">
+<input type="hidden" name="id" th:value="${listitem.getId}">
+<input type="number" name="quantity">
+<input type="submit" name="submit" value="+ в Корзину">
+</form>
+</td>
+<td th:text="${listitem.getPpNumber}"></td><td th:text="${listitem.getWorkName}"></td><td th:text="${listitem.getUnitMeasure}"></td>
+<td th:text="${listitem.getPrice}"></td><td th:text="${listitem.getComment}"></td>
+<td>
+<form th:action="@{/admin/itemEditForm}" method="get" style="display:inline;">
+<input type="hidden" name="id" th:value="${listitem.getId}">
+<input type="submit" name="submit" value="Редактировать">
+</form> |
+<form th:action="@{/admin/itemDelete}" method="get" style="display:inline;">
+<input type="hidden" name="id" th:value="${listitem.getId}">
+<input type="submit" name="submit" value="Удалить">
+</form>
+</td>
+</tr>
+</table>
+</body>
+</html>
