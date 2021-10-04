@@ -8,18 +8,21 @@
 <body>
 <a th:href="@{/admin/newItem}">Добавить пункт ТЦП</a> <br><br>
 <form th:action="@{/findByNumber}" th:method="get" style="display:inline;">
-<label>Поиск по № п/п</label><br>
+<label>Поиск по № п/п</label> &nbsp&nbsp
 <input type="number" name="ppsearch" min="0" value="0">
 <input type="submit" value="Найти" >
 </form> <br><br>
 <form th:action="@{/showCart}" th:method="get" style="display:inline;">
-<label>Корзина Заказа</label><br>
+<label>Корзина Заказа</label> &nbsp&nbsp
 <input type="submit" value="Перейти" >
+</form> &nbsp | &nbsp
+<form th:action="@{/clearCart2}" method="get" style="display:inline;">
+<input type="submit" name="submit" value="Очистить корзину">
 </form>
 <br><br>
 <table class="listItems">
 <tr>
-<th></th><th>№ пп</th><th>Наименование работ</th><th>Ед. изм.</th><th>Цена за ед., руб. без НДС</th><th>Описание позиции</th>
+<th>Добавить в Корзину</th><th>№ пп</th><th>Наименование работ</th><th>Ед. изм.</th><th>Цена за ед., руб. без НДС</th><th>Описание позиции</th>
 </tr>
 <tr th:each="listitem: ${listitems}">
 <td>

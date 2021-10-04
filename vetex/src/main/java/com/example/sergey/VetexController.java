@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class VetexController {
+	
+	double sumWithOutNds;
+	double Nds;
+	double sumWithNds;
 
 	@Autowired VetexService vetexService;
 	
@@ -95,8 +99,38 @@ public class VetexController {
 	}
 	
 	@GetMapping ("/showCart")
-	public void showCart(Model model) {
+	public String showCart(Model model) {
+		sumWithOutNds=0;
+		Nds=0;
+		sumWithNds=0;
+		
 		ArrayList<VetexOrder> cart=orderCart.getItemsOrderCart();
+		
+		for(VetexOrder cartitem : cart) {
+			this.sumWithOutNds=this.sumWithOutNds+cartitem.getEndPrice();
+		}
+		this.Nds=this.sumWithOutNds*0.2;
+		this.sumWithNds=this.sumWithOutNds+this.Nds;
 		model.addAttribute("cart", cart);
+		model.addAttribute("sumWithOutNds", this.sumWithOutNds);
+		model.addAttribute("Nds", this.Nds);
+		model.addAttribute("sumWithNds", this.sumWithNds);
+		return"showCart";
 	}
+	@GetMapping ("/clearCart")
+	public String clearCart() {
+		orderCart.clearCart();
+		return "redirect:/showCart";
+	}
+	@GetMapping ("/clearCart2")
+	public String clearCart2() {
+		orderCart.clearCart();
+		return "redirect:/priceItems";
+	}
+	@GetMapping ("/deleteFromOrder")
+	public String deleteFromOrder(@RequestParam("ppnumber")int ppnumber) {
+		orderCart.deleteItem(ppnumber);
+		return "redirect:/showCart";
+	}
+	
 }

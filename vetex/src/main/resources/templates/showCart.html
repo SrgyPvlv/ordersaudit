@@ -6,17 +6,31 @@
 <title>Корзина Заказа</title>
 </head>
 <body>
+<a th:href="@{/priceItems}">На страницу ТЦП</a>
+<br><br>
+<form th:action="@{/clearCart}" method="get" style="display:inline;">
+<input type="submit" name="submit" value="Очистить корзину">
+</form>
+<br><br>
 <table class="listItems">
 <tr>
-<th>№ пп</th><th>Наименование работ</th><th>Ед. изм.</th><th>Цена за ед., руб. без НДС</th><th>Кол-во</th>
+<th></th><th>№ пп</th><th>Наименование работ</th><th>Ед. изм.</th><th>Цена за ед., руб. без НДС</th><th>Кол-во</th>
 <th>Стоимость</th>
 </tr>
 <tr th:each="order: ${cart}">
-
+<td>
+<form th:action="@{/deleteFromOrder}" method="get" style="display:inline;">
+<input type="hidden" name="ppnumber" th:value="${order.getPpNumber}">
+<input type="submit" name="submit" value="- из Заказа">
+</form>
+</td>
 <td th:text="${order.getPpNumber}"></td><td th:text="${order.getWorkName}"></td><td th:text="${order.getUnitMeasure}"></td>
 <td th:text="${order.getPrice}"></td><td th:text="${order.getQuantity}"></td><td th:text="${order.getEndPrice}"></td>
-
 </tr>
+
+<tr><td colspan="6" style="text-align:right">Стоимость без НДС, руб.</td><td th:text="${sumWithOutNds}"></td></tr>
+<tr><td colspan="6" style="text-align:right">НДС, руб.</td><td th:text="${Nds}"></td></tr>
+<tr><td colspan="6" style="text-align:right">Стоимость с НДС, руб.</td><td th:text="${sumWithNds}"></td></tr>
 </table>
 </body>
 </html>
