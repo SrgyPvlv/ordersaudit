@@ -1,6 +1,6 @@
 package com.example.sergey;
 
-public class VetexOrder {
+public class VetexOrder implements Comparable<VetexOrder>{
 	
 	int ppnumber;String workname;String unitmeasure;double price;String comment;int quantity;double endprice;
 
@@ -55,6 +55,12 @@ public class VetexOrder {
 	}
 	public double getEndPrice() {
 		return endprice;
+	}
+
+	@Override
+	public int compareTo(VetexOrder o) {
+		
+		return this.ppnumber-o.ppnumber;
 	}
 	
 }

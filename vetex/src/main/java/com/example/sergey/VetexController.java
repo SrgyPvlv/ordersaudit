@@ -83,6 +83,17 @@ public class VetexController {
 		return "priceItems";
 	}
 	
+	@GetMapping("/findByName")
+	public String findByNumber(@RequestParam("workname") String workname,Model model)throws IOException{
+		if(workname.equals(null)) {
+			List<Vetex> listitems=vetexService.findAllPriceItems();
+			model.addAttribute("listitems", listitems);
+		} else {
+			List<Vetex> listitems=vetexService.findPriceItemByWorkName(workname);
+		model.addAttribute("listitems", listitems);}
+		return "priceItems";
+	}
+	
 	@GetMapping("/addInOrder")
 	public String addInOrder(@RequestParam("id") long id,@RequestParam("quantity") int quantity) {
 		Vetex item=vetexService.findPriceItemById(id);

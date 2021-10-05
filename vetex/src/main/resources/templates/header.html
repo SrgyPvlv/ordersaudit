@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div th:fragment="header">
+<div>
+<header>
+<a th:href="@{/}">Главная</a> &nbsp | &nbsp<a th:href="@{/logout}">Выйти</a>
+</header>
+</div>
+</div>
+</body>
+</html>

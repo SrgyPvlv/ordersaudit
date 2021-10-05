@@ -3,6 +3,7 @@ package com.example.sergey;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +17,9 @@ public class VetexService {
 	}
 	
 	public List<Vetex> findAllPriceItems(){
-		return vetexRepository.findAll();
+		Sort sort=Sort.by(Sort.Direction.ASC,"ppnumber");
+		return vetexRepository.findAll(sort);
+		//return vetexRepository.findAll();
 	}
 	
 	public Vetex findPriceItemById(long id) {
@@ -34,6 +37,10 @@ public class VetexService {
 	
 	public List<Vetex> findPriceItemByPpNumber(int pp) {
 		return vetexRepository.findPriceItemByPpNumber(pp);
+	}
+	
+	public List<Vetex> findPriceItemByWorkName(String workname) {
+		return vetexRepository.findPriceItemsByFilter(workname);
 	}
 	
 	public void deletePriceItemById(long id) {

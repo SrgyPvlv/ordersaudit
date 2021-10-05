@@ -2,6 +2,7 @@ package com.example.sergey;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 
 import org.springframework.stereotype.Component;
@@ -33,6 +34,7 @@ public class OrderCart {
 	}
 
 	public ArrayList<VetexOrder> getItemsOrderCart(){
+		Collections.sort(itemsOrderCart);
 		return itemsOrderCart;
 	}
 }

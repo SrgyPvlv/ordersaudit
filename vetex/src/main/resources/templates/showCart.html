@@ -28,9 +28,9 @@
 <td th:text="${order.getPrice}"></td><td th:text="${order.getQuantity}"></td><td th:text="${order.getEndPrice}"></td>
 </tr>
 
-<tr><td colspan="6" style="text-align:right">Стоимость без НДС, руб.</td><td th:text="${sumWithOutNds}"></td></tr>
-<tr><td colspan="6" style="text-align:right">НДС, руб.</td><td th:text="${Nds}"></td></tr>
-<tr><td colspan="6" style="text-align:right">Стоимость с НДС, руб.</td><td th:text="${sumWithNds}"></td></tr>
+<tr><td colspan="6" style="text-align:right">Итоговая стоимость работ без НДС, руб.</td><td th:text="${sumWithOutNds}"></td></tr>
+<tr><td colspan="6" style="text-align:right">НДС % - по ставке в соответствии с законодательсьвом, руб.</td><td th:text="${Nds}"></td></tr>
+<tr><td colspan="6" style="text-align:right">Итоговая стоимость с НДС, руб.</td><td th:text="${sumWithNds}"></td></tr>
 </table>
 </body>
 </html>
