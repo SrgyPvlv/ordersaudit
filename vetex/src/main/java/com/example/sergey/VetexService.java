@@ -19,7 +19,6 @@ public class VetexService {
 	public List<Vetex> findAllPriceItems(){
 		Sort sort=Sort.by(Sort.Direction.ASC,"ppnumber");
 		return vetexRepository.findAll(sort);
-		//return vetexRepository.findAll();
 	}
 	
 	public Vetex findPriceItemById(long id) {
@@ -35,7 +34,7 @@ public class VetexService {
 	
 	}
 	
-	public List<Vetex> findPriceItemByPpNumber(int pp) {
+	public List<Vetex> findPriceItemByPpNumber(String pp) {
 		return vetexRepository.findPriceItemByPpNumber(pp);
 	}
 	

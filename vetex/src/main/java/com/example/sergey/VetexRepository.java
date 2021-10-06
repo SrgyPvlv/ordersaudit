@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VetexRepository extends JpaRepository<Vetex,Long> {
 	
-	@Query(value="select * from vetex where lower(workname) like lower('%filter%')",nativeQuery=true)
+	@Query(value="select * from vetex where lower(workname) like concat('%',:filter,'%')",nativeQuery=true)
 	public List<Vetex> findPriceItemsByFilter(@Param("filter") String filter);
 
-	@Query(value="select * from vetex where ppnumber in(:pp)",nativeQuery=true)
-	public List<Vetex> findPriceItemByPpNumber(@Param("pp") int pp);
+	@Query(value="select * from vetex where lower(ppnumber) like concat('%',:pp,'%')",nativeQuery=true)
+	public List<Vetex> findPriceItemByPpNumber(@Param("pp") String pp);
 }

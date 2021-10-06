@@ -11,7 +11,7 @@ public class Vetex {
 	private long id;
 	
 	@Column(name="ppnumber") //(name="ppnumber") указывать необязательно, если имя столбца совпадает с именем переменной
-	private int ppnumber;
+	private String ppnumber;
 	
 	@Column
 	private String workname;
@@ -27,7 +27,7 @@ public class Vetex {
 	
 	public Vetex() {}
 	
-	public Vetex(int ppnumber,String workname,String unitmeasure,double price, String comment) {
+	public Vetex(String ppnumber,String workname,String unitmeasure,double price, String comment) {
 		this.ppnumber=ppnumber;
 		this.workname=workname;
 		this.unitmeasure=unitmeasure;
@@ -38,10 +38,10 @@ public class Vetex {
 	public long getId() {
 		return id;
 	}
-	public void setPpNumber(int ppnumber) {
+	public void setPpNumber(String ppnumber) {
 		this.ppnumber=ppnumber;
 	}
-	public int getPpNumber() {
+	public String getPpNumber() {
 		return ppnumber;
 	}
 	public void setWorkName(String workname) {

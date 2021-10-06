@@ -18,13 +18,13 @@ public class OrderCart {
 		itemsOrderCart.addAll(Arrays.asList(vetexOrder));
 		
 	}
-	public void deleteItem(int ppnumber) {
+	public void deleteItem(String ppnumber) {
 		
 		Iterator<VetexOrder> vetexOrderIterator = itemsOrderCart.iterator();//создаем итератор
 		while(vetexOrderIterator.hasNext()) {//до тех пор, пока в списке есть элементы
 
 			VetexOrder nextVetexOrder = vetexOrderIterator.next();//получаем следующий элемент
-		   if (nextVetexOrder.ppnumber==ppnumber) {
+		   if (nextVetexOrder.ppnumber.equals(ppnumber)) {
 			   vetexOrderIterator.remove();//удаляем с нужным именем
 		   }
 		}

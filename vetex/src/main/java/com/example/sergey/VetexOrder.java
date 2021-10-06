@@ -2,9 +2,9 @@ package com.example.sergey;
 
 public class VetexOrder implements Comparable<VetexOrder>{
 	
-	int ppnumber;String workname;String unitmeasure;double price;String comment;int quantity;double endprice;
+	String ppnumber;String workname;String unitmeasure;double price;String comment;int quantity;double endprice;
 
-	public VetexOrder(int ppnumber,String workname,String unitmeasure,double price, String comment,int quantity) {
+	public VetexOrder(String ppnumber,String workname,String unitmeasure,double price, String comment,int quantity) {
 		this.ppnumber=ppnumber;
 		this.workname=workname;
 		this.unitmeasure=unitmeasure;
@@ -14,10 +14,10 @@ public class VetexOrder implements Comparable<VetexOrder>{
 		this.endprice=this.price*this.quantity;
 	}
 	
-	public void setPpNumber(int ppnumber) {
+	public void setPpNumber(String ppnumber) {
 		this.ppnumber=ppnumber;
 	}
-	public int getPpNumber() {
+	public String getPpNumber() {
 		return ppnumber;
 	}
 	public void setWorkName(String workname) {
@@ -60,7 +60,7 @@ public class VetexOrder implements Comparable<VetexOrder>{
 	@Override
 	public int compareTo(VetexOrder o) {
 		
-		return this.ppnumber-o.ppnumber;
+		return this.ppnumber.compareTo(o.ppnumber);
 	}
 	
 }

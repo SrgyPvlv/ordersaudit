@@ -12,12 +12,13 @@
 
 <a th:href="@{/admin/newItem}">Добавить пункт ТЦП</a> <br><br>
 <form th:action="@{/findByNumber}" th:method="get" style="display:inline;">
-<label>Поиск по № п/п</label> &nbsp&nbsp
-<input type="number" name="ppsearch" min="0" value="0">
+<label>Поиск по № ТЦП (№ п/п)</label> &nbsp&nbsp
+<input type="text" name="ppsearch">
 <input type="submit" value="Найти" >
-</form> <br><br>
+</form> &nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp<a th:href="@{/priceItems}">Показать все пункты ТЦП</a>
+ <br><br>
 <form th:action="@{/findByName}" th:method="get" style="display:inline;">
-<label>Поиск по № п/п</label> &nbsp&nbsp
+<label>Поиск по Наименованию работы</label> &nbsp&nbsp
 <input type="text" name="workname">
 <input type="submit" value="Найти" >
 </form> <br><br>
@@ -37,7 +38,7 @@
 <td>
 <form th:action="@{/addInOrder}" method="get" style="display:inline;">
 <input type="hidden" name="id" th:value="${listitem.getId}">
-<input type="number" name="quantity">
+<input type="number" name="quantity" min="1" required>
 <input type="submit" name="submit" value="+ в Корзину">
 </form>
 </td>
@@ -55,5 +56,7 @@
 </td>
 </tr>
 </table>
+
+<div th:replace="footer :: footer"></div>
 </body>
 </html>

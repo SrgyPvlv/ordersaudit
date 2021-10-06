@@ -35,7 +35,7 @@ public class VetexController {
 	}
 	
 	@PostMapping("/admin/newItemCreate")
-	public String newItemCreate(@RequestParam("pp") int pp,@RequestParam("workname") String workname,//
+	public String newItemCreate(@RequestParam("pp") String pp,@RequestParam("workname") String workname,//
 			@RequestParam("unitmeasure") String unitmeasure,@RequestParam("price") double price,@RequestParam("comment") String comment) throws IOException{
 		Vetex newPriceItem=new Vetex(pp,workname,unitmeasure,price,comment);
 		try {
@@ -60,7 +60,7 @@ public class VetexController {
 	}
 	
 	@PostMapping ("/admin/itemEdite")
-	public String itemEdit(@RequestParam("id") long id,@RequestParam("pp") int pp,@RequestParam("workname") String workname,//
+	public String itemEdit(@RequestParam("id") long id,@RequestParam("pp") String pp,@RequestParam("workname") String workname,//
 	@RequestParam("unitmeasure") String unitmeasure,@RequestParam("price") double price,@RequestParam("comment") String comment) throws IOException{
 		Vetex item=vetexService.findPriceItemById(id);
 		item.setPpNumber(pp);
@@ -73,8 +73,8 @@ public class VetexController {
 	}
 	
 	@GetMapping("/findByNumber")
-	public String findByNumber(@RequestParam("ppsearch") int ppsearch,Model model)throws IOException{
-		if(ppsearch==0) {
+	public String findByNumber(@RequestParam("ppsearch") String ppsearch,Model model)throws IOException{
+		if(ppsearch.equals("")) {
 			List<Vetex> listitems=vetexService.findAllPriceItems();
 			model.addAttribute("listitems", listitems);
 		} else {
@@ -84,8 +84,8 @@ public class VetexController {
 	}
 	
 	@GetMapping("/findByName")
-	public String findByNumber(@RequestParam("workname") String workname,Model model)throws IOException{
-		if(workname.equals(null)) {
+	public String findByName(@RequestParam("workname") String workname,Model model)throws IOException{
+		if(workname.equals("")) {
 			List<Vetex> listitems=vetexService.findAllPriceItems();
 			model.addAttribute("listitems", listitems);
 		} else {
@@ -97,7 +97,7 @@ public class VetexController {
 	@GetMapping("/addInOrder")
 	public String addInOrder(@RequestParam("id") long id,@RequestParam("quantity") int quantity) {
 		Vetex item=vetexService.findPriceItemById(id);
-		int ppnumber=item.getPpNumber();
+		String ppnumber=item.getPpNumber();
 		String workname=item.getWorkName();
 		String unitmeasure=item.getUnitMeasure();
 		double price=item.getPrice();
@@ -139,7 +139,7 @@ public class VetexController {
 		return "redirect:/priceItems";
 	}
 	@GetMapping ("/deleteFromOrder")
-	public String deleteFromOrder(@RequestParam("ppnumber")int ppnumber) {
+	public String deleteFromOrder(@RequestParam("ppnumber")String ppnumber) {
 		orderCart.deleteItem(ppnumber);
 		return "redirect:/showCart";
 	}

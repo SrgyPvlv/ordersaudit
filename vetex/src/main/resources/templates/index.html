@@ -2,9 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
 <title>Главная страница</title>
 </head>
 <body>
-<a th:href="@{/priceItems}">Проверка Заказа ООО Ветекс</a>
+<h2><a th:href="@{/priceItems}">Проверка Заказа ООО Ветекс</a></h2>
+
+<div th:replace="footer :: footer"></div>
 </body>
 </html>
