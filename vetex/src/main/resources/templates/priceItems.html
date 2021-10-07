@@ -10,7 +10,7 @@
 <div th:replace="header :: header"></div>
 <br><br>
 
-<a th:href="@{/admin/newItem}">Добавить пункт ТЦП</a> <br><br>
+<a th:href="@{/admin/newItem}">Добавить пункт ТЦП (admin)</a> <br><br>
 <form th:action="@{/findByNumber}" th:method="get" style="display:inline;">
 <label>Поиск по № ТЦП (№ п/п)</label> &nbsp&nbsp
 <input type="text" name="ppsearch">
@@ -32,7 +32,8 @@
 <br><br>
 <table class="listItems">
 <tr>
-<th>Добавить в Корзину</th><th>№ п/п</th><th>Наименование работ</th><th>Ед. изм.</th><th>Цена за ед., руб. без НДС</th><th>Описание позиции</th>
+<th>Добавить в Корзину</th><th>№ п/п</th><th>Наименование работ</th><th>Ед. изм.</th>
+<th>Цена за ед., руб. без НДС</th><th>Описание позиции</th><th>Редактирование ТЦП (admin)</th>
 </tr>
 <tr th:each="listitem: ${listitems}">
 <td>

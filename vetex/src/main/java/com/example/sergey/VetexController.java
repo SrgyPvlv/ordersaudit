@@ -139,8 +139,8 @@ public class VetexController {
 		return "redirect:/priceItems";
 	}
 	@GetMapping ("/deleteFromOrder")
-	public String deleteFromOrder(@RequestParam("ppnumber")String ppnumber) {
-		orderCart.deleteItem(ppnumber);
+	public String deleteFromOrder(@RequestParam("ppnumber")String ppnumber,@RequestParam("quantity")int quantity) {
+		orderCart.deleteItem(ppnumber,quantity);
 		return "redirect:/showCart";
 	}
 	@GetMapping("/403")

@@ -21,6 +21,7 @@
 <td>
 <form th:action="@{/deleteFromOrder}" method="get" style="display:inline;">
 <input type="hidden" name="ppnumber" th:value="${order.getPpNumber}">
+<input type="hidden" name="quantity" th:value="${order.getQuantity}">
 <input type="submit" name="submit" value="- из Заказа">
 </form>
 </td>
