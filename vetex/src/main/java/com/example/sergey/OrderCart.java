@@ -15,9 +15,10 @@ public class OrderCart {
 	private ArrayList<VetexOrder> itemsOrderCart=new ArrayList<VetexOrder>();
 	
 	public void addItem(VetexOrder vetexOrder) {
-		itemsOrderCart.addAll(Arrays.asList(vetexOrder));
 		
+			   itemsOrderCart.addAll(Arrays.asList(vetexOrder));  
 	}
+	
 	public void deleteItem(String ppnumber) {
 		
 		Iterator<VetexOrder> vetexOrderIterator = itemsOrderCart.iterator();//создаем итератор
@@ -26,6 +27,7 @@ public class OrderCart {
 			VetexOrder nextVetexOrder = vetexOrderIterator.next();//получаем следующий элемент
 		   if (nextVetexOrder.ppnumber.equals(ppnumber)) {
 			   vetexOrderIterator.remove();//удаляем с нужным именем
+		   break;
 		   }
 		}
 	}
