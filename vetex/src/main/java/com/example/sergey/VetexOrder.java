@@ -2,7 +2,7 @@ package com.example.sergey;
 
 public class VetexOrder implements Comparable<VetexOrder>{
 	
-	String ppnumber;String workname;String unitmeasure;double price;String comment;int quantity;double endprice;
+	String ppnumber;String workname;String unitmeasure;double price;String comment;int quantity; double endprice;
 
 	public VetexOrder(String ppnumber,String workname,String unitmeasure,double price, String comment,int quantity) {
 		this.ppnumber=ppnumber;
@@ -13,6 +13,8 @@ public class VetexOrder implements Comparable<VetexOrder>{
 		this.quantity=quantity;
 		this.endprice=this.price*this.quantity;
 	}
+	
+	
 	
 	public void setPpNumber(String ppnumber) {
 		this.ppnumber=ppnumber;
@@ -50,8 +52,8 @@ public class VetexOrder implements Comparable<VetexOrder>{
 	public int getQuantity() {
 		return quantity;
 	}
-	public void setEndPrice(double endprice) {
-		this.endprice=endprice;
+	public void setEndPrice() {
+		this.endprice=this.quantity*this.price;
 	}
 	public double getEndPrice() {
 		return endprice;

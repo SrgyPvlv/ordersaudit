@@ -147,4 +147,9 @@ public class VetexController {
     public String error403() {
         return "/error/403";
     }
+	@GetMapping ("/saveQuantityChanges")
+	public String saveQuantityChanges(@RequestParam("ppnumber")String ppnumber,@RequestParam("quantity")int quantity,@RequestParam("newQuantity")int newQuantity) {
+		orderCart.saveQuantityItem(ppnumber,quantity,newQuantity);
+		return "redirect:/showCart";
+	}
 }

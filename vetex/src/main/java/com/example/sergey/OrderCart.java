@@ -39,4 +39,16 @@ public class OrderCart {
 		Collections.sort(itemsOrderCart);
 		return itemsOrderCart;
 	}
+	public void saveQuantityItem(String ppnumber, int quantity, int newQuantity) {
+		Iterator <VetexOrder> vetexOrderIterator=itemsOrderCart.iterator();
+		while(vetexOrderIterator.hasNext()) {
+			VetexOrder nextVetexOrder=vetexOrderIterator.next();
+			if(nextVetexOrder.ppnumber.equals(ppnumber)&nextVetexOrder.quantity==quantity) {
+				
+				nextVetexOrder.setQuantity(newQuantity);
+				nextVetexOrder.setEndPrice();
+				break;
+			}
+		}
+	}
 }
