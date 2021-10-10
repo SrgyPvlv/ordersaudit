@@ -10,7 +10,20 @@
 <div th:replace="header :: header"></div>
 <br><br>
 
-<a th:href="@{/admin/newItem}">Добавить пункт ТЦП (admin)</a> <br><br>
+<a th:href="@{/admin/newItem}">Добавить пункт ТЦП (admin)</a> &nbsp&nbsp | &nbsp&nbsp
+
+<form enctype="multipart/form-data" th:action="@{/admin/csvToDateBase}" th:method="post" style="display:inline;">
+<label>Загрузка ТЦП в БД (админ)</label> &nbsp&nbsp
+<input type="file" name="file">
+<input type="submit" value="Загрузить" >
+</form> &nbsp&nbsp | &nbsp&nbsp
+
+<form  th:action="@{/dateBaseToCSV}" th:method="get" style="display:inline;">
+<label>Выгрузка ТЦП из БД</label> &nbsp&nbsp
+<input type="submit" value="Выгрузить" >
+</form>
+<br><br>
+
 <form th:action="@{/findByNumber}" th:method="get" style="display:inline;">
 <label>Поиск по № ТЦП (№ п/п)</label> &nbsp&nbsp
 <input type="text" name="ppsearch">
