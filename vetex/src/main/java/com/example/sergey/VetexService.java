@@ -45,4 +45,8 @@ public class VetexService {
 	public void deletePriceItemById(long id) {
 		vetexRepository.deleteById(id);
 	}
+	
+	public void deleteAllPrices() {
+		vetexRepository.deleteAll();
+	}
 }

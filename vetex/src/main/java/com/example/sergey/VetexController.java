@@ -29,6 +29,12 @@ public class VetexController {
 		return "priceItems";
 	}
 	
+	@GetMapping ("/admin/deleteAllPrices")
+	public String deleteAllPrices() {
+		vetexService.deleteAllPrices();
+		return "redirect:/priceItems";
+	}
+	
 	@GetMapping("/admin/newItem")
 	public String newItemCreate() {
 		return"newItemForm";
@@ -95,7 +101,7 @@ public class VetexController {
 	}
 	
 	@GetMapping("/addInOrder")
-	public String addInOrder(@RequestParam("id") long id,@RequestParam("quantity") int quantity) {
+	public String addInOrder(@RequestParam("id") long id,@RequestParam("quantity") double quantity) {
 		Vetex item=vetexService.findPriceItemById(id);
 		String ppnumber=item.getPpNumber();
 		String workname=item.getWorkName();
@@ -139,7 +145,7 @@ public class VetexController {
 		return "redirect:/priceItems";
 	}
 	@GetMapping ("/deleteFromOrder")
-	public String deleteFromOrder(@RequestParam("ppnumber")String ppnumber,@RequestParam("quantity")int quantity) {
+	public String deleteFromOrder(@RequestParam("ppnumber")String ppnumber,@RequestParam("quantity")double quantity) {
 		orderCart.deleteItem(ppnumber,quantity);
 		return "redirect:/showCart";
 	}
@@ -148,8 +154,9 @@ public class VetexController {
         return "/error/403";
     }
 	@GetMapping ("/saveQuantityChanges")
-	public String saveQuantityChanges(@RequestParam("ppnumber")String ppnumber,@RequestParam("quantity")int quantity,@RequestParam("newQuantity")int newQuantity) {
+	public String saveQuantityChanges(@RequestParam("ppnumber")String ppnumber,@RequestParam("quantity")double quantity,@RequestParam("newQuantity")double newQuantity) {
 		orderCart.saveQuantityItem(ppnumber,quantity,newQuantity);
 		return "redirect:/showCart";
 	}
+	
 }

@@ -1,10 +1,13 @@
 package com.example.sergey;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class VetexOrder implements Comparable<VetexOrder>{
 	
-	String ppnumber;String workname;String unitmeasure;double price;String comment;int quantity; double endprice;
+	String ppnumber;String workname;String unitmeasure;double price;String comment;double quantity; double endprice;
 
-	public VetexOrder(String ppnumber,String workname,String unitmeasure,double price, String comment,int quantity) {
+	public VetexOrder(String ppnumber,String workname,String unitmeasure,double price, String comment,double quantity) {
 		this.ppnumber=ppnumber;
 		this.workname=workname;
 		this.unitmeasure=unitmeasure;
@@ -12,6 +15,8 @@ public class VetexOrder implements Comparable<VetexOrder>{
 		this.comment=comment;
 		this.quantity=quantity;
 		this.endprice=this.price*this.quantity;
+		BigDecimal bd = new BigDecimal(this.endprice).setScale(2, RoundingMode.HALF_UP);
+		this.endprice = bd.doubleValue();
 	}
 	
 	
@@ -46,14 +51,16 @@ public class VetexOrder implements Comparable<VetexOrder>{
 	public String getComment() {
 		return comment;
 	}
-	public void setQuantity(int quantity) {
+	public void setQuantity(double quantity) {
 		this.quantity=quantity;
 	}
-	public int getQuantity() {
+	public double getQuantity() {
 		return quantity;
 	}
 	public void setEndPrice() {
 		this.endprice=this.quantity*this.price;
+		BigDecimal bd = new BigDecimal(this.endprice).setScale(2, RoundingMode.HALF_UP);
+		this.endprice = bd.doubleValue();
 	}
 	public double getEndPrice() {
 		return endprice;

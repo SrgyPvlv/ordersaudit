@@ -10,13 +10,13 @@
 <form th:action="@{/admin/itemEdite}" th:method="post">
 <input type="hidden" name="id" th:value="${item.getId}">
 <label>№ пп</label><br>
-<input type="number" name="pp" style="text-align: center" th:value="${item.getPpNumber}" required ><br><br>
+<input type="text" name="pp" style="text-align: center" th:value="${item.getPpNumber}" required ><br><br>
 <label>Наименование работ</label><br>
 <input type="text" name="workname" style="text-align: center" th:value="${item.getWorkName}" required ><br><br>
 <label>Ед. изм.</label><br>
 <input type="text" name="unitmeasure" style="text-align: center" th:value="${item.getUnitMeasure}" required ><br><br>
 <label>Цена за ед., руб. без НДС</label><br>
-<input type="number" name="price" style="text-align: center" th:value="${item.getPrice}" required ><br><br>
+<input type="number" name="price" style="text-align: center" step="0.01" th:value="${item.getPrice}" required ><br><br>
 <label>Описание позиции</label><br>
 <input type="text" name="comment" style="text-align: center" th:value="${item.getComment}" required ><br><br>
 <input type="submit" value="Сохранить" autofocus style="width: 100px; height: 40px; background-color: #98FB98;">

@@ -11,6 +11,10 @@ th,td{
 		text-align: center;
 }
 
+th {
+	background:#FFFF00;
+}
+
 .footercss{
 position: fixed; /* Фиксированное положение */
     left: 0; bottom: 0; /* Левый нижний угол */
@@ -35,3 +39,47 @@ position: fixed; /* Фиксированное положение */
     justify-content: center;
     overflow: auto;  
 }
+
+.header {
+	padding:10px;
+	border-bottom: 1px solid #000000;
+}
+
+.pricesControl {
+	background:#FFFACD;
+	padding:10px;
+	border-bottom: 2px solid #FFFFFF;
+	height:90px;
+}
+
+.search {
+	background:#FFEFD5;
+	padding:10px;
+	border-bottom: 2px solid #FFFFFF;
+	height:90px;
+}
+
+.cart {
+	background:#98FB98;
+	padding:10px;
+	border-bottom: 2px solid #FFFFFF;
+	height:40px;
+}
+
+.col5 {
+	width: 10%;
+}
+.col6 {
+	width: 25%;
+}
+.col7 {
+	background:#FFFFFF;
+}
+#pricesControl_1,#search1 {
+	float: left;
+	width: 500px;
+}
+#pricesControl_2,#search2 {
+	margin-left: 520px;
+}
+

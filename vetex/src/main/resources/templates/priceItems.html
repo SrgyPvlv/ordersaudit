@@ -8,56 +8,76 @@
 <body>
 
 <div th:replace="header :: header"></div>
-<br><br>
 
-<a th:href="@{/admin/newItem}">Добавить пункт ТЦП (admin)</a> &nbsp&nbsp | &nbsp&nbsp
+<div class="pricesControl">
+      <div id="pricesControl_1">
+      <a th:href="@{/admin/newItem}">Добавить пункт ТЦП (admin)</a>
+      <br><br>
+      <form  th:action="@{/admin/deleteAllPrices}" th:method="get" >
+      <label style="color:red;">Осторожно! Удалить все ТЦП из БД (админ)</label> &nbsp&nbsp
+      <input type="submit" value="Удалить!" style="background:#FF0000; color:white;" >
+      </form>
+      </div>
 
-<form enctype="multipart/form-data" th:action="@{/admin/csvToDateBase}" th:method="post" style="display:inline;">
-<label>Загрузка ТЦП в БД (админ)</label> &nbsp&nbsp
-<input type="file" name="file">
-<input type="submit" value="Загрузить" >
-</form> &nbsp&nbsp | &nbsp&nbsp
+      <div id="pricesControl_2">
+      <form enctype="multipart/form-data" th:action="@{/admin/csvToDateBase}" th:method="post" >
+      <label>Загрузка ТЦП в БД (админ)</label> &nbsp&nbsp
+      <input type="file" name="file">
+      <input type="submit" value="Загрузить" >
+      </form>
+      <br><br>
+      <form  th:action="@{/dateBaseToCSV}" th:method="get" >
+      <label>Выгрузка ТЦП из БД в файл</label> &nbsp&nbsp
+      <input type="submit" value="Выгрузить" >
+      </form>
+      </div>
+</div>
 
-<form  th:action="@{/dateBaseToCSV}" th:method="get" style="display:inline;">
-<label>Выгрузка ТЦП из БД</label> &nbsp&nbsp
-<input type="submit" value="Выгрузить" >
-</form>
-<br><br>
-
-<form th:action="@{/findByNumber}" th:method="get" style="display:inline;">
-<label>Поиск по № ТЦП (№ п/п)</label> &nbsp&nbsp
-<input type="text" name="ppsearch">
-<input type="submit" value="Найти" >
-</form> &nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp<a th:href="@{/priceItems}">Показать все пункты ТЦП</a>
- <br><br>
-<form th:action="@{/findByName}" th:method="get" style="display:inline;">
-<label>Поиск по Наименованию работы</label> &nbsp&nbsp
-<input type="text" name="workname">
-<input type="submit" value="Найти" >
-</form> <br><br>
+<div class="search">
+       <div id="search1">
+       <form th:action="@{/findByNumber}" th:method="get" >
+       <label>Поиск по № ТЦП (№ п/п)</label> &nbsp&nbsp
+       <input type="text" name="ppsearch">
+       <input type="submit" value="Найти" >
+       </form>
+       <br><br>
+       <form th:action="@{/findByName}" th:method="get" >
+       <label>Поиск по Наименованию работы</label> &nbsp&nbsp
+       <input type="text" name="workname">
+       <input type="submit" value="Найти" >
+       </form>
+       </div>
+       <div id="search2">
+       <a th:href="@{/priceItems}">Показать все пункты ТЦП</a>
+       </div>
+</div>
+<div class="cart">
 <form th:action="@{/showCart}" th:method="get" style="display:inline;">
 <label>Корзина Заказа</label> &nbsp&nbsp
-<input type="submit" value="Перейти" >
+<input type="submit" value="Перейти в Корзину" >
 </form> &nbsp | &nbsp
 <form th:action="@{/clearCart2}" method="get" style="display:inline;">
-<input type="submit" name="submit" value="Очистить корзину">
+<input type="submit" name="submit" value="Очистить Корзину" style="background:#FF0000; color:white;">
 </form>
-<br><br>
+</div>
+<br>
+
+<div>
 <table class="listItems">
 <tr>
 <th>Добавить в Корзину</th><th>№ п/п</th><th>Наименование работ</th><th>Ед. изм.</th>
-<th>Цена за ед., руб. без НДС</th><th>Описание позиции</th><th>Редактирование ТЦП (admin)</th>
+<th class="col5">Цена за ед., руб. без НДС</th><th class="col6">Описание позиции</th><th class="col7">Редактирование ТЦП (admin)</th>
 </tr>
 <tr th:each="listitem: ${listitems}">
 <td>
 <form th:action="@{/addInOrder}" method="get" style="display:inline;">
 <input type="hidden" name="id" th:value="${listitem.getId}">
-<input type="number" name="quantity" min="1" required>
+<input type="number" name="quantity" min="0.01" step="0.01" style="width:55px" required>
 <input type="submit" name="submit" value="+ в Корзину">
 </form>
 </td>
 <td th:text="${listitem.getPpNumber}"></td><td th:text="${listitem.getWorkName}"></td><td th:text="${listitem.getUnitMeasure}"></td>
-<td th:text="${listitem.getPrice}"></td><td th:text="${listitem.getComment}"></td>
+<td th:text="${listitem.getPrice}" class="col5"></td><td th:text="${listitem.getComment}" class="col6"></td>
 <td>
 <form th:action="@{/admin/itemEditForm}" method="get" style="display:inline;">
 <input type="hidden" name="id" th:value="${listitem.getId}">
@@ -70,7 +90,9 @@
 </td>
 </tr>
 </table>
+</div>
 
+<br><br><br>
 <div th:replace="footer :: footer"></div>
 </body>
 </html>

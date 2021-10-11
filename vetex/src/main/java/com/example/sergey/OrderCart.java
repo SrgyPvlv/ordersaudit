@@ -19,7 +19,7 @@ public class OrderCart {
 			   itemsOrderCart.addAll(Arrays.asList(vetexOrder));  
 	}
 	
-	public void deleteItem(String ppnumber,int quantity) {
+	public void deleteItem(String ppnumber,double quantity) {
 		
 		Iterator<VetexOrder> vetexOrderIterator = itemsOrderCart.iterator();//создаем итератор
 		while(vetexOrderIterator.hasNext()) {//до тех пор, пока в списке есть элементы
@@ -39,7 +39,7 @@ public class OrderCart {
 		Collections.sort(itemsOrderCart);
 		return itemsOrderCart;
 	}
-	public void saveQuantityItem(String ppnumber, int quantity, int newQuantity) {
+	public void saveQuantityItem(String ppnumber, double quantity, double newQuantity) {
 		Iterator <VetexOrder> vetexOrderIterator=itemsOrderCart.iterator();
 		while(vetexOrderIterator.hasNext()) {
 			VetexOrder nextVetexOrder=vetexOrderIterator.next();

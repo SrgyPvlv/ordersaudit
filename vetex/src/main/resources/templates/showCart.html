@@ -28,7 +28,7 @@
 <td th:text="${order.getPrice}"></td>
 <td>
 <form th:action="@{/saveQuantityChanges}" id="saveQuantity" method="get" style="display:inline;">
-<input type="number" name="newQuantity" th:value="${order.getQuantity}" style="border:none;text-align:center;width:55px;"> &nbsp&nbsp | &nbsp&nbsp
+<input type="number" name="newQuantity" th:value="${order.getQuantity}" step="0.01" min="0.01" style="border:none;text-align:center;width:55px;"> &nbsp&nbsp | &nbsp&nbsp
 <input type="hidden" name="ppnumber" th:value="${order.getPpNumber}">
 <input type="hidden" name="quantity" th:value="${order.getQuantity}">
 <input type="submit" name="submit" value="Изменить" style="display:inline;">
