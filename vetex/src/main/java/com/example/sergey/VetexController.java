@@ -1,6 +1,8 @@
 package com.example.sergey;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,9 +127,17 @@ public class VetexController {
 		
 		for(VetexOrder cartitem : cart) {
 			this.sumWithOutNds=this.sumWithOutNds+cartitem.getEndPrice();
+			BigDecimal bd = new BigDecimal(this.sumWithOutNds).setScale(2, RoundingMode.HALF_UP);
+			this.sumWithOutNds = bd.doubleValue();
 		}
 		this.Nds=this.sumWithOutNds*0.2;
+		BigDecimal bd1 = new BigDecimal(this.Nds).setScale(2, RoundingMode.HALF_UP);
+		this.Nds = bd1.doubleValue();
+		
 		this.sumWithNds=this.sumWithOutNds+this.Nds;
+		BigDecimal bd2 = new BigDecimal(this.sumWithNds).setScale(2, RoundingMode.HALF_UP);
+		this.sumWithNds = bd2.doubleValue();
+		
 		model.addAttribute("cart", cart);
 		model.addAttribute("sumWithOutNds", this.sumWithOutNds);
 		model.addAttribute("Nds", this.Nds);

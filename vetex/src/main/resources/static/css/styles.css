@@ -82,4 +82,15 @@ position: fixed; /* Фиксированное положение */
 #pricesControl_2,#search2 {
 	margin-left: 520px;
 }
-
+#listPo{
+	list-style-type: disc;
+}
+.header a:link{
+	color:black; text-decoration:none;
+}
+.header a:visited {
+	color:black; text-decoration:none;
+}
+.header a:hover {
+	color:blue; text-decoration:underline;
+}
