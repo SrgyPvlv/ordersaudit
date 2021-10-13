@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import org.postgresql.copy.CopyManager;
 import org.postgresql.core.BaseConnection;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,12 +19,13 @@ import org.springframework.web.multipart.MultipartFile;
 public class CsvController {
 
 	@PostMapping("/admin/csvToDateBase")
-	public String uploadFile(@RequestParam("file") MultipartFile  file){
+	public String uploadFile(@RequestParam("file") MultipartFile  file,Model model){
 		
 		try {
 			copyToDateBase(file);
-	        return "okUpload";
+	        return "redirect:/priceItems";
 	      } catch (Exception e) {
+	        model.addAttribute("note", "Не удалось загрузить ТЦП в БД!");
 	        return "noUpload";
 	      }
 	}
