@@ -1,5 +1,6 @@
 package com.example.sergey;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -12,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.itextpdf.html2pdf.HtmlConverter;
 
 @Controller
 public class VetexController {
@@ -152,6 +155,14 @@ public class VetexController {
 	@GetMapping ("/clearCart2")
 	public String clearCart2() {
 		orderCart.clearCart();
+		return "redirect:/priceItems";
+	}
+	@GetMapping ("/createOrder")
+	public String createOrder() throws IOException {
+		GeneratePDFUsingHTML generatePdf=new GeneratePDFUsingHTML();
+		String src = "./showcart.html";
+		String dest = "showcart.pdf";
+		generatePdf.createPdf(src,dest);
 		return "redirect:/priceItems";
 	}
 	@GetMapping ("/deleteFromOrder")
