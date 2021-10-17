@@ -85,23 +85,17 @@ public class VetexController {
 	
 	@GetMapping("/findByNumber")
 	public String findByNumber(@RequestParam("ppsearch") String ppsearch,Model model)throws IOException{
-		if(ppsearch.equals("")) {
-			List<Vetex> listitems=vetexService.findAllPriceItems();
-			model.addAttribute("listitems", listitems);
-		} else {
-			List<Vetex> listitems=vetexService.findPriceItemByPpNumber(ppsearch);
-		model.addAttribute("listitems", listitems);}
+		
+		List<Vetex> listitems=vetexService.findPriceItemByPpNumber(ppsearch);
+		model.addAttribute("listitems", listitems);
 		return "priceItems";
 	}
 	
 	@GetMapping("/findByName")
 	public String findByName(@RequestParam("workname") String workname,Model model)throws IOException{
-		if(workname.equals("")) {
-			List<Vetex> listitems=vetexService.findAllPriceItems();
-			model.addAttribute("listitems", listitems);
-		} else {
-			List<Vetex> listitems=vetexService.findPriceItemByWorkName(workname);
-		model.addAttribute("listitems", listitems);}
+		
+		List<Vetex> listitems=vetexService.findPriceItemByWorkName(workname);
+		model.addAttribute("listitems", listitems);
 		return "priceItems";
 	}
 	
