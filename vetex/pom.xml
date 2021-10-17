@@ -11,6 +11,7 @@
 	<groupId>com.example.sergey</groupId>
 	<artifactId>vetex</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>vetex</name>
 	<description>Spring Boot+thymeleaf</description>
 	<properties>
