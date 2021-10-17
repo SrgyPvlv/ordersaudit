@@ -35,9 +35,9 @@ public class CsvDownController {
 	
 	public static InputStreamResource copyToFile() throws SQLException, IOException {  
 	      
-		  String urls = new String("jdbc:postgresql://localhost:5432/sergey");
-	      String username = new String("postgres");
-	      String password = new String("180578lord");
+		  String urls = new String("jdbc:postgresql://ec2-52-208-221-89.eu-west-1.compute.amazonaws.com:5432/d1vmia1uqp5a6k");
+	      String username = new String("bnyjzqxtkbdodi");
+	      String password = new String("8a98dd7cfcc0a26e5653cd0e3aa75d7b770a596483f2be5c257978fbab58b5d6");
 	      Connection conn = null;
 	      String myQuery="COPY (select ppnumber,workname,unitmeasure,price,comment from vetex order by ppnumber) TO STDOUT WITH (FORMAT CSV, HEADER)";
 	      InputStreamResource file;
