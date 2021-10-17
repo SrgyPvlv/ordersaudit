@@ -14,6 +14,14 @@ th,td{
 th {
 	background:#FFFF00;
 }
+.ordertable{
+	width:100%;
+	border:2px solid;
+	border-collapse: collapse;
+}
+.ordertable th{
+	background:white;
+}
 
 .footercss{
 position: fixed; /* Фиксированное положение */

@@ -9,8 +9,9 @@
 <a th:href="@{/priceItems}">На страницу ТЦП</a> &nbsp&nbsp | &nbsp&nbsp
 <form th:action="@{/clearCart}" method="get" style="display:inline;">
 <input type="submit" name="submit" value="Очистить корзину"> &nbsp&nbsp | &nbsp&nbsp
-<form th:action="@{/createOrder}" method="get" style="display:inline;">
-<input type="submit" name="submit" value="Создать Заказ">
+</form>
+<form th:action="@{/orderPage}" method="get" style="display:inline;">
+<input type="submit" name="submit" value="Страница Заказа">
 </form>
 <br><br>
 <table class="listItems">
