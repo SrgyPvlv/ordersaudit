@@ -15,7 +15,7 @@ th {
 	background:#FFFF00;
 }
 .ordertable{
-	width:100%;
+	width:40%;
 	border:2px solid;
 	border-collapse: collapse;
 }
@@ -47,6 +47,15 @@ position: fixed; /* Фиксированное положение */
     justify-content: center;
     overflow: auto;  
 }
+.parent_order {
+	width: 100%;
+    display: flex;
+    flex-direction:row;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    overflow: auto;  
+}
 
 .header {
 	padding:10px;
@@ -73,15 +82,25 @@ position: fixed; /* Фиксированное положение */
 	border-bottom: 2px solid #FFFFFF;
 	height:40px;
 }
-
+.col1 {
+	width: 15%;
+}
+.col2 {
+	width: 5%;
+}
+.col4 {
+	width: 10%;
+}
 .col5 {
 	width: 10%;
 }
-.col6 {
-	width: 25%;
-}
+
 .col7 {
+	width: 18%;
 	background:#FFFFFF;
+}
+.col8 {
+	width: 18%;
 }
 #pricesControl_1,#search1 {
 	float: left;
@@ -101,18 +120,4 @@ position: fixed; /* Фиксированное положение */
 }
 .header a:hover {
 	color:blue; text-decoration:underline;
-}
-.parent {
-
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    flex-direction:column;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    overflow: auto;  
 }

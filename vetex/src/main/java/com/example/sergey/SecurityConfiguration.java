@@ -26,7 +26,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("user")
-                   .password(this.passwordEncoder().encode("123"))
+                   .password(this.passwordEncoder().encode("rbs123#"))
                    .authorities("ROLE_USER")
                 .and()
                 .withUser("admin")
@@ -45,6 +45,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
               .logout()
               .permitAll()
               .and()
-              .exceptionHandling().accessDeniedHandler(accessDeniedHandler);;
+              .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
     }
 }

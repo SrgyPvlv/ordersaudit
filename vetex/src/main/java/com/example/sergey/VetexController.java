@@ -7,7 +7,6 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -35,11 +34,6 @@ public class VetexController {
 
 	@Autowired VetexService vetexService;
 	@Autowired OrderCart orderCart;
-	
-	private final TemplateEngine templateEngine;
-
-    public VetexController(TemplateEngine templateEngine) {
-        this.templateEngine = templateEngine;}
 	
 	@GetMapping("/priceItems")
 	public String getAllPriceItems(Model model) {

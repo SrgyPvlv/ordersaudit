@@ -6,12 +6,18 @@
 <title>Главная страница</title>
 </head>
 <body>
+<div class="header">
+<a th:href="@{/logout}">Выйти</a>
+</div>
+<br><br>
+
 <h1 style="color:red;">Проверка / Создание Заказов подрядных организаций.</h1>
 <ul id="listPo">
 <li><h3><a th:href="@{/priceItems}"> ООО "ВетексЭлектро"</a></h3></li>
 <li><h3>ООО "СоюзПетроСервис"</h3></li>
 <li><h3>ООО "Телрос"</h3></li>
 </ul>
+
 <div th:replace="footer :: footer"></div>
 </body>
 </html>

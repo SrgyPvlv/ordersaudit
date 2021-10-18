@@ -6,9 +6,13 @@
 <title>Заказ</title>
 </head>
 <body>
+<div class="header">
 <a th:href="@{/showCart}">Назад в Корзину</a>
-
+</div>
 <br><br>
+
+<div class="parent_order">
+<div>
 <table class="ordertable">
 <tr>
 <th>№ пп</th><th>Наименование работ</th><th>Ед. изм.</th><th>Цена за ед., руб. без НДС</th><th>Кол-во</th>
@@ -24,6 +28,8 @@
 <tr><td colspan="5" style="text-align:right">НДС % - по ставке в соответствии с законодательсьвом, руб.</td><td th:text="${Nds}"></td></tr>
 <tr><td colspan="5" style="text-align:right">Итоговая стоимость с НДС, руб.</td><td th:text="${sumWithNds}"></td></tr>
 </table>
+</div>
+</div>
 
 <div th:replace="footer :: footer"></div>
 </body>
