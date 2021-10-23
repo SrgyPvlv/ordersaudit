@@ -50,10 +50,10 @@ position: fixed; /* Фиксированное положение */
 .parent_order {
 	width: 100%;
     display: flex;
-    flex-direction:row;
+    flex-direction:column;
     align-items: center;
     align-content: center;
-    justify-content: center;
+    justify-content: flex-start;
     overflow: auto;  
 }
 

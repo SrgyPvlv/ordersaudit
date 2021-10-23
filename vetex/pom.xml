@@ -52,37 +52,11 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			</dependency>
-			<dependency>
-    <groupId>com.itextpdf</groupId>
-    <artifactId>itextpdf</artifactId>
-    <version>5.5.13.2</version>
-</dependency>
-<dependency>
-    <groupId>com.itextpdf</groupId>
-    <artifactId>kernel</artifactId>
-    <version>7.1.14</version>
-</dependency>
-<dependency>
-    <groupId>com.itextpdf</groupId>
-    <artifactId>html2pdf</artifactId>
-    <version>3.0.3</version>
-</dependency>
-<dependency>
-    <groupId>ognl</groupId>
-    <artifactId>ognl</artifactId>
-    <version>3.1.12</version> 
-</dependency>
-<dependency>
-    <groupId>org.xhtmlrenderer</groupId>
-    <artifactId>flying-saucer-pdf</artifactId>
-    <version>9.1.22</version>
-</dependency>
 <dependency>
     <groupId>com.heroku.sdk</groupId>
     <artifactId>heroku-maven-plugin</artifactId>
     <version>3.0.4</version>
 </dependency>
-
 	</dependencies>
 
 	<build>
