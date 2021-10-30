@@ -109,6 +109,10 @@ position: fixed; /* Фиксированное положение */
 #pricesControl_2,#search2 {
 	margin-left: 520px;
 }
+#pricesControl_3 {
+	float:right;
+	margin-right:15px;
+}
 #listPo{
 	list-style-type: disc;
 }
@@ -120,4 +124,8 @@ position: fixed; /* Фиксированное положение */
 }
 .header a:hover {
 	color:blue; text-decoration:underline;
+}
+.userstable{
+	border-collapse: collapse;
+    width: 50%;
 }
