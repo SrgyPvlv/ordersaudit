@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+<title>Корзина Заказа</title>
+</head>
+<body>
+<a th:href="@{/priceItems/telecom}">На страницу ТЦП</a> &nbsp&nbsp | &nbsp&nbsp
+<form th:action="@{/clearCart/telecom}" method="get" style="display:inline;">
+<input type="submit" name="submit" value="Очистить корзину"> &nbsp&nbsp | &nbsp&nbsp
+</form>
+<form th:action="@{/orderPage/telecom}" method="get" style="display:inline;">
+<input type="submit" name="submit" value="Страница Заказа">
+</form>
+<br><br>
+<table class="listItems">
+<tr>
+<th class="col4"></th><th class="col2">№ пп</th><th>Наименование работ</th><th class="col4">Ед. изм.</th><th>Цена за ед., руб. без НДС</th><th class="col8">Кол-во</th>
+<th class="col1">Стоимость</th>
+</tr>
+<tr th:each="order: ${cart}">
+<td class="col4">
+<form th:action="@{/deleteFromOrder/telecom}" method="get" style="display:inline;">
+<input type="hidden" name="ppnumber" th:value="${order.getPpNumber}">
+<input type="hidden" name="quantity" th:value="${order.getQuantity}">
+<input type="submit" name="submit" value="- из Заказа">
+</form>
+</td>
+<td th:text="${order.getPpNumber}" class="col2"></td><td th:text="${order.getWorkName}"></td><td th:text="${order.getUnitMeasure}" class="col4"></td>
+<td th:text="${order.getPrice}"></td>
+<td class="col8">
+<form th:action="@{/saveQuantityChanges/telecom}" id="saveQuantity" method="get" style="display:inline;">
+<input type="number" name="newQuantity" th:value="${order.getQuantity}" step="0.01" min="0.01" style="border:none;text-align:center;width:55px;"> &nbsp&nbsp | &nbsp&nbsp
+<input type="hidden" name="ppnumber" th:value="${order.getPpNumber}">
+<input type="hidden" name="quantity" th:value="${order.getQuantity}">
+<input type="submit" name="submit" value="Изменить" style="display:inline;">
+</form>
+</td>
+<td th:text="${order.getEndPrice}" class="col1"></td>
+</tr>
+
+<tr><td colspan="6" style="text-align:right">Итоговая стоимость работ без НДС, руб.</td><td th:text="${sumWithOutNds}"></td></tr>
+<tr><td colspan="6" style="text-align:right">НДС % - по ставке в соответствии с законодательсьвом, руб.</td><td th:text="${Nds}"></td></tr>
+<tr><td colspan="6" style="text-align:right">Итоговая стоимость с НДС, руб.</td><td th:text="${sumWithNds}"></td></tr>
+</table>
+
+<div th:replace="footer :: footer"></div>
+</body>
+</html>

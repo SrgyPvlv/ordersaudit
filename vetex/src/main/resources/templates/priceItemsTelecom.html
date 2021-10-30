@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+<title>Список ТЦП</title>
+</head>
+<body>
+
+<div th:replace="header :: header"></div>
+
+<div class="pricesControl">
+      <div id="pricesControl_1">
+      <a th:href="@{/admin/newItem/telecom}">Добавить пункт ТЦП (admin)</a>
+      <br><br>
+      <form  th:action="@{/admin/deleteAllPrices/telecom}" th:method="get" >
+      <label style="color:red;">Осторожно! Удалить все ТЦП из БД (админ)</label> &nbsp&nbsp
+      <input type="submit" value="Удалить!" style="background:#FF0000; color:white;" >
+      </form>
+      </div>
+      
+      <div id="pricesControl_3">
+      <h3 style="color:#8B4513;">ООО "Телеком-Сервис"</h3>
+      </div>
+
+      <div id="pricesControl_2">
+      <form enctype="multipart/form-data" th:action="@{/admin/csvToDateBase/telecom}" th:method="post" >
+      <label>Загрузка ТЦП в БД (админ)</label> &nbsp&nbsp
+      <input type="file" name="file">
+      <input type="submit" value="Загрузить" >
+      </form>
+      <br><br>
+      <form  th:action="@{/dateBaseToCSV/telecom}" th:method="get" >
+      <label>Выгрузка ТЦП из БД в файл</label> &nbsp&nbsp
+      <input type="submit" value="Выгрузить" >
+      </form>
+      </div>
+</div>
+
+<div class="search">
+       <div id="search1">
+       <form th:action="@{/findByNumber/telecom}" th:method="get" >
+       <label>Поиск по № ТЦП (№ п/п)</label> &nbsp&nbsp
+       <input type="text" name="ppsearch" required>
+       <input type="submit" value="Найти" >
+       </form>
+       <br><br>
+       <form th:action="@{/findByName/telecom}" th:method="get" >
+       <label>Поиск по Наименованию работы</label> &nbsp&nbsp
+       <input type="text" name="workname" required>
+       <input type="submit" value="Найти" >
+       </form>
+       </div>
+       <div id="search2">
+       <a th:href="@{/priceItems/telecom}">Показать все пункты ТЦП</a>
+       </div>
+</div>
+<div class="cart">
+<form th:action="@{/dispOrder/telecom}" th:method="get" style="display:inline;">
+<label>Корзина Заказа</label> &nbsp&nbsp
+<input type="submit" value="Перейти в Корзину" >
+</form> &nbsp | &nbsp
+<form th:action="@{/clearCart2/telecom}" method="get" style="display:inline;">
+<input type="submit" name="submit" value="Очистить Корзину" style="background:#FF0000; color:white;">
+</form>
+</div>
+<br>
+
+<div>
+<table class="listItems">
+<tr>
+<th class="col1">Добавить в Корзину</th><th class="col2">№ п/п</th><th class="col3">Наименование работ</th><th class="col4">Ед. изм.</th>
+<th class="col5">Цена за ед., руб. без НДС</th><th class="col6">Описание позиции</th><th class="col7">Редактирование ТЦП (admin)</th>
+</tr>
+<tr th:each="listitem: ${listitems}">
+<td class="col1">
+<form th:action="@{/addInOrder/telecom}" method="get" style="display:inline;">
+<input type="hidden" name="id" th:value="${listitem.getId}">
+<input type="number" name="quantity" min="0.01" step="0.01" style="width:55px" required>
+<input type="submit" name="submit" value="+ в Корзину">
+</form>
+</td>
+<td th:text="${listitem.getPpNumber}" class="col2"></td><td th:text="${listitem.getWorkName}" class="col3"></td><td th:text="${listitem.getUnitMeasure}" class="col4"></td>
+<td th:text="${listitem.getPrice}" class="col5"></td><td th:text="${listitem.getComment}" class="col6"></td>
+<td class="col7">
+<form th:action="@{/admin/itemEditForm/telecom}" method="get" style="display:inline;">
+<input type="hidden" name="id" th:value="${listitem.getId}">
+<input type="submit" name="submit" value="Редактировать">
+</form> |
+<form th:action="@{/admin/itemDelete/telecom}" method="get" style="display:inline;">
+<input type="hidden" name="id" th:value="${listitem.getId}">
+<input type="submit" name="submit" value="Удалить">
+</form>
+</td>
+</tr>
+</table>
+</div>
+
+<br><br><br>
+<div th:replace="footer :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+<title>Заказ</title>
+</head>
+<body>
+<div class="header">
+<a th:href="@{/dispOrder/telecom}">Назад в Корзину</a>
+</div>
+<br><br>
+
+<div class="parent_order">
+<div>
+<table class="ordertable">
+<tr>
+<th>№ пп</th><th>Наименование работ</th><th>Ед. изм.</th><th>Цена за ед., руб. без НДС</th><th>Кол-во</th>
+<th>Стоимость</th>
+</tr>
+<tr th:each="order: ${cart}">
+
+<td th:text="${order.getPpNumber}"></td><td th:text="${order.getWorkName}"></td><td th:text="${order.getUnitMeasure}"></td>
+<td th:text="${order.getPrice}"></td><td th:text="${order.getQuantity}"></td><td th:text="${order.getEndPrice}"></td>
+</tr>
+
+<tr><td colspan="5" style="text-align:right">Итоговая стоимость работ без НДС, руб.</td><td th:text="${sumWithOutNds}"></td></tr>
+<tr><td colspan="5" style="text-align:right">НДС % - по ставке в соответствии с законодательсьвом, руб.</td><td th:text="${Nds}"></td></tr>
+<tr><td colspan="5" style="text-align:right">Итоговая стоимость с НДС, руб.</td><td th:text="${sumWithNds}"></td></tr>
+</table>
+</div>
+</div>
+
+<div th:replace="footer :: footer"></div>
+</body>
+</html>
