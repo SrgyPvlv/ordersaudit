@@ -109,7 +109,7 @@ position: fixed; /* Фиксированное положение */
 #pricesControl_2,#search2 {
 	margin-left: 520px;
 }
-#pricesControl_3 {
+#pricesControl_3,#search3 {
 	float:right;
 	margin-right:15px;
 }

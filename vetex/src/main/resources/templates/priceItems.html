@@ -20,7 +20,15 @@
       </div>
       
       <div id="pricesControl_3">
-      <h3 style="color:#8B4513;">ООО "Ветекс"</h3>
+      <form  th:action="@{/dateBaseToCSV}" th:method="get" >
+      <label>Скачать ТЦП из БД в файл .csv</label> &nbsp&nbsp
+      <input type="submit" value="Скачать" >
+      </form>
+      <br><br>
+      <form  th:action="@{/downloadContract}" th:method="get" >
+      <label>Скачать Договор из БД</label> &nbsp&nbsp
+      <input type="submit" value="Скачать" >
+      </form>
       </div>
 
       <div id="pricesControl_2">
@@ -30,10 +38,11 @@
       <input type="submit" value="Загрузить" >
       </form>
       <br><br>
-      <form  th:action="@{/dateBaseToCSV}" th:method="get" >
-      <label>Выгрузка ТЦП из БД в файл</label> &nbsp&nbsp
-      <input type="submit" value="Выгрузить" >
-      </form>
+      <form enctype="multipart/form-data" th:action="@{/admin/contractToDateBase}" th:method="post" >
+      <label>Загрузка Договора в БД (админ)</label> &nbsp&nbsp
+      <input type="file" name="file">
+      <input type="submit" value="Загрузить" >
+      </form>  
       </div>
       
 </div>
@@ -54,6 +63,9 @@
        </div>
        <div id="search2">
        <a th:href="@{/priceItems}">Показать все пункты ТЦП</a>
+       </div>
+       <div id="search3">
+       <h3 style="color:#8B4513;">ООО "Ветекс"</h3>
        </div>
 </div>
 <div class="cart">
