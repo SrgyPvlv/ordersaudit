@@ -32,7 +32,7 @@ public class TelrosController {
 		return "priceItemsTelros";
 	}
 	
-	@GetMapping ("/admin/deleteAllPrices/telros")
+	@GetMapping ("/superadmin/deleteAllPrices/telros")
 	public String deleteAllPricesTelros() {
 		telrosService.deleteAllPrices();
 		return "redirect:/priceItems/telros";

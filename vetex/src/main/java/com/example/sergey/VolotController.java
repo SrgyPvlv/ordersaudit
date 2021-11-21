@@ -32,7 +32,7 @@ public class VolotController {
 		return "priceItemsVolot";
 	}
 	
-	@GetMapping ("/admin/deleteAllPrices/volot")
+	@GetMapping ("/superadmin/deleteAllPrices/volot")
 	public String deleteAllPricesVolot() {
 		volotService.deleteAllPrices();
 		return "redirect:/priceItems/volot";

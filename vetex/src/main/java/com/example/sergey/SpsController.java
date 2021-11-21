@@ -32,7 +32,7 @@ public class SpsController {
 		return "priceItemsSps";
 	}
 	
-	@GetMapping ("/admin/deleteAllPrices/sps")
+	@GetMapping ("/superadmin/deleteAllPrices/sps")
 	public String deleteAllPricesSps() {
 		spsService.deleteAllPrices();
 		return "redirect:/priceItems/sps";

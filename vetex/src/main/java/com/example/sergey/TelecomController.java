@@ -32,7 +32,7 @@ public class TelecomController {
 		return "priceItemsTelecom";
 	}
 	
-	@GetMapping ("/admin/deleteAllPrices/telecom")
+	@GetMapping ("/superadmin/deleteAllPrices/telecom")
 	public String deleteAllPricesTelecom() {
 		telecomService.deleteAllPrices();
 		return "redirect:/priceItems/telecom";

@@ -32,7 +32,7 @@ public class VetexController {
 		return "priceItems";
 	}
 	
-	@GetMapping ("/admin/deleteAllPrices")
+	@GetMapping ("/superadmin/deleteAllPrices")
 	public String deleteAllPrices() {
 		vetexService.deleteAllPrices();
 		return "redirect:/priceItems";
