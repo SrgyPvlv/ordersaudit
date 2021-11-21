@@ -13,8 +13,8 @@
       <div id="pricesControl_1">
       <a th:href="@{/admin/newItem}">Добавить пункт ТЦП (admin)</a>
       <br><br>
-      <form  th:action="@{/admin/deleteAllPrices}" th:method="get" >
-      <label style="color:red;">Осторожно! Удалить все ТЦП из БД (админ)</label> &nbsp&nbsp
+      <form  th:action="@{/superadmin/deleteAllPrices}" th:method="get" >
+      <label style="color:red;">Осторожно! Удалить все ТЦП из БД (superAdmin)</label> &nbsp&nbsp
       <input type="submit" value="Удалить!" style="background:#FF0000; color:white;" >
       </form>
       </div>
@@ -25,22 +25,24 @@
       <input type="submit" value="Скачать" >
       </form>
       <br><br>
-      <form  th:action="@{/downloadContract}" th:method="get" >
-      <label>Скачать Договор из БД</label> &nbsp&nbsp
+      <form  th:action="@{/downloadContractText}" th:method="get" >
+      <label>Скачать Договор из БД .doc </label> &nbsp&nbsp
+      <input type="hidden" name="id" value="1">
       <input type="submit" value="Скачать" >
       </form>
       </div>
 
       <div id="pricesControl_2">
       <form enctype="multipart/form-data" th:action="@{/admin/csvToDateBase}" th:method="post" >
-      <label>Загрузка ТЦП в БД (админ)</label> &nbsp&nbsp
-      <input type="file" name="file">
+      <label>Загрузка ТЦП в БД (admin)</label> &nbsp&nbsp
+      <input type="file" name="file" required>
       <input type="submit" value="Загрузить" >
       </form>
       <br><br>
-      <form enctype="multipart/form-data" th:action="@{/admin/contractToDateBase}" th:method="post" >
-      <label>Загрузка Договора в БД (админ)</label> &nbsp&nbsp
-      <input type="file" name="file">
+      <form enctype="multipart/form-data" th:action="@{/admin/loadContractText}" th:method="post" >
+      <label>Загрузка Договора в БД (admin)</label> &nbsp&nbsp
+      <input type="file" name="file" required>
+      <input type="hidden" name="id" value="1">
       <input type="submit" value="Загрузить" >
       </form>  
       </div>

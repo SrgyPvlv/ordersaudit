@@ -13,39 +13,51 @@
       <div id="pricesControl_1">
       <a th:href="@{/admin/newItem/telecom}">Добавить пункт ТЦП (admin)</a>
       <br><br>
-      <form  th:action="@{/admin/deleteAllPrices/telecom}" th:method="get" >
-      <label style="color:red;">Осторожно! Удалить все ТЦП из БД (админ)</label> &nbsp&nbsp
+      <form  th:action="@{/superadmin/deleteAllPrices/telecom}" th:method="get" >
+      <label style="color:red;">Осторожно! Удалить все ТЦП из БД (superAdmin)</label> &nbsp&nbsp
       <input type="submit" value="Удалить!" style="background:#FF0000; color:white;" >
       </form>
       </div>
       
       <div id="pricesControl_3">
-      <h3 style="color:#8B4513;">ООО "Телеком-Сервис"</h3>
+      <form  th:action="@{/dateBaseToCSV/telecom}" th:method="get" >
+      <label>Скачать ТЦП из БД в файл .csv</label> &nbsp&nbsp
+      <input type="submit" value="Скачать" >
+      </form>
+      <br><br>
+      <form  th:action="@{/downloadContractText}" th:method="get" >
+      <label>Скачать Договор из БД .doc</label> &nbsp&nbsp
+      <input type="hidden" name="id" value="4">
+      <input type="submit" value="Скачать" >
+      </form>
       </div>
 
       <div id="pricesControl_2">
       <form enctype="multipart/form-data" th:action="@{/admin/csvToDateBase/telecom}" th:method="post" >
-      <label>Загрузка ТЦП в БД (админ)</label> &nbsp&nbsp
-      <input type="file" name="file">
+      <label>Загрузка ТЦП в БД (admin)</label> &nbsp&nbsp
+      <input type="file" name="file" required>
       <input type="submit" value="Загрузить" >
       </form>
       <br><br>
-      <form  th:action="@{/dateBaseToCSV/telecom}" th:method="get" >
-      <label>Выгрузка ТЦП из БД в файл</label> &nbsp&nbsp
-      <input type="submit" value="Выгрузить" >
-      </form>
+      <form enctype="multipart/form-data" th:action="@{/admin/loadContractText}" th:method="post" >
+      <label>Загрузка Договора в БД (admin)</label> &nbsp&nbsp
+      <input type="file" name="file" required>
+      <input type="hidden" name="id" value="4">
+      <input type="submit" value="Загрузить" >
+      </form>  
       </div>
+      
 </div>
 
 <div class="search">
        <div id="search1">
-       <form th:action="@{/findByNumber/telecom}" th:method="get" >
+       <form th:action="@{/findByNumber}" th:method="get" >
        <label>Поиск по № ТЦП (№ п/п)</label> &nbsp&nbsp
        <input type="text" name="ppsearch" required>
        <input type="submit" value="Найти" >
        </form>
        <br><br>
-       <form th:action="@{/findByName/telecom}" th:method="get" >
+       <form th:action="@{/findByName}" th:method="get" >
        <label>Поиск по Наименованию работы</label> &nbsp&nbsp
        <input type="text" name="workname" required>
        <input type="submit" value="Найти" >
@@ -53,6 +65,9 @@
        </div>
        <div id="search2">
        <a th:href="@{/priceItems/telecom}">Показать все пункты ТЦП</a>
+       </div>
+       <div id="search3">
+       <h3 style="color:#8B4513;">ООО "Телеком-Сервис"</h3>
        </div>
 </div>
 <div class="cart">
