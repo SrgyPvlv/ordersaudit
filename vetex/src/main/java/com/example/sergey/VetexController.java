@@ -165,7 +165,7 @@ public class VetexController {
 		return "redirect:/dispOrder";
 	}
 	@GetMapping ("/orderPage")
-	public String tableOrder(Model model) {
+	public String tableOrder(@RequestParam("ordernumber")int ordernumber, Model model) {
 		sumWithOutNds=0;
 		Nds=0;
 		sumWithNds=0;
@@ -189,6 +189,8 @@ public class VetexController {
 		model.addAttribute("sumWithOutNds", this.sumWithOutNds);
 		model.addAttribute("Nds", this.Nds);
 		model.addAttribute("sumWithNds", this.sumWithNds);
+		model.addAttribute("ordernumber", ordernumber);
+		
 		return"orderPage";
 	}
 }
