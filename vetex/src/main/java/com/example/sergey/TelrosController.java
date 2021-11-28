@@ -3,7 +3,10 @@ package com.example.sergey;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +24,14 @@ public class TelrosController {
 	double sumWithNds;
 	ArrayList<VetexOrder> cart;
 	String html;
+	Date dateSend;
+	Date dateStart;
+	Date dateEnd;
 
 	@Autowired TelrosService telrosService;
 	@Autowired OrderCart orderCart;
+	@Autowired
+	private ContractTextService contractTextService;
 	
 	@GetMapping("/priceItems/telros")
 	public String getAllPriceItemsTelros(Model model) {
@@ -162,10 +170,29 @@ public class TelrosController {
 		return "redirect:/dispOrder/telros";
 	}
 	@GetMapping ("/orderPage/telros")
-	public String tableOrderTelros(Model model) {
+	public String tableOrderTelros(@RequestParam("ordernumber")int ordernumber,@RequestParam("send")String send,
+			@RequestParam("author")String author,@RequestParam("bsnumber")String bsnumber,@RequestParam("bsadress")String bsadress,
+			@RequestParam("start")String start,@RequestParam("end")String end,@RequestParam("remedy")String remedy,
+			@RequestParam("arenda")String arenda,@RequestParam("comment")String comment,Model model) {
 		sumWithOutNds=0;
 		Nds=0;
 		sumWithNds=0;
+		
+		SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat formatter1=new SimpleDateFormat("dd-MM-yyyy");
+		
+		try {
+			this.dateSend = formatter.parse(send);
+			this.dateStart = formatter.parse(start);
+			this.dateEnd = formatter.parse(end);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		send=formatter1.format(this.dateSend);
+		start=formatter1.format(this.dateStart);
+		end=formatter1.format(this.dateEnd);
+    	
 		
 		cart=orderCart.getItemsOrderCart();
 		
@@ -182,10 +209,27 @@ public class TelrosController {
 		BigDecimal bd2 = new BigDecimal(this.sumWithNds).setScale(2, RoundingMode.HALF_UP);
 		this.sumWithNds = bd2.doubleValue();
 		
+		ContractText vetexContract=contractTextService.getContractText(5);
+		String contractnumber=vetexContract.getNumber();
+		String contractdate=vetexContract.getDate();
+		
 		model.addAttribute("cart", cart);
 		model.addAttribute("sumWithOutNds", this.sumWithOutNds);
 		model.addAttribute("Nds", this.Nds);
 		model.addAttribute("sumWithNds", this.sumWithNds);
-		return"orderPageTelros";
+		model.addAttribute("ordernumber", ordernumber);
+		model.addAttribute("contractnumber", contractnumber);
+		model.addAttribute("contractdate", contractdate);
+		model.addAttribute("send", send);
+		model.addAttribute("author", author);
+		model.addAttribute("bsnumber", bsnumber);
+		model.addAttribute("bsadress", bsadress);
+		model.addAttribute("start", start);
+		model.addAttribute("end", end);
+		model.addAttribute("remedy", remedy);
+		model.addAttribute("arenda", arenda);
+		model.addAttribute("comment", comment);
+		
+		return"orderPage";
 	}
 }

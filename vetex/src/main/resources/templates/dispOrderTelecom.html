@@ -10,7 +10,7 @@
 <form th:action="@{/clearCart/telecom}" method="get" style="display:inline;">
 <input type="submit" name="submit" value="Очистить корзину"> &nbsp&nbsp | &nbsp&nbsp
 </form>
-<form th:action="@{/orderPage/telecom}" method="get" style="display:inline;">
+<form id="orderPage" th:action="@{/orderPage/telecom}" method="get" target="_blank" style="display:inline;">
 <input type="submit" name="submit" value="Страница Заказа">
 </form>
 <br><br>
@@ -41,9 +41,35 @@
 </tr>
 
 <tr><td colspan="6" style="text-align:right">Итоговая стоимость работ без НДС, руб.</td><td th:text="${sumWithOutNds}"></td></tr>
-<tr><td colspan="6" style="text-align:right">НДС % - по ставке в соответствии с законодательсьвом, руб.</td><td th:text="${Nds}"></td></tr>
+<tr><td colspan="6" style="text-align:right">НДС % - по ставке в соответствии с законодательством, руб.</td><td th:text="${Nds}"></td></tr>
 <tr><td colspan="6" style="text-align:right">Итоговая стоимость с НДС, руб.</td><td th:text="${sumWithNds}"></td></tr>
 </table>
+<br><br>
+
+<fieldset name="order">
+   <legend> Данные для Заявки </legend>
+   <p><label for="ordernumber">№ Заявки: </label>
+      <input form ="orderPage" type="number" name="ordernumber" min="1" required></p>
+   <p><label for="bsnumber">№ Базовой стации: </label>
+      <input form ="orderPage" type="text" name="bsnumber" placeholder="78-XXXXX " required></p>
+   <p><label for="bsadress">Адрес Базовой стации: </label>
+      <input form ="orderPage" type="text" name="bsadress" style="width:400px;" required></p>
+   <p><label for="send">Дата подачи заявки : </label>
+      <input form ="orderPage" type="date" name="send" required></p>
+   <p><label for="start">Начало выполнения работ : </label>
+      <input form ="orderPage" type="date" name="start" required></p>
+   <p><label for="end">Окончание выполнения работ : </label>
+      <input form ="orderPage" type="date" name="end" required></p>
+   <p><label for="remedy">№ Инцидента в Remedy: </label>
+      <input form ="orderPage" type="text" name="remedy" placeholder="MSK000010717602" required></p>
+   <p><label for="author">Инициатор заявки: ФИО(телефон): </label>
+      <input form ="orderPage" type="text" name="author" placeholder="Иванов И.И.,+79113216547" style="width:250px;" required></p>
+   <p><label for="arenda">Контакт арендодателя: ФИО(телефон): </label>
+      <input form ="orderPage" type="text" name="arenda" placeholder="Петров С.Н.,+79112345678" style="width:250px;" required></p>
+   <p><label for="comment">Комментарий: </label>
+      <textarea form ="orderPage" name="comment" cols="40" rows="5" wrap="hard" placeholder="Можно заполнить при необходимости."></textarea>
+    </fieldset>
+   <br>
 
 <br><br><br>
 <div th:replace="footer :: footer"></div>

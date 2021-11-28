@@ -5,20 +5,39 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
 <title>Заказ</title>
 </head>
-<body>
-<div class="header">
-<a th:href="@{/dispOrder}">Назад в Корзину</a> &nbsp&nbsp | &nbsp&nbsp
-<a th:href="@{/priceItems}">На страницу ТЦП</a> 
-</div>
-<br><br>
+<body style="font-size:11pt">
 
+<div class="order">
 <div class="parent_order">
-<div>
-<br>
-<table>
-<tr>
-<td th:text="'Заявка №' + ${ordernumber}"></td>
-</tr>
+<table class="head">
+<tr><td th:text="'Заявка № ' + ${ordernumber}" style="font-weight:bold;"></td></tr>
+<tr><td th:text="'к Договору № '+${contractnumber}+' от '+${contractdate}+' г.'"></td></tr>
+<tr><td>на проведение аварийно-восстановительных работ (АВР) оборудования</td></tr>
+<tr><td>на объектах сети радиодоступа ПАО «МТС»</td></tr>
+<tr><td style="text-align:left">г. Санкт-Петербург</td></tr>
+<tr><td style="text-align:left">
+ПАО «МТС» поручает, а Партнер принимает на себя проведение своими силами и на свой риск выполнение АВР на оборудовании ПАО «МТС» в соответствии с действующими нормативно-техническими документами РФ и Техническим заданием.
+</td></tr>
+</table>
+
+<table class="head2">
+<tr><td style="font-weight:bold;width:17px">1. </td><td style="width:350px">Дата подачи Заявки на выполнение работ: </td><td th:text="${send}" style="font-weight:bold;"></td></tr>
+<tr><td style="font-weight:bold;width:17px">2. </td><td colspan="2">Время подачи Заявки на выполнение работ: согласно времени отправки заявки по электронной почте.</td></tr>
+<tr><td style="font-weight:bold;width:17px">3. </td><td style="width:400px">Фамилия И.О. представителя МТС, подавшего Заявку: </td><td th:text="${author}" style="font-weight:bold;"></td></tr>
+<tr><td style="font-weight:bold;width:17px">4. </td><td colspan="2">Номера и адреса объектов, на которых необходимо выполнить работы:</td></tr>
+</table>
+
+<table class="head3">
+<tr><td style="width:90px">БС № </td><td th:text="${bsnumber}" style="font-weight:bold;"></td></tr>
+<tr><td style="width:90px">Адрес БС: </td><td th:text="${bsadress}" style="font-weight:bold;"></td></tr>
+</table>
+
+<table class="head4">
+<tr><td style="width:300px">№ Инцидента/работы в Remedy: </td><td th:text="${remedy}" style="font-weight:bold;"></td></tr>
+</table>
+
+<table class="head5">
+<tr><td style="font-weight:bold;width:17px">5. </td><td>Наименование и Стоимость работ:</td></tr>
 </table>
 <br>
 <table class="ordertable">
@@ -36,10 +55,36 @@
 <tr><td colspan="5" style="text-align:right">НДС % - по ставке в соответствии с законодательсьвом, руб.</td><td th:text="${Nds}"></td></tr>
 <tr><td colspan="5" style="text-align:right">Итоговая стоимость с НДС, руб.</td><td th:text="${sumWithNds}"></td></tr>
 </table>
+<br>
+<table class="foot">
+<tr><td style="width:180px">Контакты арендодателя: </td><td th:text="${arenda}" style="font-weight:bold;"></td></tr>
+<tr><td style="font-weight:bold;width:180px">Комментарий к заявке: </td><td th:text="${comment}"></td></tr>
+</table>
+
+<table class="foot1">
+<tr><td style="font-weight:bold;width:17px">6. </td><td>Срок выполнения работ по настоящей Заявке:</td></tr>
+</table>
+
+<table class="foot2">
+<tr><td style="width:300px">Начало выполнения работ: </td><td th:text="${start}" style="font-weight:bold;"></td></tr>
+<tr><td style="width:300px">Окончание выполнения работ: не позднее </td><td th:text="${end}" style="font-weight:bold;"></td></tr>
+</table>
+
+<table class="foot3">
+<tr><td style="font-weight:bold;vertical-align:top;width:17px">7. </td><td th:text="'Настоящая Заявка является неотъемлемой частью Договора № '+${contractnumber}+' от '+${contractdate}+' г. '
++'вступает в силу с момента подписания со стороны ПАО «МТС» и направления Партнеру.'"></td></tr>
+<tr><td style="font-weight:bold;width:17px">8. </td><td th:text="'Во всем остальные Стороны руководствуются условиями Договора № '+${contractnumber}+' от '+${contractdate}+' г.'"></td></tr>
+</table>
+
+<table class="foot4">
+<tr><td style="font-weight:bold">От МТС</td></tr>
+<tr><td>______________________________</td></tr>
+<tr><td>____________ / _______________</td></tr>
+<tr><td>"___"__________________202_ г.</td></tr>
+</table>
 </div>
 </div>
 
-<br><br><br>
-<div th:replace="footer :: footer"></div>
+
 </body>
 </html>

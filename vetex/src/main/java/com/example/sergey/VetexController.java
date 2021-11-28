@@ -3,7 +3,10 @@ package com.example.sergey;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +24,15 @@ public class VetexController {
 	double sumWithNds;
 	ArrayList<VetexOrder> cart;
 	String html;
+	String second;
+	Date dateSend;
+	Date dateStart;
+	Date dateEnd;
 
 	@Autowired VetexService vetexService;
 	@Autowired OrderCart orderCart;
+	@Autowired
+	private ContractTextService contractTextService;
 	
 	@GetMapping("/priceItems")
 	public String getAllPriceItems(Model model) {
@@ -132,7 +141,7 @@ public class VetexController {
 		this.sumWithNds=this.sumWithOutNds+this.Nds;
 		BigDecimal bd2 = new BigDecimal(this.sumWithNds).setScale(2, RoundingMode.HALF_UP);
 		this.sumWithNds = bd2.doubleValue();
-		
+				
 		model.addAttribute("cart", cart);
 		model.addAttribute("sumWithOutNds", this.sumWithOutNds);
 		model.addAttribute("Nds", this.Nds);
@@ -165,10 +174,29 @@ public class VetexController {
 		return "redirect:/dispOrder";
 	}
 	@GetMapping ("/orderPage")
-	public String tableOrder(@RequestParam("ordernumber")int ordernumber, Model model) {
+	public String tableOrder(@RequestParam("ordernumber")int ordernumber,@RequestParam("send")String send,
+			@RequestParam("author")String author,@RequestParam("bsnumber")String bsnumber,@RequestParam("bsadress")String bsadress,
+			@RequestParam("start")String start,@RequestParam("end")String end,@RequestParam("remedy")String remedy,
+			@RequestParam("arenda")String arenda,@RequestParam("comment")String comment,Model model) {
 		sumWithOutNds=0;
 		Nds=0;
 		sumWithNds=0;
+		
+		SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat formatter1=new SimpleDateFormat("dd-MM-yyyy");
+		
+		try {
+			this.dateSend = formatter.parse(send);
+			this.dateStart = formatter.parse(start);
+			this.dateEnd = formatter.parse(end);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		send=formatter1.format(this.dateSend);
+		start=formatter1.format(this.dateStart);
+		end=formatter1.format(this.dateEnd);
+    	
 		
 		cart=orderCart.getItemsOrderCart();
 		
@@ -185,11 +213,26 @@ public class VetexController {
 		BigDecimal bd2 = new BigDecimal(this.sumWithNds).setScale(2, RoundingMode.HALF_UP);
 		this.sumWithNds = bd2.doubleValue();
 		
+		ContractText vetexContract=contractTextService.getContractText(1);
+		String contractnumber=vetexContract.getNumber();
+		String contractdate=vetexContract.getDate();
+		
 		model.addAttribute("cart", cart);
 		model.addAttribute("sumWithOutNds", this.sumWithOutNds);
 		model.addAttribute("Nds", this.Nds);
 		model.addAttribute("sumWithNds", this.sumWithNds);
 		model.addAttribute("ordernumber", ordernumber);
+		model.addAttribute("contractnumber", contractnumber);
+		model.addAttribute("contractdate", contractdate);
+		model.addAttribute("send", send);
+		model.addAttribute("author", author);
+		model.addAttribute("bsnumber", bsnumber);
+		model.addAttribute("bsadress", bsadress);
+		model.addAttribute("start", start);
+		model.addAttribute("end", end);
+		model.addAttribute("remedy", remedy);
+		model.addAttribute("arenda", arenda);
+		model.addAttribute("comment", comment);
 		
 		return"orderPage";
 	}

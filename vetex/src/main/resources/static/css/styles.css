@@ -15,7 +15,7 @@ th {
 	background:#FFFF00;
 }
 .ordertable{
-	width:40%;
+	width:90%;
 	border:2px solid;
 	border-collapse: collapse;
 }
@@ -51,7 +51,6 @@ position: fixed; /* Фиксированное положение */
 }
 
  .parent {
-
     width: 100%;
     height: 100%;
     position: fixed;
@@ -64,8 +63,17 @@ position: fixed; /* Фиксированное положение */
     justify-content: center;
     overflow: auto;  
 }
-.parent_order {
+.order {
 	width: 100%;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-start;
+    overflow: auto;  
+}
+.parent_order {
+	width: 620px;
     display: flex;
     flex-direction:column;
     align-items: center;
@@ -170,4 +178,26 @@ legend{
 	font-family:courier new;
 	font-size:20px;
 	font-weight:normal;
+}
+
+.head,.head2,.head3,.head4,.head5{
+	width:95%;
+	border-collapse: collapse;
+	border:none;
+}
+.foot,.foot1,.foot2,.foot3,.foot4{
+	width:95%;
+	border-collapse: collapse;
+	border:none;
+}
+.head td{
+	border:none;
+}
+.head2 td,.head3 td,.head4 td,.head5 td{
+	border:none;
+	text-align:left;
+}
+.foot td,.foot1 td,.foot2 td,.foot3 td,.foot4 td{
+	border:none;
+	text-align:left;
 }

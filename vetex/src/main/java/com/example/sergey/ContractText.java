@@ -19,11 +19,19 @@ public class ContractText {
 	@Type(type="org.hibernate.type.BinaryType")
 	private byte[] text;
 	
+	@Column
+	public String number;
+	
+	@Column
+	public String date;
+	
 	public ContractText() {}
 	
-	public ContractText(String contractor,byte[] text ) {
+	public ContractText(String contractor,byte[] text, String number, String date ) {
 		this.contractor=contractor;
 		this.text=text;
+		this.number=number;
+		this.date=date;
 	}
 	public long getId() {
 		return id;
@@ -39,5 +47,17 @@ public class ContractText {
 	}
 	public byte[] getText() {
 		return text;
+	}
+	public void setNumber(String number) {
+		this.number=number;
+	}
+	public String getNumber() {
+		return number;
+	}
+	public void setDate(String date) {
+		this.date=date;
+	}
+	public String getDate() {
+		return date;
 	}
 }
