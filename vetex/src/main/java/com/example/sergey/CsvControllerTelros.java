@@ -32,9 +32,9 @@ public class CsvControllerTelros {
 	
 	public static void copyToDateBase(MultipartFile file) throws SQLException, IOException {  
 	      
-		  String urls = new String("jdbc:postgresql://ec2-52-208-221-89.eu-west-1.compute.amazonaws.com:5432/d1vmia1uqp5a6k");
-	      String username = new String("bnyjzqxtkbdodi");
-	      String password = new String("8a98dd7cfcc0a26e5653cd0e3aa75d7b770a596483f2be5c257978fbab58b5d6");
+		  String urls = MyDbConnection.urls;
+	      String username = MyDbConnection.username;
+	      String password = MyDbConnection.password;
 	      Connection conn = null;
 	      String myQuery="COPY telros (ppnumber,workname,unitmeasure,price,comment) FROM STDIN WITH CSV";
 	      

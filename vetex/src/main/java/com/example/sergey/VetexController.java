@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -141,11 +143,15 @@ public class VetexController {
 		this.sumWithNds=this.sumWithOutNds+this.Nds;
 		BigDecimal bd2 = new BigDecimal(this.sumWithNds).setScale(2, RoundingMode.HALF_UP);
 		this.sumWithNds = bd2.doubleValue();
+		
+		/*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username=auth.getName();*/
 				
 		model.addAttribute("cart", cart);
 		model.addAttribute("sumWithOutNds", this.sumWithOutNds);
 		model.addAttribute("Nds", this.Nds);
 		model.addAttribute("sumWithNds", this.sumWithNds);
+		//model.addAttribute("username", username);
 		return"dispOrder";
 	}
 	@GetMapping ("/clearCart")
@@ -196,7 +202,6 @@ public class VetexController {
 		send=formatter1.format(this.dateSend);
 		start=formatter1.format(this.dateStart);
 		end=formatter1.format(this.dateEnd);
-    	
 		
 		cart=orderCart.getItemsOrderCart();
 		
@@ -232,6 +237,7 @@ public class VetexController {
 		model.addAttribute("end", end);
 		model.addAttribute("remedy", remedy);
 		model.addAttribute("arenda", arenda);
+		model.addAttribute("comment", comment);
 		model.addAttribute("comment", comment);
 		
 		return"orderPage";
