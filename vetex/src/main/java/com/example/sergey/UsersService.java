@@ -31,6 +31,8 @@ public class UsersService {
 	public void deleteUserById(int id) {
 		usersrepository.deleteById(id);
 	}
-	
+	public Users findUsersByLogin(String login) {
+		return usersrepository.findByLogin(login);
+	}
 }
 

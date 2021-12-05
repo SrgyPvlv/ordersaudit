@@ -24,12 +24,16 @@ public class Users {
 	@Column
 	private String role;
 	
+	@Column
+	private String fullname;
+	
 	public Users() {}
 	
-	public Users(String login,String password,String role) {
+	public Users(String login,String password,String role,String fullname) {
 		this.login=login;
 		this.password=password;
 		this.role=role;
+		this.fullname=fullname;
 	}
 	
 	public int getId() {
@@ -58,5 +62,13 @@ public class Users {
 	
 	public void setRole(String role) {
 		this.role=role;
+	}
+	
+	public String getFullName() {
+		return fullname;
+	}
+	
+	public void setFullName(String fullname) {
+		this.fullname=fullname;
 	}
 }

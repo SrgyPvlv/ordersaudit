@@ -28,8 +28,9 @@ public class UsersController {
 	}
 	
 	@PostMapping("/admin/usersCreate") // создание нового пользователя
-	public String createNewUser(@RequestParam("login") String login, @RequestParam("password") String password,@RequestParam("role") String role) {	   
-	   Users newUser=new Users(login,password,role);
+	public String createNewUser(@RequestParam("login") String login, @RequestParam("password") String password,@RequestParam("role") String role,
+			@RequestParam("fullname") String fullname) {	   
+	   Users newUser=new Users(login,password,role,fullname);
 	   usersService.saveUsers(newUser);
 		
 		return "redirect:/admin/usersShow";
@@ -38,17 +39,21 @@ public class UsersController {
 	@GetMapping("/admin/usersEdit") // переход на форму редактирования пользователя
 	public String editUserForm(@RequestParam("id") int id, Model model) {	   
 		Users user=usersService.findUsersById(id);
+		String fullname=user.getFullName();
 		model.addAttribute("user", user);
+		model.addAttribute("fullname", fullname);
 		
 		return "editUserForm";
 	}
 	
 	@PostMapping("/admin/usersEdit") // редактирование пользователя
-	public String editNewUser(@RequestParam("id") int id,@RequestParam("login") String login, @RequestParam("password") String password,@RequestParam("role") String role) {	   
+	public String editNewUser(@RequestParam("id") int id,@RequestParam("login") String login, @RequestParam("password") String password,@RequestParam("role") String role,
+			@RequestParam("fullname") String fullname) {	   
 	   Users user=usersService.findUsersById(id);
 	   user.setLogin(login);
 	   user.setPassword(password);
 	   user.setRole(role);
+	   user.setFullName(fullname);
 	   usersService.saveUsers(user);
 		
 		return "redirect:/admin/usersShow";

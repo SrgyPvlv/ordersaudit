@@ -18,11 +18,12 @@
    </form></h3>
  </caption>
         <tr>
-          <th> Логин </th> <th>Пароль</th> <th>Права</th> 
+          <th> Логин </th> <th>Пароль</th> <th>Права</th> <th>Фамилия И.О. телефон</th>
         </tr>
          
         <tr th:each="user : ${users}">
-           <td th:text="${user.getLogin} ">Логин</td><td th:text="${user.getPassword} ">Пароль</td><td th:text="${user.getRole} ">Права</td>
+           <td th:text="${user.getLogin} ">Логин</td><td th:text="${user.getPassword} ">Пароль</td>
+           <td th:text="${user.getRole} ">Права</td><td th:text="${user.getFullName} ">Фамилия И.О. телефон</td>
            <td>
            <form th:action="@{/admin/usersEdit}" method="get" style="display:inline;">
                  <input type="hidden" name="id" th:value="${user.id}">

@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +34,8 @@ public class SpsController {
 	@Autowired OrderCart orderCart;
 	@Autowired
 	private ContractTextService contractTextService;
+	@Autowired UsersService userService;
+	@Autowired BsListService bsListService;
 	
 	@GetMapping("/priceItems/sps")
 	public String getAllPriceItemsSps(Model model) {
@@ -141,10 +145,16 @@ public class SpsController {
 		BigDecimal bd2 = new BigDecimal(this.sumWithNds).setScale(2, RoundingMode.HALF_UP);
 		this.sumWithNds = bd2.doubleValue();
 		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String login=auth.getName();
+		Users user=userService.findUsersByLogin(login);
+		String username=user.getFullName();
+		
 		model.addAttribute("cart", cart);
 		model.addAttribute("sumWithOutNds", this.sumWithOutNds);
 		model.addAttribute("Nds", this.Nds);
 		model.addAttribute("sumWithNds", this.sumWithNds);
+		model.addAttribute("username", username);
 		return"dispOrderSps";
 	}
 	@GetMapping ("/clearCart/sps")
@@ -171,7 +181,7 @@ public class SpsController {
 	}
 	@GetMapping ("/orderPage/sps")
 	public String tableOrderSps(@RequestParam("ordernumber")int ordernumber,@RequestParam("send")String send,
-			@RequestParam("author")String author,@RequestParam("bsnumber")String bsnumber,@RequestParam("bsadress")String bsadress,
+			@RequestParam("author")String author,@RequestParam("bsnumber")String bsnumber,
 			@RequestParam("start")String start,@RequestParam("end")String end,@RequestParam("remedy")String remedy,
 			@RequestParam("arenda")String arenda,@RequestParam("comment")String comment,Model model) {
 		sumWithOutNds=0;
@@ -212,6 +222,8 @@ public class SpsController {
 		ContractText vetexContract=contractTextService.getContractText(2);
 		String contractnumber=vetexContract.getNumber();
 		String contractdate=vetexContract.getDate();
+		
+		String bsadress=bsListService.findBsAddress(bsnumber);
 		
 		model.addAttribute("cart", cart);
 		model.addAttribute("sumWithOutNds", this.sumWithOutNds);
