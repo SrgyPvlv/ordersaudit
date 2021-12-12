@@ -12,10 +12,11 @@
 <input type="submit" name="submit" value="Очистить корзину"> &nbsp&nbsp | &nbsp&nbsp
 </form>
 <form id="orderPage" th:action="@{/orderPage}" method="get" target="_blank" style="display:inline;">
-<input type="submit" name="submit" value="Страница Заказа">
+<input type="submit" name="submit" value="Страница Заказа"> &nbsp&nbsp | &nbsp&nbsp
 </form>
+<span>Отправка Заявки подрядчику: </span><a href="mailto:ostruchistyy@vertexspb.ru;dmax29@ya.ru;mitinyurii@mail.ru?cc=ustich@mts.ru;maliamov@mts.ru;spavlov@mts.ru"><img src="/images/envelope.jpg" alt="mail" title="Отправка Заявки" width="25" height="25" style="border: none"></a>
 </div>
-<br><br>
+<br>
 <table class="listItems">
 <tr>
 <th class="col4"></th><th class="col2">№ пп</th><th>Наименование работ</th><th class="col4">Ед. изм.</th><th>Цена за ед., руб. без НДС</th><th class="col8">Кол-во</th>
@@ -71,9 +72,8 @@
    <p><label for="comment">Комментарий: </label>
       <textarea form ="orderPage" name="comment" cols="40" rows="5" wrap="hard" placeholder="Пояснение задачи для подрядчика(при необходимости)."></textarea>   
 </fieldset>
-<br>
 
-<br><br><br>
+<br><br><br><br>
 <div th:replace="footer :: footer"></div>
 </body>
 </html>
