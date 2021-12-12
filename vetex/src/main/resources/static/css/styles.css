@@ -70,16 +70,16 @@ position: fixed; /* Фиксированное положение */
     align-items: center;
     align-content: center;
     justify-content: flex-start;
-    overflow: auto;  
+    margin-bottom:50px;
+
 }
 .parent_order {
-	width: 620px;
+	width: 700px;
     display: flex;
     flex-direction:column;
     align-items: center;
     align-content: center;
     justify-content: flex-start;
-    overflow: auto;  
 }
 
 .header {
@@ -200,4 +200,14 @@ legend{
 .foot td,.foot1 td,.foot2 td,.foot3 td,.foot4 td{
 	border:none;
 	text-align:left;
+}
+.roadMap[contentEditable="true"]:empty:before{
+	content: attr(placeholder)
+}
+.roadMap{
+	width: 700px;
+    justify-content: center;
+    border: 1px solid grey;
+    text-align:center;
+    min-height:30px;
 }

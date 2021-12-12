@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
-<title>Заказ</title>
+<title th:text="${contractnumber}+' АВР Заявка № '+${ordernumber}+' ('+${bsnumber}+')'"></title>
 </head>
 <body style="font-size:11pt">
 
@@ -58,7 +58,7 @@
 <br>
 <table class="foot">
 <tr><td style="width:180px">Контакты арендодателя: </td><td th:text="${arenda}" style="font-weight:bold;"></td></tr>
-<tr><td style="font-weight:bold;width:180px">Комментарий к заявке: </td><td th:text="${comment}"></td></tr>
+<tr><td style="font-weight:bold;width:220px">Комментарий к заявке: </td><td th:text="${comment}"></td></tr>
 </table>
 
 <table class="foot1">
@@ -83,8 +83,9 @@
 <tr><td>"___"__________________202_ г.</td></tr>
 </table>
 </div>
+<h3 style="text-align:center;margin-top:60px;">Проходка на объект.</h3>
+<div class="roadMap" id="roadMap" name="roadMap" contenteditable="true" placeholder="... Скопируйте в это поле из Silvia текст Проходки на БС ..."></div>
 </div>
-
 
 </body>
 </html>

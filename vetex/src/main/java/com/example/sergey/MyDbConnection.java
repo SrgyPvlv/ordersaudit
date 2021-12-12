@@ -1,7 +1,7 @@
 package com.example.sergey;
 
 public class MyDbConnection {
-	static String urls = new String("jdbc:postgresql://ec2-52-208-185-143.eu-west-1.compute.amazonaws.com:5432/de6j8snr6vns8l");
-	static String username = new String("nlhowiiayhrbky");
-	static String password = new String("44d99e9c30488770c2df0759c21a027dd8fb39566f83330c988c18ada6b01233");
+	static String urls = new String("jdbc:postgresql://ec2-63-32-173-118.eu-west-1.compute.amazonaws.com:5432/d77nv9mhg4ler3");
+	static String username = new String("fdqklynbbsxglj");
+	static String password = new String("6270faaec69da2f9a2d3ea45a02a7336d0a1f266dda7401ab4b8bf9c903262ab");
 }

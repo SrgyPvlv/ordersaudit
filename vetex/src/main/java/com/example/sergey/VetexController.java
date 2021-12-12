@@ -245,8 +245,6 @@ public class VetexController {
 		model.addAttribute("remedy", remedy);
 		model.addAttribute("arenda", arenda);
 		model.addAttribute("comment", comment);
-		model.addAttribute("comment", comment);
-		
 		return"orderPage";
 	}
 }
