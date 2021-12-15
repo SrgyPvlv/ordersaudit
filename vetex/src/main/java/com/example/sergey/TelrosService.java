@@ -29,8 +29,8 @@ public class TelrosService {
 		telrosRepository.saveAndFlush(priceItem);
 	}
 	
-	public List<Telros> findPriceItemsByFilter(String filter) {
-		return telrosRepository.findPriceItemsByFilter(filter);
+	public List<Telros> findPriceItemsByFilter(String filter,String filter1,String filter2) {
+		return telrosRepository.findPriceItemsByFilter(filter,filter1,filter2);
 	
 	}
 	
@@ -38,8 +38,8 @@ public class TelrosService {
 		return telrosRepository.findPriceItemByPpNumber(pp);
 	}
 	
-	public List<Telros> findPriceItemByWorkName(String workname) {
-		return telrosRepository.findPriceItemsByFilter(workname);
+	public List<Telros> findPriceItemByWorkName(String workname,String workname1, String workname2) {
+		return telrosRepository.findPriceItemsByFilter(workname,workname1,workname2);
 	}
 	
 	public void deletePriceItemById(long id) {

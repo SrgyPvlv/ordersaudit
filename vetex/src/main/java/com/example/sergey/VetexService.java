@@ -29,8 +29,8 @@ public class VetexService {
 		vetexRepository.saveAndFlush(priceItem);
 	}
 	
-	public List<Vetex> findPriceItemsByFilter(String filter) {
-		return vetexRepository.findPriceItemsByFilter(filter);
+	public List<Vetex> findPriceItemsByFilter(String filter,String filter1,String filter2) {
+		return vetexRepository.findPriceItemsByFilter(filter,filter1,filter2);
 	
 	}
 	
@@ -38,8 +38,8 @@ public class VetexService {
 		return vetexRepository.findPriceItemByPpNumber(pp);
 	}
 	
-	public List<Vetex> findPriceItemByWorkName(String workname) {
-		return vetexRepository.findPriceItemsByFilter(workname);
+	public List<Vetex> findPriceItemByWorkName(String workname,String workname1, String workname2) {
+		return vetexRepository.findPriceItemsByFilter(workname,workname1,workname2);
 	}
 	
 	public void deletePriceItemById(long id) {

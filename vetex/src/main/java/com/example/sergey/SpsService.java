@@ -29,8 +29,8 @@ public class SpsService {
 		spsRepository.saveAndFlush(priceItem);
 	}
 	
-	public List<Sps> findPriceItemsByFilter(String filter) {
-		return spsRepository.findPriceItemsByFilter(filter);
+	public List<Sps> findPriceItemsByFilter(String filter,String filter1,String filter2) {
+		return spsRepository.findPriceItemsByFilter(filter,filter1,filter2);
 	
 	}
 	
@@ -38,8 +38,8 @@ public class SpsService {
 		return spsRepository.findPriceItemByPpNumber(pp);
 	}
 	
-	public List<Sps> findPriceItemByWorkName(String workname) {
-		return spsRepository.findPriceItemsByFilter(workname);
+	public List<Sps> findPriceItemByWorkName(String workname,String workname1, String workname2) {
+		return spsRepository.findPriceItemsByFilter(workname,workname1,workname2);
 	}
 	
 	public void deletePriceItemById(long id) {

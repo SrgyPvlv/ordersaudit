@@ -29,8 +29,8 @@ public class VolotService {
 		volotRepository.saveAndFlush(priceItem);
 	}
 	
-	public List<Volot> findPriceItemsByFilter(String filter) {
-		return volotRepository.findPriceItemsByFilter(filter);
+	public List<Volot> findPriceItemsByFilter(String filter,String filter1,String filter2) {
+		return volotRepository.findPriceItemsByFilter(filter,filter1,filter2);
 	
 	}
 	
@@ -38,8 +38,8 @@ public class VolotService {
 		return volotRepository.findPriceItemByPpNumber(pp);
 	}
 	
-	public List<Volot> findPriceItemByWorkName(String workname) {
-		return volotRepository.findPriceItemsByFilter(workname);
+	public List<Volot> findPriceItemByWorkName(String workname,String workname1, String workname2) {
+		return volotRepository.findPriceItemsByFilter(workname,workname1,workname2);
 	}
 	
 	public void deletePriceItemById(long id) {

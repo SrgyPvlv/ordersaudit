@@ -29,8 +29,8 @@ public class TelecomService {
 		telecomRepository.saveAndFlush(priceItem);
 	}
 	
-	public List<Telecom> findPriceItemsByFilter(String filter) {
-		return telecomRepository.findPriceItemsByFilter(filter);
+	public List<Telecom> findPriceItemsByFilter(String filter,String filter1,String filter2) {
+		return telecomRepository.findPriceItemsByFilter(filter,filter1,filter2);
 	
 	}
 	
@@ -38,8 +38,8 @@ public class TelecomService {
 		return telecomRepository.findPriceItemByPpNumber(pp);
 	}
 	
-	public List<Telecom> findPriceItemByWorkName(String workname) {
-		return telecomRepository.findPriceItemsByFilter(workname);
+	public List<Telecom> findPriceItemByWorkName(String workname,String workname1, String workname2) {
+		return telecomRepository.findPriceItemsByFilter(workname,workname1,workname2);
 	}
 	
 	public void deletePriceItemById(long id) {

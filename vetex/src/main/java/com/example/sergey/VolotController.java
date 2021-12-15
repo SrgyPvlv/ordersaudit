@@ -103,8 +103,17 @@ public class VolotController {
 	
 	@GetMapping("/findByName/volot")
 	public String findByNameVolot(@RequestParam("workname") String workname,Model model)throws IOException{
-		
-		List<Volot> listitems=volotService.findPriceItemByWorkName(workname);
+		String workname1;
+		String workname2;
+		String[] words=workname.split("\\s");
+		if (words.length==1) {
+		workname1=words[0];
+		workname2="";}
+		else {
+			workname1=words[0];
+			workname2=words[1];
+		}
+		List<Volot> listitems=volotService.findPriceItemByWorkName(workname,workname1,workname2);
 		model.addAttribute("listitems", listitems);
 		return "priceItemsVolot";
 	}
