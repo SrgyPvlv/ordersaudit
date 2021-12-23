@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+<link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
 <title>Корзина Заказа</title>
 </head>
 <body>
@@ -12,7 +13,7 @@
 <input type="submit" name="submit" value="Очистить корзину"> &nbsp&nbsp | &nbsp&nbsp
 </form>
 <form id="orderPage" th:action="@{/orderPage/telecom}" method="get" target="_blank" style="display:inline;">
-<input type="submit" name="submit" value="Страница Заказа"> &nbsp&nbsp | &nbsp&nbsp
+<input type="submit" name="submit" value="Страница Заявки"> &nbsp&nbsp | &nbsp&nbsp
 </form>
 <span>Отправка Заявки подрядчику: </span><a href="mailto:telecom-service@bk.ru;denis_agafonov@bk.ru?cc=ustich@mts.ru;maliamov@mts.ru;spavlov@mts.ru"><img src="/images/envelope.jpg" alt="mail" title="Отправка Заявки" width="25" height="25" style="border: none"></a>
 </div>
@@ -62,7 +63,7 @@
    <p><label for="end">Окончание выполнения работ : </label>
       <input form ="orderPage" type="date" name="end" required></p>
    <p><label for="remedy">№ Инцидента/работы в Remedy: </label>
-      <input form ="orderPage" type="text" name="remedy" placeholder="MSK000010717602" required></p>
+      <input form ="orderPage" type="text" name="remedy" placeholder="MSK000010717602" required></p> &nbsp&nbsp | &nbsp&nbsp <a href="http://remedy/arsys/shared/login.jsp" class="remedyhref" target="_blank" style="display:inline;"> Открыть Remedy </a>
    <p><label for="author">Инициатор заявки: ФИО(телефон): </label>
       <input form ="orderPage" type="text" name="author" th:value="${username}" style="width:250px;" required></p>
    <p><label for="arenda">Контакт арендодателя: ФИО(телефон): </label>

@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+<link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
 <title th:text="${contractnumber}+' АВР Заявка № '+${ordernumber}+' ('+${bsnumber}+')'"></title>
 </head>
 <body style="font-size:11pt">
@@ -23,7 +24,7 @@
 <table class="head2">
 <tr><td style="font-weight:bold;width:17px">1. </td><td style="width:350px">Дата подачи Заявки на выполнение работ: </td><td th:text="${send}" style="font-weight:bold;"></td></tr>
 <tr><td style="font-weight:bold;width:17px">2. </td><td colspan="2">Время подачи Заявки на выполнение работ: согласно времени отправки заявки по электронной почте.</td></tr>
-<tr><td style="font-weight:bold;width:17px">3. </td><td style="width:400px">Фамилия И.О. представителя МТС, подавшего Заявку: </td><td th:text="${author}" style="font-weight:bold;"></td></tr>
+<tr><td style="font-weight:bold;width:17px">3. </td><td style="width:350px">Фамилия И.О. представителя МТС, подавшего Заявку: </td><td th:text="${author}" style="font-weight:bold;"></td></tr>
 <tr><td style="font-weight:bold;width:17px">4. </td><td colspan="2">Номера и адреса объектов, на которых необходимо выполнить работы:</td></tr>
 </table>
 
