@@ -220,3 +220,13 @@ a.remedyhref:visited {
 a.remedyhref:hover {
 	color:blue; text-decoration:underline;
 }
+.form{
+	width: 300px;
+	height: 30px;
+	font-size:18px;
+}
+.btn{
+	width: 300px;
+	height: 30px;
+	font-size:18px;
+}
