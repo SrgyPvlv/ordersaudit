@@ -8,6 +8,8 @@ import java.util.Iterator;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+//Класс,  отражающий корзину заказа, содержащий все выбранные пункты ТЦП, их кол-во и т.д.
+//Позволяет изменять кол-во, пункты: добавлять, удалять, очищать корзину.
 @Component
 @SessionScope
 public class OrderCart {
@@ -39,6 +41,11 @@ public class OrderCart {
 		Collections.sort(itemsOrderCart);
 		return itemsOrderCart;
 	}
+	
+	public void setItemsOrderCart(ArrayList<VetexOrder> itemsOrderCart) {
+		this.itemsOrderCart=itemsOrderCart;
+	}
+	
 	public void saveQuantityItem(String ppnumber, double quantity, double newQuantity) {
 		Iterator <VetexOrder> vetexOrderIterator=itemsOrderCart.iterator();
 		while(vetexOrderIterator.hasNext()) {

@@ -3,6 +3,8 @@ package com.example.sergey.Model;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+//Класс, отражающий один выбранный пункт из ТЦП, со всеми полями из ТЦП, описывающими этот пункт,
+//а также кол-вом и стоимостью, зависящей от кол-ва.
 public class VetexOrder implements Comparable<VetexOrder>{
 	
 	String ppnumber;String workname;String unitmeasure;double price;String comment;double quantity; double endprice;

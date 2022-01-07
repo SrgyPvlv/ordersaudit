@@ -40,11 +40,14 @@ public class VetexController {
 	Date dateSend;
 	Date dateStart;
 	Date dateEnd;
+	
+	Long id;Integer ordernumber;String bsnumber;String bsaddress;String send;String start;String endtime;String report;
+	String cedr;String status;String worktype;String orderlistcomment;String contractnumber;String contractdate;String remedy;
+	String arenda;String comment;String author;
 
 	@Autowired VetexService vetexService;
 	@Autowired OrderCart orderCart;
-	@Autowired
-	private ContractTextService contractTextService;
+	@Autowired ContractTextService contractTextService;
 	@Autowired UsersService userService;
 	@Autowired BsListService bsListService;
 	
@@ -145,10 +148,38 @@ public class VetexController {
 	}
 	
 	@GetMapping ("/dispOrder")
-	public String showCart(Model model) {
+	public String showCart(@RequestParam(name="id",defaultValue="0",required=false) Long id,@RequestParam(name="ordernumber",defaultValue="0",required=false) Integer ordernumber,
+			@RequestParam(name="bsnumber",defaultValue="",required=false)String bsnumber,
+			@RequestParam(name="send",defaultValue="",required=false)String send,@RequestParam(name="start",defaultValue="",required=false)String start,
+			@RequestParam(name="endtime",defaultValue="",required=false)String endtime,@RequestParam(name="remedy",defaultValue="",required=false)String remedy,
+			@RequestParam(name="author",defaultValue="",required=false)String author,@RequestParam(name="arenda",defaultValue="",required=false)String arenda,
+			@RequestParam(name="worktype",defaultValue="",required=false)String worktype,@RequestParam(name="status",defaultValue="",required=false)String status,
+			@RequestParam(name="orderlistcomment",defaultValue="",required=false)String orderlistcomment,
+			@RequestParam(name="report",defaultValue="",required=false)String report,@RequestParam(name="cedr",defaultValue="",required=false)String cedr,
+			@RequestParam(name="contractnumber",defaultValue="",required=false)String contractnumber,@RequestParam(name="contractdate",defaultValue="",required=false)String contractdate,
+			@RequestParam(name="comment",defaultValue="",required=false)String comment,Model model) {
 		sumWithOutNds=0;
 		Nds=0;
 		sumWithNds=0;
+		if(id!=0) this.id=id;
+		if(ordernumber!=0) this.ordernumber=ordernumber;
+		if(!bsnumber.isEmpty()) this.bsnumber=bsnumber;
+		if(!send.isEmpty()) this.send=send;
+		if(!start.isEmpty()) this.start=start;
+		if(!endtime.isEmpty()) this.endtime=endtime;
+		if(!remedy.isEmpty()) this.remedy=remedy;
+		if(!author.isEmpty()) this.author=author;
+		if(!arenda.isEmpty()) this.arenda=arenda;
+		if(!worktype.isEmpty()) this.worktype=worktype;
+		if(!comment.isEmpty()) this.comment=comment;
+		if(!status.isEmpty()) this.status=status;
+		if(!orderlistcomment.isEmpty()) this.orderlistcomment=orderlistcomment;
+		if(!report.isEmpty()) this.report=report;
+		if(!cedr.isEmpty()) this.cedr=cedr;
+		if(!contractnumber.isEmpty() && !contractdate.isEmpty()) {this.contractnumber=contractnumber;this.contractdate=contractdate;} else {
+			ContractText vetexContract=contractTextService.getContractText(1);
+			this.contractnumber=vetexContract.getNumber();
+			this.contractdate=vetexContract.getDate();}
 		
 		cart=orderCart.getItemsOrderCart();
 		
@@ -169,22 +200,46 @@ public class VetexController {
 		String login=auth.getName();
 		Users user=userService.findUsersByLogin(login);
 		String username=user.getFullName();
-				
+		
+		
 		model.addAttribute("cart", cart);
+		model.addAttribute("id", this.id);
 		model.addAttribute("sumWithOutNds", this.sumWithOutNds);
 		model.addAttribute("Nds", this.Nds);
 		model.addAttribute("sumWithNds", this.sumWithNds);
 		model.addAttribute("username", username);
+		model.addAttribute("contractnumber", this.contractnumber);
+		model.addAttribute("contractdate", this.contractdate);
+		model.addAttribute("ordernumber", this.ordernumber);
+		model.addAttribute("bsnumber", this.bsnumber);
+		model.addAttribute("send", this.send);
+		model.addAttribute("start", this.start);
+		model.addAttribute("endtime", this.endtime);
+		model.addAttribute("remedy", this.remedy);
+		model.addAttribute("author", this.author);
+		model.addAttribute("arenda", this.arenda);
+		model.addAttribute("worktype", this.worktype);
+		model.addAttribute("comment", this.comment);
+		model.addAttribute("status", this.status);
+		model.addAttribute("report", this.report);
+		model.addAttribute("cedr", this.cedr);
+		model.addAttribute("orderlistcomment", this.orderlistcomment);
 		return"dispOrder";
 	}
 	@GetMapping ("/clearCart")
 	public String clearCart() {
 		orderCart.clearCart();
+		this.id=null; this.ordernumber=null; this.bsnumber=null; this.send=null; this.start=null; this.endtime=null;
+		this.remedy=null; this.author=null; this.arenda=null; this.worktype=null; this.comment=null; this.status=null;
+		this.report=null; this.cedr=null; this.orderlistcomment=null;
 		return "redirect:/dispOrder";
 	}
 	@GetMapping ("/clearCart2")
 	public String clearCart2() {
 		orderCart.clearCart();
+		this.id=null; this.ordernumber=null; this.bsnumber=null; this.send=null; this.start=null; this.endtime=null;
+		this.remedy=null; this.author=null; this.arenda=null; this.worktype=null; this.comment=null; this.status=null;
+		this.report=null; this.cedr=null; this.orderlistcomment=null;
 		return "redirect:/priceItems";
 	}
 	

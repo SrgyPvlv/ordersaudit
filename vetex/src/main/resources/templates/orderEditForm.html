@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
 <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
-<title>Корзина Заказа</title>
+<base target="_blank">
+<title>Форма редактирования Заказа</title>
 </head>
 <body>
 <div class="header">
@@ -18,13 +19,13 @@
 <form id="orderPage1" th:action="@{/orders/createOrder}" method="get" style="display:inline;">
 <input type="hidden" name="contractnumber" th:value="${contractnumber}">
 <input type="hidden" name="contractdate" th:value="${contractdate}">
-<input type="hidden" name="id" th:value="${id}">
 <input type="submit" name="submit" value="Сохранить заявку в БД"> &nbsp&nbsp | &nbsp&nbsp
+</form>
 </form>
 <form id="orderPage2" th:action="@{/orders/showAllOrders}" method="get" style="display:inline;">
 <input type="hidden" name="contractnumber" th:value="${contractnumber}">
 <input type="hidden" name="contractdate" th:value="${contractdate}">
-<input type="submit" name="submit" value="БД Заявок"> &nbsp&nbsp | &nbsp&nbsp
+<input type="submit" name="submit" value="Показать Заказы"> &nbsp&nbsp | &nbsp&nbsp
 </form>
 <span>Отправка Заявки подрядчику: </span><a href="mailto:ostruchistyy@vertexspb.ru;dmax29@ya.ru;mitinyurii@mail.ru?cc=ustich@mts.ru;maliamov@mts.ru;spavlov@mts.ru"><img src="/images/envelope.jpg" alt="mail" title="Отправка Заявки" width="25" height="25" style="border: none"></a>
 </div>
@@ -62,41 +63,29 @@
 <br><br>
 
 <fieldset name="order">
-   <legend> Данные для создания Заявки </legend>
+   <legend> Данные для Заявки </legend>
    <p style="display:inline;"><label for="ordernumber">№ Заявки: </label>
-      <input form ="orderPage1" type="number" name="ordernumber" th:value="*{ordernumber !=0} ? *{ordernumber} : '' "  min="1" required></p>
+      <input form ="orderPage1" type="number" name="ordernumber"  min="1"  required></p> &nbsp&nbsp | &nbsp&nbsp
    <p><label for="bsnumber">№ Базовой стации: </label>
-      <input form ="orderPage1" type="text" name="bsnumber" th:value="*{bsnumber !=null} ? *{bsnumber} : '' " placeholder="78-XXXXX " pattern="78-\d{5}" required></p>
+      <input form ="orderPage1" type="text" name="bsnumber" th:value="${orderDb.getBsnumber}" placeholder="78-XXXXX " pattern="78-\d{5}" required></p>
+  <!--   <p><label for="bsadress">Адрес Базовой стации: </label>
+      <input form ="orderPage" type="text" name="bsadress" style="width:400px;" placeholder="Заполняется если адреса нет в БД"></p> -->
    <p><label for="send">Дата подачи заявки : </label>
-      <input form ="orderPage1" type="date" name="send" th:value="*{send !=null} ? *{send} : '' " required></p>
+      <input form ="orderPage1" type="date" name="send" required></p>
    <p><label for="start">Начало выполнения работ : </label>
-      <input form ="orderPage1" type="date" name="start" th:value="*{start !=null} ? *{start} : '' " required></p>
+      <input form ="orderPage1" type="date" name="start" required></p>
    <p><label for="end">Окончание выполнения работ : </label>
-      <input form ="orderPage1" type="date" name="end" th:value="*{endtime !=null} ? *{endtime} : '' " required></p>
+      <input form ="orderPage1" type="date" name="end" required></p>
    <p style="display:inline;"><label for="remedy">№ Инцидента/работы в Remedy: </label>
-      <input form ="orderPage1" type="text" name="remedy" th:value="*{remedy !=null} ? *{remedy} : '' " placeholder="MSK000010717602"  required></p> &nbsp&nbsp | &nbsp&nbsp <a href="http://remedy/arsys/shared/login.jsp" class="remedyhref" target="_blank" style="display:inline;"> Открыть Remedy </a>
+      <input form ="orderPage1" type="text" name="remedy" placeholder="MSK000010717602"  required></p> &nbsp&nbsp | &nbsp&nbsp <a href="http://remedy/arsys/shared/login.jsp" class="remedyhref" target="_blank" style="display:inline;"> Открыть Remedy </a>
    <p><label for="author">Инициатор заявки: ФИО(телефон): </label>
-      <input form ="orderPage1" type="text" name="author" th:value="*{author !=null} ? *{author} : ${username}" style="width:250px;" required></p>
+      <input form ="orderPage1" type="text" name="author" th:value="${username}" style="width:250px;" required></p>
    <p><label for="arenda">Контакт арендодателя: ФИО(телефон): </label>
-      <input form ="orderPage1" type="text" name="arenda" th:value="*{arenda !=null} ? *{arenda} : '' " style="width:300px;"></p>
+      <input form ="orderPage1" type="text" name="arenda" style="width:300px;"></p>
    <p><label for="arenda">Вид работ: </label>
-      <input form ="orderPage1" type="text" name="worktype" th:value="*{worktype !=null} ? *{worktype} : '' " style="width:300px;"></p>   
+      <input form ="orderPage1" type="text" name="worktype" style="width:300px;"></p>   
    <p><label for="comment">Комментарий: </label>
-      <textarea form ="orderPage1" name="comment" cols="40" rows="5" wrap="hard" placeholder="Пояснение задачи для подрядчика(при необходимости)." th:text="*{comment !=null} ? *{comment} : '' "></textarea></p>
-</fieldset>
-<br>
-<fieldset name="order">
-   <legend> Дополнительные данные (для редактирования статуса Заявки) </legend>
-   <p><label for="status">Статус заявки : </label>
-      <input form ="orderPage1" type="text" name="status" th:value="*{status !=null} ? *{status} : '' " style="width:450px;"></p>
-   <p><label for="orderlistcomment">Комментарии по статусу/проверке/приемке : </label>
-      <input form ="orderPage1" type="text" name="orderlistcomment" th:value="*{orderlistcomment !=null} ? *{orderlistcomment} : '' " style="width:450px;"></p>   
-   <p><label for="report">Наличие ИД : </label>
-      <input form ="orderPage1" type="radio" name="report" th:value="да" th:checked="*{report =='да'}"> Да 
-      <input form ="orderPage1" type="radio" name="report" th:value="нет" th:checked="*{report =='нет'}"> Нет </p>
-   <p><label for="cedr">Внесено в Кедр: </label>
-      <input form ="orderPage1" type="radio" name="cedr" th:value="да" th:checked="*{cedr=='да'}"> Да 
-      <input form ="orderPage1" type="radio" name="cedr" th:value="нет" th:checked="*{cedr=='нет'}"> Нет </p>
+      <textarea form ="orderPage1" name="comment" cols="40" rows="5" wrap="hard" placeholder="Пояснение задачи для подрядчика(при необходимости)."></textarea>   
 </fieldset>
 
 <br><br><br><br>

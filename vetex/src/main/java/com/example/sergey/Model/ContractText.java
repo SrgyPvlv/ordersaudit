@@ -60,4 +60,5 @@ public class ContractText {
 	public String getDate() {
 		return date;
 	}
+	
 }
