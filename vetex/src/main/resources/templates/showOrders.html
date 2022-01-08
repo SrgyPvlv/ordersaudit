@@ -18,7 +18,7 @@
 <table class="listItems">
 <tr>
 <th>№ Заказа</th><th>№ БС</th><th>Дата ТЗ</th><th>Стоимость без НДС</th><th>Стоимость с НДС</th><th>ИД</th><th>Внесено в Кедр</th>
-<th>Статус Заказа</th><th>Срок по ТЗ</th><th>Вид работ</th><th>Комментарий</th><th class="col7"></th>
+<th>Статус Заказа</th><th>Срок по ТЗ</th><th>Вид работ</th><th>Комментарии (статус/проверка/приемка)</th><th class="col7"></th>
 </tr>
 <tr th:each="listOrder : ${listOrders}">
 <td th:text="${listOrder.getOrdernumber}"></td><td th:text="${listOrder.getBsnumber}"></td><td th:text="${listOrder.getSend}"></td><td th:text="${listOrder.getSumwithoutnds}"></td>
@@ -37,14 +37,17 @@
 <input type="hidden" name="contractdate" th:value="${contractdate}">
 <input type="submit" name="submit" value="Удалить" style="background:#FF0000; color:white;">
 </form>
-<p></p>
-<form th:action="@{/orders/orderCopy}" method="get">
+<br><br>
+<form th:action="@{/orders/orderCopy}" method="get" style="display:inline;">
 <input type="hidden" name="id" th:value="${listOrder.getId}">
 <input type="hidden" name="contractnumber" th:value="${contractnumber}">
 <input type="hidden" name="contractdate" th:value="${contractdate}">
 <input type="submit" name="submit" value="Создать копию" style="background:#808080; color:white;">
+</form> |
+<form th:action="@{/orders/orderPage}" method="get" target="_blank" style="display:inline;">
+<input type="hidden" name="id" th:value="${listOrder.getId}">
+<input type="submit" name="submit" value="Страница Заявки" >
 </form>
-</p>
 </td>
 </tr>
 

@@ -39,6 +39,10 @@ public class SpsController {
 	Date dateSend;
 	Date dateStart;
 	Date dateEnd;
+	
+	Long id;Integer ordernumber;String bsnumber;String bsaddress;String send;String start;String endtime;String report;
+	String cedr;String status;String worktype;String orderlistcomment;String contractnumber;String contractdate;String remedy;
+	String arenda;String comment;String author;
 
 	@Autowired SpsService spsService;
 	@Autowired OrderCart orderCart;
@@ -187,6 +191,13 @@ public class SpsController {
 		return "redirect:/priceItems/sps";
 	}
 	
+	public void clearCart3() {
+		orderCart.clearCart();
+		this.id=null; this.ordernumber=null; this.bsnumber=null; this.send=null; this.start=null; this.endtime=null;
+		this.remedy=null; this.author=null; this.arenda=null; this.worktype=null; this.comment=null; this.status=null;
+		this.report=null; this.cedr=null; this.orderlistcomment=null;
+	}
+	
 	@GetMapping ("/deleteFromOrder/sps")
 	public String deleteFromOrderSps(@RequestParam("ppnumber")String ppnumber,@RequestParam("quantity")double quantity) {
 		orderCart.deleteItem(ppnumber,quantity);
@@ -197,70 +208,5 @@ public class SpsController {
 	public String saveQuantityChangesSps(@RequestParam("ppnumber")String ppnumber,@RequestParam("quantity")double quantity,@RequestParam("newQuantity")double newQuantity) {
 		orderCart.saveQuantityItem(ppnumber,quantity,newQuantity);
 		return "redirect:/dispOrder/sps";
-	}
-	@GetMapping ("/orderPage/sps")
-	public String tableOrderSps(@RequestParam("ordernumber")int ordernumber,@RequestParam("send")String send,
-			@RequestParam("author")String author,@RequestParam("bsnumber")String bsnumber,
-			@RequestParam("start")String start,@RequestParam("end")String end,@RequestParam("remedy")String remedy,
-			@RequestParam("arenda")String arenda,@RequestParam("comment")String comment,Model model) {
-		sumWithOutNds=0;
-		Nds=0;
-		sumWithNds=0;
-		
-		SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat formatter1=new SimpleDateFormat("dd-MM-yyyy");
-		
-		try {
-			this.dateSend = formatter.parse(send);
-			this.dateStart = formatter.parse(start);
-			this.dateEnd = formatter.parse(end);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		send=formatter1.format(this.dateSend);
-		start=formatter1.format(this.dateStart);
-		end=formatter1.format(this.dateEnd);
-    	
-		
-		cart=orderCart.getItemsOrderCart();
-		
-		for(VetexOrder cartitem : cart) {
-			this.sumWithOutNds=this.sumWithOutNds+cartitem.getEndPrice();
-			BigDecimal bd = new BigDecimal(this.sumWithOutNds).setScale(2, RoundingMode.HALF_UP);
-			this.sumWithOutNds = bd.doubleValue();
-		}
-		this.Nds=this.sumWithOutNds*0.2;
-		BigDecimal bd1 = new BigDecimal(this.Nds).setScale(2, RoundingMode.HALF_UP);
-		this.Nds = bd1.doubleValue();
-		
-		this.sumWithNds=this.sumWithOutNds+this.Nds;
-		BigDecimal bd2 = new BigDecimal(this.sumWithNds).setScale(2, RoundingMode.HALF_UP);
-		this.sumWithNds = bd2.doubleValue();
-		
-		ContractText vetexContract=contractTextService.getContractText(2);
-		String contractnumber=vetexContract.getNumber();
-		String contractdate=vetexContract.getDate();
-		
-		String bsadress=bsListService.findBsAddress(bsnumber);
-		
-		model.addAttribute("cart", cart);
-		model.addAttribute("sumWithOutNds", this.sumWithOutNds);
-		model.addAttribute("Nds", this.Nds);
-		model.addAttribute("sumWithNds", this.sumWithNds);
-		model.addAttribute("ordernumber", ordernumber);
-		model.addAttribute("contractnumber", contractnumber);
-		model.addAttribute("contractdate", contractdate);
-		model.addAttribute("send", send);
-		model.addAttribute("author", author);
-		model.addAttribute("bsnumber", bsnumber);
-		model.addAttribute("bsadress", bsadress);
-		model.addAttribute("start", start);
-		model.addAttribute("end", end);
-		model.addAttribute("remedy", remedy);
-		model.addAttribute("arenda", arenda);
-		model.addAttribute("comment", comment);
-		
-		return"orderPage";
 	}
 }

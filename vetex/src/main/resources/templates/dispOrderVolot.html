@@ -12,8 +12,16 @@
 <form th:action="@{/clearCart/volot}" method="get" style="display:inline;">
 <input type="submit" name="submit" value="Очистить корзину"> &nbsp&nbsp | &nbsp&nbsp
 </form>
-<form id="orderPage" th:action="@{/orderPage/volot}" method="get" target="_blank" style="display:inline;">
-<input type="submit" name="submit" value="Страница Заявки"> &nbsp&nbsp | &nbsp&nbsp
+<form id="orderPage" th:action="@{/orders/createOrder}" method="get" style="display:inline;">
+<input type="hidden" name="contractnumber" th:value="${contractnumber}">
+<input type="hidden" name="contractdate" th:value="${contractdate}">
+<input type="hidden" name="id" th:value="${id}">
+<input type="submit" name="submit" value="Сохранить заявку в БД"> &nbsp&nbsp | &nbsp&nbsp
+</form>
+<form id="orderPage2" th:action="@{/orders/showAllOrders}" method="get" style="display:inline;">
+<input type="hidden" name="contractnumber" th:value="${contractnumber}">
+<input type="hidden" name="contractdate" th:value="${contractdate}">
+<input type="submit" name="submit" value="БД Заявок"> &nbsp&nbsp | &nbsp&nbsp
 </form>
 <span>Отправка Заявки подрядчику: </span><a href="mailto:v.ivanov@volot.su;a.nosov@volot.su?cc=ustich@mts.ru;maliamov@mts.ru;spavlov@mts.ru"><img src="/images/envelope.jpg" alt="mail" title="Отправка Заявки" width="25" height="25" style="border: none"></a>
 </div>

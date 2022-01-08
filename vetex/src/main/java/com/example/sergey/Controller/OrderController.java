@@ -3,7 +3,10 @@ package com.example.sergey.Controller;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.sergey.Model.ContractText;
 import com.example.sergey.Model.Order;
 import com.example.sergey.Model.OrderCart;
 import com.example.sergey.Model.VetexOrder;
@@ -34,6 +38,9 @@ public class OrderController {
 	double sumWithOutNds;
 	double Nds;
 	double sumWithNds;
+	Date dateSend;
+	Date dateStart;
+	Date dateEnd;
 	ArrayList<VetexOrder> cart;
 	@Autowired OrderCart orderCart;
 	@Autowired UsersService userService;
@@ -41,6 +48,11 @@ public class OrderController {
 	@Autowired ContractTextService contractTextService;
 	@Autowired
 	private DefaultOrderService orderService;
+	@Autowired VetexController vetexController;
+	@Autowired SpsController spsController;
+	@Autowired VolotController volotController;
+	@Autowired TelecomController telecomController;
+	@Autowired TelrosController telrosController;
 	
 	@GetMapping("/createOrder") //записать заявку в базу данных
 	public String createOrder(@RequestParam(name="id",required=false,defaultValue="0")Long id,@RequestParam("ordernumber")int ordernumber,@RequestParam("send")String send,
@@ -171,4 +183,107 @@ public class OrderController {
 		redirectAttr.addAttribute("cedr", orderDb.getCedr());
 		
 		return asd;}
+	
+	@GetMapping("/orderCopy") //переход на форму создания копии заявки (редактирования без передачи id)
+	public String orderCopyForm(@RequestParam("id") Long id,@RequestParam(name="contractnumber") String contractnumber,
+			@RequestParam(name="contractdate") String contractdate, Model model,RedirectAttributes redirectAttr) {
+		sumWithOutNds=0;
+		Nds=0;
+		sumWithNds=0;
+		
+		String vetex=contractTextService.getContractText(1).getNumber();
+		String sps=contractTextService.getContractText(2).getNumber();
+		String volot=contractTextService.getContractText(3).getNumber();
+		String telecom=contractTextService.getContractText(4).getNumber();
+		String telros=contractTextService.getContractText(5).getNumber();
+		
+		String asd = null;
+		
+		if (contractnumber.equals(vetex)) {vetexController.clearCart3(); asd="redirect:/dispOrder";} else {
+		if (contractnumber.equals(sps)) {spsController.clearCart3();asd= "redirect:/dispOrder/sps";}else {
+				if(contractnumber.equals(volot)) {volotController.clearCart3();asd= "redirect:/dispOrder/volot";} else {
+					if(contractnumber.equals(telecom)) {telecomController.clearCart3();asd= "redirect:/dispOrder/telecom";} else {
+						if(contractnumber.equals(telros)) {telrosController.clearCart3();asd= "redirect:/dispOrder/telros";}
+	}
+  }
+ }
+}	
+		Order orderDb=orderService.getOrderById(id);
+		String cartJsonStr=orderDb.getCart();
+		Type listType = new TypeToken<ArrayList<VetexOrder>>() {}.getType();
+        ArrayList<VetexOrder> cartArrayList = new Gson().fromJson(cartJsonStr,listType); //Json в ArrayList
+        
+        orderCart.setItemsOrderCart(cartArrayList);
+        cart=orderCart.getItemsOrderCart();
+	
+		//redirectAttr.addAttribute("ordernumber", orderDb.getOrdernumber());
+		//redirectAttr.addAttribute("bsnumber", orderDb.getBsnumber());
+		//redirectAttr.addAttribute("send", orderDb.getSend());
+		//redirectAttr.addAttribute("start", orderDb.getStart());
+		//redirectAttr.addAttribute("endtime", orderDb.getEndtime());
+		//redirectAttr.addAttribute("remedy", orderDb.getRemedy());
+		//redirectAttr.addAttribute("author", orderDb.getAuthor());
+		//redirectAttr.addAttribute("arenda", orderDb.getArenda());
+		redirectAttr.addAttribute("worktype", orderDb.getWorktype());
+		redirectAttr.addAttribute("comment", orderDb.getComment());
+		redirectAttr.addAttribute("contractnumber", orderDb.getContractnumber());
+		redirectAttr.addAttribute("contractdate", orderDb.getContractdate());
+		//redirectAttr.addAttribute("status", orderDb.getStatus());
+		//redirectAttr.addAttribute("orderlistcomment", orderDb.getOrderlistcomment());
+		//redirectAttr.addAttribute("report", orderDb.getReport());
+		//redirectAttr.addAttribute("cedr", orderDb.getCedr());
+		
+		return asd;}
+	
+	@GetMapping ("/orderPage") //создание страницы заявки
+	public String tableOrder(@RequestParam("id") Long id, Model model) {
+			
+		sumWithOutNds=0;
+		Nds=0;
+		sumWithNds=0;
+		
+		Order orderDb=orderService.getOrderById(id);
+		String cartJsonStr=orderDb.getCart();
+		Type listType = new TypeToken<ArrayList<VetexOrder>>() {}.getType();
+        ArrayList<VetexOrder> cartArrayList = new Gson().fromJson(cartJsonStr,listType); //Json в ArrayList
+        
+        orderCart.setItemsOrderCart(cartArrayList);
+        cart=orderCart.getItemsOrderCart();
+        
+      String send=orderDb.getSend();
+      String start=orderDb.getStart();
+      String end=orderDb.getEndtime();
+        
+	  SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
+	  SimpleDateFormat formatter1=new SimpleDateFormat("dd-MM-yyyy");
+		
+		try {
+			this.dateSend = formatter.parse(send);
+			this.dateStart = formatter.parse(start);
+			this.dateEnd = formatter.parse(end);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		send=formatter1.format(this.dateSend);
+		start=formatter1.format(this.dateStart);
+		end=formatter1.format(this.dateEnd);
+		
+		model.addAttribute("cart", cart);
+		model.addAttribute("sumWithOutNds", orderDb.getSumwithoutnds());
+		model.addAttribute("Nds", orderDb.getNds());
+		model.addAttribute("sumWithNds", orderDb.getSumwithnds());
+		model.addAttribute("ordernumber", orderDb.getOrdernumber());
+		model.addAttribute("contractnumber", orderDb.getContractnumber());
+		model.addAttribute("contractdate", orderDb.getContractdate());
+		model.addAttribute("send", send);
+		model.addAttribute("author", orderDb.getAuthor());
+		model.addAttribute("bsnumber", orderDb.getBsnumber());
+		model.addAttribute("bsadress", orderDb.getBsaddress());
+		model.addAttribute("start", start);
+		model.addAttribute("end", end);
+		model.addAttribute("remedy", orderDb.getRemedy());
+		model.addAttribute("arenda", orderDb.getArenda());
+		model.addAttribute("comment", orderDb.getComment());
+		return"orderPage";
+	}
 }
