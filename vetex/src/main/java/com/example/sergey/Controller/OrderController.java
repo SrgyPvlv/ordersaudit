@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.sergey.Model.ContractText;
 import com.example.sergey.Model.Order;
 import com.example.sergey.Model.OrderCart;
 import com.example.sergey.Model.VetexOrder;

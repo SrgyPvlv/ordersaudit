@@ -69,6 +69,11 @@
        </div>
        <div id="search3">
        <h3 style="color:#8B4513;">ООО "Волот"</h3>
+       <form id="orderPage2" th:action="@{/orders/showAllOrders}" method="get">
+       <input type="hidden" name="contractnumber" th:value="${contractnumber}">
+       <input type="hidden" name="contractdate" th:value="${contractdate}">
+       <input type="submit" name="submit" value="БД Заявок" style="background:#6495ED; color:white;font-size:14px;border-color:white;">
+       </form>
        </div>
 </div>
 <div class="cart">

@@ -3,8 +3,6 @@ package com.example.sergey.Controller;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import com.example.sergey.Model.ContractText;
 import com.example.sergey.Model.OrderCart;
 import com.example.sergey.Model.Users;
@@ -35,8 +32,6 @@ public class VetexController {
 	double Nds;
 	double sumWithNds;
 	ArrayList<VetexOrder> cart;
-	String html;
-	String second;
 	Date dateSend;
 	Date dateStart;
 	Date dateEnd;
@@ -54,7 +49,13 @@ public class VetexController {
 	@GetMapping("/priceItems")
 	public String getAllPriceItems(Model model) {
 		List<Vetex> listitems=vetexService.findAllPriceItems();
+		ContractText vetexContract=contractTextService.getContractText(1);
+		contractnumber=vetexContract.getNumber();
+		contractdate=vetexContract.getDate();
+		
 		model.addAttribute("listitems", listitems);
+		model.addAttribute("contractnumber", contractnumber);
+		model.addAttribute("contractdate", contractdate);
 		return "priceItems";
 	}
 	
