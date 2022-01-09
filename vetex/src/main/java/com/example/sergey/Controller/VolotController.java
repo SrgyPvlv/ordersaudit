@@ -230,11 +230,17 @@ public class VolotController {
 	@GetMapping ("/clearCart/volot")
 	public String clearCartVolot() {
 		orderCart.clearCart();
+		this.id=null; this.ordernumber=null; this.bsnumber=null; this.send=null; this.start=null; this.endtime=null;
+		this.remedy=null; this.author=null; this.arenda=null; this.worktype=null; this.comment=null; this.status=null;
+		this.report=null; this.cedr=null; this.orderlistcomment=null;
 		return "redirect:/dispOrder/volot";
 	}
 	@GetMapping ("/clearCart2/volot")
 	public String clearCart2Volot() {
 		orderCart.clearCart();
+		this.id=null; this.ordernumber=null; this.bsnumber=null; this.send=null; this.start=null; this.endtime=null;
+		this.remedy=null; this.author=null; this.arenda=null; this.worktype=null; this.comment=null; this.status=null;
+		this.report=null; this.cedr=null; this.orderlistcomment=null;
 		return "redirect:/priceItems/volot";
 	}
 	

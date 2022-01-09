@@ -230,11 +230,17 @@ public class SpsController {
 	@GetMapping ("/clearCart/sps")
 	public String clearCartSps() {
 		orderCart.clearCart();
+		this.id=null; this.ordernumber=null; this.bsnumber=null; this.send=null; this.start=null; this.endtime=null;
+		this.remedy=null; this.author=null; this.arenda=null; this.worktype=null; this.comment=null; this.status=null;
+		this.report=null; this.cedr=null; this.orderlistcomment=null;
 		return "redirect:/dispOrder/sps";
 	}
 	@GetMapping ("/clearCart2/sps")
 	public String clearCart2Sps() {
 		orderCart.clearCart();
+		this.id=null; this.ordernumber=null; this.bsnumber=null; this.send=null; this.start=null; this.endtime=null;
+		this.remedy=null; this.author=null; this.arenda=null; this.worktype=null; this.comment=null; this.status=null;
+		this.report=null; this.cedr=null; this.orderlistcomment=null;
 		return "redirect:/priceItems/sps";
 	}
 	

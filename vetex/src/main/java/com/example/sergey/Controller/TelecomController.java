@@ -231,11 +231,17 @@ public class TelecomController {
 	@GetMapping ("/clearCart/telecom")
 	public String clearCartTelecom() {
 		orderCart.clearCart();
+		this.id=null; this.ordernumber=null; this.bsnumber=null; this.send=null; this.start=null; this.endtime=null;
+		this.remedy=null; this.author=null; this.arenda=null; this.worktype=null; this.comment=null; this.status=null;
+		this.report=null; this.cedr=null; this.orderlistcomment=null;
 		return "redirect:/dispOrder/telecom";
 	}
 	@GetMapping ("/clearCart2/telecom")
 	public String clearCart2Telecom() {
 		orderCart.clearCart();
+		this.id=null; this.ordernumber=null; this.bsnumber=null; this.send=null; this.start=null; this.endtime=null;
+		this.remedy=null; this.author=null; this.arenda=null; this.worktype=null; this.comment=null; this.status=null;
+		this.report=null; this.cedr=null; this.orderlistcomment=null;
 		return "redirect:/priceItems/telecom";
 	}
 	

@@ -231,11 +231,17 @@ public class TelrosController {
 	@GetMapping ("/clearCart/telros")
 	public String clearCartTelros() {
 		orderCart.clearCart();
+		this.id=null; this.ordernumber=null; this.bsnumber=null; this.send=null; this.start=null; this.endtime=null;
+		this.remedy=null; this.author=null; this.arenda=null; this.worktype=null; this.comment=null; this.status=null;
+		this.report=null; this.cedr=null; this.orderlistcomment=null;
 		return "redirect:/dispOrder/telros";
 	}
 	@GetMapping ("/clearCart2/telros")
 	public String clearCart2Telros() {
 		orderCart.clearCart();
+		this.id=null; this.ordernumber=null; this.bsnumber=null; this.send=null; this.start=null; this.endtime=null;
+		this.remedy=null; this.author=null; this.arenda=null; this.worktype=null; this.comment=null; this.status=null;
+		this.report=null; this.cedr=null; this.orderlistcomment=null;
 		return "redirect:/priceItems/telros";
 	}
 	
