@@ -1,5 +1,6 @@
 package com.example.sergey.Controller;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.example.sergey.Model.Order;
 import com.example.sergey.Model.OrderCart;
 import com.example.sergey.Model.VetexOrder;
@@ -285,4 +285,28 @@ public class OrderController {
 		model.addAttribute("comment", orderDb.getComment());
 		return"orderPage";
 	}
+	@GetMapping("/findByOrderNumber") // поиск по № Заказа
+	public String findByOrderNumber(@RequestParam("orderNumberSearch") Integer orderNumberSearch,
+			@RequestParam(name="contractnumber",required=false) String contractnumber,
+			@RequestParam(name="contractdate",required=false) String contractdate,Model model)throws IOException{
+		
+		List<Order> listOrders=orderService.findByOrderNumber(orderNumberSearch, contractnumber);
+		model.addAttribute("listOrders", listOrders);
+		model.addAttribute("contractnumber", contractnumber);
+		model.addAttribute("contractdate", contractdate);
+		return "showOrders";	
+	}
+	
+	@GetMapping("/findByBsName") // поиск по № БС
+	public String findByBsName(@RequestParam("bsNumberSearch") String bsNumberSearch,
+			@RequestParam(name="contractnumber",required=false) String contractnumber,
+			@RequestParam(name="contractdate",required=false) String contractdate,Model model)throws IOException{
+		
+		List<Order> listOrders=orderService.findByBsName(bsNumberSearch, contractnumber);
+		model.addAttribute("listOrders", listOrders);
+		model.addAttribute("contractnumber", contractnumber);
+		model.addAttribute("contractdate", contractdate);		
+		return "showOrders";
+	}
+	
 }

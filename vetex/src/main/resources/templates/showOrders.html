@@ -4,11 +4,33 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
 <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
-<title>Список Заявок</title>
+<title>БД Заявок</title>
 </head>
 <body>
 <br>
-
+<div class="find">         
+     <form th:action="@{/orders/findByOrderNumber}" th:method="get" style="display:inline;">
+       <label>Поиск по № Заказа  </label> &nbsp&nbsp
+       <input type="number" name="orderNumberSearch" min="0" required>
+       <input type="hidden" name="contractnumber" th:value="${contractnumber}">
+       <input type="hidden" name="contractdate" th:value="${contractdate}">
+       <input type="submit" value="Найти" >
+     </form> &nbsp&nbsp
+     <form th:action="@{/orders/showAllOrders}" method="get" style="display:inline;">
+       <label>Показать все Заявки</label> &nbsp&nbsp
+       <input type="hidden" name="contractnumber" th:value="${contractnumber}">
+       <input type="hidden" name="contractdate" th:value="${contractdate}">
+       <input type="submit" name="submit" value="Показать">
+     </form>
+       <br><br>
+     <form th:action="@{/orders/findByBsName}" th:method="get" >
+       <label>Поиск по № БС</label> &nbsp&nbsp
+       <input type="text" name="bsNumberSearch" placeholder="Код '78-' указывать необязательно" style="width:220px" required>
+       <input type="hidden" name="contractnumber" th:value="${contractnumber}">
+       <input type="hidden" name="contractdate" th:value="${contractdate}">
+       <input type="submit" value="Найти" >  
+     </form>            
+</div>
 <div>
 <table class="listItems">
 <tr>

@@ -19,14 +19,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.sergey.MyDbConnection;
 
-//сохранение базы ТЦП в csv
-
 @Controller
-public class CsvDownController {
+public class CsvAllOrdersDownController {
 
-	@GetMapping("/dateBaseToCSV")
+	@GetMapping("/allOrdersToCSV")
 	ResponseEntity<Resource> getFileCsv() throws SQLException, IOException{
-		String filename="vetex.csv";
+		String filename="allorders.csv";
 		InputStreamResource file=copyToFile();
 		
 		return ResponseEntity.ok()
@@ -41,7 +39,7 @@ public class CsvDownController {
 	      String username = MyDbConnection.username;
 	      String password = MyDbConnection.password;
 	      Connection conn = null;
-	      String myQuery="COPY (select ppnumber,workname,unitmeasure,price,comment from vetex order by ppnumber) TO STDOUT WITH (FORMAT CSV, HEADER)";
+	      String myQuery="COPY (select * from orderlist order by ordernumber) TO STDOUT WITH (FORMAT CSV, HEADER)";
 	      InputStreamResource file;
 	      
 	      try {  
@@ -59,6 +57,5 @@ public class CsvDownController {
 	          }
 	}
 	      return file;
-	}
-	
+	}	
 }

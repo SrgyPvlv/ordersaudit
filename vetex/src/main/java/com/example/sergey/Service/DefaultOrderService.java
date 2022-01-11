@@ -41,4 +41,16 @@ public class DefaultOrderService implements OrderService {
 		orderRepository.saveAndFlush(order);
 	}
 
+	@Override
+	public List<Order> findByOrderNumber(Integer ordernumber, String contractnumber) {
+		List<Order> ordersList=orderRepository.findByOrderNumber(ordernumber, contractnumber);
+		return ordersList;
+	}
+	
+	@Override
+	public List<Order> findByBsName(String bsnumber, String contractnumber) {
+		List<Order> ordersList=orderRepository.findByBsName(bsnumber, contractnumber);
+		return ordersList;
+	}
+
 }

@@ -18,7 +18,7 @@
 <input type="hidden" name="id" th:value="${id}">
 <input type="submit" name="submit" value="Сохранить заявку в БД"> &nbsp&nbsp | &nbsp&nbsp
 </form>
-<form id="orderPage2" th:action="@{/orders/showAllOrders}" method="get" style="display:inline;">
+<form id="orderPage2" th:action="@{/orders/showAllOrders}" method="get" target="_blank" style="display:inline;">
 <input type="hidden" name="contractnumber" th:value="${contractnumber}">
 <input type="hidden" name="contractdate" th:value="${contractdate}">
 <input type="submit" name="submit" value="БД Заявок"> &nbsp&nbsp | &nbsp&nbsp
