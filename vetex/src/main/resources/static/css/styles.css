@@ -127,6 +127,12 @@ position: fixed; /* Фиксированное положение */
 .col8 {
 	width: 18%;
 }
+.col19,.col20 {
+	width: 12%;
+}
+.col21 {
+	width: 18%;
+}
 #pricesControl_1,#search1 {
 	float: left;
 	width: 500px;

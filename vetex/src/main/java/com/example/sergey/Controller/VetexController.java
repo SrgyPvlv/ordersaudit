@@ -109,15 +109,21 @@ public class VetexController {
 	}
 	
 	@GetMapping("/findByNumber")
-	public String findByNumber(@RequestParam("ppsearch") String ppsearch,Model model)throws IOException{
+	public String findByNumber(@RequestParam("ppsearch") String ppsearch,
+			@RequestParam(name="contractnumber") String contractnumber,
+			@RequestParam(name="contractdate") String contractdate, Model model)throws IOException{
 		
 		List<Vetex> listitems=vetexService.findPriceItemByPpNumber(ppsearch);
 		model.addAttribute("listitems", listitems);
+		model.addAttribute("contractnumber", contractnumber);
+		model.addAttribute("contractdate", contractdate);
 		return "priceItems";
 	}
 	
 	@GetMapping("/findByName")
-	public String findByName(@RequestParam("workname") String workname,Model model)throws IOException{
+	public String findByName(@RequestParam("workname") String workname,
+			@RequestParam(name="contractnumber") String contractnumber,
+			@RequestParam(name="contractdate") String contractdate, Model model)throws IOException{
 		String workname1;
 		String workname2;
 		String[] words=workname.split("\\s");
@@ -130,6 +136,8 @@ public class VetexController {
 		}
 		List<Vetex> listitems=vetexService.findPriceItemByWorkName(workname,workname1,workname2);
 		model.addAttribute("listitems", listitems);
+		model.addAttribute("contractnumber", contractnumber);
+		model.addAttribute("contractdate", contractdate);
 		return "priceItems";
 	}
 	

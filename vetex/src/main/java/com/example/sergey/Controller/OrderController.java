@@ -104,15 +104,22 @@ public class OrderController {
 		
 		redirectAttr.addAttribute("contractnumber", contractnumber);
 		redirectAttr.addAttribute("contractdate", contractdate);
+		redirectAttr.addAttribute("ordernumber", ordernumber);
 		
 		return "redirect:/orders/showAllOrders";
 	}
 	
 	@GetMapping("/showAllOrders") //все заявки по подрядчику(т.е. номеру договора) по возрастанию номера заявки 
 	public String showAllOrders(@RequestParam(name="contractnumber",required=false) String contractnumber,
-			@RequestParam(name="contractdate",required=false) String contractdate,Model model) {
+			@RequestParam(name="contractdate",required=false) String contractdate,
+			@RequestParam(name="ordernumber",required=false,defaultValue="0") int ordernumber, Model model) {
 
-		List<Order> listOrders=orderService.findAllByContractNumberOrderByOrdernumberAsc(contractnumber);
+		List<Order> listOrders;
+		if(ordernumber==0) {
+			listOrders=orderService.findAllByContractNumberOrderByOrdernumberAsc(contractnumber);} else {
+			listOrders=orderService.findByOrderNumber(ordernumber, contractnumber);
+		}
+		
 		model.addAttribute("listOrders", listOrders);
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractdate", contractdate);

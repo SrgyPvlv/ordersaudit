@@ -55,12 +55,16 @@
        <form th:action="@{/findByNumber}" th:method="get" >
        <label>Поиск по № ТЦП (№ п/п)</label> &nbsp&nbsp
        <input type="text" name="ppsearch" required>
+       <input type="hidden" name="contractnumber" th:value="${contractnumber}">
+       <input type="hidden" name="contractdate" th:value="${contractdate}">
        <input type="submit" value="Найти" >
        </form>
        <br><br>
        <form th:action="@{/findByName}" th:method="get" >
        <label>Поиск по Наименованию работы</label> &nbsp&nbsp
        <input type="text" name="workname" required>
+       <input type="hidden" name="contractnumber" th:value="${contractnumber}">
+       <input type="hidden" name="contractdate" th:value="${contractdate}">
        <input type="submit" value="Найти" >
        </form>
        </div>

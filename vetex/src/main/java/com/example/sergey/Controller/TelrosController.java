@@ -111,15 +111,21 @@ public class TelrosController {
 	}
 	
 	@GetMapping("/findByNumber/telros")
-	public String findByNumberTelros(@RequestParam("ppsearch") String ppsearch,Model model)throws IOException{
+	public String findByNumberTelros(@RequestParam("ppsearch") String ppsearch,
+			@RequestParam(name="contractnumber") String contractnumber,
+			@RequestParam(name="contractdate") String contractdate, Model model)throws IOException{
 		
 		List<Telros> listitems=telrosService.findPriceItemByPpNumber(ppsearch);
 		model.addAttribute("listitems", listitems);
+		model.addAttribute("contractnumber", contractnumber);
+		model.addAttribute("contractdate", contractdate);
 		return "priceItemsTelros";
 	}
 	
 	@GetMapping("/findByName/telros")
-	public String findByNameTelros(@RequestParam("workname") String workname,Model model)throws IOException{
+	public String findByNameTelros(@RequestParam("workname") String workname,
+			@RequestParam(name="contractnumber") String contractnumber,
+			@RequestParam(name="contractdate") String contractdate, Model model)throws IOException{
 		String workname1;
 		String workname2;
 		String[] words=workname.split("\\s");
@@ -132,6 +138,8 @@ public class TelrosController {
 		}
 		List<Telros> listitems=telrosService.findPriceItemByWorkName(workname,workname1,workname2);
 		model.addAttribute("listitems", listitems);
+		model.addAttribute("contractnumber", contractnumber);
+		model.addAttribute("contractdate", contractdate);
 		return "priceItemsTelros";
 	}
 	

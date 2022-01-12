@@ -111,15 +111,21 @@ public class TelecomController {
 	}
 	
 	@GetMapping("/findByNumber/telecom")
-	public String findByNumberTelecom(@RequestParam("ppsearch") String ppsearch,Model model)throws IOException{
+	public String findByNumberTelecom(@RequestParam("ppsearch") String ppsearch,
+			@RequestParam(name="contractnumber") String contractnumber,
+			@RequestParam(name="contractdate") String contractdate, Model model)throws IOException{
 		
 		List<Telecom> listitems=telecomService.findPriceItemByPpNumber(ppsearch);
 		model.addAttribute("listitems", listitems);
+		model.addAttribute("contractnumber", contractnumber);
+		model.addAttribute("contractdate", contractdate);
 		return "priceItemsTelecom";
 	}
 	
 	@GetMapping("/findByName/telecom")
-	public String findByNameTelecom(@RequestParam("workname") String workname,Model model)throws IOException{
+	public String findByNameTelecom(@RequestParam("workname") String workname,
+			@RequestParam(name="contractnumber") String contractnumber,
+			@RequestParam(name="contractdate") String contractdate, Model model)throws IOException{
 		String workname1;
 		String workname2;
 		String[] words=workname.split("\\s");
@@ -132,6 +138,8 @@ public class TelecomController {
 		}
 		List<Telecom> listitems=telecomService.findPriceItemByWorkName(workname,workname1,workname2);
 		model.addAttribute("listitems", listitems);
+		model.addAttribute("contractnumber", contractnumber);
+		model.addAttribute("contractdate", contractdate);
 		return "priceItemsTelecom";
 	}
 	

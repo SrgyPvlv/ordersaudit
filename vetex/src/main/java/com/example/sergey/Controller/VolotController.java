@@ -110,15 +110,21 @@ public class VolotController {
 	}
 	
 	@GetMapping("/findByNumber/volot")
-	public String findByNumberVolot(@RequestParam("ppsearch") String ppsearch,Model model)throws IOException{
+	public String findByNumberVolot(@RequestParam("ppsearch") String ppsearch,
+			@RequestParam(name="contractnumber") String contractnumber,
+			@RequestParam(name="contractdate") String contractdate, Model model)throws IOException{
 		
 		List<Volot> listitems=volotService.findPriceItemByPpNumber(ppsearch);
 		model.addAttribute("listitems", listitems);
+		model.addAttribute("contractnumber", contractnumber);
+		model.addAttribute("contractdate", contractdate);
 		return "priceItemsVolot";
 	}
 	
 	@GetMapping("/findByName/volot")
-	public String findByNameVolot(@RequestParam("workname") String workname,Model model)throws IOException{
+	public String findByNameVolot(@RequestParam("workname") String workname,
+			@RequestParam(name="contractnumber") String contractnumber,
+			@RequestParam(name="contractdate") String contractdate, Model model)throws IOException{
 		String workname1;
 		String workname2;
 		String[] words=workname.split("\\s");
@@ -131,6 +137,8 @@ public class VolotController {
 		}
 		List<Volot> listitems=volotService.findPriceItemByWorkName(workname,workname1,workname2);
 		model.addAttribute("listitems", listitems);
+		model.addAttribute("contractnumber", contractnumber);
+		model.addAttribute("contractdate", contractdate);
 		return "priceItemsVolot";
 	}
 	

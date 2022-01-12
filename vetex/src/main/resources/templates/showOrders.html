@@ -34,14 +34,18 @@
 <div>
 <table class="listItems">
 <tr>
-<th>№ Заказа</th><th>№ БС</th><th>Дата ТЗ</th><th>Стоимость без НДС</th><th>Стоимость с НДС</th><th>ИД</th><th>Внесено в Кедр</th>
-<th>Статус Заказа</th><th>Срок по ТЗ</th><th>Вид работ</th><th>Комментарии (статус/проверка/приемка)</th><th class="col7"></th>
+<th class="col11">№ Заказа</th><th class="col12">№ БС</th><th class="col13">Дата ТЗ</th><th class="col14">Стоимость без НДС</th>
+<th class="15">ИД</th><th class="col16">Внесено в Кедр</th><th class="col17">Статус Заказа</th>
+<th class="col18">Срок по ТЗ</th><th class="col19">Вид работ</th>
+<th class="col20">Комментарии (статус/проверка/приемка)</th><th class="col21"></th>
 </tr>
 <tr th:each="listOrder : ${listOrders}">
-<td th:text="${listOrder.getOrdernumber}"></td><td th:text="${listOrder.getBsnumber}"></td><td th:text="${listOrder.getSend}"></td><td th:text="${listOrder.getSumwithoutnds}"></td>
-<td th:text="${listOrder.getSumwithnds}"></td><td th:text="${listOrder.getReport}"></td><td th:text="${listOrder.getCedr}"></td><td th:text="${listOrder.getStatus}"></td>
-<td th:text="${listOrder.getEndtime}"></td><td th:text="${listOrder.getWorktype}"></td><td th:text="${listOrder.getOrderlistcomment}"></td>
-<td>
+<td th:text="${listOrder.getOrdernumber}" class="col11"></td><td th:text="${listOrder.getBsnumber}" th:title="${listOrder.getBsaddress}" class="col12"></td>
+<td th:text="${listOrder.getSend}" class="col13"></td><td th:text="${listOrder.getSumwithoutnds}" class="col14"></td>
+<td th:text="${listOrder.getReport}" class="col15"></td><td th:text="${listOrder.getCedr}" class="col16"></td>
+<td th:text="${listOrder.getStatus}" class="col17"></td><td th:text="${listOrder.getEndtime}" class="col18"></td>
+<td th:text="${listOrder.getWorktype}" class="col19"></td><td th:text="${listOrder.getOrderlistcomment}" class="col20"></td>
+<td class="col21">
 <form th:action="@{/orders/orderEdit}" method="get" style="display:inline;">
 <input type="hidden" name="id" th:value="${listOrder.getId}">
 <input type="hidden" name="contractnumber" th:value="${contractnumber}">
