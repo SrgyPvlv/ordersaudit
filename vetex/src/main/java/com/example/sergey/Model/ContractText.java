@@ -10,28 +10,38 @@ public class ContractText {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public long id;
+	private long id;
 	
 	@Column
-	public String contractor;
+	private String contractor;
 	
 	@Column
 	@Type(type="org.hibernate.type.BinaryType")
 	private byte[] text;
 	
 	@Column
-	public String number;
+	private String number;
 	
 	@Column
-	public String date;
+	private String date;
+	
+	@Column
+	private String name;
 	
 	public ContractText() {}
 	
-	public ContractText(String contractor,byte[] text, String number, String date ) {
+	public ContractText(String contractor,byte[] text, String number, String date, String name) {
 		this.contractor=contractor;
 		this.text=text;
 		this.number=number;
 		this.date=date;
+		this.name=name;
+	}
+	public ContractText(String contractor, String number, String date, String name) {
+		this.contractor=contractor;
+		this.number=number;
+		this.date=date;
+		this.name=name;
 	}
 	public long getId() {
 		return id;
@@ -59,6 +69,12 @@ public class ContractText {
 	}
 	public String getDate() {
 		return date;
+	}
+	public void setName(String name) {
+		this.name=name;
+	}
+	public String getName() {
+		return name;
 	}
 	
 }

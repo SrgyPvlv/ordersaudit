@@ -28,5 +28,9 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
 	//поиск по номеру БС и подрядчику
 	@Query(value="select * from orderlist where lower(bsnumber) like concat('%',:bsnum,'%') and (contractnumber) like (:contractnum) order by ordernumber",nativeQuery=true)
 	public List<Order> findByBsName(@Param("bsnum") String bsnumber,@Param("contractnum") String contractnumber);
+	
+	//поиск последнего номера заявки для данного подрядчика
+	@Query(value="select max(ordernumber) from orderlist where contractnumber like (:cn)",nativeQuery=true)
+	public int showLastOrderNumber(@Param("cn") String contractnumber);
 
 }

@@ -1,5 +1,7 @@
 package com.example.sergey.Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,4 +25,11 @@ public class ContractTextService {
 	public ContractText getContractText(long id) {
 		return contractTextRepository.getById(id);
 	}
+	public String getContractTextName(String contractnumber) {
+		return contractTextRepository.getNameByContractNumber(contractnumber);
+	}
+	public List<ContractText> getAllContractText() {
+		return contractTextRepository.findAll();
+	}
+	
 }

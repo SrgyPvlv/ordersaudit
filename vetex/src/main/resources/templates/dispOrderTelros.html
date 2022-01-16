@@ -18,11 +18,11 @@
 <input type="hidden" name="id" th:value="${id}">
 <input type="submit" name="submit" value="Сохранить заявку в БД"> &nbsp&nbsp | &nbsp&nbsp
 </form>
-<form id="orderPage2" th:action="@{/orders/showAllOrders}" method="get" target="_blank" style="display:inline;">
+<!-- <form id="orderPage2" th:action="@{/orders/showAllOrders}" method="get" style="display:inline;">
 <input type="hidden" name="contractnumber" th:value="${contractnumber}">
 <input type="hidden" name="contractdate" th:value="${contractdate}">
 <input type="submit" name="submit" value="БД Заявок"> &nbsp&nbsp | &nbsp&nbsp
-</form>
+</form> -->
 <span>Отправка Заявки подрядчику: </span><a href="mailto:fedorova@telros.ru;chukhnin@telros.ru?cc=ustich@mts.ru;maliamov@mts.ru;spavlov@mts.ru"><img src="/images/envelope.jpg" alt="mail" title="Отправка Заявки" width="25" height="25" style="border: none"></a>
 </div>
 <br>
@@ -61,7 +61,12 @@
 <fieldset name="order">
    <legend> Данные для создания Заявки </legend>
    <p style="display:inline;"><label for="ordernumber">№ Заявки: </label>
-      <input form ="orderPage" type="number" id="ordernumber" name="ordernumber" th:value="*{ordernumber !=0} ? *{ordernumber} : '' "  min="1" required></p>
+      <input form ="orderPage" type="number" id="ordernumber" name="ordernumber" th:value="*{ordernumber !=0} ? *{ordernumber} : '' "  min="1" required></p> &nbsp&nbsp ← | ← &nbsp&nbsp
+      <form id="orderPage2" th:action="@{/orders/showNextOrderNumber}" method="get" style="display:inline;">
+          <input type="hidden" name="contractnumber" th:value="${contractnumber}">
+          <input type="hidden" name="contractdate" th:value="${contractdate}">
+          <input type="submit" name="submit" value="Получить номер Заявки" class="ordnum">
+          </form>
    <p><label for="bsnumber">№ Базовой стации: </label>
       <input form ="orderPage" type="text" id="bsnumber" name="bsnumber" th:value="*{bsnumber !=null} ? *{bsnumber} : '' " placeholder="78-XXXXX " pattern="78-\d{5}" required></p>
    <p><label for="send">Дата подачи заявки : </label>

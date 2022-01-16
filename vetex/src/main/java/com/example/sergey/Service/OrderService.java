@@ -19,6 +19,9 @@ public interface OrderService {
 	//получить все заявки по номеру Заявки и подрядчику
 	List<Order> findByOrderNumber(Integer ordernumber,String contractnumber);
 	
+	//создать номер для следующей заявки
+	int showNextOrderNumber(String contractnumber);
+	
 	//добавить, сохранить заявку
 	void createOrder(Order order);
 	

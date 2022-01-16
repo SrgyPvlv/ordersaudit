@@ -53,4 +53,11 @@ public class DefaultOrderService implements OrderService {
 		return ordersList;
 	}
 
+	@Override
+	public int showNextOrderNumber(String contractnumber) {
+		int lastNumber=orderRepository.showLastOrderNumber(contractnumber);
+		int nextNumber=lastNumber+1;
+		return nextNumber;
+	}
+
 }

@@ -2,6 +2,7 @@ package com.example.sergey.Controller;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -67,6 +68,63 @@ public class ContractTextController {
 			  String note="Ошибка  - В базе нет файла для этого Договора!";
 		      model.addAttribute("note", note);
 			  return"noUpload";
+		}
+		
+		@GetMapping("/admin/contractorsShow") //список всех подрядчиков
+		public String showContractors(Model model) {
+			List<ContractText> contractors=contractTextService.getAllContractText();
+			model.addAttribute("contractors", contractors);
+			return "contractors";
+		}
+		
+		@GetMapping("/admin/contractorCreate") // переход на форму создания нового подрядчика
+		public String newContractorForm() {	   
+		   return "newContractorForm";
+		}
+		
+		@PostMapping("/admin/contractorCreate") // создание нового подрядчика
+		public String createNewContractor(@RequestParam("contractor") String contractor, @RequestParam("number") String number,@RequestParam("date") String date,
+				@RequestParam("name") String name) {	   
+			ContractText newContractor=new ContractText(contractor,number,date,name);
+		    contractTextService.saveContractText(newContractor);
+			return "redirect:/admin/contractorsShow";
+		}
+		
+		@GetMapping("/admin/contractorEdit") // переход на форму редактирования подрядчика
+		public String editContractorForm(@RequestParam("id") int id, Model model) {	   
+			ContractText contractor=contractTextService.getContractText(id);
+			String contractorOld=contractor.getContractor();
+			String numberOld=contractor.getNumber();
+			String dateOld=contractor.getDate();
+			String nameOld=contractor.getName();
+			
+			model.addAttribute("id", id);
+			model.addAttribute("contractor", contractorOld);
+			model.addAttribute("number", numberOld);
+			model.addAttribute("date", dateOld);
+			model.addAttribute("name", nameOld);
+			
+			return "editContractorForm";
+		}
+		
+		@PostMapping("/admin/contractorEdit") // редактирование подрядчика
+		public String editNewContractor(@RequestParam("id") int id,@RequestParam("contractor") String contractor, @RequestParam("number") String number,@RequestParam("date") String date,
+				@RequestParam("name") String name) {	   
+			ContractText contractorOld=contractTextService.getContractText(id);
+			contractorOld.setContractor(contractor);
+			contractorOld.setNumber(number);
+			contractorOld.setDate(date);
+			contractorOld.setName(name);
+		   contractTextService.saveContractText(contractorOld);
+			
+			return "redirect:/admin/contractorsShow";
+		}
+		
+		@GetMapping("/superadmin/contractorDelete") // удаление подрядчика
+		public String deleteContractor(@RequestParam("id") int id) {
+			contractTextService.deleteContractTextById(id);
+			
+			return "redirect:/admin/contractorsShow";
 		}
 	}
 	

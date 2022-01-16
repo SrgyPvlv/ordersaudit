@@ -63,7 +63,7 @@ public class OrderController {
 			@RequestParam(name="status",defaultValue="",required=false)String status,
 			@RequestParam(name="orderlistcomment",defaultValue="",required=false)String orderlistcomment,
 			@RequestParam(name="report",defaultValue="нет",required=false)String report,@RequestParam(name="cedr",defaultValue="нет",required=false)String cedr,
-			RedirectAttributes redirectAttr) {
+			RedirectAttributes redirectAttr,Model model) {
 		sumWithOutNds=0;
 		Nds=0;
 		sumWithNds=0;
@@ -86,6 +86,7 @@ public class OrderController {
 		
 		String bsaddress=bsListService.findBsAddress(bsnumber);
 		
+		try {
 		if(id!=0) {
 			Order orderOld=orderService.getOrderById(id);
 			orderOld.setOrdernumber(ordernumber);orderOld.setBsnumber(bsnumber);orderOld.setBsaddress(bsaddress);
@@ -106,7 +107,11 @@ public class OrderController {
 		redirectAttr.addAttribute("contractdate", contractdate);
 		redirectAttr.addAttribute("ordernumber", ordernumber);
 		
-		return "redirect:/orders/showAllOrders";
+		return "redirect:/orders/showAllOrders";} catch(Exception e) {
+	        model.addAttribute("note", "Не удалось записать Заявку в БД! Вероятно данный номер Заявки уже используется. "
+	        		+ "Вернитесь назад, увеличьте номер на 1 единицу и попробуйте снова.");
+	        return "noUpload";
+	      }
 	}
 	
 	@GetMapping("/showAllOrders") //все заявки по подрядчику(т.е. номеру договора) по возрастанию номера заявки 
@@ -119,10 +124,11 @@ public class OrderController {
 			listOrders=orderService.findAllByContractNumberOrderByOrdernumberAsc(contractnumber);} else {
 			listOrders=orderService.findByOrderNumber(ordernumber, contractnumber);
 		}
-		
+		String contractname=contractTextService.getContractTextName(contractnumber);
 		model.addAttribute("listOrders", listOrders);
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractdate", contractdate);
+		model.addAttribute("contractname", contractname);
 	
 		return "showOrders";
 	}
@@ -295,25 +301,60 @@ public class OrderController {
 	@GetMapping("/findByOrderNumber") // поиск по № Заказа
 	public String findByOrderNumber(@RequestParam("orderNumberSearch") Integer orderNumberSearch,
 			@RequestParam(name="contractnumber",required=false) String contractnumber,
-			@RequestParam(name="contractdate",required=false) String contractdate,Model model)throws IOException{
+			@RequestParam(name="contractdate",required=false) String contractdate,
+			@RequestParam(name="contractname",required=false) String contractname,Model model)throws IOException{
 		
 		List<Order> listOrders=orderService.findByOrderNumber(orderNumberSearch, contractnumber);
 		model.addAttribute("listOrders", listOrders);
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractdate", contractdate);
+		model.addAttribute("contractname", contractname);
 		return "showOrders";	
 	}
 	
 	@GetMapping("/findByBsName") // поиск по № БС
 	public String findByBsName(@RequestParam("bsNumberSearch") String bsNumberSearch,
 			@RequestParam(name="contractnumber",required=false) String contractnumber,
-			@RequestParam(name="contractdate",required=false) String contractdate,Model model)throws IOException{
+			@RequestParam(name="contractdate",required=false) String contractdate,
+			@RequestParam(name="contractname",required=false) String contractname,Model model)throws IOException{
 		
 		List<Order> listOrders=orderService.findByBsName(bsNumberSearch, contractnumber);
 		model.addAttribute("listOrders", listOrders);
 		model.addAttribute("contractnumber", contractnumber);
-		model.addAttribute("contractdate", contractdate);		
+		model.addAttribute("contractdate", contractdate);
+		model.addAttribute("contractname", contractname);
 		return "showOrders";
+	}
+	@GetMapping("/showNextOrderNumber") //определение номера для следующей заявки для данного подрядчика 
+	public String showNextOrderNumber(@RequestParam(name="contractnumber",required=false) String contractnumber,
+			@RequestParam(name="contractdate",required=false) String contractdate,Model model,RedirectAttributes redirectAttr) {
+		sumWithOutNds=0;
+		Nds=0;
+		sumWithNds=0;
+		
+		String vetex=contractTextService.getContractText(1).getNumber();
+		String sps=contractTextService.getContractText(2).getNumber();
+		String volot=contractTextService.getContractText(3).getNumber();
+		String telecom=contractTextService.getContractText(4).getNumber();
+		String telros=contractTextService.getContractText(5).getNumber();
+		
+		String asd = null;
+		
+		if (contractnumber.equals(vetex)) {asd="redirect:/dispOrder";} else {
+		if (contractnumber.equals(sps)) {asd= "redirect:/dispOrder/sps";}else {
+				if(contractnumber.equals(volot)) {asd= "redirect:/dispOrder/volot";} else {
+					if(contractnumber.equals(telecom)) {asd= "redirect:/dispOrder/telecom";} else {
+						if(contractnumber.equals(telros)) {asd= "redirect:/dispOrder/telros";}
+	}
+  }
+ }
+}	
+
+		int ordernumber=orderService.showNextOrderNumber(contractnumber);
+		redirectAttr.addAttribute("ordernumber", ordernumber);
+		redirectAttr.addAttribute("contractnumber", contractnumber);
+		redirectAttr.addAttribute("contractdate", contractdate);
+		return asd;
 	}
 	
 }
