@@ -11,6 +11,7 @@
 <div th:replace="header :: header"></div>
 
 <p id="up"><a href="#down" class="up">В конец страницы ↓</a></p>
+
 <div class="find" id="find">
   <div id="ordersshow1">         
      <form th:action="@{/orders/findByOrderNumber}" th:method="get" style="display:inline;">
@@ -20,22 +21,30 @@
        <input type="hidden" name="contractdate" th:value="${contractdate}">
        <input type="hidden" name="contractname" th:value="${contractname}">
        <input type="submit" value="Найти" >
-     </form> &nbsp&nbsp
+     </form> &nbsp&nbsp | &nbsp&nbsp
      <form th:action="@{/orders/showAllOrders}" method="get" style="display:inline;">
        <label>Показать все Заявки</label> &nbsp&nbsp
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
        <input type="hidden" name="contractdate" th:value="${contractdate}">
        <input type="submit" name="submit" value="Показать">
-     </form>
+     </form> &nbsp&nbsp | &nbsp&nbsp
+     <span>Отправка Заявки: </span>
+     <span th:switch="${contractnumber}">
+     <a th:case="'D180397413'" href="mailto:ostruchistyy@vertexspb.ru;dmax29@ya.ru;mitinyurii@mail.ru?cc=ustich@mts.ru;maliamov@mts.ru;spavlov@mts.ru"><img src="/images/envelope.jpg" alt="mail" title="Отправка Заявки" width="25" height="25" style="border: none"></a>
+     <a th:case="'D210390515-07'" href="mailto:ooospsspb@mail.ru?cc=ustich@mts.ru;maliamov@mts.ru;spavlov@mts.ru"><img src="/images/envelope.jpg" alt="mail" title="Отправка Заявки" width="25" height="25" style="border: none"></a>
+     <a th:case="'D210393422-07'" href="mailto:v.ivanov@volot.su;a.nosov@volot.su?cc=ustich@mts.ru;maliamov@mts.ru;spavlov@mts.ru"><img src="/images/envelope.jpg" alt="mail" title="Отправка Заявки" width="25" height="25" style="border: none"></a>
+     <a th:case="'D210400989-07'" href="mailto:telecom-service@bk.ru;denis_agafonov@bk.ru?cc=ustich@mts.ru;maliamov@mts.ru;spavlov@mts.ru"><img src="/images/envelope.jpg" alt="mail" title="Отправка Заявки" width="25" height="25" style="border: none"></a>
+     <a th:case="'D210345364-07'" href="mailto:fedorova@telros.ru;chukhnin@telros.ru?cc=ustich@mts.ru;maliamov@mts.ru;spavlov@mts.ru"><img src="/images/envelope.jpg" alt="mail" title="Отправка Заявки" width="25" height="25" style="border: none"></a>
+     </span>
      <br><br>  
-     <form th:action="@{/orders/findByBsName}" th:method="get" >
+     <form th:action="@{/orders/findByBsName}" th:method="get">
        <label>Поиск по № БС</label> &nbsp&nbsp
        <input type="text" name="bsNumberSearch" placeholder="Код '78-' указывать необязательно" style="width:220px" required>
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
        <input type="hidden" name="contractdate" th:value="${contractdate}">
        <input type="hidden" name="contractname" th:value="${contractname}">
        <input type="submit" value="Найти" >  
-     </form>
+     </form>  
   </div>
   <div id="ordersshow2">
   <h3 th:text="${contractname}" style="color:#8B4513;"></h3>
