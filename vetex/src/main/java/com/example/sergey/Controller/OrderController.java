@@ -151,14 +151,6 @@ public class OrderController {
 		Nds=0;
 		sumWithNds=0;
 		
-		Order orderDb=orderService.getOrderById(id);
-		String cartJsonStr=orderDb.getCart();
-		Type listType = new TypeToken<ArrayList<VetexOrder>>() {}.getType();
-        ArrayList<VetexOrder> cartArrayList = new Gson().fromJson(cartJsonStr,listType); //Json в ArrayList
-        
-        orderCart.setItemsOrderCart(cartArrayList);
-        cart=orderCart.getItemsOrderCart();
-		
 		String vetex=contractTextService.getContractText(1).getNumber();
 		String sps=contractTextService.getContractText(2).getNumber();
 		String volot=contractTextService.getContractText(3).getNumber();
@@ -167,15 +159,23 @@ public class OrderController {
 		
 		String asd = null;
 		
-		if (contractnumber.equals(vetex)) asd="redirect:/dispOrder"; else {
-		if (contractnumber.equals(sps)) asd= "redirect:/dispOrder/sps";else {
-				if(contractnumber.equals(volot)) asd= "redirect:/dispOrder/volot"; else {
-					if(contractnumber.equals(telecom)) asd= "redirect:/dispOrder/telecom"; else {
-						if(contractnumber.equals(telros)) asd= "redirect:/dispOrder/telros";
-	}
-  }
- }
-}		
+		if (contractnumber.equals(vetex)) {vetexController.clearCart3(); asd="redirect:/dispOrder";} else {
+			if (contractnumber.equals(sps)) {spsController.clearCart3();asd= "redirect:/dispOrder/sps";}else {
+					if(contractnumber.equals(volot)) {volotController.clearCart3();asd= "redirect:/dispOrder/volot";} else {
+						if(contractnumber.equals(telecom)) {telecomController.clearCart3();asd= "redirect:/dispOrder/telecom";} else {
+							if(contractnumber.equals(telros)) {telrosController.clearCart3();asd= "redirect:/dispOrder/telros";}
+		}
+	  }
+	 }
+	}	
+		Order orderDb=orderService.getOrderById(id);
+		String cartJsonStr=orderDb.getCart();
+		Type listType = new TypeToken<ArrayList<VetexOrder>>() {}.getType();
+        ArrayList<VetexOrder> cartArrayList = new Gson().fromJson(cartJsonStr,listType); //Json в ArrayList
+        
+        orderCart.setItemsOrderCart(cartArrayList);
+        cart=orderCart.getItemsOrderCart();
+		
 		redirectAttr.addAttribute("id", id);
 		redirectAttr.addAttribute("ordernumber", orderDb.getOrdernumber());
 		redirectAttr.addAttribute("bsnumber", orderDb.getBsnumber());
@@ -237,7 +237,7 @@ public class OrderController {
 		//redirectAttr.addAttribute("author", orderDb.getAuthor());
 		//redirectAttr.addAttribute("arenda", orderDb.getArenda());
 		redirectAttr.addAttribute("worktype", orderDb.getWorktype());
-		redirectAttr.addAttribute("comment", orderDb.getComment());
+		//redirectAttr.addAttribute("comment", orderDb.getComment());
 		redirectAttr.addAttribute("contractnumber", orderDb.getContractnumber());
 		redirectAttr.addAttribute("contractdate", orderDb.getContractdate());
 		//redirectAttr.addAttribute("status", orderDb.getStatus());
