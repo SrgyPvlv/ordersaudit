@@ -15,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.annotation.SessionScope;
+
 import com.example.sergey.Model.ContractText;
 import com.example.sergey.Model.OrderCart;
 import com.example.sergey.Model.Users;
@@ -26,6 +28,7 @@ import com.example.sergey.Service.UsersService;
 import com.example.sergey.Service.VetexService;
 
 @Controller
+@SessionScope
 public class VetexController {
 	
 	double sumWithOutNds;

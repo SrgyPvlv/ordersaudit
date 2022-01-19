@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.sergey.Model.Order;
 import com.example.sergey.Model.OrderCart;
@@ -31,6 +32,7 @@ import lombok.Data;
 
 @Data
 @Controller
+@SessionScope
 @RequestMapping("/orders")
 public class OrderController {
 
@@ -106,6 +108,12 @@ public class OrderController {
 		redirectAttr.addAttribute("contractnumber", contractnumber);
 		redirectAttr.addAttribute("contractdate", contractdate);
 		redirectAttr.addAttribute("ordernumber", ordernumber);
+		
+		vetexController.clearCart3();
+	    spsController.clearCart3();
+	    volotController.clearCart3();
+		telecomController.clearCart3();
+        telrosController.clearCart3();
 		
 		return "redirect:/orders/showAllOrders";} catch(Exception e) {
 	        model.addAttribute("note", "Не удалось записать Заявку в БД! Вероятно данный номер Заявки уже используется. "
