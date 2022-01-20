@@ -12,21 +12,26 @@
 
 <br><br>
 <div>
- <table class="userstable" border="1">
+ <table class="contractorstable" border="1">
  <caption align="top"><h3>Список Подрядчиков &nbsp&nbsp&nbsp&nbsp
    <form th:action="@{/admin/contractorCreate}" method="get" style="display:inline;">
    <input type="submit" value="Добавить подрядчика">
    </form></h3>
  </caption>
         <tr>
-          <th> id </th> <th>Название</th> <th>Псевдоним</th> <th>Номер договора</th> <th>Дата договора</th>
+          <th> id </th> <th>Название</th> <th>Логин</th> <th>Номер договора</th> <th>Дата договора</th>
+          <th> Почта 1 </th> <th>Почта 2</th> <th>Почта 3</th> <th>Виды работ (объем)</th> <th>Срок действия договора: до</th>
         </tr>
          
         <tr th:each="contractor : ${contractors}">
            <td th:text="${contractor.getId} ">id</td><td th:text="${contractor.getName} ">Название</td>
            <td th:text="${contractor.getContractor} ">Логин</td><td th:text="${contractor.getNumber} ">Номер договора</td>
            <td th:text="${contractor.getDate} ">Дата договора</td>
-           <td>
+           <td th:text="${contractor.getEmail1} ">Почта 1</td><td th:text="${contractor.getEmail2} ">Почта 2</td>
+           <td th:text="${contractor.getEmail3} ">Почта 3</td><td th:text="${contractor.getWork} ">Виды работ (объем)</td>
+           <td th:text="${contractor.getContractEnd} ">Срок действия договора: до</td>
+           
+           <td class="col7">
            <form th:action="@{/admin/contractorEdit}" method="get" style="display:inline;">
                  <input type="hidden" name="id" th:value="${contractor.getId}">
                  <input type="submit" value="Редактировать" style="background:#98FB98;">

@@ -177,6 +177,9 @@ position: fixed; /* Фиксированное положение */
 	border-collapse: collapse;
     width: 60%;
 }
+.contractorstable{
+	border-collapse: collapse;
+}
 a.ref:link{
 	color:black; text-decoration:none;
 }

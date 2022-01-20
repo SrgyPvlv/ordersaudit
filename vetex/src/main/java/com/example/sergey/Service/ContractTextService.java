@@ -3,6 +3,7 @@ package com.example.sergey.Service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.sergey.Model.ContractText;
@@ -13,23 +14,25 @@ public class ContractTextService {
 
 	@Autowired ContractTextRepository contractTextRepository;
 	
-	public void saveContractText(ContractText text) {
+	public void saveContractText(ContractText text) { //сохранение подрядчика в БД (аргумент-объект подрядчика)
 	    contractTextRepository.saveAndFlush(text);
     }
-	public void deleteContractText(ContractText text) {
+	public void deleteContractText(ContractText text) { //удаление подрядчика в БД (аргумент-объект подрядчика)
 		contractTextRepository.delete(text);
 	}
-	public void deleteContractTextById(long id) {
+	public void deleteContractTextById(long id) { //удаление подрядчика в БД по id
 		contractTextRepository.deleteById(id);
 	}
-	public ContractText getContractText(long id) {
+	public ContractText getContractText(long id) { //извлечение подрядчика из БД по id
 		return contractTextRepository.getById(id);
 	}
-	public String getContractTextName(String contractnumber) {
+	public String getContractTextName(String contractnumber) { //получение названия подрядчика по номеру договора
 		return contractTextRepository.getNameByContractNumber(contractnumber);
 	}
-	public List<ContractText> getAllContractText() {
+	public List<ContractText> getAllContractText() { //извлечение списком всех подрядчиков из БД
 		return contractTextRepository.findAll();
 	}
-	
+	public List<ContractText> getAllContractTextSortedById() { //извлечение списком всех подрядчиков из БД по увеличению id
+		return contractTextRepository.findAll(Sort.by("id").ascending());
+	}
 }

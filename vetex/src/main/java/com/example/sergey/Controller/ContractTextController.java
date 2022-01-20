@@ -70,9 +70,9 @@ public class ContractTextController {
 			  return"noUpload";
 		}
 		
-		@GetMapping("/admin/contractorsShow") //список всех подрядчиков
+		@GetMapping("/admin/contractorsShow") //список всех подрядчиков по увеличению id
 		public String showContractors(Model model) {
-			List<ContractText> contractors=contractTextService.getAllContractText();
+			List<ContractText> contractors=contractTextService.getAllContractTextSortedById();
 			model.addAttribute("contractors", contractors);
 			return "contractors";
 		}
@@ -83,9 +83,11 @@ public class ContractTextController {
 		}
 		
 		@PostMapping("/admin/contractorCreate") // создание нового подрядчика
-		public String createNewContractor(@RequestParam("contractor") String contractor, @RequestParam("number") String number,@RequestParam("date") String date,
-				@RequestParam("name") String name) {	   
-			ContractText newContractor=new ContractText(contractor,number,date,name);
+		public String createNewContractor(@RequestParam("contractor") String contractor, @RequestParam("number") String number,
+				@RequestParam("date") String date,@RequestParam("name") String name,@RequestParam("email1") String email1,
+				@RequestParam(name="email2",required=false) String email2,@RequestParam(name="email3",required=false) String email3,
+				@RequestParam("work") String work,@RequestParam("contractend") String contractend) {	   
+			ContractText newContractor=new ContractText(contractor,number,date,name,email1,email2,email3,work,contractend);
 		    contractTextService.saveContractText(newContractor);
 			return "redirect:/admin/contractorsShow";
 		}
@@ -97,24 +99,41 @@ public class ContractTextController {
 			String numberOld=contractor.getNumber();
 			String dateOld=contractor.getDate();
 			String nameOld=contractor.getName();
+			String email1Old=contractor.getEmail1();
+			String email2Old=contractor.getEmail2();
+			String email3Old=contractor.getEmail3();
+			String workOld=contractor.getWork();
+			String contractendOld=contractor.getContractEnd();
 			
 			model.addAttribute("id", id);
 			model.addAttribute("contractor", contractorOld);
 			model.addAttribute("number", numberOld);
 			model.addAttribute("date", dateOld);
 			model.addAttribute("name", nameOld);
+			model.addAttribute("email1", email1Old);
+			model.addAttribute("email2", email2Old);
+			model.addAttribute("email3", email3Old);
+			model.addAttribute("work", workOld);
+			model.addAttribute("contractend", contractendOld);
 			
 			return "editContractorForm";
 		}
 		
 		@PostMapping("/admin/contractorEdit") // редактирование подрядчика
 		public String editNewContractor(@RequestParam("id") int id,@RequestParam("contractor") String contractor, @RequestParam("number") String number,@RequestParam("date") String date,
-				@RequestParam("name") String name) {	   
+				@RequestParam("name") String name,@RequestParam("email1") String email1,
+				@RequestParam(name="email2",required=false) String email2,@RequestParam(name="email3",required=false) String email3,
+				@RequestParam("work") String work,@RequestParam("contractend") String contractend) {	   
 			ContractText contractorOld=contractTextService.getContractText(id);
 			contractorOld.setContractor(contractor);
 			contractorOld.setNumber(number);
 			contractorOld.setDate(date);
 			contractorOld.setName(name);
+			contractorOld.setEmail1(email1);
+			contractorOld.setEmail2(email2);
+			contractorOld.setEmail3(email3);
+			contractorOld.setWork(work);
+			contractorOld.setContractEnd(contractend);
 		   contractTextService.saveContractText(contractorOld);
 			
 			return "redirect:/admin/contractorsShow";

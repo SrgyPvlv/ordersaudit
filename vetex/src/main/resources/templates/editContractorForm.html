@@ -29,6 +29,21 @@
         <label>Дата договора</label><br>
         <input type="text" name="date" th:value="${date}" style="text-align: center;width: 250px;"/>
         <br><br>
+        <label>Почта 1</label><br>
+        <input type="email" name="email1" th:value="${email1}" style="text-align: center" required/>
+        <br><br>
+        <label>Почта 2</label><br>
+        <input type="email" name="email2" th:value="${email2}" style="text-align: center"/>
+        <br><br>
+        <label>Почта 3</label><br>
+        <input type="email" name="email3" th:value="${email3}" style="text-align: center"/>
+        <br><br>
+        <label>Виды работ (объем)</label><br>
+        <input type="text" name="work" th:value="${work}" style="text-align: center" required/>
+        <br><br>
+        <label>Срок действия договора: до</label><br>
+        <input type="text" name="contractend" th:value="${contractend}" style="text-align: center" required/>
+        <br><br>
 	    <input type="submit" value="Сохранить" autofocus style="width: 100px; height: 40px; background-color: #98FB98;">
  </form>
  </fieldset>

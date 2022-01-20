@@ -8,7 +8,7 @@ import com.example.sergey.Model.ContractText;
 
 public interface ContractTextRepository extends JpaRepository<ContractText,Long> {
 
-	//название подрядчика по номеру договора
+	//получение названия подрядчика по номеру договора
 	@Query(value="select (name) from contracttext where number like (:number)",nativeQuery=true)
 	public String getNameByContractNumber(@Param("number") String number);
 	
