@@ -35,4 +35,7 @@ public class ContractTextService {
 	public List<ContractText> getAllContractTextSortedById() { //извлечение списком всех подрядчиков из БД по увеличению id
 		return contractTextRepository.findAll(Sort.by("id").ascending());
 	}
+	public List<ContractText> getAllWithSomeColumn() { //извлечение всех подрядчиков из БД с избранными полями
+		return contractTextRepository.getAllWithSomeColumn();
+	}
 }

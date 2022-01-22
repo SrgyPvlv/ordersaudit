@@ -12,7 +12,8 @@ public class ContractText {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;
+	@Column(name="id")
+	private Long id;
 	
 	@Column
 	private String contractor;
@@ -72,7 +73,15 @@ public class ContractText {
 		this.work=work;
 		this.contractend=contractend;
 	}
-	public long getId() {
+	public ContractText(Long id,String contractor,String name,String work,String contractend) {
+		this.id=id;
+		this.contractor=contractor;
+		this.name=name;
+		this.work=work;
+		this.contractend=contractend;
+	}
+	
+	public Long getId() {
 		return id;
 	}
 	public void setContractor(String contractor) {

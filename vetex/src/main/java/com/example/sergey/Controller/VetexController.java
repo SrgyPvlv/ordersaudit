@@ -49,7 +49,7 @@ public class VetexController {
 	@Autowired UsersService userService;
 	@Autowired BsListService bsListService;
 	
-	@GetMapping("/priceItems")
+	@GetMapping("/priceItems/vetex")
 	public String getAllPriceItems(Model model) {
 		List<Vetex> listitems=vetexService.findAllPriceItems();
 		ContractText vetexContract=contractTextService.getContractText(1);
@@ -65,7 +65,7 @@ public class VetexController {
 	@GetMapping ("/superadmin/deleteAllPrices")
 	public String deleteAllPrices() {
 		vetexService.deleteAllPrices();
-		return "redirect:/priceItems";
+		return "redirect:/priceItems/vetex";
 	}
 	
 	@GetMapping("/admin/newItem")
@@ -81,14 +81,14 @@ public class VetexController {
 			vetexService.savePriceItem(newPriceItem);
 		}catch (Exception e) {}
 		
-		return "redirect:/priceItems";
+		return "redirect:/priceItems/vetex";
 	}
 	
 	@GetMapping("/admin/itemDelete")
 	public String itemDelete(@RequestParam("id") long id) {
 		vetexService.deletePriceItemById(id);
 		
-		return "redirect:/priceItems";
+		return "redirect:/priceItems/vetex";
 	}
 	
 	@GetMapping("/admin/itemEditForm")
@@ -108,7 +108,7 @@ public class VetexController {
 		item.setPrice(price);
 		item.setComment(comment);
 		vetexService.savePriceItem(item);
-		return "redirect:/priceItems";
+		return "redirect:/priceItems/vetex";
 	}
 	
 	@GetMapping("/findByNumber")
@@ -156,7 +156,7 @@ public class VetexController {
 		VetexOrder vetexOrder=new VetexOrder(ppnumber,workname,unitmeasure,price,comment,quantity);
 		orderCart.addItem(vetexOrder);
 		
-		return "redirect:/priceItems";
+		return "redirect:/priceItems/vetex";
 	}
 	
 	@GetMapping ("/dispOrder")
@@ -252,7 +252,7 @@ public class VetexController {
 		this.id=null; this.ordernumber=null; this.bsnumber=null; this.send=null; this.start=null; this.endtime=null;
 		this.remedy=null; this.author=null; this.arenda=null; this.worktype=null; this.comment=null; this.status=null;
 		this.report=null; this.cedr=null; this.orderlistcomment=null;
-		return "redirect:/priceItems";
+		return "redirect:/priceItems/vetex";
 	}
 	
 	public void clearCart3() {

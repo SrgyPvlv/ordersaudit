@@ -20,11 +20,10 @@ public class GeneralController {
 	public String login() {
 		return "login";
 	}
-	@GetMapping("/")
+	@GetMapping("/") //переход на страницу index (главную) с передачей данных о подрядчиках
 	public String index(Model model) {
 		
-		List<ContractText> contractors=contractTextService.getAllContractTextSortedById();
-		
+		List<ContractText> contractors=contractTextService.getAllWithSomeColumn();
 		model.addAttribute("contractors", contractors);
 		return "index";
 	}

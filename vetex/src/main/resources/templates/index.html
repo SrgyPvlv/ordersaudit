@@ -21,16 +21,9 @@
 <tr><th>Организация</th><th>Виды работ (объем)</th><th>Срок действия договора: до</th></tr>
 
 <tr th:each="contractor: ${contractors}">
-    <td th:text="${contractor.getName}">Организация</td>
+    <td><a th:href="@{'/priceItems/'+${contractor.getContractor}}"><span th:text="${contractor.getName}"></span></a></td>
     <td th:text="${contractor.getWork}">Виды работ (объем)</td>
     <td th:text="${contractor.getContractEnd}">Срок действия договора: до</td></tr>
-    
-<tr><td><a th:href="@{/priceItems}"> ООО "ВетексЭлектро" </a></td><td>Демонтаж/временный демонтаж/перенос по требованию арендодателя. (100%)</td><td>31.12.2021.</td></tr>
-<tr><td><a th:href="@{/priceItems/sps}">ООО "СоюзПетроСервис" </a></td><td>ТО/АВР инфраструктуры и АФУ. (Инфраструктура - 60%, АФУ - 30%.)</td><td>30.11.2023.</td></tr>
-<tr><td><a th:href="@{/priceItems/volot}">ООО "Волот" </a></td><td>ТО/АВР инфраструктуры и АФУ. (Инфраструктура - 40%, АФУ - 10%.)</td><td>30.11.2023.</td></tr>
-<tr><td><a th:href="@{/priceItems/telecom}">ООО "Телеком-Сервис" </a></td><td>ТО/АВР АФУ. (АФУ - 60%.)</td><td>30.11.2023.</td></tr>
-<tr><td><a th:href="@{/priceItems/telros}">ООО "Телрос" </a></td><td>ТО/АВР охранно-пожарных систем. (100%)</td><td>31.12.2023.</td></tr>
-
 </table>
 
 <br><br>
