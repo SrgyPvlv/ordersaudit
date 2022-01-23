@@ -53,7 +53,7 @@ public class TelecomController {
 	@GetMapping("/priceItems/telecom")
 	public String getAllPriceItemsTelecom(Model model) {
 		List<Telecom> listitems=telecomService.findAllPriceItems();
-		ContractText vetexContract=contractTextService.getContractText(4);
+		ContractText vetexContract=contractTextService.getContractorWithOutText(4);
 		contractnumber=vetexContract.getNumber();
 		contractdate=vetexContract.getDate();
 		
@@ -190,7 +190,7 @@ public class TelecomController {
 		if(!report.isEmpty()) this.report=report;
 		if(!cedr.isEmpty()) this.cedr=cedr;
 		if(!contractnumber.isEmpty() && !contractdate.isEmpty()) {this.contractnumber=contractnumber;this.contractdate=contractdate;} else {
-			ContractText vetexContract=contractTextService.getContractText(4);
+			ContractText vetexContract=contractTextService.getContractorWithOutText(4);
 			this.contractnumber=vetexContract.getNumber();
 			this.contractdate=vetexContract.getDate();}
 		
@@ -214,6 +214,8 @@ public class TelecomController {
 		Users user=userService.findUsersByLogin(login);
 		String username=user.getFullName();
 		
+		String contractname=contractTextService.getContractTextName(this.contractnumber);
+		
 		model.addAttribute("cart", cart);
 		model.addAttribute("id", this.id);
 		model.addAttribute("sumWithOutNds", this.sumWithOutNds);
@@ -236,6 +238,7 @@ public class TelecomController {
 		model.addAttribute("report", this.report);
 		model.addAttribute("cedr", this.cedr);
 		model.addAttribute("orderlistcomment", this.orderlistcomment);
+		model.addAttribute("contractname", contractname);
 		return"dispOrderTelecom";
 	}
 	@GetMapping ("/clearCart/telecom")

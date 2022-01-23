@@ -110,13 +110,13 @@ position: fixed; /* Фиксированное положение */
 .col1 {
 	width: 15%;
 }
-.col2 {
+.col2,.col161 {
 	width: 5%;
 }
-.col4 {
-	width: 10%;
+.col16{
+	width: 5%;
 }
-.col5 {
+.col4,.col5 {
 	width: 10%;
 }
 .col7 {
@@ -125,9 +125,6 @@ position: fixed; /* Фиксированное положение */
 }
 .col8 {
 	width: 18%;
-}
-.col16 {
-	width: 5%;
 }
 .col19,.col20 {
 	width: 14%;
@@ -155,15 +152,6 @@ position: fixed; /* Фиксированное положение */
 	margin-right:15px;
 	text-align:right;
 }
-#listPo{
-	list-style-type: disc;
-}
-#listPo li{
-	font-size:22px;
-}
-#listPo span{
-	font-size:20px;
-}
 .header a:link{
 	color:black; text-decoration:none;
 }
@@ -179,15 +167,6 @@ position: fixed; /* Фиксированное положение */
 }
 .contractorstable{
 	border-collapse: collapse;
-}
-a.ref:link{
-	color:black; text-decoration:none;
-}
-a.ref:visited {
-	color:black; text-decoration:none;
-}
-a.ref:hover {
-	color:blue; text-decoration:underline;
 }
 fieldset{
     
@@ -231,13 +210,13 @@ legend{
     text-align:center;
     min-height:30px;
 }
-a.remedyhref:link{
+a.ref:link,a.remedyhref:link,a.up:link,a.down:link{
 	color:black; text-decoration:none;
 }
-a.remedyhref:visited {
+a.ref:visited,a.remedyhref:visited,a.up:visited,a.down:visited {
 	color:black; text-decoration:none;
 }
-a.remedyhref:hover {
+a.ref:hover,a.remedyhref:hover,a.up:hover,a.down:hover {
 	color:blue; text-decoration:underline;
 }
 .form{
@@ -255,15 +234,6 @@ a.remedyhref:hover {
 	border:2px solid red;
 	padding: 9px;
 	margin-bottom:10px;
-}
-a.up:link,a.down:link{
-	color:black; text-decoration:none;
-}
-a.up:visited,a.down:visited {
-	color:black; text-decoration:none;
-}
-a.up:hover,a.down:hover {
-	color:blue; text-decoration:underline;
 }
 .ordnum{
 	background:#FFFFFF;

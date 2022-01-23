@@ -73,10 +73,16 @@ public class ContractText {
 		this.work=work;
 		this.contractend=contractend;
 	}
-	public ContractText(Long id,String contractor,String name,String work,String contractend) {
+	public ContractText(Long id,String contractor, String number, String date, String name,String email1,
+			String email2,String email3,String work,String contractend) {
 		this.id=id;
 		this.contractor=contractor;
+		this.number=number;
+		this.date=date;
 		this.name=name;
+		this.email1=email1;
+		this.email2=email2;
+		this.email3=email3;
 		this.work=work;
 		this.contractend=contractend;
 	}

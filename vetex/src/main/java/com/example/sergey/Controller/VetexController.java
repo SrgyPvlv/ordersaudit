@@ -52,7 +52,7 @@ public class VetexController {
 	@GetMapping("/priceItems/vetex")
 	public String getAllPriceItems(Model model) {
 		List<Vetex> listitems=vetexService.findAllPriceItems();
-		ContractText vetexContract=contractTextService.getContractText(1);
+		ContractText vetexContract=contractTextService.getContractorWithOutText(1);
 		contractnumber=vetexContract.getNumber();
 		contractdate=vetexContract.getDate();
 		
@@ -189,7 +189,7 @@ public class VetexController {
 		if(!report.isEmpty()) this.report=report;
 		if(!cedr.isEmpty()) this.cedr=cedr;
 		if(!contractnumber.isEmpty() && !contractdate.isEmpty()) {this.contractnumber=contractnumber;this.contractdate=contractdate;} else {
-			ContractText vetexContract=contractTextService.getContractText(1);
+			ContractText vetexContract=contractTextService.getContractorWithOutText(1);
 			this.contractnumber=vetexContract.getNumber();
 			this.contractdate=vetexContract.getDate();}
 		
@@ -213,6 +213,7 @@ public class VetexController {
 		Users user=userService.findUsersByLogin(login);
 		String username=user.getFullName();
 		
+		String contractname=contractTextService.getContractTextName(this.contractnumber);
 		
 		model.addAttribute("cart", cart);
 		model.addAttribute("id", this.id);
@@ -236,6 +237,7 @@ public class VetexController {
 		model.addAttribute("report", this.report);
 		model.addAttribute("cedr", this.cedr);
 		model.addAttribute("orderlistcomment", this.orderlistcomment);
+		model.addAttribute("contractname", contractname);
 		return"dispOrder";
 	}
 	@GetMapping ("/clearCart")

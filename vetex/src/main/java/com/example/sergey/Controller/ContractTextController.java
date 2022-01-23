@@ -94,7 +94,7 @@ public class ContractTextController {
 		
 		@GetMapping("/admin/contractorEdit") // переход на форму редактирования подрядчика
 		public String editContractorForm(@RequestParam("id") int id, Model model) {	   
-			ContractText contractor=contractTextService.getContractText(id);
+			ContractText contractor=contractTextService.getContractorWithOutText(id);
 			String contractorOld=contractor.getContractor();
 			String numberOld=contractor.getNumber();
 			String dateOld=contractor.getDate();
@@ -124,7 +124,7 @@ public class ContractTextController {
 				@RequestParam("name") String name,@RequestParam("email1") String email1,
 				@RequestParam(name="email2",required=false) String email2,@RequestParam(name="email3",required=false) String email3,
 				@RequestParam("work") String work,@RequestParam("contractend") String contractend) {	   
-			ContractText contractorOld=contractTextService.getContractText(id);
+			ContractText contractorOld=contractTextService.getContractorWithOutText(id);
 			contractorOld.setContractor(contractor);
 			contractorOld.setNumber(number);
 			contractorOld.setDate(date);

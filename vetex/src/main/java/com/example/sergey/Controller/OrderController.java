@@ -159,11 +159,11 @@ public class OrderController {
 		Nds=0;
 		sumWithNds=0;
 		
-		String vetex=contractTextService.getContractText(1).getNumber();
-		String sps=contractTextService.getContractText(2).getNumber();
-		String volot=contractTextService.getContractText(3).getNumber();
-		String telecom=contractTextService.getContractText(4).getNumber();
-		String telros=contractTextService.getContractText(5).getNumber();
+		String vetex=contractTextService.getContractorWithOutText(1).getNumber();
+		String sps=contractTextService.getContractorWithOutText(2).getNumber();
+		String volot=contractTextService.getContractorWithOutText(3).getNumber();
+		String telecom=contractTextService.getContractorWithOutText(4).getNumber();
+		String telros=contractTextService.getContractorWithOutText(5).getNumber();
 		
 		String asd = null;
 		
@@ -211,11 +211,11 @@ public class OrderController {
 		Nds=0;
 		sumWithNds=0;
 		
-		String vetex=contractTextService.getContractText(1).getNumber();
-		String sps=contractTextService.getContractText(2).getNumber();
-		String volot=contractTextService.getContractText(3).getNumber();
-		String telecom=contractTextService.getContractText(4).getNumber();
-		String telros=contractTextService.getContractText(5).getNumber();
+		String vetex=contractTextService.getContractorWithOutText(1).getNumber();
+		String sps=contractTextService.getContractorWithOutText(2).getNumber();
+		String volot=contractTextService.getContractorWithOutText(3).getNumber();
+		String telecom=contractTextService.getContractorWithOutText(4).getNumber();
+		String telros=contractTextService.getContractorWithOutText(5).getNumber();
 		
 		String asd = null;
 		
@@ -340,11 +340,11 @@ public class OrderController {
 		Nds=0;
 		sumWithNds=0;
 		
-		String vetex=contractTextService.getContractText(1).getNumber();
-		String sps=contractTextService.getContractText(2).getNumber();
-		String volot=contractTextService.getContractText(3).getNumber();
-		String telecom=contractTextService.getContractText(4).getNumber();
-		String telros=contractTextService.getContractText(5).getNumber();
+		String vetex=contractTextService.getContractorWithOutText(1).getNumber();
+		String sps=contractTextService.getContractorWithOutText(2).getNumber();
+		String volot=contractTextService.getContractorWithOutText(3).getNumber();
+		String telecom=contractTextService.getContractorWithOutText(4).getNumber();
+		String telros=contractTextService.getContractorWithOutText(5).getNumber();
 		
 		String asd = null;
 		

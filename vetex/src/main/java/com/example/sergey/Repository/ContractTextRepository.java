@@ -16,7 +16,13 @@ public interface ContractTextRepository extends JpaRepository<ContractText,Long>
 	@Query(value="select (name) from contracttext where number like (:number)",nativeQuery=true)
 	public String getNameByContractNumber(@Param("number") String number);
 	
-	//извлечение всех подрядчиков из БД с избранными полями
-	@Query(value="select new ContractText(c.id,c.contractor,c.name,c.work,c.contractend) from ContractText c")
+	//извлечение всех подрядчиков из БД без поля "текст договора"
+	@Query(value="select new ContractText(c.id,c.contractor,c.number,c.date,c.name,c.email1,c.email2,"
+			+ "c.email3,c.work,c.contractend) from ContractText c order by c.id")
 	public List<ContractText> getAllWithSomeColumn();
+	
+	//извлечение подрядчика по id из БД без поля "текст договора"
+	@Query(value="select new ContractText(c.id,c.contractor,c.number,c.date,c.name,c.email1,c.email2,"
+			+ "c.email3,c.work,c.contractend) from ContractText c where c.id=(:id)")
+	public ContractText getContractorWithOutText(@Param("id") Long id);
 }

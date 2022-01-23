@@ -52,7 +52,7 @@ public class VolotController {
 	@GetMapping("/priceItems/volot")
 	public String getAllPriceItemsVolot(Model model) {
 		List<Volot> listitems=volotService.findAllPriceItems();
-		ContractText vetexContract=contractTextService.getContractText(3);
+		ContractText vetexContract=contractTextService.getContractorWithOutText(3);
 		contractnumber=vetexContract.getNumber();
 		contractdate=vetexContract.getDate();
 		
@@ -189,7 +189,7 @@ public class VolotController {
 		if(!report.isEmpty()) this.report=report;
 		if(!cedr.isEmpty()) this.cedr=cedr;
 		if(!contractnumber.isEmpty() && !contractdate.isEmpty()) {this.contractnumber=contractnumber;this.contractdate=contractdate;} else {
-			ContractText vetexContract=contractTextService.getContractText(3);
+			ContractText vetexContract=contractTextService.getContractorWithOutText(3);
 			this.contractnumber=vetexContract.getNumber();
 			this.contractdate=vetexContract.getDate();}
 		
@@ -213,6 +213,8 @@ public class VolotController {
 		Users user=userService.findUsersByLogin(login);
 		String username=user.getFullName();
 		
+		String contractname=contractTextService.getContractTextName(this.contractnumber);
+		
 		model.addAttribute("cart", cart);
 		model.addAttribute("id", this.id);
 		model.addAttribute("sumWithOutNds", this.sumWithOutNds);
@@ -235,6 +237,7 @@ public class VolotController {
 		model.addAttribute("report", this.report);
 		model.addAttribute("cedr", this.cedr);
 		model.addAttribute("orderlistcomment", this.orderlistcomment);
+		model.addAttribute("contractname", contractname);
 		return"dispOrderVolot";
 	}
 	@GetMapping ("/clearCart/volot")

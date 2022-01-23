@@ -52,7 +52,7 @@ public class SpsController {
 	@GetMapping("/priceItems/sps")
 	public String getAllPriceItemsSps(Model model) {
 		List<Sps> listitems=spsService.findAllPriceItems();
-		ContractText vetexContract=contractTextService.getContractText(2);
+		ContractText vetexContract=contractTextService.getContractorWithOutText(2);
 		contractnumber=vetexContract.getNumber();
 		contractdate=vetexContract.getDate();
 		
@@ -189,7 +189,7 @@ public class SpsController {
 		if(!report.isEmpty()) this.report=report;
 		if(!cedr.isEmpty()) this.cedr=cedr;
 		if(!contractnumber.isEmpty() && !contractdate.isEmpty()) {this.contractnumber=contractnumber;this.contractdate=contractdate;} else {
-			ContractText vetexContract=contractTextService.getContractText(2);
+			ContractText vetexContract=contractTextService.getContractorWithOutText(2);
 			this.contractnumber=vetexContract.getNumber();
 			this.contractdate=vetexContract.getDate();}
 		
@@ -213,6 +213,8 @@ public class SpsController {
 		Users user=userService.findUsersByLogin(login);
 		String username=user.getFullName();
 		
+		String contractname=contractTextService.getContractTextName(this.contractnumber);
+		
 		model.addAttribute("cart", cart);
 		model.addAttribute("id", this.id);
 		model.addAttribute("sumWithOutNds", this.sumWithOutNds);
@@ -235,6 +237,7 @@ public class SpsController {
 		model.addAttribute("report", this.report);
 		model.addAttribute("cedr", this.cedr);
 		model.addAttribute("orderlistcomment", this.orderlistcomment);
+		model.addAttribute("contractname", contractname);
 		return"dispOrderSps";
 	}
 	@GetMapping ("/clearCart/sps")

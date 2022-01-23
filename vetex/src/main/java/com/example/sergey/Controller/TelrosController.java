@@ -53,7 +53,7 @@ public class TelrosController {
 	@GetMapping("/priceItems/telros")
 	public String getAllPriceItemsTelros(Model model) {
 		List<Telros> listitems=telrosService.findAllPriceItems();
-		ContractText vetexContract=contractTextService.getContractText(5);
+		ContractText vetexContract=contractTextService.getContractorWithOutText(5);
 		contractnumber=vetexContract.getNumber();
 		contractdate=vetexContract.getDate();
 		
@@ -190,7 +190,7 @@ public class TelrosController {
 		if(!report.isEmpty()) this.report=report;
 		if(!cedr.isEmpty()) this.cedr=cedr;
 		if(!contractnumber.isEmpty() && !contractdate.isEmpty()) {this.contractnumber=contractnumber;this.contractdate=contractdate;} else {
-			ContractText vetexContract=contractTextService.getContractText(5);
+			ContractText vetexContract=contractTextService.getContractorWithOutText(5);
 			this.contractnumber=vetexContract.getNumber();
 			this.contractdate=vetexContract.getDate();}
 		
@@ -214,6 +214,8 @@ public class TelrosController {
 		Users user=userService.findUsersByLogin(login);
 		String username=user.getFullName();
 		
+		String contractname=contractTextService.getContractTextName(this.contractnumber);
+		
 		model.addAttribute("cart", cart);
 		model.addAttribute("id", this.id);
 		model.addAttribute("sumWithOutNds", this.sumWithOutNds);
@@ -236,6 +238,7 @@ public class TelrosController {
 		model.addAttribute("report", this.report);
 		model.addAttribute("cedr", this.cedr);
 		model.addAttribute("orderlistcomment", this.orderlistcomment);
+		model.addAttribute("contractname", contractname);
 		return"dispOrderTelros";
 	}
 	@GetMapping ("/clearCart/telros")
