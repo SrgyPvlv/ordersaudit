@@ -3,6 +3,7 @@ package com.example.sergey.Service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.example.sergey.Model.Users;
@@ -37,5 +38,9 @@ public class UsersService {
 	public Users findUsersByLogin(String login) {
 		return usersrepository.findByLogin(login);
 	}
+	public String getLoginByAuthor(String avtor) { //получение логина по автору заявки
+		return usersrepository.getLoginByAuthor(avtor);
+	}
+	
 }
 

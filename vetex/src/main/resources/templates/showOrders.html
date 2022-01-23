@@ -61,7 +61,8 @@
 <tr th:each="listOrder : ${listOrders}">
 <td th:text="${listOrder.getOrdernumber}" class="col11"></td><td th:text="${listOrder.getBsnumber}" th:title="${listOrder.getBsaddress}" class="col12"></td>
 <td th:text="${listOrder.getSend}" class="col13"></td><td th:text="${listOrder.getSumwithoutnds}+' | '+${listOrder.getSumwithnds}" class="col14"></td>
-<td th:text="${listOrder.getReport}" class="col15"></td><td th:text="${listOrder.getCedr}" th:title="${listOrder.getAuthor}" class="col161"></td>
+<td th:text="${listOrder.getReport}" th:class="${listOrder.getReport =='да' ? 'col151' : 'col152'}"></td>
+<td th:text="${listOrder.getCedr}" th:title="${listOrder.getAuthor}" th:class="${listOrder.getCedr =='да' ? 'col161' : 'col162'}"></td>
 <td th:text="${listOrder.getStatus}" class="col17"></td><td th:text="${listOrder.getEndtime}" class="col18"></td>
 <td th:text="${listOrder.getWorktype}" th:title="${listOrder.getComment}" class="col19"></td><td th:text="${listOrder.getOrderlistcomment}" class="col20"></td>
 <td class="col21">

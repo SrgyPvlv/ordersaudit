@@ -110,8 +110,17 @@ position: fixed; /* Фиксированное положение */
 .col1 {
 	width: 15%;
 }
+.col152 {
+	color:red;
+	border-color:#000000;
+}
 .col2,.col161 {
 	width: 5%;
+}
+.col162{
+	width: 5%;
+	color:red;
+	border-color:#000000;
 }
 .col16{
 	width: 5%;

@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -155,6 +157,14 @@ public class OrderController {
 	@GetMapping("/orderEdit") //переход на форму редактирования заявки
 	public String orderEditForm(@RequestParam("id") Long id,@RequestParam(name="contractnumber") String contractnumber,
 			@RequestParam(name="contractdate") String contractdate, Model model,RedirectAttributes redirectAttr) {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String login=auth.getName();
+		Order orderDb=orderService.getOrderById(id);
+		String avtor=orderDb.getAuthor();
+		String loginAvtor=userService.getLoginByAuthor(avtor);
+		if(login.equals(loginAvtor) || login.equals("admin") || login.equals("spavlov")){
+		
 		sumWithOutNds=0;
 		Nds=0;
 		sumWithNds=0;
@@ -176,7 +186,8 @@ public class OrderController {
 	  }
 	 }
 	}	
-		Order orderDb=orderService.getOrderById(id);
+		
+		//Order orderDb=orderService.getOrderById(id);
 		String cartJsonStr=orderDb.getCart();
 		Type listType = new TypeToken<ArrayList<VetexOrder>>() {}.getType();
         ArrayList<VetexOrder> cartArrayList = new Gson().fromJson(cartJsonStr,listType); //Json в ArrayList
@@ -202,8 +213,11 @@ public class OrderController {
 		redirectAttr.addAttribute("report", orderDb.getReport());
 		redirectAttr.addAttribute("cedr", orderDb.getCedr());
 		
-		return asd;}
-	
+		return asd;} else {
+			model.addAttribute("note", "Вы не можете редактировать чужую заявку! Обратитесь к её автору или администратору.");
+			return "noUpload";}
+	}
+
 	@GetMapping("/orderCopy") //переход на форму создания копии заявки (редактирования без передачи id)
 	public String orderCopyForm(@RequestParam("id") Long id,@RequestParam(name="contractnumber") String contractnumber,
 			@RequestParam(name="contractdate") String contractdate, Model model,RedirectAttributes redirectAttr) {
