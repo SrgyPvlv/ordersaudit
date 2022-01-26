@@ -8,9 +8,17 @@
 </head>
 <body>
 <div class="header">
-<a th:href="@{/logout}">Выйти</a> &nbsp | &nbsp <a th:href="@{/admin/usersShow}">Редактирование пользователей (admin)</a>
-&nbsp | &nbsp <a th:href="@{/admin/contractorsShow}">Редактирование подрядчиков (admin)</a>
-&nbsp | &nbsp <a th:href="@{/allOrdersToCSV}">Скачать все заказы в файл .csv</a>
+<a th:href="@{/logout}">Выйти</a> &nbsp | &nbsp 
+
+      <select id="adminUserPoBS" class="adminUserPoBS" th:onchange="window.location.href=this.value;">
+        <option th:value="0" disabled selected>   --  -- Администрирование --  --   </option>
+        <option th:value="@{/admin/usersShow}">Редактирование пользователей</option>
+        <option th:value="@{/admin/contractorsShow}">Редактирование подрядчиков</option>
+        <option th:value="@{/admin/findByBsName}">Редактирование списка БС</option>
+       </select> &nbsp | &nbsp
+
+ <a th:href="@{/allOrdersToCSV}">Скачать все заказы в файл .csv</a>
+        
 </div>
 <br><br>
 

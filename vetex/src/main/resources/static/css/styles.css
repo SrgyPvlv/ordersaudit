@@ -141,6 +141,12 @@ position: fixed; /* Фиксированное положение */
 .col21 {
 	width: 18%;
 }
+.col211 {
+	width: 10%;
+}
+.col213 {
+	width: 30%;
+}
 #pricesControl_1,#search1 {
 	float: left;
 	width: 500px;
@@ -174,7 +180,10 @@ position: fixed; /* Фиксированное положение */
 	border-collapse: collapse;
     width: 60%;
 }
-.contractorstable{
+.contractorstable {
+	border-collapse: collapse;
+}
+.bslisttable {
 	border-collapse: collapse;
 }
 fieldset{
@@ -244,8 +253,18 @@ a.ref:hover,a.remedyhref:hover,a.up:hover,a.down:hover {
 	padding: 9px;
 	margin-bottom:10px;
 }
+.find1{
+	margin-top:10px;
+	margin-bottom:10px;
+	border:2px solid red;
+	padding: 9px;
+}
 .ordnum{
 	background:#FFFFFF;
 	border:2px solid #8B0000;
 	color:#8B0000;
+}
+
+.adminUserPoBS{
+	border:none;
 }
