@@ -68,7 +68,7 @@ public class BsListController {
 	}
 	
 	@GetMapping("/admin/findByBsName") // поиск БС по № БС, можно ввести часть номера
-	public String findByBsNumber(@RequestParam(name="bsNumberSearch", required=false, defaultValue="99-99999") String bsNumberSearch, 
+	public String findByBsNumber(@RequestParam(name="bsNumberSearch", required=false, defaultValue="78-00000") String bsNumberSearch, 
 			Model model) throws IOException{
 		
 		List<BsList> bs=bsListService.findBsByNumber(bsNumberSearch);
