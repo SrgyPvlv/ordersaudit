@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.example.sergey.Model.BsList;
-import com.example.sergey.Model.Order;
 
 public interface BsListRepository extends JpaRepository<BsList,Long> {
 

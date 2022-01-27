@@ -1,5 +1,6 @@
 package com.example.sergey.Controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +69,7 @@ public class BsListController {
 	
 	@GetMapping("/admin/findByBsName") // поиск БС по № БС, можно ввести часть номера
 	public String findByBsNumber(@RequestParam(name="bsNumberSearch", required=false, defaultValue="99-99999") String bsNumberSearch, 
-			Model model) {
+			Model model) throws IOException{
 		
 		List<BsList> bs=bsListService.findBsByNumber(bsNumberSearch);
 		
