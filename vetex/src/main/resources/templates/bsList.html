@@ -11,7 +11,7 @@
 <div th:replace="header :: header"></div>
 
 <div class="find1">
-  <form th:action="@{/admin/findByBsName}" th:method="get" style="display:inline;">
+  <form th:action="@{/admin/findBsByBsName}" th:method="get" style="display:inline;">
        <label>Поиск по № БС</label> &nbsp&nbsp
        <input type="text" name="bsNumberSearch" placeholder="Код '78-' указывать необязательно" style="width:220px">
        <input type="submit" value="Найти" >  
@@ -32,14 +32,14 @@
         </tr>
          
         <tr th:each="bs : ${bss}">
-           <td th:text="*{bs!=null} ? ${bs.getBsNumber}:''"> № БС </td><td th:text="*{bs!=null} ? ${bs.getBsAddress}:''"> Адрес БС </td>
+           <td th:text="${bs.getBsNumber} "> № БС </td><td th:text="${bs.getBsAddress} "> Адрес БС </td>
            <td>
            <form th:action="@{/admin/bsEdit}" method="get" style="display:inline;">
-                 <input type="hidden" name="id" th:value="*{bs!=null} ? ${bs.getId} :''">
+                 <input type="hidden" name="id" th:value="${bs.getId}">
                  <input type="submit" value="Редактировать" style="background:#98FB98;">
            </form> | 
            <form th:action="@{/superadmin/bsDelete}" method="get" style="display:inline;">
-                 <input type="hidden" name="id" th:value="*{bs!=null} ? ${bs.getId} :''">
+                 <input type="hidden" name="id" th:value="${bs.getId}">
                  <input type="submit" value="Удалить" style="background:#FF0000; color:white;">
             </form>
             </td>        

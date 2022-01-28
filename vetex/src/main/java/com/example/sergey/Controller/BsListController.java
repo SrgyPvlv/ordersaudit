@@ -29,7 +29,7 @@ public class BsListController {
 		bsListService.createBs(bsnumber, bsaddress);
 		List<BsList> bs=bsListService.findBsByNumber(bsnumber);
 		model.addAttribute("bss", bs);
-		return "bslist";
+		return "bsList";
 	}
 	
 	@GetMapping("/admin/bsEdit") // переход на форму редактирование БС в БД
@@ -53,7 +53,7 @@ public class BsListController {
 	   BsList bsNew=bsListService.getBsById(id);
 	   
 	   model.addAttribute("bss", bsNew);
-		return "bslist";
+		return "bsList";
 	}
 	
 	@GetMapping("/superadmin/bsDelete") // удаление БС
@@ -64,16 +64,16 @@ public class BsListController {
 		List<BsList> bsFind=bsListService.findBsByNumber(bsnumber);
 		
 		model.addAttribute("bss", bsFind);
-		return "bslist";
+		return "bsList";
 	}
 	
-	@GetMapping("/admin/findByBsName") // поиск БС по № БС, можно ввести часть номера
-	public String findByBsNumber(@RequestParam(name="bsNumberSearch", required=false, defaultValue="78-00000") String bsNumberSearch, 
+	@GetMapping("/admin/findBsByBsName") // поиск БС по № БС, можно ввести часть номера
+	public String findBsByBsNumber(@RequestParam(name="bsNumberSearch", required=false, defaultValue="99-99999") String bsNumberSearch, 
 			Model model) throws IOException{
 		
 		List<BsList> bs=bsListService.findBsByNumber(bsNumberSearch);
 		
 		model.addAttribute("bss", bs);
-		return "bslist";
+		return "bsList";
 	}
 }
