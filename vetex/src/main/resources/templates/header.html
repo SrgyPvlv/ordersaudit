@@ -8,9 +8,12 @@
 <body>
 <div th:fragment="header">
 <div class="header">
-<header>
-<a th:href="@{/}">Главная</a> &nbsp | &nbsp<a th:href="@{/logout}">Выйти</a>
-</header>
+<div id="header1">
+<a th:href="@{/}">Главная</a> &nbsp | &nbsp<a th:href="@{/logout}">Выйти</a> 
+</div>
+<div id="header2">
+<span th:text="'Пользователь: '+${userLogin} + ' | Роль: ' + ${userRole}" style="color:#800000;"></span>
+</div>
 </div>
 </div>
 </body>

@@ -8,6 +8,7 @@
 </head>
 <body>
 <div class="header">
+<div id="header1">
 <a th:href="@{/priceItems/volot}" class="ref">На страницу ТЦП</a> &nbsp&nbsp | &nbsp&nbsp
 <form th:action="@{/clearCart/volot}" method="get" style="display:inline;">
 <input type="submit" name="submit" value="Очистить корзину"> &nbsp&nbsp | &nbsp&nbsp
@@ -23,6 +24,10 @@
 <input type="hidden" name="contractdate" th:value="${contractdate}">
 <input type="submit" name="submit" value="БД Заявок"> &nbsp&nbsp | &nbsp&nbsp
 </form> -->
+</div>
+<div id="header2">
+<span th:text="'Пользователь: '+${userLogin} + ' | Роль: ' + ${userRole}" style="color:#800000;"></span>
+</div>
 </div>
 <br>
 <table class="listItems">

@@ -158,11 +158,11 @@ position: fixed; /* Фиксированное положение */
 	float:right;
 	margin-right:15px;
 }
-#ordersshow1 {
+#ordersshow1,#header1 {
 	float: left;
 	width: 880px;
 }
-#ordersshow2 {
+#ordersshow2,#header2 {
 	margin-left: 900px;
 	margin-right:15px;
 	text-align:right;

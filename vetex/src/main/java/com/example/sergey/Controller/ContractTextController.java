@@ -70,9 +70,9 @@ public class ContractTextController {
 			  return"noUpload";
 		}
 		
-		@GetMapping("/admin/contractorsShow") //список всех подрядчиков по увеличению id
+		@GetMapping("/admin/contractorsShow") //список всех подрядчиков по увеличению id (текст договора не подгружается)
 		public String showContractors(Model model) {
-			List<ContractText> contractors=contractTextService.getAllContractTextSortedById();
+			List<ContractText> contractors=contractTextService.getAllWithSomeColumn();
 			model.addAttribute("contractors", contractors);
 			return "contractors";
 		}
