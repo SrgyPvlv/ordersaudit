@@ -35,6 +35,7 @@ public class TelrosController {
 	double Nds;
 	double sumWithNds;
 	ArrayList<VetexOrder> cart;
+	int cartSize;
 	String html;
 	Date dateSend;
 	Date dateStart;
@@ -57,9 +58,12 @@ public class TelrosController {
 		contractnumber=vetexContract.getNumber();
 		contractdate=vetexContract.getDate();
 		
+		if (orderCart.getItemsOrderCart()!=null) {cartSize=orderCart.getItemsOrderCart().size();} else {cartSize=0;};
+		
 		model.addAttribute("listitems", listitems);
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractdate", contractdate);
+		model.addAttribute("cartSize", cartSize);
 		return "priceItemsTelros";
 	}
 	
@@ -121,6 +125,7 @@ public class TelrosController {
 		model.addAttribute("listitems", listitems);
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractdate", contractdate);
+		model.addAttribute("cartSize", cartSize);
 		return "priceItemsTelros";
 	}
 	
@@ -142,6 +147,7 @@ public class TelrosController {
 		model.addAttribute("listitems", listitems);
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractdate", contractdate);
+		model.addAttribute("cartSize", cartSize);
 		return "priceItemsTelros";
 	}
 	

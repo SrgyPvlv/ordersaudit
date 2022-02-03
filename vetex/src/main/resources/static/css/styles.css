@@ -268,3 +268,26 @@ a.ref:hover,a.remedyhref:hover,a.up:hover,a.down:hover {
 .adminUserPoBS{
 	border:none;
 }
+.container {
+  display: inline-block;
+  position: relative;
+}
+
+.span {
+  display: inline-block;
+  background: #FF7F50;
+  text-align: center;
+  border-radius: 50%;
+  padding: 50% 0;
+  width: 100%;
+  position: absolute;
+  transform: translateY(-50%);
+}
+
+.text {
+  position: relative;
+  top: -.5em;
+  padding: 0em 0.65em;
+  color: #FFFFFF;
+  font-weight:bold;
+}

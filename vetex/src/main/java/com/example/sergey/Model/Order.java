@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+//Класс Заявки(Заказа) (сущность)
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,67 +24,67 @@ public class Order {
 	Long id;
 	
 	@Column
-	private int ordernumber;
+	private int ordernumber; //номер заявки
 	
 	@Column
-	private String bsnumber;
+	private String bsnumber; //номер БС
 	
 	@Column
-	private String bsaddress;
+	private String bsaddress; //адрес БС
 	
 	@Column
-	private String send;
+	private String send; //дата отправки заявки
 	
 	@Column
-	private String start;
+	private String start; //дата начала работ
 	
 	@Column
-	private String endtime;
+	private String endtime; //крайний срок окончания работ
 	
 	@Column
-	private double sumwithoutnds;
+	private double sumwithoutnds; //сумма заказа без НДС
 	
 	@Column
-	private double nds;
+	private double nds; //НДС
 	
 	@Column
-	private double sumwithnds;
+	private double sumwithnds; //сумма Заказа с НДС
 	
 	@Column
-	private String report;
+	private String report; //наличие ИД (исполнительной документации)
 	
 	@Column
-	private String cedr;
+	private String cedr; //выложили ИД в Кедр (да или нет)
 	
 	@Column
-	private String status;
+	private String status; //статус заказа (№заявки в Oracle, оплачено и т.д.)
 	
 	@Column
-	private String worktype;
+	private String worktype; //тип работ
 	
 	@Column
-	private String orderlistcomment;
+	private String orderlistcomment; //комментарий по исполнению заявки
 	
 	@Column
-	private String contractnumber;
+	private String contractnumber; //номер договора
 	
 	@Column
-	private String contractdate;
+	private String contractdate; //дата договора
 	
 	@Column
-	private String remedy;
+	private String remedy; //номер инцидента в Ремеди
 	
 	@Column
-	private String arenda;
+	private String arenda; //контакт арендодателя
 	
 	@Column
-	private String comment;
+	private String comment; //комментарий по заявке(работе) для подрядчика
 	
 	@Column
-	private String author;
+	private String author; //инициатор заявки
 	
 	@Column
-	private String cart;
+	private String cart; //корзина в формате json
 	
 	public Order(int ordernumber,String bsnumber,String bsaddress,String send,String start,String endtime,
 			double sumwithoutnds,double nds,double sumwithnds,String report,String cedr,String status,

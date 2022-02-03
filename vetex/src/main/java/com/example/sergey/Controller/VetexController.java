@@ -35,6 +35,7 @@ public class VetexController {
 	double Nds;
 	double sumWithNds;
 	ArrayList<VetexOrder> cart;
+	int cartSize;
 	Date dateSend;
 	Date dateStart;
 	Date dateEnd;
@@ -56,9 +57,12 @@ public class VetexController {
 		contractnumber=vetexContract.getNumber();
 		contractdate=vetexContract.getDate();
 		
+		if (orderCart.getItemsOrderCart()!=null) {cartSize=orderCart.getItemsOrderCart().size();} else {cartSize=0;};
+		
 		model.addAttribute("listitems", listitems);
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractdate", contractdate);
+		model.addAttribute("cartSize", cartSize);
 		return "priceItems";
 	}
 	
@@ -120,6 +124,7 @@ public class VetexController {
 		model.addAttribute("listitems", listitems);
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractdate", contractdate);
+		model.addAttribute("cartSize", cartSize);
 		return "priceItems";
 	}
 	
@@ -141,6 +146,7 @@ public class VetexController {
 		model.addAttribute("listitems", listitems);
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractdate", contractdate);
+		model.addAttribute("cartSize", cartSize);
 		return "priceItems";
 	}
 	

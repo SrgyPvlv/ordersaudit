@@ -5,9 +5,16 @@ import java.math.RoundingMode;
 
 //Класс, отражающий один выбранный пункт из ТЦП, со всеми полями из ТЦП, описывающими этот пункт,
 //а также кол-вом и стоимостью, зависящей от кол-ва.
+
 public class VetexOrder implements Comparable<VetexOrder>{
 	
-	String ppnumber;String workname;String unitmeasure;double price;String comment;double quantity; double endprice;
+	private String ppnumber; //номер пункта ТЦП
+	private String workname; //название пункта
+	private String unitmeasure; //единица измерения пункта
+	private double price; //цена за одну единицу
+	private String comment; //комментарий по пункту
+	private double quantity; //количество, установленное пользователем
+	private double endprice; //конечная цена, т.е. кол-во*цена пункта
 
 	public VetexOrder(String ppnumber,String workname,String unitmeasure,double price, String comment,double quantity) {
 		this.ppnumber=ppnumber;
@@ -20,8 +27,6 @@ public class VetexOrder implements Comparable<VetexOrder>{
 		BigDecimal bd = new BigDecimal(this.endprice).setScale(2, RoundingMode.HALF_UP);
 		this.endprice = bd.doubleValue();
 	}
-	
-	
 	
 	public void setPpNumber(String ppnumber) {
 		this.ppnumber=ppnumber;
