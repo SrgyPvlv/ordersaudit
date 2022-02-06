@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.example.sergey.MyDbConnection;
 
 @Controller
-public class CsvAllOrdersDownController {
+public class CsvAllOrdersDownController { //скачивает из БД все заказы в файл .csv
 
 	@GetMapping("/allOrdersToCSV")
 	ResponseEntity<Resource> getFileCsv() throws SQLException, IOException{

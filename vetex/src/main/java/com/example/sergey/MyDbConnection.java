@@ -1,5 +1,6 @@
 package com.example.sergey;
 
+//данные для подключения к БД, класс используется для up-download файлов .csv
 public class MyDbConnection {
 	public static String urls = new String("jdbc:postgresql://ec2-63-32-173-118.eu-west-1.compute.amazonaws.com:5432/d77nv9mhg4ler3");
 	public static String username = new String("fdqklynbbsxglj");

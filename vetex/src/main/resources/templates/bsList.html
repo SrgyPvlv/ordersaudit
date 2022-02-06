@@ -11,19 +11,27 @@
 <div th:replace="header :: header"></div>
 
 <div class="find1">
+  <div id="bslist1">
   <form th:action="@{/admin/findBsByBsName}" th:method="get" style="display:inline;">
        <label>Поиск по № БС</label> &nbsp&nbsp
        <input type="text" name="bsNumberSearch" placeholder="Код '78-' указывать необязательно" style="width:220px">
        <input type="submit" value="Найти" >  
   </form> &nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp
-     
-  <a th:href="@{/admin/bsCreate}" style="display:inline;">Добавить новую БС</a>  &nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp  
-
-      <form enctype="multipart/form-data" th:action="@{/admin/csvBsListToDateBase}" th:method="post" style="display:inline;">
-      <label style="color:#800000">Загрузка списка новых БС</label> &nbsp&nbsp
+  <a th:href="@{/admin/bsCreate}" style="display:inline;">Добавить новую БС</a>  &nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp   
+  </div>
+    
+     <div id="bslist2">
+      <form enctype="multipart/form-data" th:action="@{/admin/csvBsListToDateBase}" th:method="post">
+      <label style="color:#800000">Загрузка списка новых БС в БД</label> &nbsp&nbsp
       <input type="file" name="file" required>
       <input type="submit" value="Загрузить" >
       </form>
+      <br>
+      <form  th:action="@{/bsListToCSV}" th:method="get" >
+      <label style="color:#800000">Скачать все БС из БД в файл .csv</label> &nbsp&nbsp
+      <input type="submit" value="Скачать" >
+      </form>
+     </div>
 </div>      
 <div>
  <table class="bslisttable" border="1">

@@ -14,11 +14,6 @@ public class VolotService {
 
 @Autowired VolotRepository volotRepository;
 	
-	
-	public VolotService(VolotRepository volotRepository) {
-		this.volotRepository=volotRepository;
-	}
-	
 	public List<Volot> findAllPriceItems(){
 		Sort sort=Sort.by(Sort.Direction.ASC,"ppnumber");
 		return volotRepository.findAll(sort);

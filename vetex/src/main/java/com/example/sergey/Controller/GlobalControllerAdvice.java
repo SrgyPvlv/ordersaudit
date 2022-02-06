@@ -8,20 +8,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.example.sergey.Service.UsersService;
 
+//определение параметров видимых на всех страницах (templates)
+
 @ControllerAdvice
 public class GlobalControllerAdvice {
 
 	@Autowired
 	private UsersService userservice;
 	
-	@ModelAttribute("userLogin")
+	@ModelAttribute("userLogin") // делаем видимым login пользователя
 	public String getUserLogin() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String login=auth.getName();
 	    return login;
 	  }
 	
-	@ModelAttribute("userRole")
+	@ModelAttribute("userRole") // делаем видимым Role пользователя
 	public String getUserRole() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String login=auth.getName();

@@ -1,8 +1,11 @@
 package com.example.sergey.Controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -68,4 +71,36 @@ public class UsersController {
 		
 		return "redirect:/admin/usersShow";
 	}
-}
+	
+	@GetMapping("/admin/findUserByFullName") // поиск пользователя по фамилии, можно ввести часть фамилии
+	public String findUserByFullName(@RequestParam("userFullNameSearch") String userFullNameSearch, 
+			Model model) throws IOException{
+		
+		List<Users> users=usersService.findUserByFullName(userFullNameSearch);
+		
+		model.addAttribute("users", users);
+		return "users";
+	}
+	@GetMapping("/passwordChange") // переход на форму изменения пароля
+	public String passwordChangeForm(Model model) {	   
+		
+		return "passwordChangeForm";
+	}
+	@PostMapping("/passwordChange") // сохранение нового пароля
+	public String savePassword(@RequestParam("oldPassw") String oldPassw,
+			@RequestParam("newPassw") String newPassw,
+			@RequestParam("newPasswRepeat") String newPasswRepeat, Model model) {	   
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String login=auth.getName();
+		Users user=usersService.findUsersByLogin(login);
+		String nowPassw=user.getPassword();
+		if(nowPassw.equals(oldPassw) && newPassw.equals(newPasswRepeat)) {
+			user.setPassword(newPassw);
+			usersService.saveUsers(user);
+			return "redirect:/";}else {
+				model.addAttribute("note", "Ошибка ввода данных.Попробуйте еще раз.");
+				return "noUpload";}
+		}		
+		
+	}

@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.sergey.Model.ContractText;
 import com.example.sergey.Service.ContractTextService;
 
+//создание, редактирование, удаление, скачивание/загрузка подрядчиков, а также их ТЦП и договоров 
 @Controller
 public class ContractTextController {
 

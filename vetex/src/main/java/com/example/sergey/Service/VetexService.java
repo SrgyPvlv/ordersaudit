@@ -14,11 +14,6 @@ public class VetexService {
 
 	@Autowired VetexRepository vetexRepository;
 	
-	
-	public VetexService(VetexRepository vetexRepository) {
-		this.vetexRepository=vetexRepository;
-	}
-	
 	public List<Vetex> findAllPriceItems(){
 		Sort sort=Sort.by(Sort.Direction.ASC,"ppnumber");
 		return vetexRepository.findAll(sort);

@@ -14,11 +14,6 @@ public class SpsService {
 
 @Autowired SpsRepository spsRepository;
 	
-	
-	public SpsService(SpsRepository spsRepository) {
-		this.spsRepository=spsRepository;
-	}
-	
 	public List<Sps> findAllPriceItems(){
 		Sort sort=Sort.by(Sort.Direction.ASC,"ppnumber");
 		return spsRepository.findAll(sort);

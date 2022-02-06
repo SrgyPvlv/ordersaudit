@@ -14,11 +14,6 @@ public class TelrosService {
 
 @Autowired TelrosRepository telrosRepository;
 	
-	
-	public TelrosService(TelrosRepository telrosRepository) {
-		this.telrosRepository=telrosRepository;
-	}
-	
 	public List<Telros> findAllPriceItems(){
 		Sort sort=Sort.by(Sort.Direction.ASC,"ppnumber");
 		return telrosRepository.findAll(sort);

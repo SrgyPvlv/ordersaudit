@@ -21,7 +21,8 @@
  <a th:href="@{/allOrdersToCSV}">Скачать все заказы в файл .csv</a>
  </div>
  <div id="header2">
-<span th:text="'Пользователь: '+${userLogin} + ' | Роль: ' + ${userRole}" style="color:#800000;"></span>
+<span th:text="'Пользователь: '+${userLogin} + ' | Роль: ' + ${userRole}" style="color:#800000;"></span>&nbsp
+<a th:href="@{/passwordChange}"><img alt="Изменение пароля" src="/images/fit.jpg" width="20" height="20" style="border: none"></a>
 </div>       
 </div>
 <br><br>

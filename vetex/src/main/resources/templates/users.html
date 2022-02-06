@@ -10,14 +10,34 @@
 
 <div th:replace="header :: header"></div>
 
-<br><br>
+<div class="find1">
+  <div id="users1">
+  <form th:action="@{/admin/findUserByFullName}" th:method="get" style="display:inline;">
+       <label>Поиск по фамилии</label> &nbsp&nbsp
+       <input type="text" name="userFullNameSearch" placeholder="Введите фамилию" style="width:220px">
+       <input type="submit" value="Найти" >  
+  </form> &nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp
+  <a th:href="@{/admin/usersCreate}" style="display:inline;">Добавить пользователя</a>  &nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp
+  <br>
+  <a th:href="@{/admin/usersShow}">Показать всех пользователей</a>   
+  </div>
+    
+     <div id="users2">
+      <form enctype="multipart/form-data" th:action="@{/admin/csvUsersToDateBase}" th:method="post">
+      <label style="color:#800000">Загрузка списка новых пользователей в БД</label> &nbsp&nbsp
+      <input type="file" name="file" required>
+      <input type="submit" value="Загрузить" >
+      </form>
+      <br>
+      <form  th:action="@{/admin/usersToCsv}" th:method="get" >
+      <label style="color:#800000">Скачать список пользователей из БД в файл .csv</label> &nbsp&nbsp
+      <input type="submit" value="Скачать" >
+      </form>
+     </div>
+</div>      
 <div>
  <table class="userstable" border="1">
- <caption align="top"><h3>Список Пользователей &nbsp&nbsp&nbsp&nbsp
-   <form th:action="@{/admin/usersCreate}" method="get" style="display:inline;">
-   <input type="submit" value="Добавить пользователя">
-   </form></h3>
- </caption>
+ <caption align="top"><h3>Список Пользователей</h3></caption>
         <tr>
           <th> Логин </th> <th>Пароль</th> <th>Права</th> <th>Фамилия И.О. телефон</th>
         </tr>

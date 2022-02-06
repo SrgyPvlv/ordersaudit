@@ -32,6 +32,7 @@ import com.google.gson.reflect.TypeToken;
 
 import lombok.Data;
 
+//создание, создание копии, редактирование, удаление, получение номера заявок
 @Data
 @Controller
 @SessionScope

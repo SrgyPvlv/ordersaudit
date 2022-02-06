@@ -14,11 +14,6 @@ public class TelecomService {
 
 @Autowired TelecomRepository telecomRepository;
 	
-	
-	public TelecomService(TelecomRepository telecomRepository) {
-		this.telecomRepository=telecomRepository;
-	}
-	
 	public List<Telecom> findAllPriceItems(){
 		Sort sort=Sort.by(Sort.Direction.ASC,"ppnumber");
 		return telecomRepository.findAll(sort);

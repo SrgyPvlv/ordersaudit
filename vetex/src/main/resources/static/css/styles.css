@@ -291,3 +291,19 @@ a.ref:hover,a.remedyhref:hover,a.up:hover,a.down:hover {
   color: #FFFFFF;
   font-weight:bold;
 }
+#bslist1 {
+	float: left;
+	width: 650px;
+}
+#bslist2 {
+	margin-left: 655px;
+	text-align:left;
+}
+#users1 {
+	float: left;
+	width: 670px;
+}
+#users2 {
+	margin-left: 675px;
+	text-align:left;
+}
