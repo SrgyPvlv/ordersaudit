@@ -46,10 +46,19 @@ public class ContractText {
 	@Column
 	private String contractend;
 	
+	@Column
+	private String email11;
+	
+	@Column
+	private String email12;
+	
+	@Column
+	private String email13;
+	
 	public ContractText() {}
 	
 	public ContractText(String contractor,byte[] text, String number, String date, String name,String email1,
-			String email2,String email3,String work,String contractend) {
+			String email2,String email3,String work,String contractend,String email11,String email12,String email13) {
 		this.contractor=contractor;
 		this.text=text;
 		this.number=number;
@@ -60,9 +69,12 @@ public class ContractText {
 		this.email3=email3;
 		this.work=work;
 		this.contractend=contractend;
+		this.email11=email11;
+		this.email12=email12;
+		this.email13=email13;
 	}
 	public ContractText(String contractor, String number, String date, String name,String email1,
-			String email2,String email3,String work,String contractend) {
+			String email2,String email3,String work,String contractend,String email11,String email12,String email13) {
 		this.contractor=contractor;
 		this.number=number;
 		this.date=date;
@@ -72,9 +84,12 @@ public class ContractText {
 		this.email3=email3;
 		this.work=work;
 		this.contractend=contractend;
+		this.email11=email11;
+		this.email12=email12;
+		this.email13=email13;
 	}
 	public ContractText(Long id,String contractor, String number, String date, String name,String email1,
-			String email2,String email3,String work,String contractend) {
+			String email2,String email3,String work,String contractend,String email11,String email12,String email13) {
 		this.id=id;
 		this.contractor=contractor;
 		this.number=number;
@@ -85,6 +100,9 @@ public class ContractText {
 		this.email3=email3;
 		this.work=work;
 		this.contractend=contractend;
+		this.email11=email11;
+		this.email12=email12;
+		this.email13=email13;
 	}
 	
 	public Long getId() {
@@ -149,5 +167,23 @@ public class ContractText {
 	}
 	public String getContractEnd() {
 		return contractend;
+	}
+	public void setEmail11(String email11) {
+		this.email11=email11;
+	}
+	public String getEmail11() {
+		return email11;
+	}
+	public void setEmail12(String email12) {
+		this.email12=email12;
+	}
+	public String getEmail12() {
+		return email12;
+	}
+	public void setEmail13(String email13) {
+		this.email13=email13;
+	}
+	public String getEmail13() {
+		return email13;
 	}
 }

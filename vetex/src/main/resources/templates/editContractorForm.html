@@ -9,8 +9,8 @@
 
 <div th:replace="header :: header"></div>
  
- <br><br>
- <div class="parent">
+ <br>
+ <div class="parent1">
  
  <div>
  <h3 style="text-align: center"> Форма редактирования подрядчика</h3>
@@ -29,14 +29,23 @@
         <label>Дата договора</label><br>
         <input type="text" name="date" th:value="${date}" style="text-align: center;width: 250px;"/>
         <br><br>
-        <label>Почта 1</label><br>
+        <label>Почта 1 ПО</label><br>
         <input type="email" name="email1" th:value="${email1}" style="text-align: center" required/>
         <br><br>
-        <label>Почта 2</label><br>
+        <label>Почта 2 ПО</label><br>
         <input type="email" name="email2" th:value="${email2}" style="text-align: center"/>
         <br><br>
-        <label>Почта 3</label><br>
+        <label>Почта 3 ПО</label><br>
         <input type="email" name="email3" th:value="${email3}" style="text-align: center"/>
+        <br><br>
+        <label>Почта 11 МТС</label><br>
+        <input type="email" name="email11" th:value="${email11}" style="text-align: center" required/>
+        <br><br>
+        <label>Почта 12 МТС</label><br>
+        <input type="email" name="email12" th:value="${email12}" style="text-align: center"/>
+        <br><br>
+        <label>Почта 13 МТС</label><br>
+        <input type="email" name="email13" th:value="${emai1l3}" style="text-align: center"/>
         <br><br>
         <label>Виды работ (объем)</label><br>
         <input type="text" name="work" th:value="${work}" style="text-align: center" required/>

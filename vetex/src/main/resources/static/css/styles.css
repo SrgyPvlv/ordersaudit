@@ -63,6 +63,15 @@ position: fixed; /* Фиксированное положение */
     justify-content: center;
     overflow: auto;  
 }
+.parent1 {
+    width: 100%;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    overflow: auto;  
+}
 .order {
 	width: 100%;
     display: flex;

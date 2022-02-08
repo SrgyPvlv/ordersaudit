@@ -29,12 +29,10 @@
        <input type="submit" name="submit" value="Показать">
      </form> &nbsp&nbsp | &nbsp&nbsp
      <span>Отправка Заявки: </span>
-     <span th:switch="${contractnumber}">
-     <a th:case="'D180397413'" href="mailto:ostruchistyy@vertexspb.ru;dmax29@ya.ru;mitinyurii@mail.ru?cc=ustich@mts.ru;maliamov@mts.ru;spavlov@mts.ru"><img src="/images/envelope.jpg" alt="mail" title="Отправка Заявки" width="25" height="25" style="border: none"></a>
-     <a th:case="'D210390515-07'" href="mailto:ooospsspb@mail.ru?cc=ustich@mts.ru;maliamov@mts.ru;spavlov@mts.ru"><img src="/images/envelope.jpg" alt="mail" title="Отправка Заявки" width="25" height="25" style="border: none"></a>
-     <a th:case="'D210393422-07'" href="mailto:v.ivanov@volot.su;a.nosov@volot.su?cc=ustich@mts.ru;maliamov@mts.ru;spavlov@mts.ru"><img src="/images/envelope.jpg" alt="mail" title="Отправка Заявки" width="25" height="25" style="border: none"></a>
-     <a th:case="'D210400989-07'" href="mailto:telecom-service@bk.ru;denis_agafonov@bk.ru?cc=ustich@mts.ru;maliamov@mts.ru;spavlov@mts.ru"><img src="/images/envelope.jpg" alt="mail" title="Отправка Заявки" width="25" height="25" style="border: none"></a>
-     <a th:case="'D210345364-07'" href="mailto:fedorova@telros.ru;chukhnin@telros.ru?cc=ustich@mts.ru;maliamov@mts.ru;spavlov@mts.ru"><img src="/images/envelope.jpg" alt="mail" title="Отправка Заявки" width="25" height="25" style="border: none"></a>
+     <span>
+     <a th:href="'mailto:'+${email1 !=null ? email1 : ''}+';'+${email2 !=null ? email2 : ''}+';'+
+     ${email3 !=null ? email3 : ''}+'?cc='+${email11 !=null ? email11 : ''}+';'+${email12 !=null ? email12 : ''}+';'+
+     ${email13 !=null ? email13 : ''}"><img src="/images/envelope.jpg" alt="mail" title="Отправка Заявки" width="25" height="25" style="border: none"></a>
      </span>
      <br><br>  
      <form th:action="@{/orders/findByBsName}" th:method="get">

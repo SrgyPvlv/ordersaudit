@@ -87,8 +87,11 @@ public class ContractTextController {
 		public String createNewContractor(@RequestParam("contractor") String contractor, @RequestParam("number") String number,
 				@RequestParam("date") String date,@RequestParam("name") String name,@RequestParam("email1") String email1,
 				@RequestParam(name="email2",required=false) String email2,@RequestParam(name="email3",required=false) String email3,
-				@RequestParam("work") String work,@RequestParam("contractend") String contractend) {	   
-			ContractText newContractor=new ContractText(contractor,number,date,name,email1,email2,email3,work,contractend);
+				@RequestParam("work") String work,@RequestParam("contractend") String contractend,
+				@RequestParam("email11") String email11,@RequestParam(name="email12",required=false) String email12,
+				@RequestParam(name="email13",required=false) String email13) {	   
+			ContractText newContractor=new ContractText(contractor,number,date,name,email1,email2,email3,work,contractend,
+					email11,email12,email13);
 		    contractTextService.saveContractText(newContractor);
 			return "redirect:/admin/contractorsShow";
 		}
@@ -105,6 +108,9 @@ public class ContractTextController {
 			String email3Old=contractor.getEmail3();
 			String workOld=contractor.getWork();
 			String contractendOld=contractor.getContractEnd();
+			String email11Old=contractor.getEmail11();
+			String email12Old=contractor.getEmail12();
+			String email13Old=contractor.getEmail13();
 			
 			model.addAttribute("id", id);
 			model.addAttribute("contractor", contractorOld);
@@ -116,6 +122,9 @@ public class ContractTextController {
 			model.addAttribute("email3", email3Old);
 			model.addAttribute("work", workOld);
 			model.addAttribute("contractend", contractendOld);
+			model.addAttribute("email11", email11Old);
+			model.addAttribute("email12", email12Old);
+			model.addAttribute("email13", email13Old);
 			
 			return "editContractorForm";
 		}
@@ -124,7 +133,9 @@ public class ContractTextController {
 		public String editNewContractor(@RequestParam("id") int id,@RequestParam("contractor") String contractor, @RequestParam("number") String number,@RequestParam("date") String date,
 				@RequestParam("name") String name,@RequestParam("email1") String email1,
 				@RequestParam(name="email2",required=false) String email2,@RequestParam(name="email3",required=false) String email3,
-				@RequestParam("work") String work,@RequestParam("contractend") String contractend) {	   
+				@RequestParam("work") String work,@RequestParam("contractend") String contractend,
+				@RequestParam("email11") String email11,@RequestParam(name="email12",required=false) String email12,
+				@RequestParam(name="email13",required=false) String email13) {	   
 			ContractText contractorOld=contractTextService.getContractorWithOutText(id);
 			contractorOld.setContractor(contractor);
 			contractorOld.setNumber(number);
@@ -135,6 +146,9 @@ public class ContractTextController {
 			contractorOld.setEmail3(email3);
 			contractorOld.setWork(work);
 			contractorOld.setContractEnd(contractend);
+			contractorOld.setEmail11(email11);
+			contractorOld.setEmail12(email12);
+			contractorOld.setEmail13(email13);
 		   contractTextService.saveContractText(contractorOld);
 			
 			return "redirect:/admin/contractorsShow";

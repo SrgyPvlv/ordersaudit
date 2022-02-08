@@ -42,4 +42,7 @@ public class ContractTextService {
 		Long id=(long)id1;
 		return contractTextRepository.getContractorWithOutText(id);
 	}
+	public ContractText getContractorByContractNumberWithOutText(String number) { //извлечение подрядчика по номеру договора из БД без поля "текст договора"
+		return contractTextRepository.getContractorByContractNumberWithOutText(number);
+	}
 }

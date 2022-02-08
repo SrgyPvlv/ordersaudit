@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.example.sergey.Model.ContractText;
 import com.example.sergey.Model.Order;
 import com.example.sergey.Model.OrderCart;
 import com.example.sergey.Model.VetexOrder;
@@ -135,11 +137,24 @@ public class OrderController {
 			listOrders=orderService.findAllByContractNumberOrderByOrdernumberAsc(contractnumber);} else {
 			listOrders=orderService.findByOrderNumber(ordernumber, contractnumber);
 		}
-		String contractname=contractTextService.getContractTextName(contractnumber);
+		ContractText contractor=contractTextService.getContractorByContractNumberWithOutText(contractnumber);
+		String email1=contractor.getEmail1();
+		String email2=contractor.getEmail2();
+		String email3=contractor.getEmail3();
+		String email11=contractor.getEmail11();
+		String email12=contractor.getEmail12();
+		String email13=contractor.getEmail13();
+		String contractname=contractor.getName();
 		model.addAttribute("listOrders", listOrders);
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractdate", contractdate);
 		model.addAttribute("contractname", contractname);
+		model.addAttribute("email1", email1);
+		model.addAttribute("email2", email2);
+		model.addAttribute("email3", email3);
+		model.addAttribute("email11", email11);
+		model.addAttribute("email12", email12);
+		model.addAttribute("email13", email13);
 	
 		return "showOrders";
 	}
