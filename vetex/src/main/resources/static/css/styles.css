@@ -39,6 +39,14 @@ th {
 	border:none;
 	background:white;
 }
+.ct th{
+	border:none;
+	text-align: centre;
+}
+.ct td{
+	border:none;
+	text-align: centre;
+}
 
 .footercss{
 position: fixed; /* Фиксированное положение */

@@ -29,8 +29,7 @@ public class BsListController {
 		bsListService.createBs(bsnumber, bsaddress);
 		List<BsList> bs=bsListService.findBsByNumber(bsnumber);
 		model.addAttribute("bss", bs);
-		return "bsList";
-	}
+		return "bsList";}
 	
 	@GetMapping("/admin/bsEdit") // переход на форму редактирование БС в БД
 	public String editBs(@RequestParam("id") long id, Model model) {	   
