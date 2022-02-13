@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -44,9 +46,6 @@ public class OrderController {
 	double sumWithOutNds;
 	double Nds;
 	double sumWithNds;
-	Date dateSend;
-	Date dateStart;
-	Date dateEnd;
 	ArrayList<VetexOrder> cart;
 	@Autowired OrderCart orderCart;
 	@Autowired UsersService userService;
@@ -59,6 +58,8 @@ public class OrderController {
 	@Autowired VolotController volotController;
 	@Autowired TelecomController telecomController;
 	@Autowired TelrosController telrosController;
+	
+	private static Logger logger=LoggerFactory.getLogger(OrderController.class);
 	
 	@GetMapping("/createOrder") //записать заявку в базу данных
 	public String createOrder(@RequestParam(name="id",required=false,defaultValue="0")Long id,@RequestParam("ordernumber")int ordernumber,@RequestParam("send")String send,
@@ -110,6 +111,10 @@ public class OrderController {
 						contractnumber, contractdate, remedy, arenda, comment, author, cartJsonStr);
 		orderService.createOrder(order);}
 		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String login=auth.getName();
+		logger.info("Пользователь "+login+" сохранил заявку №"+ordernumber+" для БС "+bsnumber+". Договор: "+contractnumber+".");
+		
 		redirectAttr.addAttribute("contractnumber", contractnumber);
 		redirectAttr.addAttribute("contractdate", contractdate);
 		redirectAttr.addAttribute("ordernumber", ordernumber);
@@ -137,6 +142,28 @@ public class OrderController {
 			listOrders=orderService.findAllByContractNumberOrderByOrdernumberAsc(contractnumber);} else {
 			listOrders=orderService.findByOrderNumber(ordernumber, contractnumber);
 		}
+		
+		 Date sendDate = null;
+	     Date startDate = null;
+	     Date endDate = null;
+		
+		for(Order order:listOrders) {
+			SimpleDateFormat formatterStringToDate=new SimpleDateFormat("yyyy-MM-dd");
+			
+			try {sendDate=formatterStringToDate.parse(order.getSend());
+			     startDate=formatterStringToDate.parse(order.getStart());
+			     endDate=formatterStringToDate.parse(order.getEndtime());}
+			catch (ParseException e) {e.printStackTrace();}
+			
+			SimpleDateFormat formatterDateToString=new SimpleDateFormat("dd.MM.yyyy");
+			String sendString=formatterDateToString.format(sendDate);
+			String startString=formatterDateToString.format(startDate);
+			String endString=formatterDateToString.format(endDate);
+			order.setSend(sendString);
+			order.setStart(startString);
+			order.setEndtime(endString);
+		}
+		
 		ContractText contractor=contractTextService.getContractorByContractNumberWithOutText(contractnumber);
 		String email1=contractor.getEmail1();
 		String email2=contractor.getEmail2();
@@ -291,6 +318,10 @@ public class OrderController {
 		sumWithOutNds=0;
 		Nds=0;
 		sumWithNds=0;
+		Date dateSend = null;
+		Date dateStart = null;
+		Date dateEnd = null;
+		Date contractDateDate = null;
 		
 		Order orderDb=orderService.getOrderById(id);
 		String cartJsonStr=orderDb.getCart();
@@ -303,20 +334,23 @@ public class OrderController {
       String send=orderDb.getSend();
       String start=orderDb.getStart();
       String end=orderDb.getEndtime();
+      String contractDateString=orderDb.getContractdate();
         
 	  SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
-	  SimpleDateFormat formatter1=new SimpleDateFormat("dd-MM-yyyy");
+	  SimpleDateFormat formatter1=new SimpleDateFormat("dd.MM.yyyy");
 		
 		try {
-			this.dateSend = formatter.parse(send);
-			this.dateStart = formatter.parse(start);
-			this.dateEnd = formatter.parse(end);
+			dateSend = formatter.parse(send);
+			dateStart = formatter.parse(start);
+			dateEnd = formatter.parse(end);
+			contractDateDate = formatter.parse(contractDateString);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		send=formatter1.format(this.dateSend);
-		start=formatter1.format(this.dateStart);
-		end=formatter1.format(this.dateEnd);
+		send=formatter1.format(dateSend);
+		start=formatter1.format(dateStart);
+		end=formatter1.format(dateEnd);
+		contractDateString=formatter1.format(contractDateDate);
 		
 		model.addAttribute("cart", cart);
 		model.addAttribute("sumWithOutNds", orderDb.getSumwithoutnds());
@@ -324,7 +358,7 @@ public class OrderController {
 		model.addAttribute("sumWithNds", orderDb.getSumwithnds());
 		model.addAttribute("ordernumber", orderDb.getOrdernumber());
 		model.addAttribute("contractnumber", orderDb.getContractnumber());
-		model.addAttribute("contractdate", orderDb.getContractdate());
+		model.addAttribute("contractdate", contractDateString);
 		model.addAttribute("send", send);
 		model.addAttribute("author", orderDb.getAuthor());
 		model.addAttribute("bsnumber", orderDb.getBsnumber());
@@ -343,6 +377,28 @@ public class OrderController {
 			@RequestParam(name="contractname",required=false) String contractname,Model model)throws IOException{
 		
 		List<Order> listOrders=orderService.findByOrderNumber(orderNumberSearch, contractnumber);
+		
+		Date sendDate = null;
+	     Date startDate = null;
+	     Date endDate = null;
+		
+		for(Order order:listOrders) {
+			SimpleDateFormat formatterStringToDate=new SimpleDateFormat("yyyy-MM-dd");
+			
+			try {sendDate=formatterStringToDate.parse(order.getSend());
+			     startDate=formatterStringToDate.parse(order.getStart());
+			     endDate=formatterStringToDate.parse(order.getEndtime());}
+			catch (ParseException e) {e.printStackTrace();}
+			
+			SimpleDateFormat formatterDateToString=new SimpleDateFormat("dd.MM.yyyy");
+			String sendString=formatterDateToString.format(sendDate);
+			String startString=formatterDateToString.format(startDate);
+			String endString=formatterDateToString.format(endDate);
+			order.setSend(sendString);
+			order.setStart(startString);
+			order.setEndtime(endString);
+		}
+		
 		model.addAttribute("listOrders", listOrders);
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractdate", contractdate);
@@ -357,6 +413,28 @@ public class OrderController {
 			@RequestParam(name="contractname",required=false) String contractname,Model model)throws IOException{
 		
 		List<Order> listOrders=orderService.findByBsName(bsNumberSearch, contractnumber);
+		
+		Date sendDate = null;
+	     Date startDate = null;
+	     Date endDate = null;
+		
+		for(Order order:listOrders) {
+			SimpleDateFormat formatterStringToDate=new SimpleDateFormat("yyyy-MM-dd");
+			
+			try {sendDate=formatterStringToDate.parse(order.getSend());
+			     startDate=formatterStringToDate.parse(order.getStart());
+			     endDate=formatterStringToDate.parse(order.getEndtime());}
+			catch (ParseException e) {e.printStackTrace();}
+			
+			SimpleDateFormat formatterDateToString=new SimpleDateFormat("dd.MM.yyyy");
+			String sendString=formatterDateToString.format(sendDate);
+			String startString=formatterDateToString.format(startDate);
+			String endString=formatterDateToString.format(endDate);
+			order.setSend(sendString);
+			order.setStart(startString);
+			order.setEndtime(endString);
+		}
+		
 		model.addAttribute("listOrders", listOrders);
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractdate", contractdate);

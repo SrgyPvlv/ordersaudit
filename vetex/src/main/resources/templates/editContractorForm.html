@@ -27,7 +27,7 @@
         <input type="text" name="number" th:value="${number}" style="text-align: center"/>
         <br><br>
         <label>Дата договора</label><br>
-        <input type="text" name="date" th:value="${date}" style="text-align: center;width: 250px;"/>
+        <input type="date" name="date" th:value="${date}" style="text-align: center;width: 250px;"/>
         <br><br>
         <label>Почта 1 ПО</label><br>
         <input type="email" name="email1" th:value="${email1}" style="text-align: center" required/>
@@ -51,7 +51,7 @@
         <input type="text" name="work" th:value="${work}" style="text-align: center" required/>
         <br><br>
         <label>Срок действия договора: до</label><br>
-        <input type="text" name="contractend" th:value="${contractend}" style="text-align: center" required/>
+        <input type="date" name="contractend" th:value="${contractend}" style="text-align: center" required/>
         <br><br>
 	    <input type="submit" value="Сохранить" style="width: 100px; height: 40px; background-color: #98FB98;">
  </form>
