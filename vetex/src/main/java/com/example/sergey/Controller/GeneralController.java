@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.sergey.Model.ContractText;
-import com.example.sergey.Model.Order;
 import com.example.sergey.Service.ContractTextService;
 
 @Controller

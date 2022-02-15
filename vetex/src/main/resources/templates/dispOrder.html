@@ -88,7 +88,7 @@
    <p><label for="arenda">Контакт арендодателя: ФИО(телефон): </label>
       <input form ="orderPage" type="text" id="arenda" name="arenda" th:value="*{arenda !=null} ? *{arenda} : '' " style="width:300px;"></p>
    <p><label for="arenda">Вид работ: </label>
-      <input form ="orderPage" type="text" id="worktype" name="worktype" th:value="*{worktype !=null} ? *{worktype} : '' " style="width:300px;"></p>   
+      <input form ="orderPage" type="text" id="worktype" name="worktype" th:value="*{worktype !=null} ? *{worktype} : '' " style="width:300px;" required></p>   
    <p><label for="comment">Комментарий: </label>
       <textarea form ="orderPage" id="comment" name="comment" cols="40" rows="5" wrap="hard" placeholder="Пояснение задачи для подрядчика(при необходимости)." th:text="*{comment !=null} ? *{comment} : '' "></textarea></p>
 </div>
