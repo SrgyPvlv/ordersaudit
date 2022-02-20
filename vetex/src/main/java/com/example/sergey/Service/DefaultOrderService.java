@@ -55,7 +55,8 @@ public class DefaultOrderService implements OrderService {
 
 	@Override
 	public int showNextOrderNumber(String contractnumber) {
-		int lastNumber=orderRepository.showLastOrderNumber(contractnumber);
+		int lastNumber;
+		try {lastNumber=orderRepository.showLastOrderNumber(contractnumber);} catch(Exception e) {lastNumber=0;}
 		int nextNumber=lastNumber+1;
 		return nextNumber;
 	}

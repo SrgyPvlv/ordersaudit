@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.annotation.SessionScope;
-
 import com.example.sergey.Model.ContractText;
 import com.example.sergey.Model.OrderCart;
 import com.example.sergey.Model.Users;
@@ -63,6 +62,7 @@ public class VetexController {
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractdate", contractdate);
 		model.addAttribute("cartSize", cartSize);
+				
 		return "priceItems";
 	}
 	
@@ -161,7 +161,7 @@ public class VetexController {
 
 		VetexOrder vetexOrder=new VetexOrder(ppnumber,workname,unitmeasure,price,comment,quantity);
 		orderCart.addItem(vetexOrder);
-		
+				
 		return "redirect:/priceItems/vetex";
 	}
 	

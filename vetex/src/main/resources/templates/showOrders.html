@@ -8,6 +8,7 @@
 </head>
 <body id="up1">
 
+<div class="headerShowOrders">
 <div  th:replace="header :: header"></div>
 
 <p id="up"><a href="#down" class="up">В конец страницы ↓</a></p>
@@ -48,7 +49,8 @@
   <h3 th:text="${contractname}" style="color:#8B4513;"></h3>
   </div>            
 </div>
-<div>
+</div>
+<div class="ordersShowOrders">
 <table class="listItems">
 <tr>
 <th class="col11">№ Заказа</th><th class="col12">№ БС</th><th class="col13">Дата ТЗ</th><th class="col14">Стоимость без|c НДС</th>

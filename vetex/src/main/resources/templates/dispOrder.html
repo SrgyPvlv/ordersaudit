@@ -7,7 +7,7 @@
 <title>Корзина Заказа</title>
 </head>
 <body>
-<div class="header">
+<div class="headerDispOrder">
 <div id="header1">
 <a th:href="@{/priceItems/vetex}" class="ref">На страницу ТЦП</a> &nbsp&nbsp | &nbsp&nbsp
 <form th:action="@{/clearCart}" method="get" style="display:inline;">
@@ -30,6 +30,7 @@
 </div>
 </div>
 <br>
+<div class="smetaDispOrder">
 <table class="listItems">
 <tr>
 <th class="col4"></th><th class="col2">№ пп</th><th>Наименование работ</th><th class="col4">Ед. изм.</th><th>Цена за ед., руб. без НДС</th><th class="col8">Кол-во</th>
@@ -60,6 +61,7 @@
 <tr><td colspan="6" style="text-align:right">НДС % - по ставке в соответствии с законодательством, руб.</td><td th:text="${Nds}"></td></tr>
 <tr><td colspan="6" style="text-align:right">Итоговая стоимость с НДС, руб.</td><td th:text="${sumWithNds}"></td></tr>
 </table>
+</div>
 <br>
 
 <div>

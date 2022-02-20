@@ -20,7 +20,8 @@ public class GlobalControllerAdvice {
 	public String getUserLogin() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String login=auth.getName();
-	    return login;
+		if (login.equals("anonymousUser")) return " "; else {
+			return login;}
 	  }
 	
 	@ModelAttribute("userRole") // делаем видимым Role пользователя

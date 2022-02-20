@@ -4,6 +4,12 @@
 	border:2px solid;
 	border-collapse: collapse;
 }
+.listItemsPrice{
+	width:100%;
+	border:2px solid;
+	border-collapse: collapse;
+}
+
 
 th,td{
 		padding: 6px; 
@@ -102,8 +108,28 @@ position: fixed; /* Фиксированное положение */
 .header {
 	padding:10px;
 	border-bottom: 1px solid #000000;
+	background:white;
 }
-
+.headerDispOrder {
+	position:fixed;
+	top:0px;
+	left:0px;
+	width: 100%;
+	padding:10px;
+	background:white;
+	border-bottom: 1px solid #000000;
+	z-index: 1;
+}
+.headerShowOrders {
+	position:fixed;
+	top:0px;
+	left:0px;
+	width: 100%;
+	padding:10px;
+	background:white;
+	border-bottom: 1px solid #000000;
+	z-index: 1;
+}
 .pricesControl {
 	background:#FFFACD;
 	padding:10px;
@@ -323,4 +349,47 @@ a.ref:hover,a.remedyhref:hover,a.up:hover,a.down:hover {
 #users2 {
 	margin-left: 675px;
 	text-align:left;
+}
+
+.test {
+  position:fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  padding: 10px;
+  z-index: 2;
+  background:white;
+}
+.test2{
+  margin: 330px auto 0 auto;
+  width: 100%;
+  padding: 10px;
+}
+
+.progress-container {
+  width: 100%;
+  height: 10px;
+  background: #ccc;
+}
+
+.progress-bar {
+  height: 10px;
+  background: #04AA6D;
+  width: 0%;
+}
+.listItemsPrice th{
+  position: -webkit-sticky;
+  position: sticky;
+  top:360px;
+  z-index: 1;
+}
+.smetaDispOrder{
+  margin: 30px auto 0 auto;
+  width: 100%;
+  padding: 10px;
+}
+.ordersShowOrders{
+  margin: 230px auto 0 auto;
+  width: 100%;
+  padding: 10px;
 }
