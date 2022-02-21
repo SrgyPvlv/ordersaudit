@@ -70,7 +70,7 @@
        </form>
        </div>
        <div id="search2">
-       <a th:href="@{/priceItems/vetex}">Показать все пункты ТЦП</a>
+       <a th:href="@{/priceItems/vetex}" id="showAllPrices">Показать все пункты ТЦП</a>
        </div>
        <div id="search3">
        <h3 style="color:#8B4513;">ООО "Ветекс"</h3>
@@ -88,7 +88,7 @@
 </form> 
 <div class=container><span class="span"></span><span class=text th:text="${cartSize}" title="Кол-во строчек(пунктов ТЦП) в Корзине"></span></div> &nbsp | &nbsp
 <form th:action="@{/clearCart2}" method="get" style="display:inline;">
-<input type="submit" name="submit" value="Очистить Корзину" style="background:#FF0000; color:white;">
+<input type="submit" name="submit" id="clearCart" value="Очистить Корзину" style="background:#FF0000; color:white;">
 </form>
 </div>
    <div class="progress-container">
@@ -136,9 +136,20 @@
 window.onscroll = function() {myFunction()};
 function myFunction() {
   var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  sessionStorage.setItem("nowscroll",winScroll);
   var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
   var scrolled = (winScroll / height) * 100;
   document.getElementById("myBar").style.width = scrolled + "%";}
+  
+document.addEventListener("DOMContentLoaded", readyLoadPage);
+function readyLoadPage(){
+	var rlp=sessionStorage.getItem("nowscroll");
+	document.documentElement.scrollTop=rlp;};
+	
+document.getElementById("showAllPrices").addEventListener("click", scrollToNull);
+document.getElementById("clearCart").addEventListener("click", scrollToNull);
+function scrollToNull(){
+	sessionStorage.setItem("nowscroll",0);}
 </script>
 
 </body>
