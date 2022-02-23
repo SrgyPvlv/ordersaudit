@@ -328,8 +328,8 @@ public class OrderController {
 		Type listType = new TypeToken<ArrayList<VetexOrder>>() {}.getType();
         ArrayList<VetexOrder> cartArrayList = new Gson().fromJson(cartJsonStr,listType); //Json в ArrayList
         
-        orderCart.setItemsOrderCart(cartArrayList);
-        cart=orderCart.getItemsOrderCart();
+        //orderCart.setItemsOrderCart(cartArrayList);
+        //cart=orderCart.getItemsOrderCart();
         
       String send=orderDb.getSend();
       String start=orderDb.getStart();
@@ -352,7 +352,7 @@ public class OrderController {
 		end=formatter1.format(dateEnd);
 		contractDateString=formatter1.format(contractDateDate);
 		
-		model.addAttribute("cart", cart);
+		model.addAttribute("cart", cartArrayList);
 		model.addAttribute("sumWithOutNds", orderDb.getSumwithoutnds());
 		model.addAttribute("Nds", orderDb.getNds());
 		model.addAttribute("sumWithNds", orderDb.getSumwithnds());
