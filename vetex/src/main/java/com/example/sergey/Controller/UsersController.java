@@ -3,8 +3,6 @@ package com.example.sergey.Controller;
 import java.io.IOException;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,13 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.sergey.Model.Users;
 import com.example.sergey.Service.UsersService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class UsersController {
 		
 	@Autowired
 	private UsersService usersService;
-	
-    private final Logger logger=LoggerFactory.getLogger(UsersController.class);
 		
 	@GetMapping("/admin/usersShow") //список всех пользователей
 	public String showUsers(Model model) {
@@ -103,7 +102,7 @@ public class UsersController {
 			user.setPassword(newPassw);
 			usersService.saveUsers(user);
 			
-			logger.info("Пользователь "+login+" изменил свой пароль.");
+			log.info("Пользователь "+login+" изменил свой пароль.");
 			
 			return "redirect:/";}else {
 				model.addAttribute("note", "Ошибка ввода данных.Попробуйте еще раз.");

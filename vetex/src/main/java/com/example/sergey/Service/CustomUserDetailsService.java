@@ -22,10 +22,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     public BCryptPasswordEncoder passwordEncoder() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         return bCryptPasswordEncoder;}
-	
-	public CustomUserDetailsService(UsersRepository usersrepository) {
-		this.usersrepository=usersrepository;
-	}
 
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {

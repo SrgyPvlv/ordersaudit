@@ -59,7 +59,7 @@ public class OrderController {
 	@Autowired TelecomController telecomController;
 	@Autowired TelrosController telrosController;
 	
-	private static Logger logger=LoggerFactory.getLogger(OrderController.class);
+	private static final Logger logger=LoggerFactory.getLogger(OrderController.class);
 	
 	@GetMapping("/createOrder") //записать заявку в базу данных
 	public String createOrder(@RequestParam(name="id",required=false,defaultValue="0")Long id,@RequestParam("ordernumber")int ordernumber,@RequestParam("send")String send,
