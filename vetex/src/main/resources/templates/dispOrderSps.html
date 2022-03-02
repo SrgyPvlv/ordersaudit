@@ -11,19 +11,15 @@
 <div id="header1">
 <a th:href="@{/priceItems/sps}" class="ref">На страницу ТЦП</a> &nbsp&nbsp | &nbsp&nbsp
 <form th:action="@{/clearCart/sps}" method="get" style="display:inline;">
-<input type="submit" name="submit" value="Очистить корзину"> &nbsp&nbsp | &nbsp&nbsp
+<input type="submit" name="submit" value="Очистить корзину" style="border-color:red;"> &nbsp&nbsp | &nbsp&nbsp
 </form>
 <form id="orderPage" th:action="@{/orders/createOrder}" method="get" style="display:inline;">
 <input type="hidden" name="contractnumber" th:value="${contractnumber}">
 <input type="hidden" name="contractdate" th:value="${contractdate}">
 <input type="hidden" name="id" th:value="${id}">
-<input type="submit" name="submit" value="Сохранить заявку в БД">
+<input type="submit" name="submit" value="Сохранить заявку в БД" style="border-color:green;">
 </form>
-<!-- <form id="orderPage2" th:action="@{/orders/showAllOrders}" method="get" style="display:inline;">
-<input type="hidden" name="contractnumber" th:value="${contractnumber}">
-<input type="hidden" name="contractdate" th:value="${contractdate}">
-<input type="submit" name="submit" value="БД Заявок"> &nbsp&nbsp | &nbsp&nbsp
-</form> -->
+
 </div>
 <div id="header2">
 <span th:text="'Пользователь: '+${userLogin} + ' | Роль: ' + ${userRole}" style="color:#800000;"></span>
@@ -67,30 +63,31 @@
 <div>
 <fieldset name="order">
    <legend> Данные для создания Заявки </legend>
- <div id="ordersshow1">  
+   <p class="p_reqinputs"> <i class="i_reqinputs">*</i> - Обязательные поля. Начинай с получения номера Заявки.</p>
+<div id="ordersshow1">
    <p style="display:inline;"><label for="ordernumber">№ Заявки: </label>
-      <input form ="orderPage" type="number" id="ordernumber" name="ordernumber" th:value="*{ordernumber !=0} ? *{ordernumber} : '' "  min="1" required></p> &nbsp&nbsp ← | ← &nbsp&nbsp
-      <form id="orderPage2" th:action="@{/orders/showNextOrderNumber}" method="get" style="display:inline;">
+      <input form ="orderPage" type="number" id="ordernumber" name="ordernumber" th:value="*{ordernumber !=0} ? *{ordernumber} : '' "  min="1" required><i></i></p> &nbsp&nbsp ← | ← &nbsp&nbsp 
+          <form id="orderPage2" th:action="@{/orders/showNextOrderNumber}" method="get" style="display:inline;">
           <input type="hidden" name="contractnumber" th:value="${contractnumber}">
           <input type="hidden" name="contractdate" th:value="${contractdate}">
           <input type="submit" name="submit" value="Получить номер Заявки" class="ordnum">
           </form>
    <p><label for="bsnumber">№ Базовой стации: </label>
-      <input form ="orderPage" type="text" id="bsnumber" name="bsnumber" th:value="*{bsnumber !=null} ? *{bsnumber} : '' " placeholder="78-XXXXX " pattern="78-\d{5}" required></p>
-   <p><label for="send">Дата подачи заявки : </label>
-      <input form ="orderPage" type="date" id="send" name="send" th:value="*{send !=null} ? *{send} : '' " required></p>
-   <p><label for="start">Начало выполнения работ : </label>
-      <input form ="orderPage" type="date" id="start" name="start" th:value="*{start !=null} ? *{start} : '' " required></p>
-   <p><label for="end">Окончание выполнения работ : </label>
-      <input form ="orderPage" type="date" id="end" name="end" th:value="*{endtime !=null} ? *{endtime} : '' " required></p>
+      <input form ="orderPage" type="text" id="bsnumber" name="bsnumber" th:value="*{bsnumber !=null} ? *{bsnumber} : '' " placeholder="78-12345 (5-значный) " pattern="78-\d{5}" title="Номер БС должен быть 5-значным." required><i></i></p>
+   <p><label for="send">Дата подачи заявки: </label>
+      <input form ="orderPage" type="date" id="send" name="send" th:value="*{send !=null} ? *{send} : '' " required><i></i></p>
+   <p><label for="start">Начало выполнения работ: </label>
+      <input form ="orderPage" type="date" id="start" name="start" th:value="*{start !=null} ? *{start} : '' " required><i></i></p>
+   <p><label for="end">Окончание выполнения работ: </label>
+      <input form ="orderPage" type="date" id="end" name="end" th:value="*{endtime !=null} ? *{endtime} : '' " required><i></i></p>
    <p style="display:inline;"><label for="remedy">№ Инцидента/работы в Remedy: </label>
-      <input form ="orderPage" type="text" id="remedy" name="remedy" th:value="*{remedy !=null} ? *{remedy} : '' " placeholder="MSK000010717602"  required></p> &nbsp&nbsp | &nbsp&nbsp <a href="http://remedy/arsys/shared/login.jsp" class="remedyhref" target="_blank" style="display:inline;"> Открыть Remedy </a>
+      <input form ="orderPage" type="text" id="remedy" name="remedy" th:value="*{remedy !=null} ? *{remedy} : '' " placeholder="MSK000010717602"  required><i></i></p> &nbsp&nbsp | &nbsp&nbsp <a href="http://remedy/arsys/shared/login.jsp" class="remedyhref" target="_blank" style="display:inline;"> Открыть Remedy </a>
    <p><label for="author">Инициатор заявки: ФИО(телефон): </label>
-      <input form ="orderPage" type="text" id="author" name="author" th:value="*{author !=null} ? *{author} : ${username}" style="width:250px;" required></p>
+      <input form ="orderPage" type="text" id="author" name="author" th:value="*{author !=null} ? *{author} : ${username}" style="width:250px;" required><i></i></p>
    <p><label for="arenda">Контакт арендодателя: ФИО(телефон): </label>
-      <input form ="orderPage" type="text" id="arenda" name="arenda" th:value="*{arenda !=null} ? *{arenda} : '' " style="width:300px;"></p>
+      <input form ="orderPage" type="text" id="arenda" name="arenda" th:value="*{arenda !=null} ? *{arenda} : '' " placeholder="при необходимости" style="width:300px;"></p>
    <p><label for="arenda">Вид работ: </label>
-      <input form ="orderPage" type="text" id="worktype" name="worktype" th:value="*{worktype !=null} ? *{worktype} : '' " style="width:300px;" required></p>   
+      <input form ="orderPage" type="text" id="worktype" name="worktype" th:value="*{worktype !=null} ? *{worktype} : '' " style="width:300px;" required><i></i></p>   
    <p><label for="comment">Комментарий: </label>
       <textarea form ="orderPage" id="comment" name="comment" cols="40" rows="5" wrap="hard" placeholder="Пояснение задачи для подрядчика(при необходимости)." th:text="*{comment !=null} ? *{comment} : '' "></textarea></p>
 </div>

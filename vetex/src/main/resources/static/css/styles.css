@@ -271,13 +271,13 @@ legend{
     text-align:center;
     min-height:30px;
 }
-a.ref:link,a.remedyhref:link,a.up:link,a.down:link{
+a.ref:link,a.remedyhref:link {
 	color:black; text-decoration:none;
 }
-a.ref:visited,a.remedyhref:visited,a.up:visited,a.down:visited {
+a.ref:visited,a.remedyhref:visited {
 	color:black; text-decoration:none;
 }
-a.ref:hover,a.remedyhref:hover,a.up:hover,a.down:hover {
+a.ref:hover,a.remedyhref:hover {
 	color:blue; text-decoration:underline;
 }
 .form{
@@ -393,3 +393,30 @@ a.ref:hover,a.remedyhref:hover,a.up:hover,a.down:hover {
   width: 100%;
   padding: 10px;
 }
+input#ordernumber:invalid+i:after,input#bsnumber:invalid+i:after,input#send:invalid+i:after,input#start:invalid+i:after,
+input#end:invalid+i:after,input#remedy:invalid+i:after,input#author:invalid+i:after,input#worktype:invalid+i:after{
+	content: '*';
+    color:red;
+    padding-left: 5px;
+}
+input#ordernumber:valid+i:after,input#bsnumber:valid+i:after,input#send:valid+i:after,input#start:valid+i:after,
+input#end:valid+i:after,input#remedy:valid+i:after,input#author:valid+i:after,input#worktype:valid+i:after{
+	content: '\2714';
+    color:#32CD32;
+    padding-left: 5px;
+}
+.p_reqinputs{
+	font-style: italic;
+}
+.i_reqinputs{
+	color:red;
+}
+a.up:link,a.down:link{
+	color:#8B0000; text-decoration:none;
+}
+a.up:visited,a.down:visited {
+	color:#8B0000; text-decoration:none;
+}
+a.up:hover,a.down:hover {
+	color:blue; text-decoration:underline;
+} 
