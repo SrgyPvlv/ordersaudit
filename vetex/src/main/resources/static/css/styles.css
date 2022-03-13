@@ -419,4 +419,10 @@ a.up:visited,a.down:visited {
 }
 a.up:hover,a.down:hover {
 	color:blue; text-decoration:underline;
+}
+input[type="submit"]{
+	transition: transform .2s;
+}
+input[type="submit"]:hover{
+	transform: scale(1.2);
 } 
