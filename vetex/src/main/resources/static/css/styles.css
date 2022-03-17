@@ -422,7 +422,37 @@ a.up:hover,a.down:hover {
 }
 input[type="submit"]{
 	transition: transform .2s;
+	cursor: pointer;
 }
 input[type="submit"]:hover{
 	transform: scale(1.2);
+}
+.tcp_index,.bd_index{
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 20px;
+  background-color: white;
+  color: black;
+  transition: transform .2s;
+  cursor: pointer;
+}
+.tcp_index {
+  border: 2px solid	#4CAF50;
+  background-color: white;
+  color: black;
+}
+.tcp_index:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+.bd_index {
+  border: 2px solid #008CBA;
+  background-color: white;
+  color: black;
+}
+.bd_index:hover {
+  background-color: #008CBA;
+  color: white;
+  transform:none !important;
 } 

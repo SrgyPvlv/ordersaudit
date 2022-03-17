@@ -31,10 +31,18 @@
 
 <br>
 <table class=listPoTable>
-<tr><th>Организация</th><th>Виды работ (объем)</th><th>Срок действия договора: до</th></tr>
+<tr><th>Организация</th><th></th><th></th><th>Виды работ (объем)</th><th>Срок действия договора: до</th></tr>
 
 <tr th:each="contractor: ${contractors}">
-    <td><a th:href="@{'/priceItems/'+${contractor.getContractor}}"><span th:text="${contractor.getName}"></span></a></td>
+    <td th:text="${contractor.getName}" style="color:#00008B;font-weight:bold"></td>
+    <td><a th:href="@{'/priceItems/'+${contractor.getContractor}}" class="tcp_index"><span>ТЦП</span></a></td>
+    <td>
+    <form id="orderPage2" th:action="@{/orders/showAllOrders}" method="get">
+       <input type="hidden" name="contractnumber" th:value="${contractor.getNumber}">
+       <input type="hidden" name="contractdate" th:value="${contractor.getDate}">
+       <input type="submit" name="submit" class="bd_index" value="БД Заявок">
+       </form>
+    </td>
     <td th:text="${contractor.getWork}">Виды работ (объем)</td>
     <td th:text="${contractor.getContractEnd}">Срок действия договора: до</td></tr>
 </table>
