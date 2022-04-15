@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.sergey.Model.BsList;
 import com.example.sergey.Service.BsListService;
 
-// создание, редактирование, удаление БС в БД
+// создание, редактирование, удаление БС в БД.
 @Controller
 public class BsListController {
 	
