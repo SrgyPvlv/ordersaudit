@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+<link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
+<title th:text="${contractnumber}+' АВР Заявка № '+${ordernumber}+' ('+${bsnumber}+')'"></title>
+</head>
+<body style="font-size:11pt">
+
+<div class="order">
+<div class="no-print">
+<input type="button" id="save_pdf" value="Сохранить как PDF">
+<p class="remark">*Принтер: выбрать "Сохранить как PDF"</p>
+<p class="remark">*Дополнительные настройки: убрать колонтитулы.</p>
+</div>
+<div class="parent_order">
+<table class="head">
+<tr><td th:text="'Заявка № ' + ${ordernumber}" style="font-weight:bold;"></td></tr>
+<tr><td th:text="'к Договору № '+${contractnumber}+' от '+${contractdate}+' г.'"></td></tr>
+<tr><td>на проведение работ на объектах сети радиодоступа ПАО «МТС»</td></tr>
+<tr><td style="text-align:left">г. Санкт-Петербург</td></tr>
+<tr><td style="text-align:left">
+ПАО «МТС» поручает, а Партнер принимает на себя проведение своими силами и на свой риск Работ на объектах сети радиодоступа ПАО «МТС» в соответствии с действующими нормативно-техническими документами РФ и Техническим заданием.
+</td></tr>
+</table>
+
+<table class="head2">
+<tr><td style="font-weight:bold;width:17px">1. </td><td style="width:350px">Дата подачи Заявки на выполнение работ: </td><td th:text="${send}" style="font-weight:bold;"></td></tr>
+<tr><td style="font-weight:bold;width:17px">2. </td><td colspan="2">Время подачи Заявки на выполнение работ: согласно времени отправки заявки по электронной почте.</td></tr>
+<tr><td style="font-weight:bold;width:17px">3. </td><td style="width:350px">Фамилия И.О. представителя МТС, подавшего Заявку: </td><td th:text="${author}" style="font-weight:bold;"></td></tr>
+<tr><td style="font-weight:bold;width:17px">4. </td><td colspan="2">Номера и адреса объектов, на которых необходимо выполнить работы:</td></tr>
+</table>
+
+<table class="head3">
+<tr><td style="width:90px">БС № </td><td th:text="${bsnumber}" style="font-weight:bold;"></td></tr>
+<tr><td style="width:90px">Адрес БС: </td><td th:text="${bsadress}" style="font-weight:bold;"></td></tr>
+</table>
+
+<table class="head4">
+<tr><td style="width:300px">№ Инцидента/работы в Remedy: </td><td th:text="${remedy}" style="font-weight:bold;"></td></tr>
+</table>
+
+<table class="head5">
+<tr><td style="font-weight:bold;width:17px">5. </td><td>Наименование и Стоимость работ:</td></tr>
+</table>
+<br>
+<table class="ordertable">
+<tr>
+<th>№ п/п</th><th>Наименование работ</th><th>Ед. изм.</th><th>Цена за ед., руб. без НДС</th><th>Кол-во</th>
+<th>Стоимость</th>
+</tr>
+<tr th:each="order: ${cart}">
+
+<td th:text="${order.getPpNumber}"></td><td th:text="${order.getWorkName}"></td><td th:text="${order.getUnitMeasure}"></td>
+<td th:text="${order.getPrice}"></td><td th:text="${order.getQuantity}"></td><td th:text="${order.getEndPrice}"></td>
+</tr>
+
+<tr><td colspan="5" style="text-align:right">Итоговая стоимость работ без НДС, руб.</td><td th:text="${sumWithOutNds}"></td></tr>
+<tr><td colspan="5" style="text-align:right">НДС % - по ставке в соответствии с законодательством, руб.</td><td th:text="${Nds}"></td></tr>
+<tr><td colspan="5" style="text-align:right">Итоговая стоимость с НДС, руб.</td><td th:text="${sumWithNds}"></td></tr>
+</table>
+<br>
+<table class="foot">
+<tr><td style="width:180px">Контакты арендодателя: </td><td th:text="${arenda}" style="font-weight:bold;"></td></tr>
+<tr><td style="font-weight:bold;width:220px">Комментарий к заявке: </td><td th:text="${comment}"></td></tr>
+</table>
+
+<table class="foot1">
+<tr><td style="font-weight:bold;width:17px">6. </td><td>Срок выполнения работ по настоящей Заявке:</td></tr>
+</table>
+
+<table class="foot2">
+<tr><td style="width:300px">Начало выполнения работ: </td><td th:text="${start}" style="font-weight:bold;"></td></tr>
+<tr><td style="width:300px">Окончание выполнения работ: не позднее </td><td th:text="${end}" style="font-weight:bold;"></td></tr>
+</table>
+
+<table class="foot3">
+<tr><td style="font-weight:bold;vertical-align:top;width:17px">7. </td><td th:text="'Настоящая Заявка является неотъемлемой частью Договора № '+${contractnumber}+' от '+${contractdate}+' г. '
++'вступает в силу с момента подписания со стороны ПАО «МТС» и направления Партнеру.'"></td></tr>
+<tr><td style="font-weight:bold;width:17px">8. </td><td th:text="'Во всем остальные Стороны руководствуются условиями Договора № '+${contractnumber}+' от '+${contractdate}+' г.'"></td></tr>
+</table>
+
+<table class="foot4">
+<tr><td style="font-weight:bold">От МТС</td></tr>
+<tr><td>______________________________</td></tr>
+<tr><td>____________ / _______________</td></tr>
+<tr><td>"___"__________________202_ г.</td></tr>
+</table>
+</div>
+<h3 style="text-align:center;margin-top:60px;">Проходка на объект.</h3>
+<div class="roadMap" id="roadMap" name="roadMap" contenteditable="true" placeholder="... Скопируйте в это поле из Silvia текст Проходки на БС ..."></div>
+</div>
+<script>
+function saving(){window.print();}
+save_pdf.addEventListener("click",saving);
+</script>
+</body>
+</html>

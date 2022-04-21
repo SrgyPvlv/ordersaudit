@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+<title>Insert title here</title>
+</head>
+<body>
+<div th:fragment="header" class="header" id="header">
+<div id="header1">
+<a th:href="@{/}">Главная</a> &nbsp | &nbsp<a th:href="@{/logout}">Выйти</a> 
+</div>
+<div id="header2">
+<span th:text="'Пользователь: '+${userLogin} + ' | Роль: ' + ${userRole}" style="color:#800000;"></span>
+</div>
+</div>
+</body>
+</html>

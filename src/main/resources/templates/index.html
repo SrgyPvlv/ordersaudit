@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+<link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
+<title>Главная страница</title>
+</head>
+<body>
+<div class="header">
+<div id="header1">
+<a th:href="@{/logout}">Выйти</a> &nbsp | &nbsp 
+
+      <select id="adminUserPoBS" class="adminUserPoBS" th:onchange="window.location.href=this.value;">
+        <option th:value="0" disabled selected>   --  -- Администрирование --  --   </option>
+        <option th:value="@{/admin/usersShow}">Редактирование пользователей</option>
+        <option th:value="@{/admin/contractorsShow}">Редактирование подрядчиков</option>
+        <option th:value="@{/admin/findBsByBsName}">Редактирование списка БС</option>
+       </select> &nbsp | &nbsp
+
+ <a th:href="@{/allOrdersToCSV}">Скачать все заказы в файл .csv</a>
+ </div>
+ <div id="header2">
+<span th:text="'Пользователь: '+${userLogin} + ' | Роль: ' + ${userRole}" style="color:#800000;"></span>&nbsp
+<a th:href="@{/passwordChange}"><img title="Изменение пароля" src="/images/fit.jpg" width="20" height="20" style="border: none"></a>
+</div>       
+</div>
+<br><br>
+
+<h1 style="color:red;">Проверка / Создание Заказов подрядных организаций.</h1>
+
+<br>
+<table class=listPoTable>
+<tr><th>Организация</th><th></th><th></th><th>Виды работ (объем)</th><th>Срок действия договора: до</th></tr>
+
+<tr th:each="contractor: ${contractors}">
+    <td th:text="${contractor.getName}" style="color:#00008B;font-weight:bold"></td>
+    <td><a th:href="@{'/priceItems/'+${contractor.getContractor}}" class="tcp_index"><span>ТЦП</span></a></td>
+    <td>
+    <form id="orderPage2" th:action="@{/orders/showAllOrders}" method="get">
+       <input type="hidden" name="contractnumber" th:value="${contractor.getNumber}">
+       <input type="hidden" name="contractdate" th:value="${contractor.getDate}">
+       <input type="submit" name="submit" class="bd_index" value="БД Заявок">
+       </form>
+    </td>
+    <td th:text="${contractor.getWork}">Виды работ (объем)</td>
+    <td th:text="${contractor.getContractEnd}">Срок действия договора: до</td></tr>
+</table>
+
+<br><br>
+<div th:replace="footer :: footer"></div>
+</body>
+</html>

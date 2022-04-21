@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+<link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
+<title>Список Пользователей</title>
+</head>
+<body>
+
+<div th:replace="header :: header"></div>
+
+<div class="find1">
+  <div id="users1">
+  <form th:action="@{/admin/findUserByFullName}" th:method="get" style="display:inline;">
+       <label>Поиск по фамилии</label> &nbsp&nbsp
+       <input type="text" name="userFullNameSearch" placeholder="Введите фамилию" style="width:220px">
+       <input type="submit" value="Найти" >  
+  </form> &nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp
+  <a th:href="@{/admin/usersCreate}" style="display:inline;">Добавить пользователя</a>  &nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp
+  <br>
+  <a th:href="@{/admin/usersShow}">Показать всех пользователей</a>   
+  </div>
+    
+     <div id="users2">
+      <form enctype="multipart/form-data" th:action="@{/admin/csvUsersToDateBase}" th:method="post">
+      <label style="color:#800000">Загрузка списка новых пользователей в БД</label> &nbsp&nbsp
+      <input type="file" name="file" required>
+      <input type="submit" value="Загрузить" >
+      </form>
+      <br>
+      <form  th:action="@{/admin/usersToCsv}" th:method="get" >
+      <label style="color:#800000">Скачать список пользователей из БД в файл .csv</label> &nbsp&nbsp
+      <input type="submit" value="Скачать" >
+      </form>
+     </div>
+</div>      
+<div>
+ <table class="userstable" border="1">
+ <caption align="top"><h3>Список Пользователей</h3></caption>
+        <tr>
+          <th> Логин </th> <th>Пароль</th> <th>Права</th> <th>Фамилия И.О. телефон</th>
+        </tr>
+         
+        <tr th:each="user : ${users}">
+           <td th:text="${user.getLogin} ">Логин</td><td th:text="${user.getPassword} ">Пароль</td>
+           <td th:text="${user.getRole} ">Права</td><td th:text="${user.getFullName} ">Фамилия И.О. телефон</td>
+           <td>
+           <form th:action="@{/admin/usersEdit}" method="get" style="display:inline;">
+                 <input type="hidden" name="id" th:value="${user.id}">
+                 <input type="submit" value="Редактировать" style="background:#98FB98;">
+           </form> | 
+           <form th:action="@{/admin/usersDelete}" method="get" style="display:inline;">
+                 <input type="hidden" name="id" th:value="${user.id}">
+                 <input type="submit" value="Удалить" style="background:#FF0000; color:white;">
+            </form>
+            </td>        
+        </tr>          
+    </table>
+</div>
+<br><br>
+    
+<div th:replace="footer :: footer"></div>
+</body>
+</html>

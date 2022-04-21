@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+ <head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+<title>Создание Подрядчика</title>
+</head>
+<body>
+
+<div th:replace="header :: header"></div>
+ 
+ <br>
+ <div class="parent1">
+ 
+ <div>
+ <h3 style="text-align: center"> Форма создания нового подрядчика</h3>
+ <fieldset style="border-color:#FFEBCD;text-align: center">
+  <form id="orderedit" th:action="@{/admin/contractorCreate}" method="post">
+        
+        <label>Название</label><br>
+        <input type="text" name="name" style="text-align: center" required/>
+        <br><br>
+        <label>Логин</label><br>
+        <input type="text" name="contractor" style="text-align: center" required/>
+        <br><br>
+        <label>Номер договора</label><br>
+        <input type="text" name="number" style="text-align: center" required/>
+        <br><br>
+        <label>Дата договора</label><br>
+        <input type="date" name="date" style="text-align: center" required/>
+        <br><br>
+        <label>Почта 1 ПО</label><br>
+        <input type="email" name="email1" style="text-align: center" required/>
+        <br><br>
+        <label>Почта 2 ПО</label><br>
+        <input type="email" name="email2" style="text-align: center"/>
+        <br><br>
+        <label>Почта 3 ПО</label><br>
+        <input type="email" name="email3" style="text-align: center"/>
+        <br><br>
+        <label>Почта 11 МТС</label><br>
+        <input type="email" name="email11" style="text-align: center" required/>
+        <br><br>
+        <label>Почта 12 МТС</label><br>
+        <input type="email" name="email12" style="text-align: center"/>
+        <br><br>
+        <label>Почта 13 МТС</label><br>
+        <input type="email" name="email13" style="text-align: center"/>
+        <br><br>
+        <label>Виды работ (объем)</label><br>
+        <input type="text" name="work" style="text-align: center" required/>
+        <br><br>
+        <label>Срок действия договора: до</label><br>
+        <input type="date" name="contractend" style="text-align: center" required/>
+        <br><br>
+	    <input type="submit" value="Создать" style="width: 100px; height: 40px; background-color: #98FB98;">
+ </form>
+ </fieldset>
+ </div>
+ 
+ </div>
+ <br><br>
+ 
+<div th:replace="footer :: footer"></div>
+
+</body>
+</html>
