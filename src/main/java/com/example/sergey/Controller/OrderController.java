@@ -53,7 +53,7 @@ public class OrderController {
 	@Autowired ContractTextService contractTextService;
 	@Autowired
 	private DefaultOrderService orderService;
-	@Autowired VetexController vetexController;
+	@Autowired PricesController vetexController;
 	@Autowired SpsController spsController;
 	@Autowired VolotController volotController;
 	@Autowired TelecomController telecomController;

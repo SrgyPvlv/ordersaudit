@@ -16,27 +16,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.annotation.SessionScope;
-
 import com.example.sergey.Model.ContractText;
 import com.example.sergey.Model.OrderCart;
-import com.example.sergey.Model.Telros;
 import com.example.sergey.Model.Users;
+import com.example.sergey.Model.Prices;
 import com.example.sergey.Model.VetexOrder;
 import com.example.sergey.Service.BsListService;
 import com.example.sergey.Service.ContractTextService;
-import com.example.sergey.Service.TelrosService;
 import com.example.sergey.Service.UsersService;
+import com.example.sergey.Service.PricesService;
 
 @Controller
 @SessionScope
-public class TelrosController {
+public class PricesController {
 	
 	double sumWithOutNds;
 	double Nds;
 	double sumWithNds;
 	ArrayList<VetexOrder> cart;
 	int cartSize;
-	String html;
 	Date dateSend;
 	Date dateStart;
 	Date dateEnd;
@@ -45,16 +43,16 @@ public class TelrosController {
 	String cedr;String status;String worktype;String orderlistcomment;String contractnumber;String contractdate;String remedy;
 	String arenda;String comment;String author;
 
-	@Autowired TelrosService telrosService;
+	@Autowired PricesService vetexService;
 	@Autowired OrderCart orderCart;
 	@Autowired ContractTextService contractTextService;
 	@Autowired UsersService userService;
 	@Autowired BsListService bsListService;
 	
-	@GetMapping("/priceItems/telros")
-	public String getAllPriceItemsTelros(Model model) {
-		List<Telros> listitems=telrosService.findAllPriceItems();
-		ContractText vetexContract=contractTextService.getContractorWithOutText(5);
+	@GetMapping("/priceItems") //надо переделать, добавить параметр подрядчик-contractor
+	public String getAllPriceItems(@RequestParam(name="contractor",required=false) String contractor, Model model) {
+		List<Prices> listitems=vetexService.findAllPriceItems();
+		ContractText vetexContract=contractTextService.getContractorWithOutText(1);
 		contractnumber=vetexContract.getNumber();
 		contractdate=vetexContract.getDate();
 		
@@ -64,73 +62,74 @@ public class TelrosController {
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractdate", contractdate);
 		model.addAttribute("cartSize", cartSize);
-		return "priceItemsTelros";
+				
+		return "priceItems";
 	}
 	
-	@GetMapping ("/superadmin/deleteAllPrices/telros")
-	public String deleteAllPricesTelros() {
-		telrosService.deleteAllPrices();
-		return "redirect:/priceItems/telros";
+	@GetMapping ("/superadmin/deleteAllPrices")
+	public String deleteAllPrices() {
+		vetexService.deleteAllPrices();
+		return "redirect:/priceItems/vetex";
 	}
 	
-	@GetMapping("/admin/newItem/telros")
-	public String newItemCreateTelros() {
-		return"newItemFormTelros";
+	@GetMapping("/admin/newItem")
+	public String newItemCreate() {
+		return"newItemForm";
 	}
 	
-	@PostMapping("/admin/newItemCreate/telros")
-	public String newItemCreateTelros(@RequestParam("pp") String pp,@RequestParam("workname") String workname,//
+	@PostMapping("/admin/newItemCreate")
+	public String newItemCreate(@RequestParam("pp") String pp,@RequestParam("workname") String workname,//
 			@RequestParam("unitmeasure") String unitmeasure,@RequestParam("price") double price,@RequestParam("comment") String comment) throws IOException{
-		Telros newPriceItem=new Telros(pp,workname,unitmeasure,price,comment);
+		Prices newPriceItem=new Prices(pp,workname,unitmeasure,price,comment);
 		try {
-			telrosService.savePriceItem(newPriceItem);
+			vetexService.savePriceItem(newPriceItem);
 		}catch (Exception e) {}
 		
-		return "redirect:/priceItems/telros";
+		return "redirect:/priceItems/vetex";
 	}
 	
-	@GetMapping("/admin/itemDelete/telros")
-	public String itemDeleteTelros(@RequestParam("id") long id) {
-		telrosService.deletePriceItemById(id);
+	@GetMapping("/admin/itemDelete")
+	public String itemDelete(@RequestParam("id") long id) {
+		vetexService.deletePriceItemById(id);
 		
-		return "redirect:/priceItems/telros";
+		return "redirect:/priceItems/vetex";
 	}
 	
-	@GetMapping("/admin/itemEditForm/telros")
-	public String itemEditFormTelros(@RequestParam("id") long id,Model model) {
-		Telros item=telrosService.findPriceItemById(id);
+	@GetMapping("/admin/itemEditForm")
+	public String itemEditForm(@RequestParam("id") long id,Model model) {
+		Prices item=vetexService.findPriceItemById(id);
 		model.addAttribute("item", item);
-		return "editItemFormTelros";
+		return "editItemForm";
 	}
 	
-	@PostMapping ("/admin/itemEdite/telros")
-	public String itemEditTelros(@RequestParam("id") long id,@RequestParam("pp") String pp,@RequestParam("workname") String workname,//
+	@PostMapping ("/admin/itemEdite")
+	public String itemEdit(@RequestParam("id") long id,@RequestParam("pp") String pp,@RequestParam("workname") String workname,//
 	@RequestParam("unitmeasure") String unitmeasure,@RequestParam("price") double price,@RequestParam("comment") String comment) throws IOException{
-		Telros item=telrosService.findPriceItemById(id);
+		Prices item=vetexService.findPriceItemById(id);
 		item.setPpNumber(pp);
 		item.setWorkName(workname);
 		item.setUnitMeasure(unitmeasure);
 		item.setPrice(price);
 		item.setComment(comment);
-		telrosService.savePriceItem(item);
-		return "redirect:/priceItems/telros";
+		vetexService.savePriceItem(item);
+		return "redirect:/priceItems/vetex";
 	}
 	
-	@GetMapping("/findByNumber/telros")
-	public String findByNumberTelros(@RequestParam("ppsearch") String ppsearch,
+	@GetMapping("/findByNumber")
+	public String findByNumber(@RequestParam("ppsearch") String ppsearch,
 			@RequestParam(name="contractnumber") String contractnumber,
 			@RequestParam(name="contractdate") String contractdate, Model model)throws IOException{
 		
-		List<Telros> listitems=telrosService.findPriceItemByPpNumber(ppsearch);
+		List<Prices> listitems=vetexService.findPriceItemByPpNumber(ppsearch);
 		model.addAttribute("listitems", listitems);
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractdate", contractdate);
 		model.addAttribute("cartSize", cartSize);
-		return "priceItemsTelros";
+		return "priceItems";
 	}
 	
-	@GetMapping("/findByName/telros")
-	public String findByNameTelros(@RequestParam("workname") String workname,
+	@GetMapping("/findByName")
+	public String findByName(@RequestParam("workname") String workname,
 			@RequestParam(name="contractnumber") String contractnumber,
 			@RequestParam(name="contractdate") String contractdate, Model model)throws IOException{
 		String workname1;
@@ -143,17 +142,17 @@ public class TelrosController {
 			workname1=words[0];
 			workname2=words[1];
 		}
-		List<Telros> listitems=telrosService.findPriceItemByWorkName(workname,workname1,workname2);
+		List<Prices> listitems=vetexService.findPriceItemByWorkName(workname,workname1,workname2);
 		model.addAttribute("listitems", listitems);
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractdate", contractdate);
 		model.addAttribute("cartSize", cartSize);
-		return "priceItemsTelros";
+		return "priceItems";
 	}
 	
-	@GetMapping("/addInOrder/telros")
-	public String addInOrderTelros(@RequestParam("id") long id,@RequestParam("quantity") double quantity) {
-		Telros item=telrosService.findPriceItemById(id);
+	@GetMapping("/addInOrder")
+	public String addInOrder(@RequestParam("id") long id,@RequestParam("quantity") double quantity) {
+		Prices item=vetexService.findPriceItemById(id);
 		String ppnumber=item.getPpNumber();
 		String workname=item.getWorkName();
 		String unitmeasure=item.getUnitMeasure();
@@ -162,12 +161,12 @@ public class TelrosController {
 
 		VetexOrder vetexOrder=new VetexOrder(ppnumber,workname,unitmeasure,price,comment,quantity);
 		orderCart.addItem(vetexOrder);
-		
-		return "redirect:/priceItems/telros";
+				
+		return "redirect:/priceItems/vetex";
 	}
 	
-	@GetMapping ("/dispOrder/telros")
-	public String showCartTelros(@RequestParam(name="id",defaultValue="0",required=false) Long id,@RequestParam(name="ordernumber",defaultValue="0",required=false) Integer ordernumber,
+	@GetMapping ("/dispOrder")
+	public String showCart(@RequestParam(name="id",defaultValue="0",required=false) Long id,@RequestParam(name="ordernumber",defaultValue="0",required=false) Integer ordernumber,
 			@RequestParam(name="bsnumber",defaultValue="",required=false)String bsnumber,
 			@RequestParam(name="send",defaultValue="",required=false)String send,@RequestParam(name="start",defaultValue="",required=false)String start,
 			@RequestParam(name="endtime",defaultValue="",required=false)String endtime,@RequestParam(name="remedy",defaultValue="",required=false)String remedy,
@@ -196,7 +195,7 @@ public class TelrosController {
 		if(!report.isEmpty()) this.report=report;
 		if(!cedr.isEmpty()) this.cedr=cedr;
 		if(!contractnumber.isEmpty() && !contractdate.isEmpty()) {this.contractnumber=contractnumber;this.contractdate=contractdate;} else {
-			ContractText vetexContract=contractTextService.getContractorWithOutText(5);
+			ContractText vetexContract=contractTextService.getContractorWithOutText(1);
 			this.contractnumber=vetexContract.getNumber();
 			this.contractdate=vetexContract.getDate();}
 		
@@ -245,23 +244,23 @@ public class TelrosController {
 		model.addAttribute("cedr", this.cedr);
 		model.addAttribute("orderlistcomment", this.orderlistcomment);
 		model.addAttribute("contractname", contractname);
-		return"dispOrderTelros";
+		return"dispOrder";
 	}
-	@GetMapping ("/clearCart/telros")
-	public String clearCartTelros() {
+	@GetMapping ("/clearCart")
+	public String clearCart() {
 		orderCart.clearCart();
 		this.id=null; this.ordernumber=null; this.bsnumber=null; this.send=null; this.start=null; this.endtime=null;
 		this.remedy=null; this.author=null; this.arenda=null; this.worktype=null; this.comment=null; this.status=null;
 		this.report=null; this.cedr=null; this.orderlistcomment=null;
-		return "redirect:/dispOrder/telros";
+		return "redirect:/dispOrder";
 	}
-	@GetMapping ("/clearCart2/telros")
-	public String clearCart2Telros() {
+	@GetMapping ("/clearCart2")
+	public String clearCart2() {
 		orderCart.clearCart();
 		this.id=null; this.ordernumber=null; this.bsnumber=null; this.send=null; this.start=null; this.endtime=null;
 		this.remedy=null; this.author=null; this.arenda=null; this.worktype=null; this.comment=null; this.status=null;
 		this.report=null; this.cedr=null; this.orderlistcomment=null;
-		return "redirect:/priceItems/telros";
+		return "redirect:/priceItems/vetex";
 	}
 	
 	public void clearCart3() {
@@ -271,15 +270,18 @@ public class TelrosController {
 		this.report=null; this.cedr=null; this.orderlistcomment=null;
 	}
 	
-	@GetMapping ("/deleteFromOrder/telros")
-	public String deleteFromOrderTelros(@RequestParam("ppnumber")String ppnumber,@RequestParam("quantity")double quantity) {
+	@GetMapping ("/deleteFromOrder")
+	public String deleteFromOrder(@RequestParam("ppnumber")String ppnumber,@RequestParam("quantity")double quantity) {
 		orderCart.deleteItem(ppnumber,quantity);
-		return "redirect:/dispOrder/telros";
+		return "redirect:/dispOrder";
 	}
-	
-	@GetMapping ("/saveQuantityChanges/telros")
-	public String saveQuantityChangesTelros(@RequestParam("ppnumber")String ppnumber,@RequestParam("quantity")double quantity,@RequestParam("newQuantity")double newQuantity) {
+	@GetMapping("/403")
+    public String error403() {
+        return "403";
+    }
+	@GetMapping ("/saveQuantityChanges")
+	public String saveQuantityChanges(@RequestParam("ppnumber")String ppnumber,@RequestParam("quantity")double quantity,@RequestParam("newQuantity")double newQuantity) {
 		orderCart.saveQuantityItem(ppnumber,quantity,newQuantity);
-		return "redirect:/dispOrder/telros";
+		return "redirect:/dispOrder";
 	}
 }

@@ -35,7 +35,12 @@
 
 <tr th:each="contractor: ${contractors}">
     <td th:text="${contractor.getName}" style="color:#00008B;font-weight:bold"></td>
-    <td><a th:href="@{'/priceItems/'+${contractor.getContractor}}" class="tcp_index"><span>ТЦП</span></a></td>
+    <td>
+    <form id="orderPage2" th:action="@{/priceItems}" method="get">
+       <input type="hidden" name="contractor" th:value="${contractor.getContractor}">
+       <input type="submit" name="submit" class="tcp_index" value="ТЦП">
+       </form>
+    </td>
     <td>
     <form id="orderPage2" th:action="@{/orders/showAllOrders}" method="get">
        <input type="hidden" name="contractnumber" th:value="${contractor.getNumber}">
