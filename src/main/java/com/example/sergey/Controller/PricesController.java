@@ -49,17 +49,19 @@ public class PricesController {
 	@Autowired UsersService userService;
 	@Autowired BsListService bsListService;
 	
-	@GetMapping("/priceItems") //надо переделать, добавить параметр подрядчик-contractor
-	public String getAllPriceItems(@RequestParam(name="contractor",required=false) String contractor,
+	@GetMapping("/priceItems") //показать все пункты тцп по конкретному подрядчику
+	public String getAllPriceItems(@RequestParam(name="contractor") String contractor,
 			@RequestParam(name="contractnumber") String contractnumber,
-			@RequestParam(name="contractdate") String contractdate,Model model) {
+			@RequestParam(name="contractdate") String contractdate, @RequestParam(name="contractname") String contractname,Model model) {
 		List<Prices> listitems=pricesService.findAllPriceItemsByContractor(contractor);
 		
 		if (orderCart.getItemsOrderCart()!=null) {cartSize=orderCart.getItemsOrderCart().size();} else {cartSize=0;};
 		
 		model.addAttribute("listitems", listitems);
+		model.addAttribute("contractor", contractor);
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractdate", contractdate);
+		model.addAttribute("contractname", contractname);
 		model.addAttribute("cartSize", cartSize);
 				
 		return "priceItems";
@@ -118,22 +120,23 @@ public class PricesController {
 	}
 	
 	@GetMapping("/findByNumber")
-	public String findByNumber(@RequestParam("ppsearch") String ppsearch,
+	public String findByNumber(@RequestParam(name="contractor") String contractor, @RequestParam("ppsearch") String ppsearch,
 			@RequestParam(name="contractnumber") String contractnumber,
-			@RequestParam(name="contractdate") String contractdate, Model model)throws IOException{
+			@RequestParam(name="contractdate") String contractdate, @RequestParam(name="contractname") String contractname, Model model)throws IOException{
 		
-		List<Prices> listitems=pricesService.findPriceItemByPpNumber(ppsearch);
+		List<Prices> listitems=pricesService.findPriceItemByPpNumber(contractor, ppsearch);
 		model.addAttribute("listitems", listitems);
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractdate", contractdate);
+		model.addAttribute("contractname", contractname);
 		model.addAttribute("cartSize", cartSize);
 		return "priceItems";
 	}
 	
 	@GetMapping("/findByName")
-	public String findByName(@RequestParam("workname") String workname,
+	public String findByName(@RequestParam(name="contractor") String contractor, @RequestParam("workname") String workname,
 			@RequestParam(name="contractnumber") String contractnumber,
-			@RequestParam(name="contractdate") String contractdate, Model model)throws IOException{
+			@RequestParam(name="contractdate") String contractdate, @RequestParam(name="contractname") String contractname, Model model)throws IOException{
 		String workname1;
 		String workname2;
 		String[] words=workname.split("\\s");
@@ -144,10 +147,11 @@ public class PricesController {
 			workname1=words[0];
 			workname2=words[1];
 		}
-		List<Prices> listitems=pricesService.findPriceItemByWorkName(workname,workname1,workname2);
+		List<Prices> listitems=pricesService.findPriceItemByWorkName(contractor,workname,workname1,workname2);
 		model.addAttribute("listitems", listitems);
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractdate", contractdate);
+		model.addAttribute("contractname", contractname);
 		model.addAttribute("cartSize", cartSize);
 		return "priceItems";
 	}
@@ -164,7 +168,7 @@ public class PricesController {
 		PricesSelect vetexOrder=new PricesSelect(ppnumber,workname,unitmeasure,price,comment,quantity);
 		orderCart.addItem(vetexOrder);
 				
-		return "redirect:/priceItems/vetex";
+		return "redirect:/priceItems";
 	}
 	
 	@GetMapping ("/dispOrder")
@@ -262,7 +266,7 @@ public class PricesController {
 		this.id=null; this.ordernumber=null; this.bsnumber=null; this.send=null; this.start=null; this.endtime=null;
 		this.remedy=null; this.author=null; this.arenda=null; this.worktype=null; this.comment=null; this.status=null;
 		this.report=null; this.cedr=null; this.orderlistcomment=null;
-		return "redirect:/priceItems/vetex";
+		return "redirect:/priceItems";
 	}
 	
 	public void clearCart3() {

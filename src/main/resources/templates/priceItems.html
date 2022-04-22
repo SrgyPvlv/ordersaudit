@@ -55,25 +55,35 @@
        <div id="search1">
        <form th:action="@{/findByNumber}" th:method="get" >
        <label>Поиск по № ТЦП (№ п/п)</label> &nbsp&nbsp
+       <input type="hidden" name="contractor" th:value="${contractor}">
        <input type="text" name="ppsearch" required>
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
        <input type="hidden" name="contractdate" th:value="${contractdate}">
+       <input type="hidden" name="contractname" th:value="${contractname}">
        <input type="submit" value="Найти" >
        </form>
        <br><br>
        <form th:action="@{/findByName}" th:method="get" >
        <label>Поиск по Наименованию работы</label> &nbsp&nbsp
+       <input type="hidden" name="contractor" th:value="${contractor}">
        <input type="text" name="workname" required>
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
        <input type="hidden" name="contractdate" th:value="${contractdate}">
+       <input type="hidden" name="contractname" th:value="${contractname}">
        <input type="submit" value="Найти" >
        </form>
        </div>
        <div id="search2">
-       <a th:href="@{/priceItems/vetex}" id="showAllPrices">Показать все пункты ТЦП</a>
+       <form th:action="@{/priceItems}" th:method="get" >
+       <input type="hidden" name="contractor" th:value="${contractor}">
+       <input type="hidden" name="contractnumber" th:value="${contractnumber}">
+       <input type="hidden" name="contractdate" th:value="${contractdate}">
+       <input type="hidden" name="contractname" th:value="${contractname}">
+       <input type="submit" value="Показать все пункты ТЦП" >
+       </form>
        </div>
        <div id="search3">
-       <h3 style="color:#8B4513;">ООО "Ветекс"</h3>
+       <h3 th:text="${contractname}" style="color:#8B4513;"></h3>
        <form id="orderPage2" th:action="@{/orders/showAllOrders}" method="get">
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
        <input type="hidden" name="contractdate" th:value="${contractdate}">
