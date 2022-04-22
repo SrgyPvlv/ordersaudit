@@ -3,7 +3,7 @@ package com.example.sergey.Model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="prices") //сущность таблицы с тцп всех подрядчиков, принадлежность пункта - по полю contractor
+@Table(name="prices") //сущность таблицы содержащей тцп всех подрядчиков, принадлежность пункта в таблице определяется по полю contractor
 public class Prices {
 
 	@Id

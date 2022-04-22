@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-//Класс Заявки(Заказа) (сущность)
+//Сущность Заявки(Заказа)
 
 @Data
 @NoArgsConstructor

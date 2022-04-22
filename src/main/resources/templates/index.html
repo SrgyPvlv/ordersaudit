@@ -38,6 +38,8 @@
     <td>
     <form id="orderPage2" th:action="@{/priceItems}" method="get">
        <input type="hidden" name="contractor" th:value="${contractor.getContractor}">
+       <input type="hidden" name="contractnumber" th:value="${contractor.getNumber}">
+       <input type="hidden" name="contractdate" th:value="${contractor.getDate}">
        <input type="submit" name="submit" class="tcp_index" value="ТЦП">
        </form>
     </td>

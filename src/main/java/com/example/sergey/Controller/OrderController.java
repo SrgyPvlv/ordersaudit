@@ -26,7 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.sergey.Model.ContractText;
 import com.example.sergey.Model.Order;
 import com.example.sergey.Model.OrderCart;
-import com.example.sergey.Model.VetexOrder;
+import com.example.sergey.Model.PricesSelect;
 import com.example.sergey.Service.BsListService;
 import com.example.sergey.Service.ContractTextService;
 import com.example.sergey.Service.DefaultOrderService;
@@ -46,19 +46,15 @@ public class OrderController {
 	double sumWithOutNds;
 	double Nds;
 	double sumWithNds;
-	ArrayList<VetexOrder> cart;
+	ArrayList<PricesSelect> cart;
 	@Autowired OrderCart orderCart;
 	@Autowired UsersService userService;
 	@Autowired BsListService bsListService;
 	@Autowired ContractTextService contractTextService;
 	@Autowired
 	private DefaultOrderService orderService;
-	@Autowired PricesController vetexController;
-	@Autowired SpsController spsController;
-	@Autowired VolotController volotController;
-	@Autowired TelecomController telecomController;
-	@Autowired TelrosController telrosController;
-	
+	@Autowired PricesController pricesController;
+		
 	private static final Logger logger=LoggerFactory.getLogger(OrderController.class);
 	
 	@GetMapping("/createOrder") //записать заявку в базу данных
@@ -79,7 +75,7 @@ public class OrderController {
         cart=orderCart.getItemsOrderCart();
         String cartJsonStr = new Gson().toJson(cart); //ArrayList в Json
 		
-		for(VetexOrder cartitem : cart) {
+		for(PricesSelect cartitem : cart) {
 			this.sumWithOutNds=this.sumWithOutNds+cartitem.getEndPrice();
 			BigDecimal bd = new BigDecimal(this.sumWithOutNds).setScale(2, RoundingMode.HALF_UP);
 			this.sumWithOutNds = bd.doubleValue();
@@ -119,11 +115,7 @@ public class OrderController {
 		redirectAttr.addAttribute("contractdate", contractdate);
 		redirectAttr.addAttribute("ordernumber", ordernumber);
 		
-		vetexController.clearCart3();
-	    spsController.clearCart3();
-	    volotController.clearCart3();
-		telecomController.clearCart3();
-        telrosController.clearCart3();
+		pricesController.clearCart3();
 		
 		return "redirect:/orders/showAllOrders";} catch(Exception e) {
 	        model.addAttribute("note", "Не удалось записать Заявку в БД! Вероятно данный номер Заявки уже используется. "
@@ -212,28 +204,12 @@ public class OrderController {
 		Nds=0;
 		sumWithNds=0;
 		
-		String vetex=contractTextService.getContractorWithOutText(1).getNumber();
-		String sps=contractTextService.getContractorWithOutText(2).getNumber();
-		String volot=contractTextService.getContractorWithOutText(3).getNumber();
-		String telecom=contractTextService.getContractorWithOutText(4).getNumber();
-		String telros=contractTextService.getContractorWithOutText(5).getNumber();
-		
-		String asd = null;
-		
-		if (contractnumber.equals(vetex)) {vetexController.clearCart3(); asd="redirect:/dispOrder";} else {
-			if (contractnumber.equals(sps)) {spsController.clearCart3();asd= "redirect:/dispOrder/sps";}else {
-					if(contractnumber.equals(volot)) {volotController.clearCart3();asd= "redirect:/dispOrder/volot";} else {
-						if(contractnumber.equals(telecom)) {telecomController.clearCart3();asd= "redirect:/dispOrder/telecom";} else {
-							if(contractnumber.equals(telros)) {telrosController.clearCart3();asd= "redirect:/dispOrder/telros";}
-		}
-	  }
-	 }
-	}	
+		pricesController.clearCart3();
 		
 		//Order orderDb=orderService.getOrderById(id);
 		String cartJsonStr=orderDb.getCart();
-		Type listType = new TypeToken<ArrayList<VetexOrder>>() {}.getType();
-        ArrayList<VetexOrder> cartArrayList = new Gson().fromJson(cartJsonStr,listType); //Json в ArrayList
+		Type listType = new TypeToken<ArrayList<PricesSelect>>() {}.getType();
+        ArrayList<PricesSelect> cartArrayList = new Gson().fromJson(cartJsonStr,listType); //Json в ArrayList
         
         orderCart.setItemsOrderCart(cartArrayList);
         cart=orderCart.getItemsOrderCart();
@@ -256,7 +232,7 @@ public class OrderController {
 		redirectAttr.addAttribute("report", orderDb.getReport());
 		redirectAttr.addAttribute("cedr", orderDb.getCedr());
 		
-		return asd;} else {
+		return "redirect:/dispOrder";} else {
 			model.addAttribute("note", "Вы не можете редактировать чужую заявку! Обратитесь к её автору или администратору.");
 			return "noUpload";}
 	}
@@ -268,27 +244,12 @@ public class OrderController {
 		Nds=0;
 		sumWithNds=0;
 		
-		String vetex=contractTextService.getContractorWithOutText(1).getNumber();
-		String sps=contractTextService.getContractorWithOutText(2).getNumber();
-		String volot=contractTextService.getContractorWithOutText(3).getNumber();
-		String telecom=contractTextService.getContractorWithOutText(4).getNumber();
-		String telros=contractTextService.getContractorWithOutText(5).getNumber();
+		pricesController.clearCart3();
 		
-		String asd = null;
-		
-		if (contractnumber.equals(vetex)) {vetexController.clearCart3(); asd="redirect:/dispOrder";} else {
-		if (contractnumber.equals(sps)) {spsController.clearCart3();asd= "redirect:/dispOrder/sps";}else {
-				if(contractnumber.equals(volot)) {volotController.clearCart3();asd= "redirect:/dispOrder/volot";} else {
-					if(contractnumber.equals(telecom)) {telecomController.clearCart3();asd= "redirect:/dispOrder/telecom";} else {
-						if(contractnumber.equals(telros)) {telrosController.clearCart3();asd= "redirect:/dispOrder/telros";}
-	}
-  }
- }
-}	
 		Order orderDb=orderService.getOrderById(id);
 		String cartJsonStr=orderDb.getCart();
-		Type listType = new TypeToken<ArrayList<VetexOrder>>() {}.getType();
-        ArrayList<VetexOrder> cartArrayList = new Gson().fromJson(cartJsonStr,listType); //Json в ArrayList
+		Type listType = new TypeToken<ArrayList<PricesSelect>>() {}.getType();
+        ArrayList<PricesSelect> cartArrayList = new Gson().fromJson(cartJsonStr,listType); //Json в ArrayList
         
         orderCart.setItemsOrderCart(cartArrayList);
         cart=orderCart.getItemsOrderCart();
@@ -310,7 +271,7 @@ public class OrderController {
 		//redirectAttr.addAttribute("report", orderDb.getReport());
 		//redirectAttr.addAttribute("cedr", orderDb.getCedr());
 		
-		return asd;}
+		return "redirect:/dispOrder";}
 	
 	@GetMapping ("/orderPage") //создание страницы заявки
 	public String tableOrder(@RequestParam("id") Long id, Model model) {
@@ -325,8 +286,8 @@ public class OrderController {
 		
 		Order orderDb=orderService.getOrderById(id);
 		String cartJsonStr=orderDb.getCart();
-		Type listType = new TypeToken<ArrayList<VetexOrder>>() {}.getType();
-        ArrayList<VetexOrder> cartArrayList = new Gson().fromJson(cartJsonStr,listType); //Json в ArrayList
+		Type listType = new TypeToken<ArrayList<PricesSelect>>() {}.getType();
+        ArrayList<PricesSelect> cartArrayList = new Gson().fromJson(cartJsonStr,listType); //Json в ArrayList
         
         //orderCart.setItemsOrderCart(cartArrayList);
         //cart=orderCart.getItemsOrderCart();
@@ -448,29 +409,10 @@ public class OrderController {
 		Nds=0;
 		sumWithNds=0;
 		
-		String vetex=contractTextService.getContractorWithOutText(1).getNumber();
-		String sps=contractTextService.getContractorWithOutText(2).getNumber();
-		String volot=contractTextService.getContractorWithOutText(3).getNumber();
-		String telecom=contractTextService.getContractorWithOutText(4).getNumber();
-		String telros=contractTextService.getContractorWithOutText(5).getNumber();
-		
-		String asd = null;
-		
-		if (contractnumber.equals(vetex)) {asd="redirect:/dispOrder";} else {
-		if (contractnumber.equals(sps)) {asd= "redirect:/dispOrder/sps";}else {
-				if(contractnumber.equals(volot)) {asd= "redirect:/dispOrder/volot";} else {
-					if(contractnumber.equals(telecom)) {asd= "redirect:/dispOrder/telecom";} else {
-						if(contractnumber.equals(telros)) {asd= "redirect:/dispOrder/telros";}
-	}
-  }
- }
-}	
-
 		int ordernumber=orderService.showNextOrderNumber(contractnumber);
 		redirectAttr.addAttribute("ordernumber", ordernumber);
 		redirectAttr.addAttribute("contractnumber", contractnumber);
 		redirectAttr.addAttribute("contractdate", contractdate);
-		return asd;
-	}
-	
+		return "redirect:/dispOrder";
+	}	
 }

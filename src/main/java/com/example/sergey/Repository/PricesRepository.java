@@ -12,9 +12,14 @@ import com.example.sergey.Model.Prices;
 @Repository
 public interface PricesRepository extends JpaRepository<Prices,Long> {
 	
-	@Query(value="select * from vetex where lower(workname) like concat('%',:filter,'%') or lower(workname) like concat('%',:filter1,'%',:filter2,'%') or lower(workname) like concat('%',:filter2,'%',:filter1,'%')",nativeQuery=true)
+	//поиск пунктов тцп по фильрам в названии
+	@Query(value="select * from prices where lower(workname) like concat('%',:filter,'%') or lower(workname) like concat('%',:filter1,'%',:filter2,'%') or lower(workname) like concat('%',:filter2,'%',:filter1,'%')",nativeQuery=true)
 	public List<Prices> findPriceItemsByFilter(@Param("filter") String filter,@Param("filter1") String filter1,@Param("filter2") String filter2);
 
-	@Query(value="select * from vetex where lower(ppnumber) like (:pp)",nativeQuery=true)
+	//поиск пунктов тцп по номеру
+	@Query(value="select * from prices where lower(ppnumber) like (:pp)",nativeQuery=true)
 	public List<Prices> findPriceItemByPpNumber(@Param("pp") String pp);
+	
+	//поиск всех пуктов тцп по подрядчику
+	public List<Prices> findByContractor(String contractor);
 }

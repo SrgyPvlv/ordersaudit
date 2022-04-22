@@ -20,7 +20,7 @@ import com.example.sergey.Model.ContractText;
 import com.example.sergey.Model.OrderCart;
 import com.example.sergey.Model.Users;
 import com.example.sergey.Model.Prices;
-import com.example.sergey.Model.VetexOrder;
+import com.example.sergey.Model.PricesSelect;
 import com.example.sergey.Service.BsListService;
 import com.example.sergey.Service.ContractTextService;
 import com.example.sergey.Service.UsersService;
@@ -33,7 +33,7 @@ public class PricesController {
 	double sumWithOutNds;
 	double Nds;
 	double sumWithNds;
-	ArrayList<VetexOrder> cart;
+	ArrayList<PricesSelect> cart;
 	int cartSize;
 	Date dateSend;
 	Date dateStart;
@@ -43,18 +43,17 @@ public class PricesController {
 	String cedr;String status;String worktype;String orderlistcomment;String contractnumber;String contractdate;String remedy;
 	String arenda;String comment;String author;
 
-	@Autowired PricesService vetexService;
+	@Autowired PricesService pricesService;
 	@Autowired OrderCart orderCart;
 	@Autowired ContractTextService contractTextService;
 	@Autowired UsersService userService;
 	@Autowired BsListService bsListService;
 	
 	@GetMapping("/priceItems") //надо переделать, добавить параметр подрядчик-contractor
-	public String getAllPriceItems(@RequestParam(name="contractor",required=false) String contractor, Model model) {
-		List<Prices> listitems=vetexService.findAllPriceItems();
-		ContractText vetexContract=contractTextService.getContractorWithOutText(1);
-		contractnumber=vetexContract.getNumber();
-		contractdate=vetexContract.getDate();
+	public String getAllPriceItems(@RequestParam(name="contractor",required=false) String contractor,
+			@RequestParam(name="contractnumber") String contractnumber,
+			@RequestParam(name="contractdate") String contractdate,Model model) {
+		List<Prices> listitems=pricesService.findAllPriceItemsByContractor(contractor);
 		
 		if (orderCart.getItemsOrderCart()!=null) {cartSize=orderCart.getItemsOrderCart().size();} else {cartSize=0;};
 		
@@ -68,8 +67,8 @@ public class PricesController {
 	
 	@GetMapping ("/superadmin/deleteAllPrices")
 	public String deleteAllPrices() {
-		vetexService.deleteAllPrices();
-		return "redirect:/priceItems/vetex";
+		pricesService.deleteAllPrices();
+		return "redirect:/priceItems";
 	}
 	
 	@GetMapping("/admin/newItem")
@@ -79,40 +78,43 @@ public class PricesController {
 	
 	@PostMapping("/admin/newItemCreate")
 	public String newItemCreate(@RequestParam("pp") String pp,@RequestParam("workname") String workname,//
-			@RequestParam("unitmeasure") String unitmeasure,@RequestParam("price") double price,@RequestParam("comment") String comment) throws IOException{
-		Prices newPriceItem=new Prices(pp,workname,unitmeasure,price,comment);
+			@RequestParam("unitmeasure") String unitmeasure,@RequestParam("price") double price,@RequestParam("comment") String comment,
+			@RequestParam("contractor") String contractor) throws IOException{
+		Prices newPriceItem=new Prices(pp,workname,unitmeasure,price,comment,contractor);
 		try {
-			vetexService.savePriceItem(newPriceItem);
+			pricesService.savePriceItem(newPriceItem);
 		}catch (Exception e) {}
 		
-		return "redirect:/priceItems/vetex";
+		return "redirect:/priceItems";
 	}
 	
 	@GetMapping("/admin/itemDelete")
 	public String itemDelete(@RequestParam("id") long id) {
-		vetexService.deletePriceItemById(id);
+		pricesService.deletePriceItemById(id);
 		
-		return "redirect:/priceItems/vetex";
+		return "redirect:/priceItems";
 	}
 	
 	@GetMapping("/admin/itemEditForm")
 	public String itemEditForm(@RequestParam("id") long id,Model model) {
-		Prices item=vetexService.findPriceItemById(id);
+		Prices item=pricesService.findPriceItemById(id);
 		model.addAttribute("item", item);
 		return "editItemForm";
 	}
 	
 	@PostMapping ("/admin/itemEdite")
 	public String itemEdit(@RequestParam("id") long id,@RequestParam("pp") String pp,@RequestParam("workname") String workname,//
-	@RequestParam("unitmeasure") String unitmeasure,@RequestParam("price") double price,@RequestParam("comment") String comment) throws IOException{
-		Prices item=vetexService.findPriceItemById(id);
+	@RequestParam("unitmeasure") String unitmeasure,@RequestParam("price") double price,@RequestParam("comment") String comment,
+	@RequestParam("contractor") String contractor) throws IOException{
+		Prices item=pricesService.findPriceItemById(id);
 		item.setPpNumber(pp);
 		item.setWorkName(workname);
 		item.setUnitMeasure(unitmeasure);
 		item.setPrice(price);
 		item.setComment(comment);
-		vetexService.savePriceItem(item);
-		return "redirect:/priceItems/vetex";
+		item.setContractor(contractor);
+		pricesService.savePriceItem(item);
+		return "redirect:/priceItems";
 	}
 	
 	@GetMapping("/findByNumber")
@@ -120,7 +122,7 @@ public class PricesController {
 			@RequestParam(name="contractnumber") String contractnumber,
 			@RequestParam(name="contractdate") String contractdate, Model model)throws IOException{
 		
-		List<Prices> listitems=vetexService.findPriceItemByPpNumber(ppsearch);
+		List<Prices> listitems=pricesService.findPriceItemByPpNumber(ppsearch);
 		model.addAttribute("listitems", listitems);
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractdate", contractdate);
@@ -142,7 +144,7 @@ public class PricesController {
 			workname1=words[0];
 			workname2=words[1];
 		}
-		List<Prices> listitems=vetexService.findPriceItemByWorkName(workname,workname1,workname2);
+		List<Prices> listitems=pricesService.findPriceItemByWorkName(workname,workname1,workname2);
 		model.addAttribute("listitems", listitems);
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractdate", contractdate);
@@ -152,14 +154,14 @@ public class PricesController {
 	
 	@GetMapping("/addInOrder")
 	public String addInOrder(@RequestParam("id") long id,@RequestParam("quantity") double quantity) {
-		Prices item=vetexService.findPriceItemById(id);
+		Prices item=pricesService.findPriceItemById(id);
 		String ppnumber=item.getPpNumber();
 		String workname=item.getWorkName();
 		String unitmeasure=item.getUnitMeasure();
 		double price=item.getPrice();
 		String comment=item.getComment();
 
-		VetexOrder vetexOrder=new VetexOrder(ppnumber,workname,unitmeasure,price,comment,quantity);
+		PricesSelect vetexOrder=new PricesSelect(ppnumber,workname,unitmeasure,price,comment,quantity);
 		orderCart.addItem(vetexOrder);
 				
 		return "redirect:/priceItems/vetex";
@@ -201,7 +203,7 @@ public class PricesController {
 		
 		cart=orderCart.getItemsOrderCart();
 		
-		for(VetexOrder cartitem : cart) {
+		for(PricesSelect cartitem : cart) {
 			this.sumWithOutNds=this.sumWithOutNds+cartitem.getEndPrice();
 			BigDecimal bd = new BigDecimal(this.sumWithOutNds).setScale(2, RoundingMode.HALF_UP);
 			this.sumWithOutNds = bd.doubleValue();
