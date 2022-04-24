@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
 <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
-<title>Список ТЦП</title>
+<title>Редактирование ТЦП и Договора</title>
 </head>
 <body>
 
@@ -14,29 +14,36 @@
 
 <div class="pricesControl">
       <div id="pricesControl_1">
-      <a th:href="@{/admin/newItem/telecom}">Добавить пункт ТЦП (admin)</a>
+      <form  th:action="@{/admin/newPriceItemForm}" th:method="get" >
+      <label>Добавить пункт ТЦП</label> &nbsp&nbsp
+      <input type="hidden" name="contractor" th:value="${contractor}">
+      <input type="hidden" name="contractname" th:value="${contractname}">
+      <input type="submit" value="Добавить" >
+      </form>
       <br><br>
-      <form  th:action="@{/superadmin/deleteAllPrices/telecom}" th:method="get" >
+      <form  th:action="@{/superadmin/deleteAllPrices}" th:method="get" >
       <label style="color:red;">Осторожно! Удалить все ТЦП из БД (superAdmin)</label> &nbsp&nbsp
+      <input type="hidden" name="contractor" th:value="${contractor}">
+      <input type="hidden" name="contractname" th:value="${contractname}">
       <input type="submit" value="Удалить!" style="background:#FF0000; color:white;" >
       </form>
       </div>
       
       <div id="pricesControl_3">
-      <form  th:action="@{/dateBaseToCSV/telecom}" th:method="get" >
+      <form  th:action="@{/dateBaseToCSV}" th:method="get" >
       <label>Скачать ТЦП из БД в файл .csv</label> &nbsp&nbsp
       <input type="submit" value="Скачать" >
       </form>
       <br><br>
       <form  th:action="@{/downloadContractText}" th:method="get" >
-      <label>Скачать Договор из БД .doc</label> &nbsp&nbsp
-      <input type="hidden" name="id" value="4">
+      <label>Скачать Договор из БД .doc </label> &nbsp&nbsp
+      <input type="hidden" name="id" value="1">
       <input type="submit" value="Скачать" >
       </form>
       </div>
 
       <div id="pricesControl_2">
-      <form enctype="multipart/form-data" th:action="@{/admin/csvToDateBase/telecom}" th:method="post" >
+      <form enctype="multipart/form-data" th:action="@{/admin/csvToDateBase}" th:method="post" >
       <label>Загрузка ТЦП в БД (admin)</label> &nbsp&nbsp
       <input type="file" name="file" required>
       <input type="submit" value="Загрузить" >
@@ -45,53 +52,42 @@
       <form enctype="multipart/form-data" th:action="@{/admin/loadContractText}" th:method="post" >
       <label>Загрузка Договора в БД (admin)</label> &nbsp&nbsp
       <input type="file" name="file" required>
-      <input type="hidden" name="id" value="4">
+      <input type="hidden" name="id" value="1">
       <input type="submit" value="Загрузить" >
       </form>  
       </div>
-      
 </div>
 
 <div class="search">
        <div id="search1">
-       <form th:action="@{/findByNumber/telecom}" th:method="get" >
+       <form th:action="@{/findByNumber}" th:method="get" >
        <label>Поиск по № ТЦП (№ п/п)</label> &nbsp&nbsp
+       <input type="hidden" name="contractor" th:value="${contractor}">
        <input type="text" name="ppsearch" required>
-       <input type="hidden" name="contractnumber" th:value="${contractnumber}">
-       <input type="hidden" name="contractdate" th:value="${contractdate}">
+       <input type="hidden" name="contractname" th:value="${contractname}">
        <input type="submit" value="Найти" >
        </form>
        <br><br>
-       <form th:action="@{/findByName/telecom}" th:method="get" >
+       <form th:action="@{/findByName}" th:method="get" >
        <label>Поиск по Наименованию работы</label> &nbsp&nbsp
+       <input type="hidden" name="contractor" th:value="${contractor}">
        <input type="text" name="workname" required>
-       <input type="hidden" name="contractnumber" th:value="${contractnumber}">
-       <input type="hidden" name="contractdate" th:value="${contractdate}">
+       <input type="hidden" name="contractname" th:value="${contractname}">
        <input type="submit" value="Найти" >
        </form>
        </div>
        <div id="search2">
-       <a th:href="@{/priceItems/telecom}" id="showAllPrices">Показать все пункты ТЦП</a>
-       </div>
-       <div id="search3">
-       <h3 style="color:#8B4513;">ООО "Телеком-Сервис"</h3>
-       <form id="orderPage2" th:action="@{/orders/showAllOrders}" method="get">
-       <input type="hidden" name="contractnumber" th:value="${contractnumber}">
-       <input type="hidden" name="contractdate" th:value="${contractdate}">
-       <input type="submit" name="submit" value="БД Заявок" style="background:#6495ED; color:white;font-size:14px;border-color:white;">
+       <form th:action="@{/admin/priceItems}" th:method="get" >
+       <input type="hidden" name="contractor" th:value="${contractor}">
+       <input type="hidden" name="contractname" th:value="${contractname}">
+       <input type="submit" value="Показать все пункты ТЦП" >
        </form>
        </div>
+       <div id="search3">
+       <h3 th:text="${contractname}" style="color:#8B4513;"></h3>
+       </div>
 </div>
-<div class="cart">
-<form th:action="@{/dispOrder/telecom}" th:method="get" style="display:inline;">
-<label>Корзина Заказа</label> &nbsp&nbsp
-<input type="submit" value="Перейти в Корзину" >
-</form>
-<div class=container><span class="span"></span><span class=text th:text="${cartSize}" title="Кол-во строчек(пунктов ТЦП) в Корзине"></span></div> &nbsp | &nbsp
-<form th:action="@{/clearCart2/telecom}" method="get" style="display:inline;">
-<input type="submit" name="submit" id="clearCart" value="Очистить Корзину" style="background:#FF0000; color:white;">
-</form>
-</div>
+
    <div class="progress-container">
     <div class="progress-bar" id="myBar"></div>
    </div>   
@@ -102,26 +98,21 @@
 <div class="test3" id="test3">
 <table class="listItemsPrice">
 <tr>
-<th class="col1">Добавить в Корзину</th><th class="col2">№ п/п</th><th class="col3">Наименование работ</th><th class="col4">Ед. изм.</th>
+<th class="col2">№ п/п</th><th class="col3">Наименование работ</th><th class="col4">Ед. изм.</th>
 <th class="col5">Цена за ед., руб. без НДС</th><th class="col6">Описание позиции</th><th class="col7">Редактирование ТЦП (admin)</th>
 </tr>
 <tr th:each="listitem: ${listitems}">
-<td class="col1">
-<form th:action="@{/addInOrder/telecom}" method="get" style="display:inline;">
-<input type="hidden" name="id" th:value="${listitem.getId}">
-<input type="number" name="quantity" min="0.01" step="0.01" style="width:55px" required>
-<input type="submit" name="submit" value="+ в Корзину">
-</form>
-</td>
 <td th:text="${listitem.getPpNumber}" class="col2"></td><td th:text="${listitem.getWorkName}" class="col3"></td><td th:text="${listitem.getUnitMeasure}" class="col4"></td>
 <td th:text="${listitem.getPrice}" class="col5"></td><td th:text="${listitem.getComment}" class="col6"></td>
 <td class="col7">
-<form th:action="@{/admin/itemEditForm/telecom}" method="get" style="display:inline;">
+<form th:action="@{/admin/editPriceItemForm}" method="get" style="display:inline;">
 <input type="hidden" name="id" th:value="${listitem.getId}">
 <input type="submit" name="submit" value="Редактировать">
 </form> |
-<form th:action="@{/admin/itemDelete/telecom}" method="get" style="display:inline;">
+<form th:action="@{/admin/deletePriceItem}" method="get" style="display:inline;">
 <input type="hidden" name="id" th:value="${listitem.getId}">
+<input type="hidden" name="contractor" th:value="${contractor}">
+<input type="hidden" name="contractname" th:value="${contractname}">
 <input type="submit" name="submit" value="Удалить">
 </form>
 </td>

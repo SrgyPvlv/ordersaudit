@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.annotation.SessionScope;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.example.sergey.Model.ContractText;
 import com.example.sergey.Model.OrderCart;
 import com.example.sergey.Model.Users;
@@ -49,10 +51,11 @@ public class PricesController {
 	@Autowired UsersService userService;
 	@Autowired BsListService bsListService;
 	
-	@GetMapping("/priceItems") //показать все пункты тцп по конкретному подрядчику
+	@GetMapping("/priceItems") //показать все пункты тцп по конкретному подрядчику для добавления в заявку, без возможности редактирования (для users)
 	public String getAllPriceItems(@RequestParam(name="contractor") String contractor,
 			@RequestParam(name="contractnumber") String contractnumber,
 			@RequestParam(name="contractdate") String contractdate, @RequestParam(name="contractname") String contractname,Model model) {
+		
 		List<Prices> listitems=pricesService.findAllPriceItemsByContractor(contractor);
 		
 		if (orderCart.getItemsOrderCart()!=null) {cartSize=orderCart.getItemsOrderCart().size();} else {cartSize=0;};
@@ -67,73 +70,126 @@ public class PricesController {
 		return "priceItems";
 	}
 	
-	@GetMapping ("/superadmin/deleteAllPrices")
-	public String deleteAllPrices() {
-		pricesService.deleteAllPrices();
-		return "redirect:/priceItems";
+	@GetMapping("/admin/priceItems") //показать все пункты тцп по конкретному подрядчику с возможностью редактирования (для admin)
+	public String getEditAllPriceItems(@RequestParam(name="contractor") String contractor,
+			@RequestParam(name="contractname") String contractname,Model model) {
+		
+		List<Prices> listitems=pricesService.findAllPriceItemsByContractor(contractor);
+				
+		model.addAttribute("listitems", listitems);
+		model.addAttribute("contractor", contractor);
+		model.addAttribute("contractname", contractname);
+						
+		return "prices";
 	}
 	
-	@GetMapping("/admin/newItem")
-	public String newItemCreate() {
-		return"newItemForm";
+	@GetMapping ("/superadmin/deleteAllPrices") //удаление всех пунктов тцп данного подрядчика (без удаления самого подрядчика)
+	public String deleteAllPricesByContractor(@RequestParam(name="contractor") String contractor,
+			@RequestParam(name="contractname") String contractname,RedirectAttributes redirectAttr) {
+		
+		pricesService.deleteAllPricesByContractor(contractor);
+		
+		redirectAttr.addAttribute("contractor", contractor);
+		redirectAttr.addAttribute("contractname", contractname);
+		
+		return "redirect:/admin/priceItems";
 	}
 	
-	@PostMapping("/admin/newItemCreate")
-	public String newItemCreate(@RequestParam("pp") String pp,@RequestParam("workname") String workname,//
+	@GetMapping("/admin/newPriceItemForm") //переход на форму добавления нового пункта тцп для данного подрядчика
+	public String newPriceItemForm(@RequestParam(name="contractor") String contractor,
+			@RequestParam("contractname") String contractname, Model model) {
+		
+		model.addAttribute("contractor", contractor);
+		model.addAttribute("contractname", contractname);
+		
+		return"newPriceItemForm";
+	}
+	
+	@PostMapping("/admin/newPriceItemCreate") //сохранение нового пункта тцп и возврат на страницу тцп данного подрядчика
+	public String newPriceItemCreate(@RequestParam("pp") String pp,@RequestParam("workname") String workname,//
 			@RequestParam("unitmeasure") String unitmeasure,@RequestParam("price") double price,@RequestParam("comment") String comment,
-			@RequestParam("contractor") String contractor) throws IOException{
+			@RequestParam("contractor") String contractor,@RequestParam("contractname") String contractname,RedirectAttributes redirectAttr) throws IOException{
+		
 		Prices newPriceItem=new Prices(pp,workname,unitmeasure,price,comment,contractor);
 		try {
 			pricesService.savePriceItem(newPriceItem);
 		}catch (Exception e) {}
 		
-		return "redirect:/priceItems";
+		redirectAttr.addAttribute("contractor", contractor);
+		redirectAttr.addAttribute("contractname", contractname);
+		
+		return "redirect:/admin/priceItems";
 	}
 	
-	@GetMapping("/admin/itemDelete")
-	public String itemDelete(@RequestParam("id") long id) {
+	@GetMapping("/admin/deletePriceItem") //удаление одного конкретного пункта тцп данного подрядчика
+	public String deletePriceItem(@RequestParam("id") long id,@RequestParam("contractor") String contractor,
+			@RequestParam("contractname") String contractname,RedirectAttributes redirectAttr) {
+		
 		pricesService.deletePriceItemById(id);
 		
-		return "redirect:/priceItems";
+		redirectAttr.addAttribute("contractor", contractor);
+		redirectAttr.addAttribute("contractname", contractname);
+		
+		return "redirect:/admin/priceItems";
 	}
 	
-	@GetMapping("/admin/itemEditForm")
-	public String itemEditForm(@RequestParam("id") long id,Model model) {
+	@GetMapping("/admin/editPriceItemForm") //переход на форму редактирования конкретного пункта тцп для данного подрядчика
+	public String editPriceItemForm(@RequestParam("id") long id,@RequestParam("contractor") String contractor,
+			@RequestParam("contractname") String contractname,Model model,RedirectAttributes redirectAttr) {
+		
 		Prices item=pricesService.findPriceItemById(id);
+		
 		model.addAttribute("item", item);
-		return "editItemForm";
+		redirectAttr.addAttribute("contractor", contractor);
+		redirectAttr.addAttribute("contractname", contractname);
+		
+		return "editPriceItemForm";
 	}
 	
-	@PostMapping ("/admin/itemEdite")
-	public String itemEdit(@RequestParam("id") long id,@RequestParam("pp") String pp,@RequestParam("workname") String workname,//
+	@PostMapping ("/admin/editPriceItem") //сохранение редактирования конкретного пункта тцп для данного подрядчика
+	public String editPriceItem(@RequestParam("id") long id,@RequestParam("pp") String pp,@RequestParam("workname") String workname,
 	@RequestParam("unitmeasure") String unitmeasure,@RequestParam("price") double price,@RequestParam("comment") String comment,
-	@RequestParam("contractor") String contractor) throws IOException{
+	@RequestParam("contractor") String contractor,@RequestParam("contractname") String contractname,RedirectAttributes redirectAttr) throws IOException{
+		
 		Prices item=pricesService.findPriceItemById(id);
 		item.setPpNumber(pp);
 		item.setWorkName(workname);
 		item.setUnitMeasure(unitmeasure);
 		item.setPrice(price);
 		item.setComment(comment);
-		item.setContractor(contractor);
 		pricesService.savePriceItem(item);
-		return "redirect:/priceItems";
+		
+		redirectAttr.addAttribute("contractor", contractor);
+		redirectAttr.addAttribute("contractname", contractname);
+		
+		return "redirect:/admin/priceItems";
 	}
 	
-	@GetMapping("/findByNumber")
+	@GetMapping("/findByNumber") //поиск для данного подрядчика пункта тцп по его номеру
 	public String findByNumber(@RequestParam(name="contractor") String contractor, @RequestParam("ppsearch") String ppsearch,
-			@RequestParam(name="contractnumber") String contractnumber,
-			@RequestParam(name="contractdate") String contractdate, @RequestParam(name="contractname") String contractname, Model model)throws IOException{
+			@RequestParam(name="contractnumber",required=false) String contractnumber,
+			@RequestParam(name="contractdate",required=false) String contractdate, @RequestParam(name="contractname") String contractname, Model model)throws IOException{
 		
 		List<Prices> listitems=pricesService.findPriceItemByPpNumber(contractor, ppsearch);
+		
+		if(contractnumber.isEmpty()) {
 		model.addAttribute("listitems", listitems);
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractdate", contractdate);
 		model.addAttribute("contractname", contractname);
 		model.addAttribute("cartSize", cartSize);
-		return "priceItems";
+		
+		return "priceItems";} else {
+			
+			model.addAttribute("listitems", listitems);
+			model.addAttribute("contractor", contractor);
+			model.addAttribute("contractname", contractname);
+			
+			return "prices";
+		}
 	}
 	
-	@GetMapping("/findByName")
+	@GetMapping("/findByName") //поиск для данного подрядчика пункта тцп по фильтрам в названии пункта (фильтр до 2-х слов, в любом их порядке и сокращении)
 	public String findByName(@RequestParam(name="contractor") String contractor, @RequestParam("workname") String workname,
 			@RequestParam(name="contractnumber") String contractnumber,
 			@RequestParam(name="contractdate") String contractdate, @RequestParam(name="contractname") String contractname, Model model)throws IOException{
@@ -148,25 +204,44 @@ public class PricesController {
 			workname2=words[1];
 		}
 		List<Prices> listitems=pricesService.findPriceItemByWorkName(contractor,workname,workname1,workname2);
-		model.addAttribute("listitems", listitems);
-		model.addAttribute("contractnumber", contractnumber);
-		model.addAttribute("contractdate", contractdate);
-		model.addAttribute("contractname", contractname);
-		model.addAttribute("cartSize", cartSize);
-		return "priceItems";
+		
+		if(contractnumber.isEmpty()) {
+			model.addAttribute("listitems", listitems);
+			model.addAttribute("contractnumber", contractnumber);
+			model.addAttribute("contractdate", contractdate);
+			model.addAttribute("contractname", contractname);
+			model.addAttribute("cartSize", cartSize);
+			
+			return "priceItems";} else {
+				
+				model.addAttribute("listitems", listitems);
+				model.addAttribute("contractor", contractor);
+				model.addAttribute("contractname", contractname);
+				
+				return "prices";
+			}
 	}
 	
 	@GetMapping("/addInOrder")
-	public String addInOrder(@RequestParam("id") long id,@RequestParam("quantity") double quantity) {
+	public String addInOrder(@RequestParam("id") long id,@RequestParam("quantity") double quantity,
+			@RequestParam(name="contractor") String contractor,@RequestParam(name="contractnumber") String contractnumber,
+			@RequestParam(name="contractdate") String contractdate, @RequestParam(name="contractname") String contractname,RedirectAttributes redirectAttr) {
+		
 		Prices item=pricesService.findPriceItemById(id);
 		String ppnumber=item.getPpNumber();
 		String workname=item.getWorkName();
 		String unitmeasure=item.getUnitMeasure();
 		double price=item.getPrice();
 		String comment=item.getComment();
+		String contractorGet=item.getContractor();
 
-		PricesSelect vetexOrder=new PricesSelect(ppnumber,workname,unitmeasure,price,comment,quantity);
-		orderCart.addItem(vetexOrder);
+		PricesSelect pricesSelect=new PricesSelect(ppnumber,workname,unitmeasure,price,comment,contractorGet,quantity);
+		orderCart.addItem(pricesSelect);
+		
+		redirectAttr.addAttribute("contractor", contractor);
+		redirectAttr.addAttribute("contractnumber", contractnumber);
+		redirectAttr.addAttribute("contractdate", contractdate);
+		redirectAttr.addAttribute("contractname", contractname);
 				
 		return "redirect:/priceItems";
 	}

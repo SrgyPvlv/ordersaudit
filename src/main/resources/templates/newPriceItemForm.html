@@ -12,10 +12,10 @@
  <br>
  <div class="parent1">
  
- <div>
+<div>
 <h3>Добавление нового пункта ТЦП</h3>
 <fieldset style="border-color:#FFEBCD;text-align: center">
-<form th:action="@{/admin/newItemCreate/sps}" th:method="post">
+<form th:action="@{/admin/newItemCreate}" th:method="post">
 <label>№ пп</label><br>
 <input type="text" name="pp" style="text-align: center" required ><br><br>
 <label>Наименование работ</label><br>
@@ -26,6 +26,10 @@
 <input type="number" name="price" step="0.01" min="0.01" style="text-align: center" required ><br><br>
 <label>Описание позиции</label><br>
 <input type="text" name="comment" style="text-align: center" required ><br><br>
+<label>Логин подрядчика</label><br>
+<input type="text" name="contractor" th:value="${contractor}" style="text-align: center" readonly ><br><br>
+  <input type="hidden" name="contractor" th:value="${contractor}">
+  <input type="hidden" name="contractname" th:value="${contractname}">
 <input type="submit" value="Создать" style="width: 100px; height: 40px; background-color: #98FB98;">
 </form>
 </fieldset>

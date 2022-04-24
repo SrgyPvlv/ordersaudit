@@ -22,4 +22,7 @@ public interface PricesRepository extends JpaRepository<Prices,Long> {
 	
 	//поиск Всех пуктов тцп по подрядчику
 	public List<Prices> findByContractor(String contractor);
+	
+	//удалить Все пункты тцп данного подрядчика
+	public void deleteAllByContractor(String contractor);
 }

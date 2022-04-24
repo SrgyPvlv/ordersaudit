@@ -42,7 +42,7 @@ public class PricesService {
 		pricesRepository.deleteById(id);
 	}
 	
-	public void deleteAllPrices() { //удаление всех пунктов тцп
-		pricesRepository.deleteAll();
+	public void deleteAllPricesByContractor(String contractor) { //удаление всех пунктов тцп данного подрядчика
+		pricesRepository.deleteAllByContractor(contractor);
 	}
 }

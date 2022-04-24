@@ -13,50 +13,51 @@ public class ContractText {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
-	private Long id;
+	private Long id; //id подрядчика
 	
 	@Column
-	private String contractor;
+	private String contractor; //логин подрядчика
 	
 	@Column
 	@Type(type="org.hibernate.type.BinaryType")
-	private byte[] text;
+	private byte[] text; //текст договора
 	
 	@Column
-	private String number;
+	private String number; //номер договора
 	
 	@Column
-	private String date;
+	private String date; //дата договора
 	
 	@Column
-	private String name;
+	private String name; //полное название организации подрядчика
 	
 	@Column
-	private String email1;
+	private String email1; //email подрядчика №1 для отправки заявки
 	
 	@Column
-	private String email2;
+	private String email2; //email подрядчика №2 для отправки заявки
 	
 	@Column
-	private String email3;
+	private String email3; //email подрядчика №3 для отправки заявки
 	
 	@Column
-	private String work;
+	private String work; //общее описание типа выполняемых работ (например ТО/АВР АФУ...или ТО/АВР ОПС и т.д.)
 	
 	@Column
-	private String contractend;
+	private String contractend; //дата окончания договора
 	
 	@Column
-	private String email11;
+	private String email11; //email заказчика (МТС) №1 для отправки копии заявки
 	
 	@Column
-	private String email12;
+	private String email12; //email заказчика (МТС) №2 для отправки копии заявки
 	
 	@Column
-	private String email13;
+	private String email13; //email заказчика (МТС) №3 для отправки копии заявки
 	
 	public ContractText() {}
 	
+	//Конструктор без id, но с текстом договора
 	public ContractText(String contractor,byte[] text, String number, String date, String name,String email1,
 			String email2,String email3,String work,String contractend,String email11,String email12,String email13) {
 		this.contractor=contractor;
@@ -73,6 +74,8 @@ public class ContractText {
 		this.email12=email12;
 		this.email13=email13;
 	}
+	
+	//Конструктор без id и без текста договора
 	public ContractText(String contractor, String number, String date, String name,String email1,
 			String email2,String email3,String work,String contractend,String email11,String email12,String email13) {
 		this.contractor=contractor;
@@ -88,6 +91,8 @@ public class ContractText {
 		this.email12=email12;
 		this.email13=email13;
 	}
+	
+	//Конструктор с id, но без текста договора
 	public ContractText(Long id,String contractor, String number, String date, String name,String email1,
 			String email2,String email3,String work,String contractend,String email11,String email12,String email13) {
 		this.id=id;
