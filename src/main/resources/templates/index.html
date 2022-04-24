@@ -47,7 +47,6 @@
     <td>
     <form id="orderPage2" th:action="@{/orders/showAllOrders}" method="get">
        <input type="hidden" name="contractnumber" th:value="${contractor.getNumber}">
-       <input type="hidden" name="contractdate" th:value="${contractor.getDate}">
        <input type="submit" name="submit" class="bd_index" value="БД Заявок">
        </form>
     </td>

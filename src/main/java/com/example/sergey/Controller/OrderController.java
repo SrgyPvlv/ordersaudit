@@ -112,7 +112,6 @@ public class OrderController {
 		logger.info("Пользователь "+login+" сохранил заявку №"+ordernumber+" для БС "+bsnumber+". Договор: "+contractnumber+".");
 		
 		redirectAttr.addAttribute("contractnumber", contractnumber);
-		redirectAttr.addAttribute("contractdate", contractdate);
 		redirectAttr.addAttribute("ordernumber", ordernumber);
 		
 		pricesController.clearCart3();
@@ -126,7 +125,6 @@ public class OrderController {
 	
 	@GetMapping("/showAllOrders") //все заявки по подрядчику(т.е. номеру договора) по возрастанию номера заявки 
 	public String showAllOrders(@RequestParam(name="contractnumber",required=false) String contractnumber,
-			@RequestParam(name="contractdate",required=false) String contractdate,
 			@RequestParam(name="ordernumber",required=false,defaultValue="0") int ordernumber, Model model) {
 
 		List<Order> listOrders;
@@ -166,7 +164,6 @@ public class OrderController {
 		String contractname=contractor.getName();
 		model.addAttribute("listOrders", listOrders);
 		model.addAttribute("contractnumber", contractnumber);
-		model.addAttribute("contractdate", contractdate);
 		model.addAttribute("contractname", contractname);
 		model.addAttribute("email1", email1);
 		model.addAttribute("email2", email2);
@@ -180,18 +177,17 @@ public class OrderController {
 	
 	@GetMapping("/orderDelete") //удалить заявку
 	public String orderDelete(@RequestParam("id")Long id,@RequestParam(name="contractnumber") String contractnumber,
-			@RequestParam(name="contractdate") String contractdate, RedirectAttributes redirectAttr) {
+			RedirectAttributes redirectAttr) {
 		
 		orderService.deleteOrder(id);
 		redirectAttr.addAttribute("contractnumber", contractnumber);
-		redirectAttr.addAttribute("contractdate", contractdate);
-		
+				
 		return "redirect:/orders/showAllOrders";
 	}
 	
 	@GetMapping("/orderEdit") //переход на форму редактирования заявки
-	public String orderEditForm(@RequestParam("id") Long id,@RequestParam(name="contractnumber") String contractnumber,
-			@RequestParam(name="contractdate") String contractdate, Model model,RedirectAttributes redirectAttr) {
+	public String orderEditForm(@RequestParam("id") Long id,
+			@RequestParam(name="contractname")String contractname, RedirectAttributes redirectAttr,Model model) {
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String login=auth.getName();
@@ -206,7 +202,6 @@ public class OrderController {
 		
 		pricesController.clearCart3();
 		
-		//Order orderDb=orderService.getOrderById(id);
 		String cartJsonStr=orderDb.getCart();
 		Type listType = new TypeToken<ArrayList<PricesSelect>>() {}.getType();
         ArrayList<PricesSelect> cartArrayList = new Gson().fromJson(cartJsonStr,listType); //Json в ArrayList
@@ -231,6 +226,7 @@ public class OrderController {
 		redirectAttr.addAttribute("orderlistcomment", orderDb.getOrderlistcomment());
 		redirectAttr.addAttribute("report", orderDb.getReport());
 		redirectAttr.addAttribute("cedr", orderDb.getCedr());
+		redirectAttr.addAttribute("contractname", contractname);
 		
 		return "redirect:/dispOrder";} else {
 			model.addAttribute("note", "Вы не можете редактировать чужую заявку! Обратитесь к её автору или администратору.");
@@ -238,8 +234,9 @@ public class OrderController {
 	}
 
 	@GetMapping("/orderCopy") //переход на форму создания копии заявки (редактирования без передачи id)
-	public String orderCopyForm(@RequestParam("id") Long id,@RequestParam(name="contractnumber") String contractnumber,
-			@RequestParam(name="contractdate") String contractdate, Model model,RedirectAttributes redirectAttr) {
+	public String orderCopyForm(@RequestParam("id") Long id,
+			@RequestParam(name="contractname")String contractname,Model model,RedirectAttributes redirectAttr) {
+		
 		sumWithOutNds=0;
 		Nds=0;
 		sumWithNds=0;
@@ -254,23 +251,11 @@ public class OrderController {
         orderCart.setItemsOrderCart(cartArrayList);
         cart=orderCart.getItemsOrderCart();
 	
-		//redirectAttr.addAttribute("ordernumber", orderDb.getOrdernumber());
-		//redirectAttr.addAttribute("bsnumber", orderDb.getBsnumber());
-		//redirectAttr.addAttribute("send", orderDb.getSend());
-		//redirectAttr.addAttribute("start", orderDb.getStart());
-		//redirectAttr.addAttribute("endtime", orderDb.getEndtime());
-		//redirectAttr.addAttribute("remedy", orderDb.getRemedy());
-		//redirectAttr.addAttribute("author", orderDb.getAuthor());
-		//redirectAttr.addAttribute("arenda", orderDb.getArenda());
 		redirectAttr.addAttribute("worktype", orderDb.getWorktype());
-		//redirectAttr.addAttribute("comment", orderDb.getComment());
 		redirectAttr.addAttribute("contractnumber", orderDb.getContractnumber());
 		redirectAttr.addAttribute("contractdate", orderDb.getContractdate());
-		//redirectAttr.addAttribute("status", orderDb.getStatus());
-		//redirectAttr.addAttribute("orderlistcomment", orderDb.getOrderlistcomment());
-		//redirectAttr.addAttribute("report", orderDb.getReport());
-		//redirectAttr.addAttribute("cedr", orderDb.getCedr());
-		
+		redirectAttr.addAttribute("contractname", contractname);
+				
 		return "redirect:/dispOrder";}
 	
 	@GetMapping ("/orderPage") //создание страницы заявки
@@ -331,10 +316,10 @@ public class OrderController {
 		model.addAttribute("comment", orderDb.getComment());
 		return"orderPage";
 	}
+	
 	@GetMapping("/findByOrderNumber") // поиск по № Заказа
 	public String findByOrderNumber(@RequestParam("orderNumberSearch") Integer orderNumberSearch,
 			@RequestParam(name="contractnumber",required=false) String contractnumber,
-			@RequestParam(name="contractdate",required=false) String contractdate,
 			@RequestParam(name="contractname",required=false) String contractname,Model model)throws IOException{
 		
 		List<Order> listOrders=orderService.findByOrderNumber(orderNumberSearch, contractnumber);
@@ -362,7 +347,6 @@ public class OrderController {
 		
 		model.addAttribute("listOrders", listOrders);
 		model.addAttribute("contractnumber", contractnumber);
-		model.addAttribute("contractdate", contractdate);
 		model.addAttribute("contractname", contractname);
 		return "showOrders";	
 	}
@@ -370,7 +354,6 @@ public class OrderController {
 	@GetMapping("/findByBsName") // поиск по № БС
 	public String findByBsName(@RequestParam("bsNumberSearch") String bsNumberSearch,
 			@RequestParam(name="contractnumber",required=false) String contractnumber,
-			@RequestParam(name="contractdate",required=false) String contractdate,
 			@RequestParam(name="contractname",required=false) String contractname,Model model)throws IOException{
 		
 		List<Order> listOrders=orderService.findByBsName(bsNumberSearch, contractnumber);
@@ -398,10 +381,10 @@ public class OrderController {
 		
 		model.addAttribute("listOrders", listOrders);
 		model.addAttribute("contractnumber", contractnumber);
-		model.addAttribute("contractdate", contractdate);
 		model.addAttribute("contractname", contractname);
 		return "showOrders";
 	}
+	
 	@GetMapping("/showNextOrderNumber") //определение номера для следующей заявки для данного подрядчика 
 	public String showNextOrderNumber(@RequestParam(name="contractnumber",required=false) String contractnumber,
 			@RequestParam(name="contractdate",required=false) String contractdate,Model model,RedirectAttributes redirectAttr) {

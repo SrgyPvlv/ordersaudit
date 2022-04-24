@@ -174,6 +174,7 @@ public class PricesController {
 		
 		if(contractnumber.isEmpty()) {
 		model.addAttribute("listitems", listitems);
+		model.addAttribute("contractor", contractor);
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractdate", contractdate);
 		model.addAttribute("contractname", contractname);
@@ -207,6 +208,7 @@ public class PricesController {
 		
 		if(contractnumber.isEmpty()) {
 			model.addAttribute("listitems", listitems);
+			model.addAttribute("contractor", contractor);
 			model.addAttribute("contractnumber", contractnumber);
 			model.addAttribute("contractdate", contractdate);
 			model.addAttribute("contractname", contractname);
@@ -222,7 +224,7 @@ public class PricesController {
 			}
 	}
 	
-	@GetMapping("/addInOrder")
+	@GetMapping("/addInOrder") //добавление пункта тцп с указанием кол-ва в заявку
 	public String addInOrder(@RequestParam("id") long id,@RequestParam("quantity") double quantity,
 			@RequestParam(name="contractor") String contractor,@RequestParam(name="contractnumber") String contractnumber,
 			@RequestParam(name="contractdate") String contractdate, @RequestParam(name="contractname") String contractname,RedirectAttributes redirectAttr) {
@@ -256,7 +258,8 @@ public class PricesController {
 			@RequestParam(name="orderlistcomment",defaultValue="",required=false)String orderlistcomment,
 			@RequestParam(name="report",defaultValue="",required=false)String report,@RequestParam(name="cedr",defaultValue="",required=false)String cedr,
 			@RequestParam(name="contractnumber",defaultValue="",required=false)String contractnumber,@RequestParam(name="contractdate",defaultValue="",required=false)String contractdate,
-			@RequestParam(name="comment",defaultValue="",required=false)String comment,Model model) {
+			@RequestParam(name="comment",defaultValue="",required=false)String comment,
+			@RequestParam(name="contractname")String contractname,Model model) {
 		sumWithOutNds=0;
 		Nds=0;
 		sumWithNds=0;
@@ -275,10 +278,8 @@ public class PricesController {
 		if(!orderlistcomment.isEmpty()) this.orderlistcomment=orderlistcomment;
 		if(!report.isEmpty()) this.report=report;
 		if(!cedr.isEmpty()) this.cedr=cedr;
-		if(!contractnumber.isEmpty() && !contractdate.isEmpty()) {this.contractnumber=contractnumber;this.contractdate=contractdate;} else {
-			ContractText vetexContract=contractTextService.getContractorWithOutText(1);
-			this.contractnumber=vetexContract.getNumber();
-			this.contractdate=vetexContract.getDate();}
+		if(!contractnumber.isEmpty()) this.contractnumber=contractnumber;
+		if(!contractdate.isEmpty()) this.contractdate=contractdate;
 		
 		cart=orderCart.getItemsOrderCart();
 		
@@ -300,7 +301,7 @@ public class PricesController {
 		Users user=userService.findUsersByLogin(login);
 		String username=user.getFullName();
 		
-		String contractname=contractTextService.getContractTextName(this.contractnumber);
+		//String contractname=contractTextService.getContractTextName(this.contractnumber);
 		
 		model.addAttribute("cart", cart);
 		model.addAttribute("id", this.id);

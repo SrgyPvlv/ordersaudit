@@ -19,14 +19,12 @@
        <label>Поиск по № Заказа  </label> &nbsp&nbsp
        <input type="number" name="orderNumberSearch" min="0" required>
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
-       <input type="hidden" name="contractdate" th:value="${contractdate}">
        <input type="hidden" name="contractname" th:value="${contractname}">
        <input type="submit" value="Найти" >
      </form> &nbsp&nbsp | &nbsp&nbsp
      <form th:action="@{/orders/showAllOrders}" method="get" style="display:inline;">
        <label>Показать все Заявки</label> &nbsp&nbsp
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
-       <input type="hidden" name="contractdate" th:value="${contractdate}">
        <input type="submit" name="submit" value="Показать">
      </form> &nbsp&nbsp | &nbsp&nbsp
      <span>Отправка Заявки: </span>
@@ -40,7 +38,6 @@
        <label>Поиск по № БС</label> &nbsp&nbsp
        <input type="text" name="bsNumberSearch" placeholder="Код '78-' указывать необязательно" style="width:220px" required>
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
-       <input type="hidden" name="contractdate" th:value="${contractdate}">
        <input type="hidden" name="contractname" th:value="${contractname}">
        <input type="submit" value="Найти" >  
      </form>  
@@ -68,21 +65,18 @@
 <td class="col21">
 <form th:action="@{/orders/orderEdit}" method="get" style="display:inline;">
 <input type="hidden" name="id" th:value="${listOrder.getId}">
-<input type="hidden" name="contractnumber" th:value="${contractnumber}">
-<input type="hidden" name="contractdate" th:value="${contractdate}">
+<input type="hidden" name="contractname" th:value="${contractname}">
 <input type="submit" name="submit" value="Редактировать" style="background:#98FB98;">
 </form> |
 <form th:action="@{/orders/orderDelete}" method="get" style="display:inline;">
 <input type="hidden" name="id" th:value="${listOrder.getId}">
 <input type="hidden" name="contractnumber" th:value="${contractnumber}">
-<input type="hidden" name="contractdate" th:value="${contractdate}">
 <input type="submit" name="submit" value="Удалить" style="background:#FF0000; color:white;">
 </form>
 <br><br>
 <form th:action="@{/orders/orderCopy}" method="get" style="display:inline;">
 <input type="hidden" name="id" th:value="${listOrder.getId}">
-<input type="hidden" name="contractnumber" th:value="${contractnumber}">
-<input type="hidden" name="contractdate" th:value="${contractdate}">
+<input type="hidden" name="contractname" th:value="${contractname}">
 <input type="submit" name="submit" value="Создать копию" style="background:#808080; color:white;">
 </form> |
 <form th:action="@{/orders/orderPage}" method="get" target="_blank" style="display:inline;">
