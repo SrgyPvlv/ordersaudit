@@ -9,8 +9,17 @@
 <body>
 <div class="headerDispOrder">
 <div id="header1">
-<a th:href="@{/priceItems/vetex}" class="ref">На страницу ТЦП</a> &nbsp&nbsp | &nbsp&nbsp
+<form id="orderPage2" th:action="@{/priceItems}" method="get">
+<input type="hidden" name="contractor" th:value="${contractor}">
+<input type="hidden" name="contractnumber" th:value="${contractnumber}">
+<input type="hidden" name="contractdate" th:value="${contractdate}">
+<input type="hidden" name="contractname" th:value="${contractname}">
+<input type="submit" name="submit" class="tcp_index" value="На страницу ТЦП">
+</form> &nbsp&nbsp | &nbsp&nbsp
 <form th:action="@{/clearCart}" method="get" style="display:inline;">
+<input type="hidden" name="contractnumber" th:value="${contractnumber}">
+<input type="hidden" name="contractdate" th:value="${contractdate}">
+<input type="hidden" name="contractname" th:value="${contractname}">
 <input type="submit" name="submit" value="Очистить корзину" style="border-color:red;"> &nbsp&nbsp | &nbsp&nbsp
 </form>
 <form id="orderPage" th:action="@{/orders/createOrder}" method="get" style="display:inline;">
@@ -34,19 +43,25 @@
 </tr>
 <tr th:each="order: ${cart}">
 <td class="col4">
-<form th:action="@{/deleteFromOrder}" method="get" style="display:inline;">
+<form th:action="@{/deletePriceItemFromOrder}" method="get" style="display:inline;">
 <input type="hidden" name="ppnumber" th:value="${order.getPpNumber}">
 <input type="hidden" name="quantity" th:value="${order.getQuantity}">
+<input type="hidden" name="contractnumber" th:value="${contractnumber}">
+<input type="hidden" name="contractdate" th:value="${contractdate}">
+<input type="hidden" name="contractname" th:value="${contractname}">
 <input type="submit" name="submit" value="Удалить">
 </form>
 </td>
 <td th:text="${order.getPpNumber}" class="col2"></td><td th:text="${order.getWorkName}"></td><td th:text="${order.getUnitMeasure}" class="col4"></td>
 <td th:text="${order.getPrice}"></td>
 <td class="col8">
-<form th:action="@{/saveQuantityChanges}" id="saveQuantity" method="get" style="display:inline;">
+<form th:action="@{/savePriceItemQuantityChanges}" id="saveQuantity" method="get" style="display:inline;">
 <input type="number" name="newQuantity" th:value="${order.getQuantity}" step="0.01" min="0.01" style="border:none;text-align:center;width:55px;"> &nbsp&nbsp | &nbsp&nbsp
 <input type="hidden" name="ppnumber" th:value="${order.getPpNumber}">
 <input type="hidden" name="quantity" th:value="${order.getQuantity}">
+<input type="hidden" name="contractnumber" th:value="${contractnumber}">
+<input type="hidden" name="contractdate" th:value="${contractdate}">
+<input type="hidden" name="contractname" th:value="${contractname}">
 <input type="submit" name="submit" value="Изменить" style="display:inline;">
 </form>
 </td>

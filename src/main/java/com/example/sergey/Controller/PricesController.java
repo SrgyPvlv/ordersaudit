@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.sergey.Model.ContractText;
 import com.example.sergey.Model.OrderCart;
 import com.example.sergey.Model.Users;
 import com.example.sergey.Model.Prices;
@@ -248,7 +247,7 @@ public class PricesController {
 		return "redirect:/priceItems";
 	}
 	
-	@GetMapping ("/dispOrder")
+	@GetMapping ("/dispOrder") //переход в корзину (на страницу корзины)
 	public String showCart(@RequestParam(name="id",defaultValue="0",required=false) Long id,@RequestParam(name="ordernumber",defaultValue="0",required=false) Integer ordernumber,
 			@RequestParam(name="bsnumber",defaultValue="",required=false)String bsnumber,
 			@RequestParam(name="send",defaultValue="",required=false)String send,@RequestParam(name="start",defaultValue="",required=false)String start,
@@ -259,7 +258,7 @@ public class PricesController {
 			@RequestParam(name="report",defaultValue="",required=false)String report,@RequestParam(name="cedr",defaultValue="",required=false)String cedr,
 			@RequestParam(name="contractnumber",defaultValue="",required=false)String contractnumber,@RequestParam(name="contractdate",defaultValue="",required=false)String contractdate,
 			@RequestParam(name="comment",defaultValue="",required=false)String comment,
-			@RequestParam(name="contractname")String contractname,Model model) {
+			@RequestParam(name="contractname")String contractname,@RequestParam(name="contractor") String contractor,Model model) {
 		sumWithOutNds=0;
 		Nds=0;
 		sumWithNds=0;
@@ -326,44 +325,77 @@ public class PricesController {
 		model.addAttribute("cedr", this.cedr);
 		model.addAttribute("orderlistcomment", this.orderlistcomment);
 		model.addAttribute("contractname", contractname);
+		model.addAttribute("contractor", contractor);
 		return"dispOrder";
 	}
-	@GetMapping ("/clearCart")
-	public String clearCart() {
+	@GetMapping ("/clearCart") //очистка корзины (страницы корзины) с возвратом на страницу корзины
+	public String clearCart(@RequestParam(name="contractnumber") String contractnumber,@RequestParam(name="contractdate") String contractdate, 
+			@RequestParam(name="contractname") String contractname,RedirectAttributes redirectAttr) {
+		
 		orderCart.clearCart();
 		this.id=null; this.ordernumber=null; this.bsnumber=null; this.send=null; this.start=null; this.endtime=null;
 		this.remedy=null; this.author=null; this.arenda=null; this.worktype=null; this.comment=null; this.status=null;
 		this.report=null; this.cedr=null; this.orderlistcomment=null;
+		
+		redirectAttr.addAttribute("contractnumber", contractnumber);
+		redirectAttr.addAttribute("contractdate", contractdate);
+		redirectAttr.addAttribute("contractname", contractname);
+		
 		return "redirect:/dispOrder";
 	}
-	@GetMapping ("/clearCart2")
-	public String clearCart2() {
+	@GetMapping ("/clearCart2") //очистка корзины (страницы корзины) с возвратом на страницу тцп данного подрядчика
+	public String clearCart2(@RequestParam(name="contractor") String contractor,@RequestParam(name="contractnumber") String contractnumber,
+			@RequestParam(name="contractdate") String contractdate, @RequestParam(name="contractname") String contractname,RedirectAttributes redirectAttr) {
+		
 		orderCart.clearCart();
 		this.id=null; this.ordernumber=null; this.bsnumber=null; this.send=null; this.start=null; this.endtime=null;
 		this.remedy=null; this.author=null; this.arenda=null; this.worktype=null; this.comment=null; this.status=null;
 		this.report=null; this.cedr=null; this.orderlistcomment=null;
+		
+		redirectAttr.addAttribute("contractor", contractor);
+		redirectAttr.addAttribute("contractnumber", contractnumber);
+		redirectAttr.addAttribute("contractdate", contractdate);
+		redirectAttr.addAttribute("contractname", contractname);
+		
 		return "redirect:/priceItems";
 	}
 	
-	public void clearCart3() {
+	public void clearCart3() { //очистка корзины внутри другого метода, перед выполнением других операций внутри него
 		orderCart.clearCart();
 		this.id=null; this.ordernumber=null; this.bsnumber=null; this.send=null; this.start=null; this.endtime=null;
 		this.remedy=null; this.author=null; this.arenda=null; this.worktype=null; this.comment=null; this.status=null;
 		this.report=null; this.cedr=null; this.orderlistcomment=null;
 	}
 	
-	@GetMapping ("/deleteFromOrder")
-	public String deleteFromOrder(@RequestParam("ppnumber")String ppnumber,@RequestParam("quantity")double quantity) {
+	@GetMapping ("/deletePriceItemFromOrder") //удаление пункта тцп из корзины заказа
+	public String deleteFromOrder(@RequestParam("ppnumber")String ppnumber,@RequestParam("quantity")double quantity,
+			@RequestParam(name="contractnumber") String contractnumber,@RequestParam(name="contractdate") String contractdate, 
+			@RequestParam(name="contractname") String contractname,RedirectAttributes redirectAttr) {
+		
 		orderCart.deleteItem(ppnumber,quantity);
+		
+		redirectAttr.addAttribute("contractnumber", contractnumber);
+		redirectAttr.addAttribute("contractdate", contractdate);
+		redirectAttr.addAttribute("contractname", contractname);
+		
 		return "redirect:/dispOrder";
 	}
-	@GetMapping("/403")
+	@GetMapping("/403") //переход на страницу ошибки при отказе в доступе к запрошенной странице
     public String error403() {
-        return "403";
+        
+		return "403";
     }
-	@GetMapping ("/saveQuantityChanges")
-	public String saveQuantityChanges(@RequestParam("ppnumber")String ppnumber,@RequestParam("quantity")double quantity,@RequestParam("newQuantity")double newQuantity) {
+	@GetMapping ("/savePriceItemQuantityChanges") //сохранение изменения кол-ва по данному пункту в корзине
+	public String saveQuantityChanges(@RequestParam("ppnumber")String ppnumber,@RequestParam("quantity")double quantity,
+			@RequestParam("newQuantity")double newQuantity,@RequestParam(name="contractnumber") String contractnumber,
+			@RequestParam(name="contractdate") String contractdate, @RequestParam(name="contractname") String contractname,RedirectAttributes redirectAttr) {
+		
 		orderCart.saveQuantityItem(ppnumber,quantity,newQuantity);
+		
+		redirectAttr.addAttribute("contractnumber", contractnumber);
+		redirectAttr.addAttribute("contractdate", contractdate);
+		redirectAttr.addAttribute("contractname", contractname);
+		
 		return "redirect:/dispOrder";
 	}
 }
