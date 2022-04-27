@@ -36,7 +36,7 @@ public class CsvUsersController {
 	        return "redirect:/admin/usersShow";
 	      } catch (Exception e) {
 	        model.addAttribute("note", "Не удалось загрузить список пользователей в БД!");
-	        return "noUpload";
+	        return "noLoad";
 	      }
 	}
 	

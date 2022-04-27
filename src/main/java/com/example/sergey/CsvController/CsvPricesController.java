@@ -22,20 +22,29 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.sergey.MyDbConnection;
 
-@Controller
-public class CsvBsListController {
 
-	@PostMapping("/admin/csvBsListToDateBase") //загрузка БС сразу списком в БД (список в формате .csv)
-	public String uploadFile(@RequestParam("file") MultipartFile  file,Model model){
+@Controller
+public class CsvPricesController {
+
+	@PostMapping("/admin/csvToDateBase") //копирование(сохранение) тцп из файла .csv в базу данных
+	public String uploadFile(@RequestParam("file") MultipartFile  file,@RequestParam(name="contractor") String contractor,
+			@RequestParam(name="contractname") String contractname,Model model,RedirectAttributes redirectAttr){
 		
 		try {
 			copyToDateBase(file);
-	        return "redirect:/admin/findBsByBsName";
+			
+			redirectAttr.addAttribute("contractor", contractor);
+			redirectAttr.addAttribute("contractname", contractname);
+			
+	        return "redirect:/admin/priceItems";
 	      } catch (Exception e) {
-	        model.addAttribute("note", "Не удалось загрузить список БС в БД!");
+	    	  
+	        model.addAttribute("note", "Не удалось загрузить ТЦП в БД!");
+	        
 	        return "noLoad";
 	      }
 	}
@@ -46,7 +55,7 @@ public class CsvBsListController {
 	      String username = MyDbConnection.username;
 	      String password = MyDbConnection.password;
 	      Connection conn = null;
-	      String myQuery="COPY bslist (bsnumber,bsaddress) FROM STDIN WITH CSV";
+	      String myQuery="COPY prices (ppnumber,workname,unitmeasure,price,comment,contractor) FROM STDIN WITH CSV";
 	      
 	      try {  
 	    	  conn = DriverManager.getConnection(urls, username, password);
@@ -65,9 +74,9 @@ public class CsvBsListController {
 	}
 	}
 	
-	@GetMapping("/bsListToCSV") //сохранение из базы списка БС в файл .csv
+	@GetMapping("/dateBaseToCSV") //сохранение тцп из базы данных в файл .csv
 	ResponseEntity<Resource> getFileCsv() throws SQLException, IOException{
-		String filename="bsList.csv";
+		String filename="prices.csv";
 		InputStreamResource file=copyToFile();
 		
 		return ResponseEntity.ok()
@@ -82,7 +91,7 @@ public class CsvBsListController {
 	      String username = MyDbConnection.username;
 	      String password = MyDbConnection.password;
 	      Connection conn = null;
-	      String myQuery="COPY (select bsnumber,bsaddress from bslist order by bsnumber) TO STDOUT WITH (FORMAT CSV, HEADER)";
+	      String myQuery="COPY (select ppnumber,workname,unitmeasure,price,comment,contractor from prices) TO STDOUT WITH (FORMAT CSV, HEADER)";
 	      InputStreamResource file;
 	      
 	      try {  
@@ -101,5 +110,4 @@ public class CsvBsListController {
 	}
 	      return file;
 	}
-	
 }

@@ -39,11 +39,11 @@ public class ContractTextController {
 			contractTextService.saveContractText(contractText);
 			String note="Файл Договора сохранен в базе данных!";
 		    model.addAttribute("note", note);
-			return"noUpload";}
+			return"noLoad";}
 			catch(Exception e) {
 				  String note="Ошибка  - Что-то пошло не так!";
 			      model.addAttribute("note", note);
-				  return"noUpload";}	
+				  return"noLoad";}	
 			}
 	
 	@GetMapping("/downloadContractText") // скачивание файла договора из БД
@@ -62,13 +62,12 @@ public class ContractTextController {
 		return null;
 	}
 	
-	
 		@GetMapping("/errorDownload") //редирект на страницу ошибки
 		public String errorDownload(Model model) {
 			
 			  String note="Ошибка  - В базе нет файла для этого Договора!";
 		      model.addAttribute("note", note);
-			  return"noUpload";
+			  return"noLoad";
 		}
 		
 		@GetMapping("/admin/contractorsShow") //список всех подрядчиков по увеличению id (текст договора не подгружается)
