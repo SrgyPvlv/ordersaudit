@@ -9,20 +9,22 @@
 <body>
 <div class="headerDispOrder">
 <div id="header1">
-<form id="orderPage2" th:action="@{/priceItems}" method="get">
+<form id="orderPage2" th:action="@{/priceItems}" method="get" style="display:inline;">
 <input type="hidden" name="contractor" th:value="${contractor}">
 <input type="hidden" name="contractnumber" th:value="${contractnumber}">
 <input type="hidden" name="contractdate" th:value="${contractdate}">
 <input type="hidden" name="contractname" th:value="${contractname}">
-<input type="submit" name="submit" class="tcp_index" value="На страницу ТЦП">
+<input type="submit" name="submit" value="На страницу ТЦП" style="border-color:blue;">
 </form> &nbsp&nbsp | &nbsp&nbsp
 <form th:action="@{/clearCart}" method="get" style="display:inline;">
+<input type="hidden" name="contractor" th:value="${contractor}">
 <input type="hidden" name="contractnumber" th:value="${contractnumber}">
 <input type="hidden" name="contractdate" th:value="${contractdate}">
 <input type="hidden" name="contractname" th:value="${contractname}">
 <input type="submit" name="submit" value="Очистить корзину" style="border-color:red;"> &nbsp&nbsp | &nbsp&nbsp
 </form>
 <form id="orderPage" th:action="@{/orders/createOrder}" method="get" style="display:inline;">
+<input type="hidden" name="contractor" th:value="${contractor}">
 <input type="hidden" name="contractnumber" th:value="${contractnumber}">
 <input type="hidden" name="contractdate" th:value="${contractdate}">
 <input type="hidden" name="id" th:value="${id}">
@@ -46,6 +48,7 @@
 <form th:action="@{/deletePriceItemFromOrder}" method="get" style="display:inline;">
 <input type="hidden" name="ppnumber" th:value="${order.getPpNumber}">
 <input type="hidden" name="quantity" th:value="${order.getQuantity}">
+<input type="hidden" name="contractor" th:value="${contractor}">
 <input type="hidden" name="contractnumber" th:value="${contractnumber}">
 <input type="hidden" name="contractdate" th:value="${contractdate}">
 <input type="hidden" name="contractname" th:value="${contractname}">
@@ -59,6 +62,7 @@
 <input type="number" name="newQuantity" th:value="${order.getQuantity}" step="0.01" min="0.01" style="border:none;text-align:center;width:55px;"> &nbsp&nbsp | &nbsp&nbsp
 <input type="hidden" name="ppnumber" th:value="${order.getPpNumber}">
 <input type="hidden" name="quantity" th:value="${order.getQuantity}">
+<input type="hidden" name="contractor" th:value="${contractor}">
 <input type="hidden" name="contractnumber" th:value="${contractnumber}">
 <input type="hidden" name="contractdate" th:value="${contractdate}">
 <input type="hidden" name="contractname" th:value="${contractname}">
@@ -83,8 +87,10 @@
    <p style="display:inline;"><label for="ordernumber">№ Заявки: </label>
       <input form ="orderPage" type="number" id="ordernumber" name="ordernumber" th:value="*{ordernumber !=0} ? *{ordernumber} : '' "  min="1" required><i></i></p> &nbsp&nbsp ← | ← &nbsp&nbsp 
           <form id="orderPage2" th:action="@{/orders/showNextOrderNumber}" method="get" style="display:inline;">
+          <input type="hidden" name="contractor" th:value="${contractor}">
           <input type="hidden" name="contractnumber" th:value="${contractnumber}">
           <input type="hidden" name="contractdate" th:value="${contractdate}">
+          <input type="hidden" name="contractname" th:value="${contractname}">
           <input type="submit" name="submit" value="Получить номер Заявки" class="ordnum">
           </form>
    <p><label for="bsnumber">№ Базовой стации: </label>

@@ -135,7 +135,13 @@ position: fixed; /* Фиксированное положение */
 	border-bottom: 1px solid #000000;
 	z-index: 1;
 }
-.pricesControl {
+.pricesControl_priceItems {
+	background:#FFFACD;
+	padding:10px;
+	border-bottom: 2px solid #FFFFFF;
+	height:40px;
+}
+.pricesControl_prices {
 	background:#FFFACD;
 	padding:10px;
 	border-bottom: 2px solid #FFFFFF;
@@ -365,7 +371,12 @@ a.ref:hover,a.remedyhref:hover {
   z-index: 2;
   background:white;
 }
-.test2{
+.test2_prices{
+  margin: 330px auto 0 auto;
+  width: 100%;
+  padding: 10px;
+}
+.test2_priceItems{
   margin: 330px auto 0 auto;
   width: 100%;
   padding: 10px;

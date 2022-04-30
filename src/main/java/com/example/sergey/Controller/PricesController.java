@@ -139,8 +139,8 @@ public class PricesController {
 		Prices item=pricesService.findPriceItemById(id);
 		
 		model.addAttribute("item", item);
-		redirectAttr.addAttribute("contractor", contractor);
-		redirectAttr.addAttribute("contractname", contractname);
+		model.addAttribute("contractor", contractor);
+		model.addAttribute("contractname", contractname);
 		
 		return "editPriceItemForm";
 	}
@@ -166,12 +166,12 @@ public class PricesController {
 	
 	@GetMapping("/findByNumber") //поиск для данного подрядчика пункта тцп по его номеру
 	public String findByNumber(@RequestParam(name="contractor") String contractor, @RequestParam("ppsearch") String ppsearch,
-			@RequestParam(name="contractnumber",required=false) String contractnumber,
+			@RequestParam(name="contractnumber",defaultValue="",required=false) String contractnumber,
 			@RequestParam(name="contractdate",required=false) String contractdate, @RequestParam(name="contractname") String contractname, Model model)throws IOException{
 		
 		List<Prices> listitems=pricesService.findPriceItemByPpNumber(contractor, ppsearch);
 		
-		if(contractnumber.isEmpty()) {
+		if(!contractnumber.isEmpty()) {
 		model.addAttribute("listitems", listitems);
 		model.addAttribute("contractor", contractor);
 		model.addAttribute("contractnumber", contractnumber);
@@ -191,8 +191,8 @@ public class PricesController {
 	
 	@GetMapping("/findByName") //поиск для данного подрядчика пункта тцп по фильтрам в названии пункта (фильтр до 2-х слов, в любом их порядке и сокращении)
 	public String findByName(@RequestParam(name="contractor") String contractor, @RequestParam("workname") String workname,
-			@RequestParam(name="contractnumber") String contractnumber,
-			@RequestParam(name="contractdate") String contractdate, @RequestParam(name="contractname") String contractname, Model model)throws IOException{
+			@RequestParam(name="contractnumber",defaultValue="",required=false) String contractnumber,
+			@RequestParam(name="contractdate",required=false) String contractdate, @RequestParam(name="contractname") String contractname, Model model)throws IOException{
 		String workname1;
 		String workname2;
 		String[] words=workname.split("\\s");
@@ -205,7 +205,7 @@ public class PricesController {
 		}
 		List<Prices> listitems=pricesService.findPriceItemByWorkName(contractor,workname,workname1,workname2);
 		
-		if(contractnumber.isEmpty()) {
+		if(!contractnumber.isEmpty()) {
 			model.addAttribute("listitems", listitems);
 			model.addAttribute("contractor", contractor);
 			model.addAttribute("contractnumber", contractnumber);
@@ -329,7 +329,8 @@ public class PricesController {
 		return"dispOrder";
 	}
 	@GetMapping ("/clearCart") //очистка корзины (страницы корзины) с возвратом на страницу корзины
-	public String clearCart(@RequestParam(name="contractnumber") String contractnumber,@RequestParam(name="contractdate") String contractdate, 
+	public String clearCart(@RequestParam(name="contractor") String contractor,@RequestParam(name="contractnumber") String contractnumber,
+			@RequestParam(name="contractdate") String contractdate, 
 			@RequestParam(name="contractname") String contractname,RedirectAttributes redirectAttr) {
 		
 		orderCart.clearCart();
@@ -337,6 +338,7 @@ public class PricesController {
 		this.remedy=null; this.author=null; this.arenda=null; this.worktype=null; this.comment=null; this.status=null;
 		this.report=null; this.cedr=null; this.orderlistcomment=null;
 		
+		redirectAttr.addAttribute("contractor", contractor);
 		redirectAttr.addAttribute("contractnumber", contractnumber);
 		redirectAttr.addAttribute("contractdate", contractdate);
 		redirectAttr.addAttribute("contractname", contractname);
@@ -369,11 +371,12 @@ public class PricesController {
 	
 	@GetMapping ("/deletePriceItemFromOrder") //удаление пункта тцп из корзины заказа
 	public String deleteFromOrder(@RequestParam("ppnumber")String ppnumber,@RequestParam("quantity")double quantity,
-			@RequestParam(name="contractnumber") String contractnumber,@RequestParam(name="contractdate") String contractdate, 
-			@RequestParam(name="contractname") String contractname,RedirectAttributes redirectAttr) {
+			@RequestParam(name="contractor") String contractor,@RequestParam(name="contractnumber") String contractnumber,
+			@RequestParam(name="contractdate") String contractdate, @RequestParam(name="contractname") String contractname,RedirectAttributes redirectAttr) {
 		
 		orderCart.deleteItem(ppnumber,quantity);
 		
+		redirectAttr.addAttribute("contractor", contractor);
 		redirectAttr.addAttribute("contractnumber", contractnumber);
 		redirectAttr.addAttribute("contractdate", contractdate);
 		redirectAttr.addAttribute("contractname", contractname);
@@ -387,11 +390,13 @@ public class PricesController {
     }
 	@GetMapping ("/savePriceItemQuantityChanges") //сохранение изменения кол-ва по данному пункту в корзине
 	public String saveQuantityChanges(@RequestParam("ppnumber")String ppnumber,@RequestParam("quantity")double quantity,
-			@RequestParam("newQuantity")double newQuantity,@RequestParam(name="contractnumber") String contractnumber,
+			@RequestParam("newQuantity")double newQuantity,
+			@RequestParam(name="contractor") String contractor,@RequestParam(name="contractnumber") String contractnumber,
 			@RequestParam(name="contractdate") String contractdate, @RequestParam(name="contractname") String contractname,RedirectAttributes redirectAttr) {
 		
 		orderCart.saveQuantityItem(ppnumber,quantity,newQuantity);
 		
+		redirectAttr.addAttribute("contractor", contractor);
 		redirectAttr.addAttribute("contractnumber", contractnumber);
 		redirectAttr.addAttribute("contractdate", contractdate);
 		redirectAttr.addAttribute("contractname", contractname);

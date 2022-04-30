@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.sergey.Model.Prices;
 import com.example.sergey.Repository.PricesRepository;
@@ -42,6 +43,7 @@ public class PricesService {
 		pricesRepository.deleteById(id);
 	}
 	
+	@Transactional
 	public void deleteAllPricesByContractor(String contractor) { //удаление всех пунктов тцп данного подрядчика
 		pricesRepository.deleteAllByContractor(contractor);
 	}

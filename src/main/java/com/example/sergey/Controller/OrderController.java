@@ -119,7 +119,7 @@ public class OrderController {
 		return "redirect:/orders/showAllOrders";} catch(Exception e) {
 	        model.addAttribute("note", "Не удалось записать Заявку в БД! Вероятно данный номер Заявки уже используется. "
 	        		+ "Вернитесь назад, увеличьте номер на 1 единицу и попробуйте снова.");
-	        return "noUpload";
+	        return "noLoad";
 	      }
 	}
 	
@@ -154,15 +154,17 @@ public class OrderController {
 			order.setEndtime(endString);
 		}
 		
-		ContractText contractor=contractTextService.getContractorByContractNumberWithOutText(contractnumber);
-		String email1=contractor.getEmail1();
-		String email2=contractor.getEmail2();
-		String email3=contractor.getEmail3();
-		String email11=contractor.getEmail11();
-		String email12=contractor.getEmail12();
-		String email13=contractor.getEmail13();
-		String contractname=contractor.getName();
+		ContractText contractor1=contractTextService.getContractorByContractNumberWithOutText(contractnumber);
+		String email1=contractor1.getEmail1();
+		String email2=contractor1.getEmail2();
+		String email3=contractor1.getEmail3();
+		String email11=contractor1.getEmail11();
+		String email12=contractor1.getEmail12();
+		String email13=contractor1.getEmail13();
+		String contractname=contractor1.getName();
+		String contractor=contractor1.getContractor();
 		model.addAttribute("listOrders", listOrders);
+		model.addAttribute("contractor", contractor);
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractname", contractname);
 		model.addAttribute("email1", email1);
@@ -186,7 +188,7 @@ public class OrderController {
 	}
 	
 	@GetMapping("/orderEdit") //переход на форму редактирования заявки
-	public String orderEditForm(@RequestParam("id") Long id,
+	public String orderEditForm(@RequestParam("id") Long id,@RequestParam(name="contractor") String contractor,
 			@RequestParam(name="contractname")String contractname, RedirectAttributes redirectAttr,Model model) {
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -226,16 +228,17 @@ public class OrderController {
 		redirectAttr.addAttribute("orderlistcomment", orderDb.getOrderlistcomment());
 		redirectAttr.addAttribute("report", orderDb.getReport());
 		redirectAttr.addAttribute("cedr", orderDb.getCedr());
+		redirectAttr.addAttribute("contractor", contractor);
 		redirectAttr.addAttribute("contractname", contractname);
 		
 		return "redirect:/dispOrder";} else {
 			model.addAttribute("note", "Вы не можете редактировать чужую заявку! Обратитесь к её автору или администратору.");
-			return "noUpload";}
+			return "noLoad";}
 	}
 
 	@GetMapping("/orderCopy") //переход на форму создания копии заявки (редактирования без передачи id)
-	public String orderCopyForm(@RequestParam("id") Long id,
-			@RequestParam(name="contractname")String contractname,Model model,RedirectAttributes redirectAttr) {
+	public String orderCopyForm(@RequestParam("id") Long id,@RequestParam(name="contractor") String contractor,
+			@RequestParam(name="contractname")String contractname,RedirectAttributes redirectAttr) {
 		
 		sumWithOutNds=0;
 		Nds=0;
@@ -254,6 +257,7 @@ public class OrderController {
 		redirectAttr.addAttribute("worktype", orderDb.getWorktype());
 		redirectAttr.addAttribute("contractnumber", orderDb.getContractnumber());
 		redirectAttr.addAttribute("contractdate", orderDb.getContractdate());
+		redirectAttr.addAttribute("contractor", contractor);
 		redirectAttr.addAttribute("contractname", contractname);
 				
 		return "redirect:/dispOrder";}
@@ -387,15 +391,18 @@ public class OrderController {
 	
 	@GetMapping("/showNextOrderNumber") //определение номера для следующей заявки для данного подрядчика 
 	public String showNextOrderNumber(@RequestParam(name="contractnumber",required=false) String contractnumber,
-			@RequestParam(name="contractdate",required=false) String contractdate,Model model,RedirectAttributes redirectAttr) {
+			@RequestParam(name="contractor") String contractor,@RequestParam(name="contractname")String contractname,
+			@RequestParam(name="contractdate",required=false) String contractdate,RedirectAttributes redirectAttr) {
 		sumWithOutNds=0;
 		Nds=0;
 		sumWithNds=0;
 		
 		int ordernumber=orderService.showNextOrderNumber(contractnumber);
 		redirectAttr.addAttribute("ordernumber", ordernumber);
+		redirectAttr.addAttribute("contractor", contractor);
 		redirectAttr.addAttribute("contractnumber", contractnumber);
 		redirectAttr.addAttribute("contractdate", contractdate);
+		redirectAttr.addAttribute("contractname", contractname);
 		return "redirect:/dispOrder";
 	}	
 }
