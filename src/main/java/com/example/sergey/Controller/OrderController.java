@@ -1,6 +1,5 @@
 package com.example.sergey.Controller;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -18,7 +17,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -29,7 +27,7 @@ import com.example.sergey.Model.OrderCart;
 import com.example.sergey.Model.PricesSelect;
 import com.example.sergey.Service.BsListService;
 import com.example.sergey.Service.ContractTextService;
-import com.example.sergey.Service.DefaultOrderService;
+import com.example.sergey.Service.OrderService;
 import com.example.sergey.Service.UsersService;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -40,24 +38,22 @@ import lombok.Data;
 @Data
 @Controller
 @SessionScope
-@RequestMapping("/orders")
 public class OrderController {
 
 	double sumWithOutNds;
 	double Nds;
 	double sumWithNds;
-	ArrayList<PricesSelect> cart;
 	@Autowired OrderCart orderCart;
 	@Autowired UsersService userService;
 	@Autowired BsListService bsListService;
 	@Autowired ContractTextService contractTextService;
 	@Autowired
-	private DefaultOrderService orderService;
+	private OrderService orderService;
 	@Autowired PricesController pricesController;
 		
 	private static final Logger logger=LoggerFactory.getLogger(OrderController.class);
 	
-	@GetMapping("/createOrder") //записать заявку в базу данных
+	@GetMapping("/orders/createOrder") //записать заявку в базу данных
 	public String createOrder(@RequestParam(name="id",required=false,defaultValue="0")Long id,@RequestParam("ordernumber")int ordernumber,@RequestParam("send")String send,
 			@RequestParam("author")String author,@RequestParam("bsnumber")String bsnumber,
 			@RequestParam("start")String start,@RequestParam("end")String end,@RequestParam("remedy")String remedy,
@@ -72,7 +68,7 @@ public class OrderController {
 		Nds=0;
 		sumWithNds=0;
 		
-        cart=orderCart.getItemsOrderCart();
+		ArrayList<PricesSelect> cart=orderCart.getItemsOrderCart();
         String cartJsonStr = new Gson().toJson(cart); //ArrayList в Json
 		
 		for(PricesSelect cartitem : cart) {
@@ -123,21 +119,25 @@ public class OrderController {
 	      }
 	}
 	
-	@GetMapping("/showAllOrders") //все заявки по подрядчику(т.е. номеру договора) по возрастанию номера заявки 
-	public String showAllOrders(@RequestParam(name="contractnumber",required=false) String contractnumber,
-			@RequestParam(name="ordernumber",required=false,defaultValue="0") int ordernumber, Model model) {
+	@GetMapping("/orders/showAllOrders") //все заявки по подрядчику(т.е. номеру договора) по возрастанию номера заявки, 
+	                              //а также фильтрованные по номеру заявки или номеру бс (для user)
+	public String showAllOrders(@RequestParam(name="contractnumber") String contractnumber,
+			@RequestParam(name="ordernumber",required=false,defaultValue="0") int ordernumber,
+			@RequestParam(name="bsNumberSearch",defaultValue="",required=false) String bsNumberSearch, Model model) {
 
-		List<Order> listOrders;
-		if(ordernumber==0) {
+		List<Order> listOrders = null;
+		if(ordernumber==0 & bsNumberSearch.isEmpty()) {
 			listOrders=orderService.findAllByContractNumberOrderByOrdernumberAsc(contractnumber);} else {
-			listOrders=orderService.findByOrderNumber(ordernumber, contractnumber);
+			if(ordernumber!=0) listOrders=orderService.findByOrderNumber(ordernumber, contractnumber); else {
+				if(!bsNumberSearch.isEmpty()) listOrders=orderService.findByBsName(bsNumberSearch, contractnumber);
+			}
 		}
 		
 		 Date sendDate = null;
 	     Date startDate = null;
 	     Date endDate = null;
 		
-		for(Order order:listOrders) {
+		for(Order order: listOrders) {
 			SimpleDateFormat formatterStringToDate=new SimpleDateFormat("yyyy-MM-dd");
 			
 			try {sendDate=formatterStringToDate.parse(order.getSend());
@@ -177,7 +177,7 @@ public class OrderController {
 		return "showOrders";
 	}
 	
-	@GetMapping("/orderDelete") //удалить заявку
+	@GetMapping("/admin/orderDelete") //удалить заявку
 	public String orderDelete(@RequestParam("id")Long id,@RequestParam(name="contractnumber") String contractnumber,
 			RedirectAttributes redirectAttr) {
 		
@@ -187,7 +187,7 @@ public class OrderController {
 		return "redirect:/orders/showAllOrders";
 	}
 	
-	@GetMapping("/orderEdit") //переход на форму редактирования заявки
+	@GetMapping("/orders/orderEdit") //переход на форму редактирования заявки
 	public String orderEditForm(@RequestParam("id") Long id,@RequestParam(name="contractor") String contractor,
 			@RequestParam(name="contractname")String contractname, RedirectAttributes redirectAttr,Model model) {
 		
@@ -209,8 +209,7 @@ public class OrderController {
         ArrayList<PricesSelect> cartArrayList = new Gson().fromJson(cartJsonStr,listType); //Json в ArrayList
         
         orderCart.setItemsOrderCart(cartArrayList);
-        cart=orderCart.getItemsOrderCart();
-		
+        		
 		redirectAttr.addAttribute("id", id);
 		redirectAttr.addAttribute("ordernumber", orderDb.getOrdernumber());
 		redirectAttr.addAttribute("bsnumber", orderDb.getBsnumber());
@@ -236,7 +235,7 @@ public class OrderController {
 			return "noLoad";}
 	}
 
-	@GetMapping("/orderCopy") //переход на форму создания копии заявки (редактирования без передачи id)
+	@GetMapping("/orders/orderCopy") //переход на форму создания копии заявки (редактирования без передачи id)
 	public String orderCopyForm(@RequestParam("id") Long id,@RequestParam(name="contractor") String contractor,
 			@RequestParam(name="contractname")String contractname,RedirectAttributes redirectAttr) {
 		
@@ -252,8 +251,7 @@ public class OrderController {
         ArrayList<PricesSelect> cartArrayList = new Gson().fromJson(cartJsonStr,listType); //Json в ArrayList
         
         orderCart.setItemsOrderCart(cartArrayList);
-        cart=orderCart.getItemsOrderCart();
-	
+        	
 		redirectAttr.addAttribute("worktype", orderDb.getWorktype());
 		redirectAttr.addAttribute("contractnumber", orderDb.getContractnumber());
 		redirectAttr.addAttribute("contractdate", orderDb.getContractdate());
@@ -262,7 +260,7 @@ public class OrderController {
 				
 		return "redirect:/dispOrder";}
 	
-	@GetMapping ("/orderPage") //создание страницы заявки
+	@GetMapping ("/orders/orderPage") //создание страницы заявки
 	public String tableOrder(@RequestParam("id") Long id, Model model) {
 			
 		sumWithOutNds=0;
@@ -277,10 +275,7 @@ public class OrderController {
 		String cartJsonStr=orderDb.getCart();
 		Type listType = new TypeToken<ArrayList<PricesSelect>>() {}.getType();
         ArrayList<PricesSelect> cartArrayList = new Gson().fromJson(cartJsonStr,listType); //Json в ArrayList
-        
-        //orderCart.setItemsOrderCart(cartArrayList);
-        //cart=orderCart.getItemsOrderCart();
-        
+                
       String send=orderDb.getSend();
       String start=orderDb.getStart();
       String end=orderDb.getEndtime();
@@ -321,7 +316,7 @@ public class OrderController {
 		return"orderPage";
 	}
 	
-	@GetMapping("/findByOrderNumber") // поиск по № Заказа
+	/**@GetMapping("/findByOrderNumber") // поиск по № Заказа
 	public String findByOrderNumber(@RequestParam("orderNumberSearch") Integer orderNumberSearch,
 			@RequestParam(name="contractnumber",required=false) String contractnumber,
 			@RequestParam(name="contractname",required=false) String contractname,Model model)throws IOException{
@@ -387,9 +382,9 @@ public class OrderController {
 		model.addAttribute("contractnumber", contractnumber);
 		model.addAttribute("contractname", contractname);
 		return "showOrders";
-	}
+	} **/
 	
-	@GetMapping("/showNextOrderNumber") //определение номера для следующей заявки для данного подрядчика 
+	@GetMapping("/orders/showNextOrderNumber") //определение номера для следующей заявки для данного подрядчика 
 	public String showNextOrderNumber(@RequestParam(name="contractnumber",required=false) String contractnumber,
 			@RequestParam(name="contractor") String contractor,@RequestParam(name="contractname")String contractname,
 			@RequestParam(name="contractdate",required=false) String contractdate,RedirectAttributes redirectAttr) {
@@ -404,5 +399,64 @@ public class OrderController {
 		redirectAttr.addAttribute("contractdate", contractdate);
 		redirectAttr.addAttribute("contractname", contractname);
 		return "redirect:/dispOrder";
-	}	
+	}
+	
+	@GetMapping("/superadmin/deleteAllByContractor") //удалить Все заказы данного подрядчика
+	public String deleteAllByContractor(@RequestParam(name="contractor") String contractor,
+			@RequestParam(name="contractnumber") String contractnumber,
+			RedirectAttributes redirectAttr) {
+		
+		orderService.deleteAllByContractor(contractnumber);
+		
+		redirectAttr.addAttribute("contractnumber", contractnumber);
+		
+		return "redirect:/orders/showAllOrders";
+	}
+	
+	@GetMapping("/admin/showAllOrdersAdmin") //все заявки по подрядчику(т.е. номеру договора) по возрастанию номера заявки, 
+    //а также фильтрованные по номеру заявки или номеру бс, с возможностью удаления (для admin) 
+public String showAllOrdersAdmin(@RequestParam(name="contractnumber") String contractnumber,
+@RequestParam(name="ordernumber",required=false,defaultValue="0") int ordernumber,
+@RequestParam(name="bsNumberSearch",defaultValue="",required=false) String bsNumberSearch, Model model) {
+
+List<Order> listOrders = null;
+if(ordernumber==0 & bsNumberSearch.isEmpty()) {
+listOrders=orderService.findAllByContractNumberOrderByOrdernumberAsc(contractnumber);} else {
+if(ordernumber!=0) listOrders=orderService.findByOrderNumber(ordernumber, contractnumber); else {
+if(!bsNumberSearch.isEmpty()) listOrders=orderService.findByBsName(bsNumberSearch, contractnumber);
+}
+}
+
+Date sendDate = null;
+Date startDate = null;
+Date endDate = null;
+
+for(Order order: listOrders) {
+SimpleDateFormat formatterStringToDate=new SimpleDateFormat("yyyy-MM-dd");
+
+try {sendDate=formatterStringToDate.parse(order.getSend());
+startDate=formatterStringToDate.parse(order.getStart());
+endDate=formatterStringToDate.parse(order.getEndtime());}
+catch (ParseException e) {e.printStackTrace();}
+
+SimpleDateFormat formatterDateToString=new SimpleDateFormat("dd.MM.yyyy");
+String sendString=formatterDateToString.format(sendDate);
+String startString=formatterDateToString.format(startDate);
+String endString=formatterDateToString.format(endDate);
+order.setSend(sendString);
+order.setStart(startString);
+order.setEndtime(endString);
+}
+
+ContractText contractor1=contractTextService.getContractorByContractNumberWithOutText(contractnumber);
+String contractname=contractor1.getName();
+String contractor=contractor1.getContractor();
+model.addAttribute("listOrders", listOrders);
+model.addAttribute("contractor", contractor);
+model.addAttribute("contractnumber", contractnumber);
+model.addAttribute("contractname", contractname);
+
+return "showOrdersAdmin";
+}
+	
 }

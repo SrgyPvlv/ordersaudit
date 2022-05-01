@@ -33,4 +33,6 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
 	@Query(value="select max(ordernumber) from orderlist where contractnumber like (:cn)",nativeQuery=true)
 	public int showLastOrderNumber(@Param("cn") String contractnumber);
 
+	//удалить Все заказы данного подрядчика
+	public void deleteAllByContractor(String contractor);
 }

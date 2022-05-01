@@ -167,59 +167,50 @@ public class PricesController {
 	@GetMapping("/findByNumber") //поиск для данного подрядчика пункта тцп по его номеру
 	public String findByNumber(@RequestParam(name="contractor") String contractor, @RequestParam("ppsearch") String ppsearch,
 			@RequestParam(name="contractnumber",defaultValue="",required=false) String contractnumber,
-			@RequestParam(name="contractdate",required=false) String contractdate, @RequestParam(name="contractname") String contractname, Model model)throws IOException{
+			@RequestParam(name="contractdate",required=false) String contractdate, @RequestParam(name="contractname") String contractname, RedirectAttributes redirectAttr)throws IOException{
 		
 		List<Prices> listitems=pricesService.findPriceItemByPpNumber(contractor, ppsearch);
 		
 		if(!contractnumber.isEmpty()) {
-		model.addAttribute("listitems", listitems);
-		model.addAttribute("contractor", contractor);
-		model.addAttribute("contractnumber", contractnumber);
-		model.addAttribute("contractdate", contractdate);
-		model.addAttribute("contractname", contractname);
-		model.addAttribute("cartSize", cartSize);
+			redirectAttr.addAttribute("listitems", listitems);
+			redirectAttr.addAttribute("contractor", contractor);
+			redirectAttr.addAttribute("contractnumber", contractnumber);
+			redirectAttr.addAttribute("contractdate", contractdate);
+			redirectAttr.addAttribute("contractname", contractname);
+			redirectAttr.addAttribute("cartSize", cartSize);
 		
-		return "priceItems";} else {
+		return "redirect:/priceItems";} else {
 			
-			model.addAttribute("listitems", listitems);
-			model.addAttribute("contractor", contractor);
-			model.addAttribute("contractname", contractname);
+			redirectAttr.addAttribute("listitems", listitems);
+			redirectAttr.addAttribute("contractor", contractor);
+			redirectAttr.addAttribute("contractname", contractname);
 			
-			return "prices";
+			return "redirect:/admin/priceItems";
 		}
 	}
 	
 	@GetMapping("/findByName") //поиск для данного подрядчика пункта тцп по фильтрам в названии пункта (фильтр до 2-х слов, в любом их порядке и сокращении)
 	public String findByName(@RequestParam(name="contractor") String contractor, @RequestParam("workname") String workname,
 			@RequestParam(name="contractnumber",defaultValue="",required=false) String contractnumber,
-			@RequestParam(name="contractdate",required=false) String contractdate, @RequestParam(name="contractname") String contractname, Model model)throws IOException{
-		String workname1;
-		String workname2;
-		String[] words=workname.split("\\s");
-		if (words.length==1) {
-		workname1=words[0];
-		workname2="";}
-		else {
-			workname1=words[0];
-			workname2=words[1];
-		}
-		List<Prices> listitems=pricesService.findPriceItemByWorkName(contractor,workname,workname1,workname2);
+			@RequestParam(name="contractdate",required=false) String contractdate, @RequestParam(name="contractname") String contractname, RedirectAttributes redirectAttr)throws IOException{
+		
+		List<Prices> listitems=pricesService.findPriceItemByWorkName(contractor,workname);
 		
 		if(!contractnumber.isEmpty()) {
-			model.addAttribute("listitems", listitems);
-			model.addAttribute("contractor", contractor);
-			model.addAttribute("contractnumber", contractnumber);
-			model.addAttribute("contractdate", contractdate);
-			model.addAttribute("contractname", contractname);
-			model.addAttribute("cartSize", cartSize);
+			redirectAttr.addAttribute("listitems", listitems);
+			redirectAttr.addAttribute("contractor", contractor);
+			redirectAttr.addAttribute("contractnumber", contractnumber);
+			redirectAttr.addAttribute("contractdate", contractdate);
+			redirectAttr.addAttribute("contractname", contractname);
+			redirectAttr.addAttribute("cartSize", cartSize);
 			
-			return "priceItems";} else {
+			return "redirect:/priceItems";} else {
 				
-				model.addAttribute("listitems", listitems);
-				model.addAttribute("contractor", contractor);
-				model.addAttribute("contractname", contractname);
+				redirectAttr.addAttribute("listitems", listitems);
+				redirectAttr.addAttribute("contractor", contractor);
+				redirectAttr.addAttribute("contractname", contractname);
 				
-				return "prices";
+				return "redirect:/admin/priceItems";
 			}
 	}
 	

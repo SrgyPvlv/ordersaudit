@@ -14,8 +14,8 @@ public class PricesService {
 
 	@Autowired PricesRepository pricesRepository;
 	
-	public List<Prices> findAllPriceItemsByContractor(String contractor){ //поиск всех пунктов тцп по подрядчику
-		return pricesRepository.findByContractor(contractor);
+	public List<Prices> findAllPriceItemsByContractor(String contractor){ //поиск всех пунктов тцп по подрядчику (сортированных по номеру пункта)
+		return pricesRepository.findByContractorOrderByPpnamber(contractor);
 	}
 	
 	public Prices findPriceItemById(long id) { //поиск пункта тцп по id
@@ -25,17 +25,24 @@ public class PricesService {
 	public void savePriceItem(Prices priceItem) { //сохранение пукта тцп в бд
 		pricesRepository.saveAndFlush(priceItem);
 	}
-	
-	public List<Prices> findPriceItemsByFilter(String contractor,String filter,String filter1,String filter2) { //поиск пуктов тцп по фильтрам в названии (иподрядчику)
-		return pricesRepository.findPriceItemsByFilter(contractor,filter,filter1,filter2);
-	
-	}
-	
+		
 	public List<Prices> findPriceItemByPpNumber(String contractor, String pp) { //поиск пункта тцп по номеру (и подрядчику)
 		return pricesRepository.findPriceItemByPpNumber(contractor, pp);
 	}
 	
-	public List<Prices> findPriceItemByWorkName(String contractor,String workname,String workname1, String workname2) { //поиск пуктов тцп по фильтрам в названии (и подрядчику)
+	public List<Prices> findPriceItemByWorkName(String contractor,String workname) { //поиск пуктов тцп по фильтрам в названии (и подрядчику)
+		
+		String workname1;
+		String workname2;
+		String[] words=workname.split("\\s");
+		if (words.length==1) {
+		workname1=words[0];
+		workname2="";}
+		else {
+			workname1=words[0];
+			workname2=words[1];
+		}
+		
 		return pricesRepository.findPriceItemsByFilter(contractor,workname,workname1,workname2);
 	}
 	

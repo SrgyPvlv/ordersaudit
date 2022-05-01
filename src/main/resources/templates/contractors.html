@@ -46,6 +46,10 @@
             <input type="hidden" name="contractor" th:value="${contractor.getContractor}">
             <input type="hidden" name="contractname" th:value="${contractor.getName}">
             <input type="submit" name="submit" value="ТЦП и Договор" style="background:#808080; color:white;">
+            </form> | 
+            <form th:action="@{/admin/showAllOrdersAdmin}" method="get" style="display:inline;">
+            <input type="hidden" name="contractnumber" th:value="${contractor.getNumber}">
+            <input type="submit" name="submit" value="Заказы" >
             </form>
             </td>        
         </tr>          

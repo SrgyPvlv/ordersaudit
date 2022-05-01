@@ -15,11 +15,11 @@
 
 <div class="find" id="find">
   <div id="ordersshow1">         
-     <form th:action="@{/orders/findByOrderNumber}" th:method="get" style="display:inline;">
+     <form th:action="@{/orders/showAllOrders}" th:method="get" style="display:inline;">
        <label>Поиск по № Заказа  </label> &nbsp&nbsp
        <input type="number" name="orderNumberSearch" min="0" required>
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
-       <input type="hidden" name="contractname" th:value="${contractname}">
+       <!-- <input type="hidden" name="contractname" th:value="${contractname}"> -->
        <input type="submit" value="Найти" >
      </form> &nbsp&nbsp | &nbsp&nbsp
      <form th:action="@{/orders/showAllOrders}" method="get" style="display:inline;">
@@ -34,11 +34,11 @@
      ${email13 !=null ? email13 : ''}+';'"><img src="/images/envelope.jpg" alt="mail" title="Отправка Заявки" width="25" height="25" style="border: none"></a>
      </span>
      <br><br>  
-     <form th:action="@{/orders/findByBsName}" th:method="get">
+     <form th:action="@{/orders/showAllOrders}" th:method="get">
        <label>Поиск по № БС</label> &nbsp&nbsp
        <input type="text" name="bsNumberSearch" placeholder="Код '78-' указывать необязательно" style="width:220px" required>
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
-       <input type="hidden" name="contractname" th:value="${contractname}">
+       <!-- <input type="hidden" name="contractname" th:value="${contractname}"> -->
        <input type="submit" value="Найти" >  
      </form>  
   </div>

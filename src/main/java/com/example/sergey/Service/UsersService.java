@@ -30,12 +30,15 @@ public class UsersService {
 	public void deleteUserById(int id) { //удаление пользователя по id
 		usersrepository.deleteById(id);
 	}
+	
 	public Users findUsersByLogin(String login) { //получение пользователя по логину
 		return usersrepository.findByLogin(login);
 	}
+	
 	public String getLoginByAuthor(String avtor) { //получение логина по автору заявки
 		return usersrepository.getLoginByAuthor(avtor);
 	}
+	
 	public List<Users> findUserByFullName(String avtor) { //получение пользователя по фамилии автора заявки
 		return usersrepository.findUserByFullName(avtor);
 	}

@@ -106,7 +106,7 @@ public class UsersController {
 			
 			return "redirect:/";}else {
 				model.addAttribute("note", "Ошибка ввода данных.Попробуйте еще раз.");
-				return "noUpload";}
+				return "noLoad";}
 		}		
 		
 	}
