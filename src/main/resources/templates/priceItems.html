@@ -16,7 +16,7 @@
       <form  th:action="@{/dateBaseToCSV}" th:method="get" style="display:inline;">
       <label>Скачать ТЦП из БД в файл .csv</label> &nbsp&nbsp
       <input type="submit" value="Скачать" >
-      </form>  |  
+      </form> &nbsp&nbsp | &nbsp&nbsp  
       <form  th:action="@{/downloadContractText}" th:method="get" style="display:inline;">
       <label>Скачать Договор из БД .doc </label> &nbsp&nbsp
       <input type="hidden" name="id" value="1">
@@ -26,7 +26,7 @@
 
 <div class="search">
        <div id="search1">
-       <form th:action="@{/findByNumber}" th:method="get" >
+       <form th:action="@{/priceItems}" th:method="get" >
        <label>Поиск по № ТЦП (№ п/п)</label> &nbsp&nbsp
        <input type="hidden" name="contractor" th:value="${contractor}">
        <input type="text" name="ppsearch" required>
@@ -36,7 +36,7 @@
        <input type="submit" value="Найти" >
        </form>
        <br><br>
-       <form th:action="@{/findByName}" th:method="get" >
+       <form th:action="@{/priceItems}" th:method="get" >
        <label>Поиск по Наименованию работы</label> &nbsp&nbsp
        <input type="hidden" name="contractor" th:value="${contractor}">
        <input type="text" name="workname" required>
@@ -48,11 +48,12 @@
        </div>
        <div id="search2">
        <form th:action="@{/priceItems}" th:method="get" >
+       <label>Показать все пункты ТЦП</label> &nbsp&nbsp
        <input type="hidden" name="contractor" th:value="${contractor}">
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
        <input type="hidden" name="contractdate" th:value="${contractdate}">
        <input type="hidden" name="contractname" th:value="${contractname}">
-       <input type="submit" value="Показать все пункты ТЦП" >
+       <input type="submit" value="Показать" >
        </form>
        </div>
        <div id="search3">
@@ -87,8 +88,7 @@
 </div>
 <br>
 
-<div class="test2_priceItems" id="test2">
-<div class="test3" id="test3">
+<div class="test2" id="test2">
 <table class="listItemsPrice">
 <tr>
 <th class="col1">Добавить в Корзину</th><th class="col2">№ п/п</th><th class="col3">Наименование работ</th><th class="col4">Ед. изм.</th>
@@ -110,7 +110,6 @@
 <td th:text="${listitem.getPrice}" class="col5"></td><td th:text="${listitem.getComment}" class="col6"></td>
 </tr>
 </table>
-</div>
 </div>
 
 <br><br><br>

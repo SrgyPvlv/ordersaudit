@@ -120,7 +120,7 @@ public class OrderController {
 	}
 	
 	@GetMapping("/orders/showAllOrders") //все заявки по подрядчику(т.е. номеру договора) по возрастанию номера заявки, 
-	                              //а также фильтрованные по номеру заявки или номеру бс (для user)
+	                              //а также фильтрованные по номеру заявки или номеру бс
 	public String showAllOrders(@RequestParam(name="contractnumber") String contractnumber,
 			@RequestParam(name="ordernumber",required=false,defaultValue="0") int ordernumber,
 			@RequestParam(name="bsNumberSearch",defaultValue="",required=false) String bsNumberSearch, Model model) {
@@ -177,7 +177,7 @@ public class OrderController {
 		return "showOrders";
 	}
 	
-	@GetMapping("/admin/orderDelete") //удалить заявку
+	@GetMapping("/superadmin/orderDelete") //удалить заявку
 	public String orderDelete(@RequestParam("id")Long id,@RequestParam(name="contractnumber") String contractnumber,
 			RedirectAttributes redirectAttr) {
 		
@@ -315,75 +315,7 @@ public class OrderController {
 		model.addAttribute("comment", orderDb.getComment());
 		return"orderPage";
 	}
-	
-	/**@GetMapping("/findByOrderNumber") // поиск по № Заказа
-	public String findByOrderNumber(@RequestParam("orderNumberSearch") Integer orderNumberSearch,
-			@RequestParam(name="contractnumber",required=false) String contractnumber,
-			@RequestParam(name="contractname",required=false) String contractname,Model model)throws IOException{
 		
-		List<Order> listOrders=orderService.findByOrderNumber(orderNumberSearch, contractnumber);
-		
-		Date sendDate = null;
-	     Date startDate = null;
-	     Date endDate = null;
-		
-		for(Order order:listOrders) {
-			SimpleDateFormat formatterStringToDate=new SimpleDateFormat("yyyy-MM-dd");
-			
-			try {sendDate=formatterStringToDate.parse(order.getSend());
-			     startDate=formatterStringToDate.parse(order.getStart());
-			     endDate=formatterStringToDate.parse(order.getEndtime());}
-			catch (ParseException e) {e.printStackTrace();}
-			
-			SimpleDateFormat formatterDateToString=new SimpleDateFormat("dd.MM.yyyy");
-			String sendString=formatterDateToString.format(sendDate);
-			String startString=formatterDateToString.format(startDate);
-			String endString=formatterDateToString.format(endDate);
-			order.setSend(sendString);
-			order.setStart(startString);
-			order.setEndtime(endString);
-		}
-		
-		model.addAttribute("listOrders", listOrders);
-		model.addAttribute("contractnumber", contractnumber);
-		model.addAttribute("contractname", contractname);
-		return "showOrders";	
-	}
-	
-	@GetMapping("/findByBsName") // поиск по № БС
-	public String findByBsName(@RequestParam("bsNumberSearch") String bsNumberSearch,
-			@RequestParam(name="contractnumber",required=false) String contractnumber,
-			@RequestParam(name="contractname",required=false) String contractname,Model model)throws IOException{
-		
-		List<Order> listOrders=orderService.findByBsName(bsNumberSearch, contractnumber);
-		
-		Date sendDate = null;
-	     Date startDate = null;
-	     Date endDate = null;
-		
-		for(Order order:listOrders) {
-			SimpleDateFormat formatterStringToDate=new SimpleDateFormat("yyyy-MM-dd");
-			
-			try {sendDate=formatterStringToDate.parse(order.getSend());
-			     startDate=formatterStringToDate.parse(order.getStart());
-			     endDate=formatterStringToDate.parse(order.getEndtime());}
-			catch (ParseException e) {e.printStackTrace();}
-			
-			SimpleDateFormat formatterDateToString=new SimpleDateFormat("dd.MM.yyyy");
-			String sendString=formatterDateToString.format(sendDate);
-			String startString=formatterDateToString.format(startDate);
-			String endString=formatterDateToString.format(endDate);
-			order.setSend(sendString);
-			order.setStart(startString);
-			order.setEndtime(endString);
-		}
-		
-		model.addAttribute("listOrders", listOrders);
-		model.addAttribute("contractnumber", contractnumber);
-		model.addAttribute("contractname", contractname);
-		return "showOrders";
-	} **/
-	
 	@GetMapping("/orders/showNextOrderNumber") //определение номера для следующей заявки для данного подрядчика 
 	public String showNextOrderNumber(@RequestParam(name="contractnumber",required=false) String contractnumber,
 			@RequestParam(name="contractor") String contractor,@RequestParam(name="contractname")String contractname,
@@ -402,61 +334,12 @@ public class OrderController {
 	}
 	
 	@GetMapping("/superadmin/deleteAllByContractor") //удалить Все заказы данного подрядчика
-	public String deleteAllByContractor(@RequestParam(name="contractor") String contractor,
-			@RequestParam(name="contractnumber") String contractnumber,
-			RedirectAttributes redirectAttr) {
+	public String deleteAllByContractor(@RequestParam(name="contractnumber") String contractnumber,RedirectAttributes redirectAttr) {
 		
-		orderService.deleteAllByContractor(contractnumber);
+		orderService.deleteAllByContractnumber(contractnumber);
 		
 		redirectAttr.addAttribute("contractnumber", contractnumber);
 		
 		return "redirect:/orders/showAllOrders";
-	}
-	
-	@GetMapping("/admin/showAllOrdersAdmin") //все заявки по подрядчику(т.е. номеру договора) по возрастанию номера заявки, 
-    //а также фильтрованные по номеру заявки или номеру бс, с возможностью удаления (для admin) 
-public String showAllOrdersAdmin(@RequestParam(name="contractnumber") String contractnumber,
-@RequestParam(name="ordernumber",required=false,defaultValue="0") int ordernumber,
-@RequestParam(name="bsNumberSearch",defaultValue="",required=false) String bsNumberSearch, Model model) {
-
-List<Order> listOrders = null;
-if(ordernumber==0 & bsNumberSearch.isEmpty()) {
-listOrders=orderService.findAllByContractNumberOrderByOrdernumberAsc(contractnumber);} else {
-if(ordernumber!=0) listOrders=orderService.findByOrderNumber(ordernumber, contractnumber); else {
-if(!bsNumberSearch.isEmpty()) listOrders=orderService.findByBsName(bsNumberSearch, contractnumber);
-}
-}
-
-Date sendDate = null;
-Date startDate = null;
-Date endDate = null;
-
-for(Order order: listOrders) {
-SimpleDateFormat formatterStringToDate=new SimpleDateFormat("yyyy-MM-dd");
-
-try {sendDate=formatterStringToDate.parse(order.getSend());
-startDate=formatterStringToDate.parse(order.getStart());
-endDate=formatterStringToDate.parse(order.getEndtime());}
-catch (ParseException e) {e.printStackTrace();}
-
-SimpleDateFormat formatterDateToString=new SimpleDateFormat("dd.MM.yyyy");
-String sendString=formatterDateToString.format(sendDate);
-String startString=formatterDateToString.format(startDate);
-String endString=formatterDateToString.format(endDate);
-order.setSend(sendString);
-order.setStart(startString);
-order.setEndtime(endString);
-}
-
-ContractText contractor1=contractTextService.getContractorByContractNumberWithOutText(contractnumber);
-String contractname=contractor1.getName();
-String contractor=contractor1.getContractor();
-model.addAttribute("listOrders", listOrders);
-model.addAttribute("contractor", contractor);
-model.addAttribute("contractnumber", contractnumber);
-model.addAttribute("contractname", contractname);
-
-return "showOrdersAdmin";
-}
-	
+	}	
 }

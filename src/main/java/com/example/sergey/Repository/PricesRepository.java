@@ -20,8 +20,8 @@ public interface PricesRepository extends JpaRepository<Prices,Long> {
 	@Query(value="select * from prices where contractor like (:contractor) and lower(ppnumber) like (:pp)",nativeQuery=true)
 	public List<Prices> findPriceItemByPpNumber(@Param("contractor") String contractor, @Param("pp") String pp);
 	
-	//поиск Всех пуктов тцп по подрядчику сортированных по номеру пукта
-	public List<Prices> findByContractorOrderByPpnamber(String contractor);
+	//поиск Всех пуктов тцп по подрядчику сортированных по номеру пункта
+	public List<Prices> findByContractorOrderByPpnumber(String contractor);
 	
 	//удалить Все пункты тцп данного подрядчика
 	public void deleteAllByContractor(String contractor);

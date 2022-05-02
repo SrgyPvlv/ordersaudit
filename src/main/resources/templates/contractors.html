@@ -15,7 +15,7 @@
  <table class="contractorstable" border="1">
  <caption align="top"><h3>Список Подрядчиков &nbsp&nbsp&nbsp&nbsp
    <form th:action="@{/admin/contractorCreate}" method="get" style="display:inline;">
-   <input type="submit" value="Добавить подрядчика">
+   <input type="submit" value="Добавить подрядчика" style="border-color:blue;">
    </form></h3>
  </caption>
         <tr>
@@ -35,21 +35,18 @@
            <td>
            <form th:action="@{/admin/contractorEdit}" method="get" style="display:inline;">
                  <input type="hidden" name="id" th:value="${contractor.getId}">
-                 <input type="submit" value="Редактировать" style="background:#98FB98;">
-           </form> | 
-           <form th:action="@{/superadmin/contractorDelete}" method="get" style="display:inline;">
-                 <input type="hidden" name="id" th:value="${contractor.getId}">
-                 <input type="submit" value="Удалить" style="background:#FF0000; color:white;">
-            </form>
-            <br><br>
-            <form th:action="@{/admin/priceItems}" method="get" style="display:inline;">
+                 <input type="submit" value="Редактировать Профиль" style="background:#98FB98;">
+           </form>
+           <br><br>
+           <form th:action="@{/admin/priceItems}" method="get" style="display:inline;">
             <input type="hidden" name="contractor" th:value="${contractor.getContractor}">
             <input type="hidden" name="contractname" th:value="${contractor.getName}">
-            <input type="submit" name="submit" value="ТЦП и Договор" style="background:#808080; color:white;">
-            </form> | 
-            <form th:action="@{/admin/showAllOrdersAdmin}" method="get" style="display:inline;">
-            <input type="hidden" name="contractnumber" th:value="${contractor.getNumber}">
-            <input type="submit" name="submit" value="Заказы" >
+            <input type="submit" name="submit" value="Редактировать ТЦП и Договор" style="background:#808080; color:white;">
+            </form>
+            <br><br>
+            <form th:action="@{/superadmin/contractorDelete}" method="get" style="display:inline;">
+                 <input type="hidden" name="id" th:value="${contractor.getId}">
+                 <input type="submit" value="Удалить" style="background:#FF0000; color:white;">
             </form>
             </td>        
         </tr>          

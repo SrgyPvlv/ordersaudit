@@ -62,8 +62,8 @@ public class DefaultOrderService implements OrderService {
 	}
 	
 	@Override
-	public void deleteAllByContractor(String contractnumber) {
-		orderRepository.deleteAllByContractor(contractnumber);
+	public void deleteAllByContractnumber(String contractnumber) {
+		orderRepository.deleteAllByContractnumber(contractnumber);
 	}
 
 }

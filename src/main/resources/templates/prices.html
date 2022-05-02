@@ -15,7 +15,7 @@
 <div class="pricesControl_prices">
       <div id="pricesControl_1">
       <form  th:action="@{/admin/newPriceItemForm}" th:method="get" >
-      <label>Добавить пункт ТЦП</label> &nbsp&nbsp
+      <label>Добавить пункт ТЦП (admin)</label> &nbsp&nbsp
       <input type="hidden" name="contractor" th:value="${contractor}">
       <input type="hidden" name="contractname" th:value="${contractname}">
       <input type="submit" value="Добавить" >
@@ -44,7 +44,7 @@
 
       <div id="pricesControl_2">
       <form enctype="multipart/form-data" th:action="@{/admin/csvToDateBase}" th:method="post" >
-      <label>Загрузка ТЦП в БД</label> &nbsp&nbsp
+      <label>Загрузка ТЦП в БД (admin)</label> &nbsp&nbsp
       <input type="file" name="file" required>
       <input type="hidden" name="contractor" th:value="${contractor}">
        <input type="hidden" name="contractname" th:value="${contractname}">
@@ -52,7 +52,7 @@
       </form>
       <br><br>
       <form enctype="multipart/form-data" th:action="@{/admin/loadContractText}" th:method="post" >
-      <label>Загрузка Договора в БД</label> &nbsp&nbsp
+      <label>Загрузка Договора в БД (admin)</label> &nbsp&nbsp
       <input type="file" name="file" required>
       <input type="hidden" name="id" value="1">
       <input type="submit" value="Загрузить" >
@@ -62,7 +62,7 @@
 
 <div class="search">
        <div id="search1">
-       <form th:action="@{/findByNumber}" th:method="get" >
+       <form th:action="@{/admin/priceItems}" th:method="get" >
        <label>Поиск по № ТЦП (№ п/п)</label> &nbsp&nbsp
        <input type="hidden" name="contractor" th:value="${contractor}">
        <input type="text" name="ppsearch" required>
@@ -70,7 +70,7 @@
        <input type="submit" value="Найти" >
        </form>
        <br><br>
-       <form th:action="@{/findByName}" th:method="get" >
+       <form th:action="@{/admin/priceItems}" th:method="get" >
        <label>Поиск по Наименованию работы</label> &nbsp&nbsp
        <input type="hidden" name="contractor" th:value="${contractor}">
        <input type="text" name="workname" required>
@@ -80,9 +80,10 @@
        </div>
        <div id="search2">
        <form th:action="@{/admin/priceItems}" th:method="get" >
+       <label>Показать все пункты ТЦП</label> &nbsp&nbsp
        <input type="hidden" name="contractor" th:value="${contractor}">
        <input type="hidden" name="contractname" th:value="${contractname}">
-       <input type="submit" value="Показать все пункты ТЦП" >
+       <input type="submit" value="Показать" >
        </form>
        </div>
        <div id="search3">
@@ -96,8 +97,7 @@
 </div>
 <br>
 
-<div class="test2_prices" id="test2">
-<div class="test3" id="test3">
+<div class="test2" id="test2">
 <table class="listItemsPrice">
 <tr>
 <th class="col2">№ п/п</th><th class="col3">Наименование работ</th><th class="col4">Ед. изм.</th>
@@ -112,7 +112,7 @@
 <input type="hidden" name="contractor" th:value="${contractor}">
 <input type="hidden" name="contractname" th:value="${contractname}">
 <input type="submit" name="submit" value="Редактировать" style="background:#98FB98;">
-</form> |
+</form> &nbsp | &nbsp
 <form th:action="@{/admin/deletePriceItem}" method="get" style="display:inline;">
 <input type="hidden" name="id" th:value="${listitem.getId}">
 <input type="hidden" name="contractor" th:value="${contractor}">
@@ -122,7 +122,6 @@
 </td>
 </tr>
 </table>
-</div>
 </div>
 
 <br><br><br>

@@ -34,5 +34,5 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
 	public int showLastOrderNumber(@Param("cn") String contractnumber);
 
 	//удалить Все заказы данного подрядчика
-	public void deleteAllByContractor(String contractor);
+	public void deleteAllByContractnumber(String contractnumber);
 }

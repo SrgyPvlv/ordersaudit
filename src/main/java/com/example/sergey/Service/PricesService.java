@@ -15,7 +15,7 @@ public class PricesService {
 	@Autowired PricesRepository pricesRepository;
 	
 	public List<Prices> findAllPriceItemsByContractor(String contractor){ //поиск всех пунктов тцп по подрядчику (сортированных по номеру пункта)
-		return pricesRepository.findByContractorOrderByPpnamber(contractor);
+		return pricesRepository.findByContractorOrderByPpnumber(contractor);
 	}
 	
 	public Prices findPriceItemById(long id) { //поиск пункта тцп по id

@@ -34,6 +34,6 @@ public interface OrderService {
 	
 	//удалить Все заказы данного подрядчика
 	@Transactional
-	public void deleteAllByContractor(String contractnumber);
+	public void deleteAllByContractnumber(String contractnumber);
 	
 }

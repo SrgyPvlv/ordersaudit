@@ -1,15 +1,10 @@
 @charset "UTF-8";
-.listItems{
-	width:100%;
-	border:2px solid;
-	border-collapse: collapse;
-}
-.listItemsPrice{
-	width:100%;
-	border:2px solid;
-	border-collapse: collapse;
-}
 
+.listItems,.listItemsPrice{
+	width:100%;
+	border:2px solid;
+	border-collapse: collapse;
+}
 
 th,td{
 		padding: 6px; 
@@ -139,7 +134,7 @@ position: fixed; /* Фиксированное положение */
 	background:#FFFACD;
 	padding:10px;
 	border-bottom: 2px solid #FFFFFF;
-	height:40px;
+	height:30px;
 }
 .pricesControl_prices {
 	background:#FFFACD;
@@ -170,6 +165,9 @@ position: fixed; /* Фиксированное положение */
 }
 .col2,.col161 {
 	width: 5%;
+}
+.col3 {
+	width: 30%;
 }
 .col162{
 	width: 5%;
@@ -371,13 +369,8 @@ a.ref:hover,a.remedyhref:hover {
   z-index: 2;
   background:white;
 }
-.test2_prices{
-  margin: 330px auto 0 auto;
-  width: 100%;
-  padding: 10px;
-}
-.test2_priceItems{
-  margin: 330px auto 0 auto;
+.test2{
+  margin: 270px auto 0 auto;
   width: 100%;
   padding: 10px;
 }
@@ -396,9 +389,10 @@ a.ref:hover,a.remedyhref:hover {
 .listItemsPrice th{
   position: -webkit-sticky;
   position: sticky;
-  top:360px;
+  top:300px;
   z-index: 1;
 }
+
 .smetaDispOrder{
   margin: 30px auto 0 auto;
   width: 100%;
