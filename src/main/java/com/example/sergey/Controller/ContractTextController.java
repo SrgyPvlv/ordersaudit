@@ -31,10 +31,12 @@ public class ContractTextController {
 	private ContractTextService contractTextService;
 	
 	@PostMapping("/admin/loadContractText") // загрузка файла Договора в БД
-	public String loadContractText(@RequestParam("file") MultipartFile file,@RequestParam("id") long id, Model model)throws IOException{
+	public String loadContractText(@RequestParam("file") MultipartFile file,
+			@RequestParam("contractor") String contractor, Model model)throws IOException{
 		byte[] text=file.getBytes();
+						
 		try {
-			ContractText contractText=contractTextService.getContractText(id);
+			ContractText contractText=contractTextService.getContractTextByContractor(contractor);
 			contractText.setText(text);
 			contractTextService.saveContractText(contractText);
 			String note="Файл Договора сохранен в базе данных!";
@@ -47,9 +49,11 @@ public class ContractTextController {
 			}
 	
 	@GetMapping("/downloadContractText") // скачивание файла договора из БД
-	public ResponseEntity<Resource> fileDown(@RequestParam("id") long id, HttpServletResponse response,HttpServletRequest request) throws IOException{
+	public ResponseEntity<Resource> fileDown(@RequestParam("contractor") String contractor, 
+			HttpServletResponse response,HttpServletRequest request) throws IOException{
+		
 		try {
-			ContractText contractText=contractTextService.getContractText(id);
+			ContractText contractText=contractTextService.getContractTextByContractor(contractor);
 		    String filename=contractText.getContractor()+".doc";
 		    byte[] text=contractText.getText();
 		    InputStreamResource file=new InputStreamResource(new ByteArrayInputStream(text));
@@ -72,7 +76,7 @@ public class ContractTextController {
 		
 		@GetMapping("/admin/contractorsShow") //список всех подрядчиков по увеличению id (текст договора не подгружается)
 		public String showContractors(Model model) {
-			List<ContractText> contractors=contractTextService.getAllWithSomeColumn();
+			List<ContractText> contractors=contractTextService.getAllContractorsWithOutText();
 			model.addAttribute("contractors", contractors);
 			return "contractors";
 		}
@@ -96,7 +100,7 @@ public class ContractTextController {
 		}
 		
 		@GetMapping("/admin/contractorEdit") // переход на форму редактирования подрядчика
-		public String editContractorForm(@RequestParam("id") int id, Model model) {	   
+		public String editContractorForm(@RequestParam("id") Long id, Model model) {	   
 			ContractText contractor=contractTextService.getContractorWithOutText(id);
 			String contractorOld=contractor.getContractor();
 			String numberOld=contractor.getNumber();
@@ -129,13 +133,13 @@ public class ContractTextController {
 		}
 		
 		@PostMapping("/admin/contractorEdit") // редактирование подрядчика
-		public String editNewContractor(@RequestParam("id") int id,@RequestParam("contractor") String contractor, @RequestParam("number") String number,@RequestParam("date") String date,
+		public String editNewContractor(@RequestParam("id") Long id,@RequestParam("contractor") String contractor, @RequestParam("number") String number,@RequestParam("date") String date,
 				@RequestParam("name") String name,@RequestParam("email1") String email1,
 				@RequestParam(name="email2",required=false) String email2,@RequestParam(name="email3",required=false) String email3,
 				@RequestParam("work") String work,@RequestParam("contractend") String contractend,
 				@RequestParam("email11") String email11,@RequestParam(name="email12",required=false) String email12,
 				@RequestParam(name="email13",required=false) String email13) {	   
-			ContractText contractorOld=contractTextService.getContractorWithOutText(id);
+			ContractText contractorOld=contractTextService.getContractText(id);
 			contractorOld.setContractor(contractor);
 			contractorOld.setNumber(number);
 			contractorOld.setDate(date);
@@ -154,7 +158,7 @@ public class ContractTextController {
 		}
 		
 		@GetMapping("/superadmin/contractorDelete") // удаление подрядчика
-		public String deleteContractor(@RequestParam("id") int id) {
+		public String deleteContractor(@RequestParam("id") Long id) {
 			contractTextService.deleteContractTextById(id);
 			
 			return "redirect:/admin/contractorsShow";

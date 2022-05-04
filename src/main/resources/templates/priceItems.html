@@ -15,11 +15,12 @@
 <div class="pricesControl_priceItems">      
       <form  th:action="@{/dateBaseToCSV}" th:method="get" style="display:inline;">
       <label>Скачать ТЦП из БД в файл .csv</label> &nbsp&nbsp
+      <input type="hidden" name="contractor" th:value="${contractor}">
       <input type="submit" value="Скачать" >
       </form> &nbsp&nbsp | &nbsp&nbsp  
       <form  th:action="@{/downloadContractText}" th:method="get" style="display:inline;">
       <label>Скачать Договор из БД .doc </label> &nbsp&nbsp
-      <input type="hidden" name="id" value="1">
+      <input type="hidden" name="contractor" th:value="${contractor}">
       <input type="submit" value="Скачать" >
       </form>
 </div>

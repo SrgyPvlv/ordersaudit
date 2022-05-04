@@ -19,7 +19,7 @@ public interface ContractTextRepository extends JpaRepository<ContractText,Long>
 	//извлечение всех подрядчиков из БД без поля "текст договора"
 	@Query(value="select new ContractText(c.id,c.contractor,c.number,c.date,c.name,c.email1,c.email2,"
 			+ "c.email3,c.work,c.contractend,c.email11,c.email12,c.email13) from ContractText c order by c.id")
-	public List<ContractText> getAllWithSomeColumn();
+	public List<ContractText> getAllContractorsWithOutText();
 	
 	//извлечение подрядчика по id из БД без поля "текст договора"
 	@Query(value="select new ContractText(c.id,c.contractor,c.number,c.date,c.name,c.email1,c.email2,"
@@ -30,5 +30,8 @@ public interface ContractTextRepository extends JpaRepository<ContractText,Long>
 		@Query(value="select new ContractText(c.id,c.contractor,c.number,c.date,c.name,c.email1,c.email2,"
 				+ "c.email3,c.work,c.contractend,c.email11,c.email12,c.email13) from ContractText c where c.number like (:number)")
 		public ContractText getContractorByContractNumberWithOutText(@Param("number") String number);
+
+	//извлечение подрядчика по логину подрядчика
+		public ContractText findByContractor(String contractor);
 	
 }

@@ -32,12 +32,13 @@
       <div id="pricesControl_3">
       <form  th:action="@{/dateBaseToCSV}" th:method="get" >
       <label>Скачать ТЦП из БД в файл .csv</label> &nbsp&nbsp
+      <input type="hidden" name="contractor" th:value="${contractor}">
       <input type="submit" value="Скачать" >
       </form>
       <br><br>
       <form  th:action="@{/downloadContractText}" th:method="get" >
       <label>Скачать Договор из БД .doc </label> &nbsp&nbsp
-      <input type="hidden" name="id" value="1">
+      <input type="hidden" name="contractor" th:value="${contractor}">
       <input type="submit" value="Скачать" >
       </form>
       </div>
@@ -47,14 +48,14 @@
       <label>Загрузка ТЦП в БД (admin)</label> &nbsp&nbsp
       <input type="file" name="file" required>
       <input type="hidden" name="contractor" th:value="${contractor}">
-       <input type="hidden" name="contractname" th:value="${contractname}">
+      <input type="hidden" name="contractname" th:value="${contractname}">
       <input type="submit" value="Загрузить" >
       </form>
       <br><br>
       <form enctype="multipart/form-data" th:action="@{/admin/loadContractText}" th:method="post" >
       <label>Загрузка Договора в БД (admin)</label> &nbsp&nbsp
       <input type="file" name="file" required>
-      <input type="hidden" name="id" value="1">
+      <input type="hidden" name="contractor" th:value="${contractor}">
       <input type="submit" value="Загрузить" >
       </form>  
       </div>

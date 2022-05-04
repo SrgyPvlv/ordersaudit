@@ -26,7 +26,7 @@ public class GeneralController {
 	@GetMapping("/") //переход на страницу index (главную) с передачей данных о подрядчиках
 	public String index(Model model) {
 				
-		List<ContractText> contractors=contractTextService.getAllWithSomeColumn();
+		List<ContractText> contractors=contractTextService.getAllContractorsWithOutText();
 		
 	    Date contractEndDate = null;
 		

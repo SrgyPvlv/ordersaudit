@@ -51,7 +51,8 @@ public class PricesController {
 	@Autowired BsListService bsListService;
 	
 	@GetMapping("/priceItems") //показать все пункты тцп по конкретному подрядчику для добавления в заявку, без возможности редактирования (для users)
-	public String getAllPriceItems(@RequestParam(name="contractor") String contractor,@RequestParam(name="contractnumber") String contractnumber,
+	public String getAllPriceItems(@RequestParam(name="contractor") String contractor,
+			@RequestParam(name="contractnumber") String contractnumber,
 			@RequestParam(name="contractdate") String contractdate, @RequestParam(name="contractname") String contractname,
 			@RequestParam(name="ppsearch",defaultValue="",required=false) String ppsearch,
 			@RequestParam(name="workname",defaultValue="",required=false) String workname,Model model) {
@@ -77,7 +78,8 @@ public class PricesController {
 	}
 	
 	@GetMapping("/admin/priceItems") //показать все пункты тцп по конкретному подрядчику с возможностью редактирования (для admin)
-	public String getEditAllPriceItems(@RequestParam(name="contractor") String contractor,@RequestParam(name="contractname") String contractname,
+	public String getEditAllPriceItems(@RequestParam(name="contractor") String contractor,
+			@RequestParam(name="contractname") String contractname,
 			@RequestParam(name="ppsearch",defaultValue="",required=false) String ppsearch,
 			@RequestParam(name="workname",defaultValue="",required=false) String workname,Model model) {
 		
@@ -88,7 +90,7 @@ public class PricesController {
 				if(!workname.isEmpty()) listitems=pricesService.findPriceItemByWorkName(contractor,workname);
 			}
 		}
-				
+		
 		model.addAttribute("listitems", listitems);
 		model.addAttribute("contractor", contractor);
 		model.addAttribute("contractname", contractname);
@@ -119,7 +121,7 @@ public class PricesController {
 	}
 	
 	@PostMapping("/admin/newPriceItemCreate") //сохранение нового пункта тцп и возврат на страницу тцп данного подрядчика
-	public String newPriceItemCreate(@RequestParam("pp") String pp,@RequestParam("workname") String workname,//
+	public String newPriceItemCreate(@RequestParam("pp") String pp,@RequestParam("workname") String workname,
 			@RequestParam("unitmeasure") String unitmeasure,@RequestParam("price") double price,@RequestParam("comment") String comment,
 			@RequestParam("contractor") String contractor,@RequestParam("contractname") String contractname,RedirectAttributes redirectAttr) throws IOException{
 		
@@ -281,6 +283,7 @@ public class PricesController {
 		model.addAttribute("orderlistcomment", this.orderlistcomment);
 		model.addAttribute("contractname", contractname);
 		model.addAttribute("contractor", contractor);
+		
 		return"dispOrder";
 	}
 	@GetMapping ("/clearCart") //очистка корзины (страницы корзины) с возвратом на страницу корзины
@@ -297,7 +300,7 @@ public class PricesController {
 		redirectAttr.addAttribute("contractnumber", contractnumber);
 		redirectAttr.addAttribute("contractdate", contractdate);
 		redirectAttr.addAttribute("contractname", contractname);
-		
+				
 		return "redirect:/dispOrder";
 	}
 	@GetMapping ("/clearCart2") //очистка корзины (страницы корзины) с возвратом на страницу тцп данного подрядчика
@@ -335,7 +338,7 @@ public class PricesController {
 		redirectAttr.addAttribute("contractnumber", contractnumber);
 		redirectAttr.addAttribute("contractdate", contractdate);
 		redirectAttr.addAttribute("contractname", contractname);
-		
+				
 		return "redirect:/dispOrder";
 	}
 	@GetMapping("/403") //переход на страницу ошибки при отказе в доступе к запрошенной странице
@@ -355,7 +358,7 @@ public class PricesController {
 		redirectAttr.addAttribute("contractnumber", contractnumber);
 		redirectAttr.addAttribute("contractdate", contractdate);
 		redirectAttr.addAttribute("contractname", contractname);
-		
+				
 		return "redirect:/dispOrder";
 	}
 }

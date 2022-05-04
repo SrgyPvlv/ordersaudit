@@ -39,7 +39,7 @@ public class CsvPricesController {
 			
 			redirectAttr.addAttribute("contractor", contractor);
 			redirectAttr.addAttribute("contractname", contractname);
-			
+						
 	        return "redirect:/admin/priceItems";
 	      } catch (Exception e) {
 	    	  
@@ -74,10 +74,10 @@ public class CsvPricesController {
 	}
 	}
 	
-	@GetMapping("/dateBaseToCSV") //сохранение тцп из базы данных в файл .csv
-	ResponseEntity<Resource> getFileCsv() throws SQLException, IOException{
-		String filename="prices.csv";
-		InputStreamResource file=copyToFile();
+	@GetMapping("/dateBaseToCSV") //сохранение тцп данного подрядчика из базы данных в файл .csv
+	ResponseEntity<Resource> getFileCsv(@RequestParam(name="contractor") String contractor) throws SQLException, IOException{
+		String filename="prices_"+contractor+".csv";
+		InputStreamResource file=copyToFile(contractor);
 		
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
@@ -85,13 +85,14 @@ public class CsvPricesController {
 		        .body(file);
 	}
 	
-	public static InputStreamResource copyToFile() throws SQLException, IOException {  
+	public static InputStreamResource copyToFile(String contractor) throws SQLException, IOException {  
 	      
 		  String urls = MyDbConnection.urls;
 	      String username = MyDbConnection.username;
 	      String password = MyDbConnection.password;
 	      Connection conn = null;
-	      String myQuery="COPY (select ppnumber,workname,unitmeasure,price,comment,contractor from prices) TO STDOUT WITH (FORMAT CSV, HEADER)";
+	      String myQuery="COPY (select ppnumber,workname,unitmeasure,price,comment,contractor from prices where contractor like '"+contractor+
+	     "') TO STDOUT WITH (FORMAT CSV, HEADER)";
 	      InputStreamResource file;
 	      
 	      try {  

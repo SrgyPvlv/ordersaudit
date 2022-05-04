@@ -20,11 +20,14 @@ public class ContractTextService {
 	public void deleteContractText(ContractText text) { //удаление подрядчика в БД (аргумент-объект подрядчика)
 		contractTextRepository.delete(text);
 	}
-	public void deleteContractTextById(long id) { //удаление подрядчика в БД по id
+	public void deleteContractTextById(Long id) { //удаление подрядчика в БД по id
 		contractTextRepository.deleteById(id);
 	}
-	public ContractText getContractText(long id) { //извлечение подрядчика из БД по id
+	public ContractText getContractText(Long id) { //извлечение подрядчика из БД по id
 		return contractTextRepository.getById(id);
+	}
+	public ContractText getContractTextByContractor(String contractor) { //извлечение подрядчика из БД по логину подрядчика
+		return contractTextRepository.findByContractor(contractor);
 	}
 	public String getContractTextName(String contractnumber) { //получение названия подрядчика по номеру договора
 		return contractTextRepository.getNameByContractNumber(contractnumber);
@@ -35,11 +38,10 @@ public class ContractTextService {
 	public List<ContractText> getAllContractTextSortedById() { //извлечение списком всех подрядчиков из БД по увеличению id
 		return contractTextRepository.findAll(Sort.by("id").ascending());
 	}
-	public List<ContractText> getAllWithSomeColumn() { //извлечение всех подрядчиков из БД без поля "текст договора" по увеличению id
-		return contractTextRepository.getAllWithSomeColumn();
+	public List<ContractText> getAllContractorsWithOutText() { //извлечение всех подрядчиков из БД без поля "текст договора" по увеличению id
+		return contractTextRepository.getAllContractorsWithOutText();
 	}
-	public ContractText getContractorWithOutText(int id1) { //извлечение подрядчика из БД по id без поля "текст договора"
-		Long id=(long)id1;
+	public ContractText getContractorWithOutText(Long id) { //извлечение подрядчика из БД по id без поля "текст договора"
 		return contractTextRepository.getContractorWithOutText(id);
 	}
 	public ContractText getContractorByContractNumberWithOutText(String number) { //извлечение подрядчика по номеру договора из БД без поля "текст договора"
