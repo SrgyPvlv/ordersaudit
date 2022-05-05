@@ -23,7 +23,6 @@ import com.example.sergey.Model.Users;
 import com.example.sergey.Model.Prices;
 import com.example.sergey.Model.PricesSelect;
 import com.example.sergey.Service.BsListService;
-import com.example.sergey.Service.ContractTextService;
 import com.example.sergey.Service.UsersService;
 import com.example.sergey.Service.PricesService;
 
@@ -46,7 +45,6 @@ public class PricesController {
 
 	@Autowired PricesService pricesService;
 	@Autowired OrderCart orderCart;
-	@Autowired ContractTextService contractTextService;
 	@Autowired UsersService userService;
 	@Autowired BsListService bsListService;
 	

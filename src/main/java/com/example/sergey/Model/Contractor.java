@@ -4,11 +4,11 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.Type;
 
-//Подрядчик и его договор
+//Подрядчик
 
 @Entity
-@Table(name="contracttext")
-public class ContractText {
+@Table(name="contractor")
+public class Contractor {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -55,10 +55,10 @@ public class ContractText {
 	@Column
 	private String email13; //email заказчика (МТС) №3 для отправки копии заявки
 	
-	public ContractText() {}
+	public Contractor() {}
 	
 	//Конструктор без id, но с текстом договора
-	public ContractText(String contractor,byte[] text, String number, String date, String name,String email1,
+	public Contractor(String contractor,byte[] text, String number, String date, String name,String email1,
 			String email2,String email3,String work,String contractend,String email11,String email12,String email13) {
 		this.contractor=contractor;
 		this.text=text;
@@ -76,7 +76,7 @@ public class ContractText {
 	}
 	
 	//Конструктор без id и без текста договора
-	public ContractText(String contractor, String number, String date, String name,String email1,
+	public Contractor(String contractor, String number, String date, String name,String email1,
 			String email2,String email3,String work,String contractend,String email11,String email12,String email13) {
 		this.contractor=contractor;
 		this.number=number;
@@ -93,7 +93,7 @@ public class ContractText {
 	}
 	
 	//Конструктор с id, но без текста договора
-	public ContractText(Long id,String contractor, String number, String date, String name,String email1,
+	public Contractor(Long id,String contractor, String number, String date, String name,String email1,
 			String email2,String email3,String work,String contractend,String email11,String email12,String email13) {
 		this.id=id;
 		this.contractor=contractor;

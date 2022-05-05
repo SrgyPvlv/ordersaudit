@@ -21,12 +21,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.sergey.Model.ContractText;
+import com.example.sergey.Model.Contractor;
 import com.example.sergey.Model.Order;
 import com.example.sergey.Model.OrderCart;
 import com.example.sergey.Model.PricesSelect;
 import com.example.sergey.Service.BsListService;
-import com.example.sergey.Service.ContractTextService;
+import com.example.sergey.Service.ContractorService;
 import com.example.sergey.Service.OrderService;
 import com.example.sergey.Service.UsersService;
 import com.google.gson.Gson;
@@ -46,7 +46,7 @@ public class OrderController {
 	@Autowired OrderCart orderCart;
 	@Autowired UsersService userService;
 	@Autowired BsListService bsListService;
-	@Autowired ContractTextService contractTextService;
+	@Autowired ContractorService contractorService;
 	@Autowired
 	private OrderService orderService;
 	@Autowired PricesController pricesController;
@@ -154,7 +154,7 @@ public class OrderController {
 			order.setEndtime(endString);
 		}
 		
-		ContractText contractor1=contractTextService.getContractorByContractNumberWithOutText(contractnumber);
+		Contractor contractor1=contractorService.getContractorByContractNumberWithOutText(contractnumber);
 		String email1=contractor1.getEmail1();
 		String email2=contractor1.getEmail2();
 		String email3=contractor1.getEmail3();

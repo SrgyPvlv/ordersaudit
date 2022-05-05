@@ -10,14 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.example.sergey.Model.ContractText;
-import com.example.sergey.Service.ContractTextService;
+import com.example.sergey.Model.Contractor;
+import com.example.sergey.Service.ContractorService;
 
 @Controller
 public class GeneralController {
 
 	@Autowired
-	private ContractTextService contractTextService;
+	private ContractorService contractorService;
 	
 	@GetMapping("/login")
 	public String login() {
@@ -26,11 +26,11 @@ public class GeneralController {
 	@GetMapping("/") //переход на страницу index (главную) с передачей данных о подрядчиках
 	public String index(Model model) {
 				
-		List<ContractText> contractors=contractTextService.getAllContractorsWithOutText();
+		List<Contractor> contractors=contractorService.getAllContractorsWithOutText();
 		
 	    Date contractEndDate = null;
 		
-		for(ContractText contractor:contractors) {
+		for(Contractor contractor:contractors) {
 			SimpleDateFormat formatterStringToDate=new SimpleDateFormat("yyyy-MM-dd");
 			
 			try {contractEndDate=formatterStringToDate.parse(contractor.getContractEnd());} catch (ParseException e) {e.printStackTrace();}

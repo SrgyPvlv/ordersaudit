@@ -7,35 +7,9 @@
 <title>Корзина Заказа</title>
 </head>
 <body>
-<div class="headerDispOrder">
-<div id="header1">
-<form id="orderPage2" th:action="@{/priceItems}" method="get" style="display:inline;">
-<input type="hidden" name="contractor" th:value="${contractor}">
-<input type="hidden" name="contractnumber" th:value="${contractnumber}">
-<input type="hidden" name="contractdate" th:value="${contractdate}">
-<input type="hidden" name="contractname" th:value="${contractname}">
-<input type="submit" name="submit" value="На страницу ТЦП" style="border-color:blue;">
-</form> &nbsp&nbsp | &nbsp&nbsp
-<form th:action="@{/clearCart}" method="get" style="display:inline;">
-<input type="hidden" name="contractor" th:value="${contractor}">
-<input type="hidden" name="contractnumber" th:value="${contractnumber}">
-<input type="hidden" name="contractdate" th:value="${contractdate}">
-<input type="hidden" name="contractname" th:value="${contractname}">
-<input type="submit" name="submit" value="Очистить корзину" style="border-color:red;"> &nbsp&nbsp | &nbsp&nbsp
-</form>
-<form id="orderPage" th:action="@{/orders/createOrder}" method="get" style="display:inline;">
-<input type="hidden" name="contractor" th:value="${contractor}">
-<input type="hidden" name="contractnumber" th:value="${contractnumber}">
-<input type="hidden" name="contractdate" th:value="${contractdate}">
-<input type="hidden" name="id" th:value="${id}">
-<input type="submit" name="submit" value="Сохранить заявку в БД" style="border-color:green;">
-</form>
 
-</div>
-<div id="header2">
-<span th:text="'Пользователь: '+${userLogin} + ' | Роль: ' + ${userRole}" style="color:#800000;"></span>
-</div>
-</div>
+<div th:replace="header :: headerDispOrder"></div>
+
 <br>
 <div class="smetaDispOrder">
 <table class="listItems">

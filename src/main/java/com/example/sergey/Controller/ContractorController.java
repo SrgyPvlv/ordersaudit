@@ -20,15 +20,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.sergey.Model.ContractText;
-import com.example.sergey.Service.ContractTextService;
+import com.example.sergey.Model.Contractor;
+import com.example.sergey.Service.ContractorService;
 
 //создание, редактирование, удаление, скачивание/загрузка подрядчиков, а также их ТЦП и договоров 
 @Controller
-public class ContractTextController {
+public class ContractorController {
 
 	@Autowired
-	private ContractTextService contractTextService;
+	private ContractorService contractorService;
 	
 	@PostMapping("/admin/loadContractText") // загрузка файла Договора в БД
 	public String loadContractText(@RequestParam("file") MultipartFile file,
@@ -36,9 +36,9 @@ public class ContractTextController {
 		byte[] text=file.getBytes();
 						
 		try {
-			ContractText contractText=contractTextService.getContractTextByContractor(contractor);
+			Contractor contractText=contractorService.getContractTextByContractor(contractor);
 			contractText.setText(text);
-			contractTextService.saveContractText(contractText);
+			contractorService.saveContractText(contractText);
 			String note="Файл Договора сохранен в базе данных!";
 		    model.addAttribute("note", note);
 			return"noLoad";}
@@ -53,7 +53,7 @@ public class ContractTextController {
 			HttpServletResponse response,HttpServletRequest request) throws IOException{
 		
 		try {
-			ContractText contractText=contractTextService.getContractTextByContractor(contractor);
+			Contractor contractText=contractorService.getContractTextByContractor(contractor);
 		    String filename=contractText.getContractor()+".doc";
 		    byte[] text=contractText.getText();
 		    InputStreamResource file=new InputStreamResource(new ByteArrayInputStream(text));
@@ -76,7 +76,7 @@ public class ContractTextController {
 		
 		@GetMapping("/admin/contractorsShow") //список всех подрядчиков по увеличению id (текст договора не подгружается)
 		public String showContractors(Model model) {
-			List<ContractText> contractors=contractTextService.getAllContractorsWithOutText();
+			List<Contractor> contractors=contractorService.getAllContractorsWithOutText();
 			model.addAttribute("contractors", contractors);
 			return "contractors";
 		}
@@ -93,15 +93,15 @@ public class ContractTextController {
 				@RequestParam("work") String work,@RequestParam("contractend") String contractend,
 				@RequestParam("email11") String email11,@RequestParam(name="email12",required=false) String email12,
 				@RequestParam(name="email13",required=false) String email13) {	   
-			ContractText newContractor=new ContractText(contractor,number,date,name,email1,email2,email3,work,contractend,
+			Contractor newContractor=new Contractor(contractor,number,date,name,email1,email2,email3,work,contractend,
 					email11,email12,email13);
-		    contractTextService.saveContractText(newContractor);
+			contractorService.saveContractText(newContractor);
 			return "redirect:/admin/contractorsShow";
 		}
 		
 		@GetMapping("/admin/contractorEdit") // переход на форму редактирования подрядчика
 		public String editContractorForm(@RequestParam("id") Long id, Model model) {	   
-			ContractText contractor=contractTextService.getContractorWithOutText(id);
+			Contractor contractor=contractorService.getContractorWithOutText(id);
 			String contractorOld=contractor.getContractor();
 			String numberOld=contractor.getNumber();
 			String dateOld=contractor.getDate();
@@ -139,7 +139,7 @@ public class ContractTextController {
 				@RequestParam("work") String work,@RequestParam("contractend") String contractend,
 				@RequestParam("email11") String email11,@RequestParam(name="email12",required=false) String email12,
 				@RequestParam(name="email13",required=false) String email13) {	   
-			ContractText contractorOld=contractTextService.getContractText(id);
+			Contractor contractorOld=contractorService.getContractText(id);
 			contractorOld.setContractor(contractor);
 			contractorOld.setNumber(number);
 			contractorOld.setDate(date);
@@ -152,14 +152,14 @@ public class ContractTextController {
 			contractorOld.setEmail11(email11);
 			contractorOld.setEmail12(email12);
 			contractorOld.setEmail13(email13);
-		   contractTextService.saveContractText(contractorOld);
+			contractorService.saveContractText(contractorOld);
 			
 			return "redirect:/admin/contractorsShow";
 		}
 		
 		@GetMapping("/superadmin/contractorDelete") // удаление подрядчика
 		public String deleteContractor(@RequestParam("id") Long id) {
-			contractTextService.deleteContractTextById(id);
+			contractorService.deleteContractTextById(id);
 			
 			return "redirect:/admin/contractorsShow";
 		}

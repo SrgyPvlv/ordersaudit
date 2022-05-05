@@ -6,7 +6,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div th:fragment="header" class="header" id="header">
+<div th:fragment="header" class="header" id="header"> <!-- Заголовок почти для всех страниц -->
 <div id="header1">
 <a th:href="@{/}">Главная</a> &nbsp | &nbsp<a th:href="@{/logout}">Выйти</a> 
 </div>
@@ -14,5 +14,63 @@
 <span th:text="'Пользователь: '+${userLogin} + ' | Роль: ' + ${userRole}" style="color:#800000;"></span>
 </div>
 </div>
+
+<div th:fragment="headerPrices" class="header" id="header"> <!-- Заголовок для страницы редактирования ТЦП -->
+<div id="header1">
+<a th:href="@{/}">Главная</a>&nbsp | &nbsp<a th:href="@{/admin/contractorsShow}">Редактирование подрядчиков</a> &nbsp | &nbsp<a th:href="@{/logout}">Выйти</a> 
+</div>
+<div id="header2">
+<span th:text="'Пользователь: '+${userLogin} + ' | Роль: ' + ${userRole}" style="color:#800000;"></span>
+</div>
+</div>
+
+<div th:fragment="headerDispOrder" class="headerDispOrder"> <!-- Заголовок для страницы Корзины -->
+<div id="header1">
+<form id="orderPage2" th:action="@{/priceItems}" method="get" style="display:inline;">
+<input type="hidden" name="contractor" th:value="${contractor}">
+<input type="hidden" name="contractnumber" th:value="${contractnumber}">
+<input type="hidden" name="contractdate" th:value="${contractdate}">
+<input type="hidden" name="contractname" th:value="${contractname}">
+<input type="submit" name="submit" value="На страницу ТЦП" style="border-color:blue;">
+</form> &nbsp&nbsp | &nbsp&nbsp
+<form th:action="@{/clearCart}" method="get" style="display:inline;">
+<input type="hidden" name="contractor" th:value="${contractor}">
+<input type="hidden" name="contractnumber" th:value="${contractnumber}">
+<input type="hidden" name="contractdate" th:value="${contractdate}">
+<input type="hidden" name="contractname" th:value="${contractname}">
+<input type="submit" name="submit" value="Очистить корзину" style="border-color:red;"> &nbsp&nbsp | &nbsp&nbsp
+</form>
+<form id="orderPage" th:action="@{/orders/createOrder}" method="get" style="display:inline;">
+<input type="hidden" name="contractor" th:value="${contractor}">
+<input type="hidden" name="contractnumber" th:value="${contractnumber}">
+<input type="hidden" name="contractdate" th:value="${contractdate}">
+<input type="hidden" name="id" th:value="${id}">
+<input type="submit" name="submit" value="Сохранить заявку в БД" style="border-color:green;">
+</form>
+</div>
+<div id="header2">
+<span th:text="'Пользователь: '+${userLogin} + ' | Роль: ' + ${userRole}" style="color:#800000;"></span>
+</div>
+</div>
+
+<div th:fragment="headerIndex" class="header" id="header"> <!-- Заголовок для главной страницы -->
+<div id="header1">
+<a th:href="@{/logout}">Выйти</a> &nbsp | &nbsp 
+
+      <select id="adminUserPoBS" class="adminUserPoBS" th:onchange="window.location.href=this.value;">
+        <option th:value="0" disabled selected>   --  -- Администрирование --  --   </option>
+        <option th:value="@{/admin/usersShow}">Редактирование пользователей</option>
+        <option th:value="@{/admin/contractorsShow}">Редактирование подрядчиков</option>
+        <option th:value="@{/admin/findBsByBsName}">Редактирование списка БС</option>
+       </select> &nbsp | &nbsp
+
+ <a th:href="@{/allOrdersToCSV}">Скачать все заказы в файл .csv</a>
+ </div>
+ <div id="header2">
+<span th:text="'Пользователь: '+${userLogin} + ' | Роль: ' + ${userRole}" style="color:#800000;"></span>&nbsp
+<a th:href="@{/passwordChange}"><img title="Изменение пароля" src="/images/fit.jpg" width="20" height="20" style="border: none"></a>
+</div>       
+</div>
+
 </body>
 </html>
