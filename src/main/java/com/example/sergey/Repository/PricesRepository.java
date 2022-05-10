@@ -25,4 +25,8 @@ public interface PricesRepository extends JpaRepository<Prices,Long> {
 	
 	//удалить Все пункты тцп данного подрядчика
 	public void deleteAllByContractor(String contractor);
+	
+	//поиск пунктов тцп по фильтрам в названии (по всем подрядчикам)
+	@Query(value="select * from prices where lower(workname) like concat('%',:filter,'%') or lower(workname) like concat('%',:filter1,'%',:filter2,'%') or lower(workname) like concat('%',:filter2,'%',:filter1,'%') order by workname",nativeQuery=true)
+	public List<Prices> findPriceItemsByFilterThroughAllContractors(@Param("filter") String filter,@Param("filter1") String filter1,@Param("filter2") String filter2);
 }

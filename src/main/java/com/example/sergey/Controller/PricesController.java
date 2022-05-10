@@ -123,7 +123,7 @@ public class PricesController {
 			@RequestParam("unitmeasure") String unitmeasure,@RequestParam("price") double price,@RequestParam("comment") String comment,
 			@RequestParam("contractor") String contractor,@RequestParam("contractname") String contractname,RedirectAttributes redirectAttr) throws IOException{
 		
-		Prices newPriceItem=new Prices(pp,workname,unitmeasure,price,comment,contractor);
+		Prices newPriceItem=new Prices(pp,workname,unitmeasure,price,comment,contractor,contractname);
 		try {
 			pricesService.savePriceItem(newPriceItem);
 		}catch (Exception e) {}
@@ -284,6 +284,7 @@ public class PricesController {
 		
 		return"dispOrder";
 	}
+	
 	@GetMapping ("/clearCart") //очистка корзины (страницы корзины) с возвратом на страницу корзины
 	public String clearCart(@RequestParam(name="contractor") String contractor,@RequestParam(name="contractnumber") String contractnumber,
 			@RequestParam(name="contractdate") String contractdate, 
@@ -301,6 +302,7 @@ public class PricesController {
 				
 		return "redirect:/dispOrder";
 	}
+	
 	@GetMapping ("/clearCart2") //очистка корзины (страницы корзины) с возвратом на страницу тцп данного подрядчика
 	public String clearCart2(@RequestParam(name="contractor") String contractor,@RequestParam(name="contractnumber") String contractnumber,
 			@RequestParam(name="contractdate") String contractdate, @RequestParam(name="contractname") String contractname,RedirectAttributes redirectAttr) {
@@ -339,11 +341,13 @@ public class PricesController {
 				
 		return "redirect:/dispOrder";
 	}
+	
 	@GetMapping("/403") //переход на страницу ошибки при отказе в доступе к запрошенной странице
     public String error403() {
         
 		return "403";
     }
+	
 	@GetMapping ("/savePriceItemQuantityChanges") //сохранение изменения кол-ва по данному пункту в корзине
 	public String saveQuantityChanges(@RequestParam("ppnumber")String ppnumber,@RequestParam("quantity")double quantity,
 			@RequestParam("newQuantity")double newQuantity,
@@ -358,5 +362,15 @@ public class PricesController {
 		redirectAttr.addAttribute("contractname", contractname);
 				
 		return "redirect:/dispOrder";
+	}
+	
+	@GetMapping ("/searchPriceItemsThroughAllContractors") //поиск пунктов тцп по фильтрам в названии (по всем подрядчикам)
+	public String searchPriceItemsPage(@RequestParam(name="workname",defaultValue="xyzXYZ",required=false) String workname,Model model) {
+		
+		List<Prices> listitems=pricesService.findPriceItemsByWorkNameThroughAllContractors(workname);
+		
+		model.addAttribute("listitems", listitems);
+		
+		return "searchPriceItems";
 	}
 }

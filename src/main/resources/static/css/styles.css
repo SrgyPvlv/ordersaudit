@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-.listItems,.listItemsPrice{
+.listItems,.listItemsPrice,.listItemsPrice_searchPriceItems{
 	width:100%;
 	border:2px solid;
 	border-collapse: collapse;
@@ -375,6 +375,12 @@ a.ref:hover,a.remedyhref:hover {
   padding: 10px;
 }
 
+.items_searchPriceItems{
+  margin: 80px auto 0 auto;
+  width: 100%;
+  padding: 10px;	
+}
+
 .progress-container {
   width: 100%;
   height: 10px;
@@ -390,6 +396,13 @@ a.ref:hover,a.remedyhref:hover {
   position: -webkit-sticky;
   position: sticky;
   top:300px;
+  z-index: 1;
+}
+
+.listItemsPrice_searchPriceItems th{
+  position: -webkit-sticky;
+  position: sticky;
+  top:120px;
   z-index: 1;
 }
 
@@ -421,13 +434,13 @@ input#end:valid+i:after,input#remedy:valid+i:after,input#author:valid+i:after,in
 .i_reqinputs{
 	color:red;
 }
-a.up:link,a.down:link{
+a.up:link,a.down:link,a.searchPricesItems_index:link{
 	color:#8B0000; text-decoration:none;
 }
-a.up:visited,a.down:visited {
+a.up:visited,a.down:visited,a.searchPricesItems_index:visited {
 	color:#8B0000; text-decoration:none;
 }
-a.up:hover,a.down:hover {
+a.up:hover,a.down:hover,a.searchPricesItems_index:hover {
 	color:blue; text-decoration:underline;
 }
 input[type="submit"],input[type="button"]{
@@ -483,4 +496,9 @@ input[type="submit"]:hover,input[type="button"]:hover{
 }
 .remark{
 	color:red;
+}
+
+.searchPricesItems_index{
+	font-size: 22px;
+	font-style:italic;
 } 

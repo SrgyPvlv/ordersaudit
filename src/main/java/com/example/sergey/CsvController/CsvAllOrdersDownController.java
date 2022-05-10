@@ -22,7 +22,7 @@ import com.example.sergey.MyDbConnection;
 @Controller
 public class CsvAllOrdersDownController { //скачивает из БД все заказы в файл .csv
 
-	@GetMapping("/allOrdersToCSV")
+	@GetMapping("/admin/allOrdersToCSV")
 	ResponseEntity<Resource> getFileCsv() throws SQLException, IOException{
 		String filename="allorders.csv";
 		InputStreamResource file=copyToFile();

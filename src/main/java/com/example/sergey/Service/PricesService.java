@@ -54,4 +54,20 @@ public class PricesService {
 	public void deleteAllPricesByContractor(String contractor) { //удаление всех пунктов тцп данного подрядчика
 		pricesRepository.deleteAllByContractor(contractor);
 	}
+	
+	public List<Prices> findPriceItemsByWorkNameThroughAllContractors(String workname) { //поиск пунктов тцп по фильтрам в названии (по всем подрядчикам)
+		
+		String workname1;
+		String workname2;
+		String[] words=workname.split("\\s");
+		if (words.length==1) {
+		workname1=words[0];
+		workname2="";}
+		else {
+			workname1=words[0];
+			workname2=words[1];
+		}
+		
+		return pricesRepository.findPriceItemsByFilterThroughAllContractors(workname, workname1, workname2);
+	}
 }

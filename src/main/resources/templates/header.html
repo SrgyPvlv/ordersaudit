@@ -55,16 +55,15 @@
 
 <div th:fragment="headerIndex" class="header" id="header"> <!-- Заголовок для главной страницы -->
 <div id="header1">
-<a th:href="@{/logout}">Выйти</a> &nbsp | &nbsp 
+<a th:href="@{/logout}">Выйти</a> &nbsp | &nbsp
 
       <select id="adminUserPoBS" class="adminUserPoBS" th:onchange="window.location.href=this.value;">
         <option th:value="0" disabled selected>   --  -- Администрирование --  --   </option>
         <option th:value="@{/admin/usersShow}">Редактирование пользователей</option>
         <option th:value="@{/admin/contractorsShow}">Редактирование подрядчиков</option>
         <option th:value="@{/admin/findBsByBsName}">Редактирование списка БС</option>
-       </select> &nbsp | &nbsp
-
- <a th:href="@{/allOrdersToCSV}">Скачать все заказы в файл .csv</a>
+        <option th:value="@{/admin/allOrdersToCSV}">Скачать все заказы в файл .csv</option>
+       </select> 
  </div>
  <div id="header2">
 <span th:text="'Пользователь: '+${userLogin} + ' | Роль: ' + ${userRole}" style="color:#800000;"></span>&nbsp

@@ -28,15 +28,19 @@ public class Prices {
 	@Column
 	private String contractor; //логин подрядчика
 	
+	@Column
+	private String contractname; //логин подрядчика
+	
 	public Prices() {}
 	
-	public Prices(String ppnumber,String workname,String unitmeasure,double price, String comment, String contractor) {
+	public Prices(String ppnumber,String workname,String unitmeasure,double price, String comment,String contractor,String contractname) {
 		this.ppnumber=ppnumber;
 		this.workname=workname;
 		this.unitmeasure=unitmeasure;
 		this.price=price;
 		this.comment=comment;
 		this.contractor=contractor;
+		this.contractname=contractname;
 	}
 	
 	public long getId() {
@@ -77,5 +81,11 @@ public class Prices {
 	}
 	public String getContractor() {
 		return contractor;
+	}
+	public void setContractName(String contractname) {
+		this.contractname=contractname;
+	}
+	public String getContractName() {
+		return contractname;
 	}
 }

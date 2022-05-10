@@ -19,7 +19,6 @@
        <label>Поиск по № Заказа  </label> &nbsp&nbsp
        <input type="number" name="ordernumber" min="0" required>
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
-       <!-- <input type="hidden" name="contractname" th:value="${contractname}"> -->
        <input type="submit" value="Найти" >
      </form> &nbsp&nbsp | &nbsp&nbsp
      <form th:action="@{/orders/showAllOrders}" method="get" style="display:inline;">
@@ -38,7 +37,6 @@
        <label>Поиск по № БС</label> &nbsp&nbsp
        <input type="text" name="bsNumberSearch" placeholder="Код '78-' указывать необязательно" style="width:220px" required>
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
-       <!-- <input type="hidden" name="contractname" th:value="${contractname}"> -->
        <input type="submit" value="Найти" >  
      </form> &nbsp&nbsp | &nbsp&nbsp
      <form th:action="@{/superadmin/deleteAllByContractor}" method="get" style="display:inline;">

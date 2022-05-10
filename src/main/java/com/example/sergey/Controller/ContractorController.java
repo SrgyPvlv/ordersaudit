@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.sergey.Model.Contractor;
 import com.example.sergey.Service.ContractorService;
+import com.example.sergey.Service.PricesService;
 
 //создание, редактирование, удаление, скачивание/загрузка подрядчиков, а также их ТЦП и договоров 
 @Controller
@@ -29,6 +30,9 @@ public class ContractorController {
 
 	@Autowired
 	private ContractorService contractorService;
+	@Autowired
+	private PricesService pricesService;
+	
 	
 	@PostMapping("/admin/loadContractText") // загрузка файла Договора в БД
 	public String loadContractText(@RequestParam("file") MultipartFile file,
@@ -36,9 +40,9 @@ public class ContractorController {
 		byte[] text=file.getBytes();
 						
 		try {
-			Contractor contractText=contractorService.getContractTextByContractor(contractor);
+			Contractor contractText=contractorService.getContractorByContractor(contractor);
 			contractText.setText(text);
-			contractorService.saveContractText(contractText);
+			contractorService.saveContractor(contractText);
 			String note="Файл Договора сохранен в базе данных!";
 		    model.addAttribute("note", note);
 			return"noLoad";}
@@ -53,8 +57,8 @@ public class ContractorController {
 			HttpServletResponse response,HttpServletRequest request) throws IOException{
 		
 		try {
-			Contractor contractText=contractorService.getContractTextByContractor(contractor);
-		    String filename=contractText.getContractor()+".doc";
+			Contractor contractText=contractorService.getContractorByContractor(contractor);
+		    String filename="contracttext_"+contractor+".doc";
 		    byte[] text=contractText.getText();
 		    InputStreamResource file=new InputStreamResource(new ByteArrayInputStream(text));
 			
@@ -95,7 +99,7 @@ public class ContractorController {
 				@RequestParam(name="email13",required=false) String email13) {	   
 			Contractor newContractor=new Contractor(contractor,number,date,name,email1,email2,email3,work,contractend,
 					email11,email12,email13);
-			contractorService.saveContractText(newContractor);
+			contractorService.saveContractor(newContractor);
 			return "redirect:/admin/contractorsShow";
 		}
 		
@@ -139,7 +143,7 @@ public class ContractorController {
 				@RequestParam("work") String work,@RequestParam("contractend") String contractend,
 				@RequestParam("email11") String email11,@RequestParam(name="email12",required=false) String email12,
 				@RequestParam(name="email13",required=false) String email13) {	   
-			Contractor contractorOld=contractorService.getContractText(id);
+			Contractor contractorOld=contractorService.getContractor(id);
 			contractorOld.setContractor(contractor);
 			contractorOld.setNumber(number);
 			contractorOld.setDate(date);
@@ -152,14 +156,16 @@ public class ContractorController {
 			contractorOld.setEmail11(email11);
 			contractorOld.setEmail12(email12);
 			contractorOld.setEmail13(email13);
-			contractorService.saveContractText(contractorOld);
+			contractorService.saveContractor(contractorOld);
 			
 			return "redirect:/admin/contractorsShow";
 		}
 		
 		@GetMapping("/superadmin/contractorDelete") // удаление подрядчика
-		public String deleteContractor(@RequestParam("id") Long id) {
-			contractorService.deleteContractTextById(id);
+		public String deleteContractor(@RequestParam("id") Long id,@RequestParam("contractor") String contractor) {
+			
+			pricesService.deleteAllPricesByContractor(contractor);
+			contractorService.deleteContractorById(id);
 			
 			return "redirect:/admin/contractorsShow";
 		}

@@ -14,28 +14,28 @@ public class ContractorService {
 
 	@Autowired ContractorRepository contractorRepository;
 	
-	public void saveContractText(Contractor text) { //сохранение подрядчика в БД (аргумент-объект подрядчика)
+	public void saveContractor(Contractor text) { //сохранение подрядчика в БД (аргумент-объект подрядчика)
 		contractorRepository.saveAndFlush(text);
     }
-	public void deleteContractText(Contractor text) { //удаление подрядчика в БД (аргумент-объект подрядчика)
+	public void deleteContractor(Contractor text) { //удаление подрядчика в БД (аргумент-объект подрядчика)
 		contractorRepository.delete(text);
 	}
-	public void deleteContractTextById(Long id) { //удаление подрядчика в БД по id
+	public void deleteContractorById(Long id) { //удаление подрядчика в БД по id
 		contractorRepository.deleteById(id);
 	}
-	public Contractor getContractText(Long id) { //извлечение подрядчика из БД по id
+	public Contractor getContractor(Long id) { //извлечение подрядчика из БД по id
 		return contractorRepository.getById(id);
 	}
-	public Contractor getContractTextByContractor(String contractor) { //извлечение подрядчика из БД по логину подрядчика
+	public Contractor getContractorByContractor(String contractor) { //извлечение подрядчика из БД по логину подрядчика
 		return contractorRepository.findByContractor(contractor);
 	}
-	public String getContractTextName(String contractnumber) { //получение названия подрядчика по номеру договора
+	public String getContractorName(String contractnumber) { //получение названия подрядчика по номеру договора
 		return contractorRepository.getNameByContractNumber(contractnumber);
 	}
-	public List<Contractor> getAllContractText() { //извлечение списком всех подрядчиков из БД
+	public List<Contractor> getAllContractors() { //извлечение списком всех подрядчиков из БД
 		return contractorRepository.findAll();
 	}
-	public List<Contractor> getAllContractTextSortedById() { //извлечение списком всех подрядчиков из БД по увеличению id
+	public List<Contractor> getAllContractorsSortedById() { //извлечение списком всех подрядчиков из БД по увеличению id
 		return contractorRepository.findAll(Sort.by("id").ascending());
 	}
 	public List<Contractor> getAllContractorsWithOutText() { //извлечение всех подрядчиков из БД без поля "текст договора" по увеличению id
