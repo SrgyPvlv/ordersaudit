@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
 <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
-<title>Поиск работ по ТЦП</title>
+<title>Поиск работ по всем ТЦП</title>
 </head>
 <body>
 
@@ -42,5 +42,14 @@
 <br><br>
 <div th:replace="footer :: footer"></div>
 
+<script type="text/javascript">
+window.onscroll = function() {myFunction()};
+function myFunction() {
+  var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  sessionStorage.setItem("nowscroll",winScroll);
+  var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var scrolled = (winScroll / height) * 100;
+  document.getElementById("myBar").style.width = scrolled + "%";}
+</script>
 </body>
 </html>
