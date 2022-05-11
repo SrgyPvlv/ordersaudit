@@ -16,8 +16,7 @@ import com.example.sergey.Service.ContractorService;
 @Controller
 public class GeneralController {
 
-	@Autowired
-	private ContractorService contractorService;
+	@Autowired private ContractorService contractorService;
 	
 	@GetMapping("/login")
 	public String login() {

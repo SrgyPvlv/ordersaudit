@@ -22,16 +22,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.sergey.Model.Contractor;
 import com.example.sergey.Service.ContractorService;
+import com.example.sergey.Service.OrderService;
 import com.example.sergey.Service.PricesService;
 
 //создание, редактирование, удаление, скачивание/загрузка подрядчиков, а также их ТЦП и договоров 
 @Controller
 public class ContractorController {
 
-	@Autowired
-	private ContractorService contractorService;
-	@Autowired
-	private PricesService pricesService;
+	@Autowired private ContractorService contractorService;
+	@Autowired private PricesService pricesService;
+	@Autowired private OrderService orderService;
 	
 	
 	@PostMapping("/admin/loadContractText") // загрузка файла Договора в БД
@@ -162,9 +162,11 @@ public class ContractorController {
 		}
 		
 		@GetMapping("/superadmin/contractorDelete") // удаление подрядчика
-		public String deleteContractor(@RequestParam("id") Long id,@RequestParam("contractor") String contractor) {
+		public String deleteContractor(@RequestParam("id") Long id,@RequestParam("contractor") String contractor,
+				@RequestParam("contractnumber") String contractnumber) {
 			
 			pricesService.deleteAllPricesByContractor(contractor);
+			orderService.deleteAllByContractnumber(contractnumber);
 			contractorService.deleteContractorById(id);
 			
 			return "redirect:/admin/contractorsShow";

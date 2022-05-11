@@ -43,13 +43,12 @@ public class OrderController {
 	double sumWithOutNds;
 	double Nds;
 	double sumWithNds;
-	@Autowired OrderCart orderCart;
-	@Autowired UsersService userService;
-	@Autowired BsListService bsListService;
-	@Autowired ContractorService contractorService;
-	@Autowired
-	private OrderService orderService;
-	@Autowired PricesController pricesController;
+	@Autowired private OrderCart orderCart;
+	@Autowired private UsersService userService;
+	@Autowired private BsListService bsListService;
+	@Autowired private ContractorService contractorService;
+	@Autowired private OrderService orderService;
+	@Autowired private PricesController pricesController;
 		
 	private static final Logger logger=LoggerFactory.getLogger(OrderController.class);
 	

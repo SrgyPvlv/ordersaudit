@@ -22,7 +22,6 @@ import com.example.sergey.Model.OrderCart;
 import com.example.sergey.Model.Users;
 import com.example.sergey.Model.Prices;
 import com.example.sergey.Model.PricesSelect;
-import com.example.sergey.Service.BsListService;
 import com.example.sergey.Service.UsersService;
 import com.example.sergey.Service.PricesService;
 
@@ -43,10 +42,9 @@ public class PricesController {
 	String cedr;String status;String worktype;String orderlistcomment;String contractnumber;String contractdate;String remedy;
 	String arenda;String comment;String author;
 
-	@Autowired PricesService pricesService;
-	@Autowired OrderCart orderCart;
-	@Autowired UsersService userService;
-	@Autowired BsListService bsListService;
+	@Autowired private PricesService pricesService;
+	@Autowired private OrderCart orderCart;
+	@Autowired private UsersService userService;
 	
 	@GetMapping("/priceItems") //показать все пункты тцп по конкретному подрядчику для добавления в заявку, без возможности редактирования (для users)
 	public String getAllPriceItems(@RequestParam(name="contractor") String contractor,

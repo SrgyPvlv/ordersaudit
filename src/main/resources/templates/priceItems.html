@@ -34,7 +34,7 @@
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
        <input type="hidden" name="contractdate" th:value="${contractdate}">
        <input type="hidden" name="contractname" th:value="${contractname}">
-       <input type="submit" name="submit" id="findButton" value="Найти" >
+       <input type="submit" name="submit" id="findButton1" value="Найти" >
        </form>
        <br><br>
        <form th:action="@{/priceItems}" th:method="get" >
@@ -44,7 +44,7 @@
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
        <input type="hidden" name="contractdate" th:value="${contractdate}">
        <input type="hidden" name="contractname" th:value="${contractname}">
-       <input type="submit" name="submit" id="findButton" value="Найти" >
+       <input type="submit" name="submit" id="findButton2" value="Найти" >
        </form>
        </div>
        <div id="search2">
@@ -54,7 +54,7 @@
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
        <input type="hidden" name="contractdate" th:value="${contractdate}">
        <input type="hidden" name="contractname" th:value="${contractname}">
-       <input type="submit" name="submit" id="findButton" value="Показать" >
+       <input type="submit" name="submit" id="findButton3" value="Показать" >
        </form>
        </div>
        <div id="search3">
@@ -118,6 +118,7 @@
 
 <script type="text/javascript">
 window.onscroll = function() {myFunction()};
+
 function myFunction() {
   var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
   sessionStorage.setItem("nowscroll",winScroll);
@@ -126,12 +127,16 @@ function myFunction() {
   document.getElementById("myBar").style.width = scrolled + "%";}
   
 document.addEventListener("DOMContentLoaded", readyLoadPage);
+
 function readyLoadPage(){
 	var rlp=sessionStorage.getItem("nowscroll");
 	document.documentElement.scrollTop=rlp;};
 
 document.getElementById("clearCart").addEventListener("click", scrollToNull);
-document.getElementById("findButton").addEventListener("click", scrollToNull);
+document.getElementById("findButton1").addEventListener("click", scrollToNull);
+document.getElementById("findButton2").addEventListener("click", scrollToNull);
+document.getElementById("findButton3").addEventListener("click", scrollToNull);
+
 function scrollToNull(){
 	sessionStorage.setItem("nowscroll",0);}
 </script>
