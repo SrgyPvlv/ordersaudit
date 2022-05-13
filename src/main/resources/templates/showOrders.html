@@ -38,15 +38,23 @@
        <input type="text" name="bsNumberSearch" placeholder="Код '78-' указывать необязательно" style="width:220px" required>
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
        <input type="submit" value="Найти" >  
-     </form> &nbsp&nbsp | &nbsp&nbsp
-     <form th:action="@{/superadmin/deleteAllByContractor}" method="get" style="display:inline;">
-       <label style="color:red">Удалить все Заявки</label> &nbsp&nbsp
-       <input type="hidden" name="contractnumber" th:value="${contractnumber}">
-       <input type="submit" name="submit" value="Удалить" style="background:#FF0000; color:white;">
      </form>  
   </div>
   <div id="ordersshow2">
-  <h3 th:text="${contractname}" style="color:#8B4513;"></h3>
+     <form th:action="@{/csvAllOrdersByContractNumber}" method="get">
+       <label>Скачать все Заявки в файл .csv</label> &nbsp&nbsp
+       <input type="hidden" name="contractnumber" th:value="${contractnumber}">
+       <input type="submit" name="submit" value="Скачать">
+     </form>
+     <br>
+     <form th:action="@{/superadmin/deleteAllOrdersByContractNumber}" method="get">
+       <label style="color:red">Удалить все Заявки</label> &nbsp&nbsp
+       <input type="hidden" name="contractnumber" th:value="${contractnumber}">
+       <input type="submit" name="submit" value="Удалить" style="background:#FF0000; color:white;">
+     </form>
+  </div>
+  <div id="ordersshow3">
+  <h3 th:text="${contractname}" style="color:#8B4513"></h3>
   </div>            
 </div>
 </div>

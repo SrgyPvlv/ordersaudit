@@ -332,10 +332,10 @@ public class OrderController {
 		return "redirect:/dispOrder";
 	}
 	
-	@GetMapping("/superadmin/deleteAllByContractor") //удалить Все заказы данного подрядчика
-	public String deleteAllByContractor(@RequestParam(name="contractnumber") String contractnumber,RedirectAttributes redirectAttr) {
+	@GetMapping("/superadmin/deleteAllOrdersByContractNumber") //удалить Все заказы данного подрядчика
+	public String deleteAllOrdersByContractNumber(@RequestParam(name="contractnumber") String contractnumber,RedirectAttributes redirectAttr) {
 		
-		orderService.deleteAllByContractnumber(contractnumber);
+		orderService.deleteAllOrdersByContractNumber(contractnumber);
 		
 		redirectAttr.addAttribute("contractnumber", contractnumber);
 		

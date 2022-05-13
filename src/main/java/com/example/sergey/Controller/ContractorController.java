@@ -166,11 +166,10 @@ public class ContractorController {
 				@RequestParam("contractnumber") String contractnumber) {
 			
 			pricesService.deleteAllPricesByContractor(contractor);
-			orderService.deleteAllByContractnumber(contractnumber);
+			orderService.deleteAllOrdersByContractNumber(contractnumber);
 			contractorService.deleteContractorById(id);
 			
 			return "redirect:/admin/contractorsShow";
 		}
 	}
 	
-

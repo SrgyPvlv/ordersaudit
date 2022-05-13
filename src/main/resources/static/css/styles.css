@@ -214,8 +214,16 @@ position: fixed; /* Фиксированное положение */
 	float: left;
 	width: 880px;
 }
-#ordersshow2,#header2 {
+#header2 {
 	margin-left: 900px;
+	margin-right:15px;
+	text-align:right;
+}
+#ordersshow2 {
+	margin-left: 900px;
+}
+#ordersshow3 {
+	float:right;
 	margin-right:15px;
 	text-align:right;
 }
@@ -501,4 +509,10 @@ input[type="submit"]:hover,input[type="button"]:hover{
 .searchPricesItems_index{
 	font-size: 22px;
 	font-style:italic;
+}
+.load_allOrdersAdmin{
+	margin-top: 40px;
+}
+.load2_allOrdersAdmin{
+	margin-top: 30px;
 } 

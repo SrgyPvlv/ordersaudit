@@ -22,7 +22,7 @@
       </form>
       <br><br>
       <form  th:action="@{/superadmin/deleteAllPrices}" th:method="get" >
-      <label style="color:red;">Осторожно! Удалить ТЦП из БД (superAdmin)</label> &nbsp&nbsp
+      <label style="color:red;">Осторожно! Удалить все ТЦП из БД (superAdmin)</label> &nbsp&nbsp
       <input type="hidden" name="contractor" th:value="${contractor}">
       <input type="hidden" name="contractname" th:value="${contractname}">
       <input type="submit" value="Удалить!" style="background:#FF0000; color:white;" >
