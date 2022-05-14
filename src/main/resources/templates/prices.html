@@ -133,7 +133,7 @@ window.onscroll = function() {myFunction()};
 
 function myFunction() {
   var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-  sessionStorage.setItem("nowscroll",winScroll);
+  sessionStorage.setItem("nowscroll_prices",winScroll);
   var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
   var scrolled = (winScroll / height) * 100;
   document.getElementById("myBar").style.width = scrolled + "%";}
@@ -141,15 +141,16 @@ function myFunction() {
 document.addEventListener("DOMContentLoaded", readyLoadPage);
 
 function readyLoadPage(){
-	var rlp=sessionStorage.getItem("nowscroll");
+	var rlp=sessionStorage.getItem("nowscroll_prices");
 	document.documentElement.scrollTop=rlp;};
 	
 document.getElementById("findButton1").addEventListener("click", scrollToNull);
 document.getElementById("findButton2").addEventListener("click", scrollToNull);
 document.getElementById("findButton3").addEventListener("click", scrollToNull);
+document.getElementById("main").addEventListener("click", scrollToNull);
 
 function scrollToNull(){
-	sessionStorage.setItem("nowscroll",0);}
+	sessionStorage.setItem("nowscroll_prices",0);}
 </script>
 
 </body>

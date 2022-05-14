@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-.listItems,.listItemsPrice,.listItemsPrice_searchPriceItems{
+.listItems,.listItemsPrice,.listItemsPrice_searchPriceItems,.listItems_showOrders{
 	width:100%;
 	border:2px solid;
 	border-collapse: collapse;
@@ -128,7 +128,7 @@ position: fixed; /* Фиксированное положение */
 	padding:10px;
 	background:white;
 	border-bottom: 1px solid #000000;
-	z-index: 1;
+	z-index: 2;
 }
 .pricesControl_priceItems {
 	background:#FFFACD;
@@ -191,7 +191,7 @@ position: fixed; /* Фиксированное положение */
 	width: 14%;
 }
 .col21 {
-	width: 18%;
+	width: 280px;
 }
 .col211 {
 	width: 10%;
@@ -210,7 +210,7 @@ position: fixed; /* Фиксированное положение */
 	float:right;
 	margin-right:15px;
 }
-#ordersshow1,#header1 {
+#ordersshowLeft,#ordersshow1,#header1 {
 	float: left;
 	width: 880px;
 }
@@ -219,10 +219,10 @@ position: fixed; /* Фиксированное положение */
 	margin-right:15px;
 	text-align:right;
 }
-#ordersshow2 {
+#ordersshowCenter {
 	margin-left: 900px;
 }
-#ordersshow3 {
+#ordersshowRight,#ordersshow2 {
 	float:right;
 	margin-right:15px;
 	text-align:right;
@@ -406,6 +406,12 @@ a.ref:hover,a.remedyhref:hover {
   top:300px;
   z-index: 1;
 }
+.listItems_showOrders th{
+  position: -webkit-sticky;
+  position: sticky;
+  top:220px;
+  z-index: 1;
+}
 
 .listItemsPrice_searchPriceItems th{
   position: -webkit-sticky;
@@ -420,9 +426,11 @@ a.ref:hover,a.remedyhref:hover {
   padding: 10px;
 }
 .ordersShowOrders{
-  margin: 230px auto 0 auto;
+  margin: 220px auto 0 auto;
   width: 100%;
   padding: 10px;
+  background:white;
+  z-index: 1;
 }
 input#ordernumber:invalid+i:after,input#bsnumber:invalid+i:after,input#send:invalid+i:after,input#start:invalid+i:after,
 input#end:invalid+i:after,input#remedy:invalid+i:after,input#author:invalid+i:after,input#worktype:invalid+i:after{

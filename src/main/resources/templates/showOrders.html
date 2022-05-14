@@ -14,7 +14,7 @@
 <p id="up"><a href="#down" class="up">В конец страницы ↓</a></p>
 
 <div class="find" id="find">
-  <div id="ordersshow1">         
+  <div id="ordersshowLeft">         
      <form th:action="@{/orders/showAllOrders}" th:method="get" style="display:inline;">
        <label>Поиск по № Заказа  </label> &nbsp&nbsp
        <input type="number" name="ordernumber" min="0" required>
@@ -33,16 +33,20 @@
      ${email13 !=null ? email13 : ''}+';'"><img src="/images/envelope.jpg" alt="mail" title="Отправка Заявки" width="25" height="25" style="border: none"></a>
      </span>
      <br><br>  
-     <form th:action="@{/orders/showAllOrders}" th:method="get" style="display:inline;">
+     <form th:action="@{/orders/showAllOrders}" th:method="get">
        <label>Поиск по № БС</label> &nbsp&nbsp
        <input type="text" name="bsNumberSearch" placeholder="Код '78-' указывать необязательно" style="width:220px" required>
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
        <input type="submit" value="Найти" >  
      </form>  
   </div>
-  <div id="ordersshow2">
+  <div id="ordersshowRight">
+  <h3 th:text="${contractname}" style="color:#8B4513"></h3>
+  </div>
+  <div id="ordersshowCenter">
      <form th:action="@{/csvAllOrdersByContractNumber}" method="get">
-       <label>Скачать все Заявки в файл .csv</label> &nbsp&nbsp
+       <label style="color:#8B4513">Скачать все Заявки в файл .csv</label> &nbsp&nbsp
+       <input type="hidden" name="contractor" th:value="${contractor}">
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
        <input type="submit" name="submit" value="Скачать">
      </form>
@@ -51,15 +55,12 @@
        <label style="color:red">Удалить все Заявки</label> &nbsp&nbsp
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
        <input type="submit" name="submit" value="Удалить" style="background:#FF0000; color:white;">
-     </form>
+     </form>            
   </div>
-  <div id="ordersshow3">
-  <h3 th:text="${contractname}" style="color:#8B4513"></h3>
-  </div>            
 </div>
 </div>
 <div class="ordersShowOrders">
-<table class="listItems">
+<table class="listItems_showOrders">
 <tr>
 <th class="col11">№ Заказа</th><th class="col12">№ БС</th><th class="col13">Дата ТЗ</th><th class="col14">Стоимость без|c НДС</th>
 <th class="15">ИД</th><th class="col16">Внесено в Кедр</th><th class="col17">Статус Заказа</th>

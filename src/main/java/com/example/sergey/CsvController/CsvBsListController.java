@@ -65,7 +65,7 @@ public class CsvBsListController {
 	}
 	}
 	
-	@GetMapping("/bsListToCSV") //сохранение из базы списка БС в файл .csv
+	@GetMapping("/admin/bsListToCSV") //сохранение из базы списка БС в файл .csv
 	ResponseEntity<Resource> getFileCsv() throws SQLException, IOException{
 		String filename="bsList.csv";
 		InputStreamResource file=copyToFile();

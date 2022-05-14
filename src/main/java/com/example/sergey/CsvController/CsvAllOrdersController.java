@@ -108,4 +108,42 @@ public class CsvAllOrdersController { //скачивает из БД все за
 	          }
 	}
 	}
+	
+	@GetMapping("/csvAllOrdersByContractNumber") //скачивание всех заказов данного подрядчика в файл .csv
+	ResponseEntity<Resource> getFileCsvByContractNumber(@RequestParam(name="contractor") String contractor,
+			@RequestParam(name="contractnumber") String contractnumber) throws SQLException, IOException{
+		
+		String filename="orders_"+contractor+".csv";
+		InputStreamResource file=copyToFileByContractNumber(contractnumber);
+		
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+		        .contentType(MediaType.parseMediaType("text/csv"))
+		        .body(file);
+	}
+	
+	public static InputStreamResource copyToFileByContractNumber(String contractnumber) throws SQLException, IOException {  
+	      
+		  String urls = MyDbConnection.urls;
+	      String username = MyDbConnection.username;
+	      String password = MyDbConnection.password;
+	      Connection conn = null;
+	      String myQuery="COPY (select * from orderlist where contractnumber like '"+contractnumber+"' order by ordernumber) TO STDOUT WITH (FORMAT CSV, HEADER)";
+	      InputStreamResource file;
+	      
+	      try {  
+	    	  conn = DriverManager.getConnection(urls, username, password);
+	          CopyManager copyManager = new CopyManager((BaseConnection) conn);
+	          ByteArrayOutputStream out = new ByteArrayOutputStream();
+	          copyManager.copyOut(myQuery, out);
+	          ByteArrayInputStream in=new ByteArrayInputStream(out.toByteArray());
+	          file=new InputStreamResource(in);
+	      } finally {      
+	          if (conn != null) {
+	              try {
+	                  conn.close();
+	              } catch (SQLException e) { e.printStackTrace();}
+	          }
+	}
+	      return file;}
 }
