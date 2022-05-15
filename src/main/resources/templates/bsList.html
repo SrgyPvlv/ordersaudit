@@ -27,7 +27,7 @@
       <input type="submit" value="Загрузить" >
       </form>
       <br>
-      <form  th:action="@{/bsListToCSV}" th:method="get" >
+      <form  th:action="@{/admin/bsListToCSV}" th:method="get" >
       <label style="color:#800000">Скачать все БС из БД в файл .csv</label> &nbsp&nbsp
       <input type="submit" value="Скачать" >
       </form>
@@ -45,7 +45,7 @@
            <form th:action="@{/admin/bsEdit}" method="get" style="display:inline;">
                  <input type="hidden" name="id" th:value="${bs.getId}">
                  <input type="submit" value="Редактировать" style="background:#98FB98;">
-           </form> | 
+           </form> &nbsp | &nbsp 
            <form th:action="@{/superadmin/bsDelete}" method="get" style="display:inline;">
                  <input type="hidden" name="id" th:value="${bs.getId}">
                  <input type="submit" value="Удалить" style="background:#FF0000; color:white;">

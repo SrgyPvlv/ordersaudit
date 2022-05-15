@@ -15,7 +15,7 @@
  <div>
 <h3>Редактирование пункта ТЦП</h3>
 <fieldset style="border-color:#FFEBCD;text-align: center">
-<form th:action="@{/admin/itemEdite/volot}" th:method="post">
+<form th:action="@{/admin/editPriceItem}" th:method="post">
 <input type="hidden" name="id" th:value="${item.getId}">
 <label>№ пп</label><br>
 <input type="text" name="pp" style="text-align: center" th:value="${item.getPpNumber}" required ><br><br>
@@ -27,6 +27,8 @@
 <input type="number" name="price" style="text-align: center" step="0.01" th:value="${item.getPrice}" required ><br><br>
 <label>Описание позиции</label><br>
 <input type="text" name="comment" style="text-align: center" th:value="${item.getComment}" required ><br><br>
+  <input type="hidden" name="contractor" th:value="${contractor}">
+  <input type="hidden" name="contractname" th:value="${contractname}">
 <input type="submit" value="Сохранить" style="width: 100px; height: 40px; background-color: #98FB98;">
 </form>
 </fieldset>

@@ -16,8 +16,7 @@ import com.example.sergey.Service.BsListService;
 @Controller
 public class BsListController {
 	
-	@Autowired
-	BsListService bsListService;
+	@Autowired private BsListService bsListService;
 	
 	@GetMapping("/admin/bsCreate") //переход на форму создания новой БС в БД
 	public String newBsForm() {

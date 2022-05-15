@@ -15,16 +15,16 @@
  <table class="contractorstable" border="1">
  <caption align="top"><h3>Список Подрядчиков &nbsp&nbsp&nbsp&nbsp
    <form th:action="@{/admin/contractorCreate}" method="get" style="display:inline;">
-   <input type="submit" value="Добавить подрядчика">
+   <input type="submit" value="Добавить подрядчика" style="border-color:blue;">
    </form></h3>
  </caption>
         <tr>
-          <th> id </th> <th>Название</th> <th>Логин</th> <th>Номер договора</th> <th>Дата договора</th>
+          <th>Название</th> <th>Логин</th> <th>Номер договора</th> <th>Дата договора</th>
           <th> Почта Подрядчик</th> <th>Почта МТС</th> <th>Виды работ (объем)</th> <th>Срок действия договора: до</th>
         </tr>
          
         <tr th:each="contractor : ${contractors}">
-           <td th:text="${contractor.getId} ">id</td><td th:text="${contractor.getName} ">Название</td>
+           <td th:text="${contractor.getName} ">Название</td>
            <td th:text="${contractor.getContractor} ">Логин</td><td th:text="${contractor.getNumber} ">Номер договора</td>
            <td th:text="${contractor.getDate} ">Дата договора</td>
            <td> <table class="ct"><tr><td th:text="${contractor.getEmail1}">Почта 1 ПО</td></tr> <tr><td th:text="${contractor.getEmail2}">Почта 2 ПО</td></tr><tr><td th:text="${contractor.getEmail3}">Почта 3 ПО</td></tr></table></td>
@@ -33,14 +33,22 @@
            <td th:text="${contractor.getContractEnd} ">Срок действия договора: до</td>
            
            <td>
-           <form th:action="@{/admin/contractorEdit}" method="get">
+           <form th:action="@{/admin/contractorEdit}" method="get" style="display:inline;">
                  <input type="hidden" name="id" th:value="${contractor.getId}">
-                 <input type="submit" value="Редактировать" style="background:#98FB98;">
+                 <input type="submit" value="Редактировать Профиль" style="background:#98FB98;">
            </form>
-           <br>
-           <form th:action="@{/superadmin/contractorDelete}" method="get">
+           <br><br>
+           <form th:action="@{/admin/priceItems}" method="get" style="display:inline;">
+            <input type="hidden" name="contractor" th:value="${contractor.getContractor}">
+            <input type="hidden" name="contractname" th:value="${contractor.getName}">
+            <input type="submit" name="submit" value="Редактировать ТЦП и Договор" style="background:#808080; color:white;">
+            </form>
+            <br><br>
+            <form th:action="@{/superadmin/contractorDelete}" method="get" style="display:inline;">
                  <input type="hidden" name="id" th:value="${contractor.getId}">
-                 <input type="submit" value="Удалить" style="background:#FF0000; color:white;">
+                 <input type="hidden" name="contractor" th:value="${contractor.getContractor}">
+                 <input type="hidden" name="contractnumber" th:value="${contractor.getNumber}">
+                 <input type="submit" value="Удалить Подрядчика" style="background:#FF0000; color:white;">
             </form>
             </td>        
         </tr>          

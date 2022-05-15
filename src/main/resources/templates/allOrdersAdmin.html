@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+<link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
+<title>Скачивание/Загрузка заказов</title>
+</head>
+<body>
+
+<div th:replace="header :: header"></div>
+
+<div class="load_allOrdersAdmin">
+      
+     <div class="load1_allOrdersAdmin">
+      <form enctype="multipart/form-data" th:action="@{/admin/csvAllOrdersToDateBase}" th:method="post">
+      <label style="color:#800000">Загрузка списка Заказов в БД из файла .csv</label> &nbsp&nbsp
+      <input type="file" name="file" required>
+      <input type="submit" value="Загрузить" >
+      </form>
+      <br><br>
+      <form  th:action="@{/admin/allOrdersToCSV}" th:method="get" >
+      <label style="color:#800000">Скачать все Заказы (всех подрядчиков) из БД в файл .csv</label> &nbsp&nbsp
+      <input type="submit" value="Скачать" >
+      </form>
+     </div>
+     
+     <div class="load2_allOrdersAdmin">
+     <p class="remark">* Загружать в БД из файла .csv можно заказы: -и всех подрядчиков, - и конкретного подрядчика, и группы подрядчиков </p>
+     <p>- В файле не должно быть строки с заголовками полей таблицы. </p>
+     <p>- Даты должны быть в формате yyyy-MM-dd. (При скачивании в .csv даты часто преобразуются Exel-ем в формат dd.MM.yyyy, а нам это не подходит.) </p>
+     <p class="remark">* Из БД в файл .csv скачиваются  все заказы (всех подрядчиков), которые сейчас есть в БД </p>
+     </div>
+</div>      
+
+<br><br>
+    
+<div th:replace="footer :: footer"></div>
+</body>
+</html>

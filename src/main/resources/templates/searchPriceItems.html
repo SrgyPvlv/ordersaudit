@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+<link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
+<title>Поиск работ по всем ТЦП</title>
+</head>
+<body>
+
+<div class="test" id="test">
+
+<div th:replace="header :: header"></div>
+
+<div class="find1">
+       <form th:action="@{/searchPriceItemsThroughAllContractors}" th:method="get" >
+       <label>Поиск по Наименованию работы</label> &nbsp&nbsp
+       <input type="text" name="workname" required>
+       <input type="submit" value="Найти" >
+       </form>
+</div>
+   <div class="progress-container">
+    <div class="progress-bar" id="myBar"></div>
+   </div>   
+</div>
+<br>
+
+<div class="items_searchPriceItems" id="items_searchPriceItems">
+<table class="listItemsPrice_searchPriceItems">
+<tr>
+<th class="col2">№ п/п</th><th class="col3">Наименование работ</th><th class="col4">Ед. изм.</th>
+<th class="col5">Цена за ед., руб. без НДС</th><th class="col6">Описание позиции</th><th class="col7">Подрядчик</th>
+</tr>
+<tr th:each="listitem: ${listitems}">
+<td th:text="${listitem.getPpNumber}" class="col2"></td><td th:text="${listitem.getWorkName}" class="col3"></td><td th:text="${listitem.getUnitMeasure}" class="col4"></td>
+<td th:text="${listitem.getPrice}" class="col5"></td><td th:text="${listitem.getComment}" class="col6"></td>
+<td th:text="${listitem.getContractName}" class="col7"></td>
+</tr>
+</table>
+</div>
+
+<br><br>
+<div th:replace="footer :: footer"></div>
+
+<script type="text/javascript">
+window.onscroll = function() {myFunction()};
+function myFunction() {
+  var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var scrolled = (winScroll / height) * 100;
+  document.getElementById("myBar").style.width = scrolled + "%";}
+</script>
+</body>
+</html>

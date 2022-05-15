@@ -13,8 +13,7 @@ import com.example.sergey.Service.UsersService;
 @ControllerAdvice
 public class GlobalControllerAdvice {
 
-	@Autowired
-	private UsersService userservice;
+	@Autowired private UsersService userservice;
 	
 	@ModelAttribute("userLogin") // делаем видимым login пользователя
 	public String getUserLogin() {

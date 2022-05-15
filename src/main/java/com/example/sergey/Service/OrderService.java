@@ -1,37 +1,39 @@
 package com.example.sergey.Service;
 
 import java.util.List;
+
+import org.springframework.transaction.annotation.Transactional;
+
 import com.example.sergey.Model.Order;
 
 public interface OrderService {
-    
-	//получить все заявки по номеру БС
-	
+    	
 	//получить заявку по номеру id
-	Order getOrderById(Long id);
+	public Order getOrderById(Long id);
 	
 	//получить все заявки по подрядчику(т.е. номеру договора) по возрастанию номера заявки	
-	List<Order> findAllByContractNumberOrderByOrdernumberAsc(String contractnumber);
+	public List<Order> findAllByContractNumberOrderByOrdernumberAsc(String contractnumber);
 	
 	//получить все заявки по номеру БС и подрядчику
-	List<Order> findByBsName(String bsnumber,String contractnumber);
+	public List<Order> findByBsName(String bsnumber,String contractnumber);
 	
 	//получить все заявки по номеру Заявки и подрядчику
-	List<Order> findByOrderNumber(Integer ordernumber,String contractnumber);
+	public List<Order> findByOrderNumber(Integer ordernumber,String contractnumber);
 	
 	//создать номер для следующей заявки
-	int showNextOrderNumber(String contractnumber);
+	public int showNextOrderNumber(String contractnumber);
 	
 	//добавить, сохранить заявку
-	void createOrder(Order order);
+	public void createOrder(Order order);
 	
 	//редактировать заявку
-	void editOrder(Order order);
+	public void editOrder(Order order);
 	
 	//удалить заявку
-	void deleteOrder(Long id);
+	public void deleteOrder(Long id);
 	
-	//удалить все заявки по данному подрядчику
-	
+	//удалить Все заказы данного подрядчика
+	@Transactional
+	public void deleteAllOrdersByContractNumber(String contractnumber);
 	
 }

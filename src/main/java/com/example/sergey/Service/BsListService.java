@@ -15,8 +15,7 @@ public class BsListService {
 	BsListRepository bsListRepository;
 	
 	public String findBsAddress(String bsnumber) { //поиск адреса БС по номеру БС, для вставки в заявку (надо ввести точный номер)
-		String message="БС с данным номером не найдена. Обратитесь к администратору приложения. (Пока-что Вы можете "
-				+ "внести адрес самостоятельно непосредственно в word-файл заявки.)";
+		String message="БС с данным номером не найдена. Обратитесь к администратору приложения.";
 		BsList bs=bsListRepository.findBsByNumber(bsnumber);
 		
 		if (bs!=null) {
@@ -34,12 +33,15 @@ public class BsListService {
 		newBs.setBsAddress(bsaddress);
 		bsListRepository.saveAndFlush(newBs);
 	}
+	
 	public BsList getBsById(Long id) { //получение БС по id
 		return bsListRepository.getById(id);
 	}
+	
 	public void saveBs(BsList bs) { //сохранение БС в БД
 		bsListRepository.saveAndFlush(bs);
 	}
+	
 	public void deleteBsById(long id) { //удаление БС по id
 		bsListRepository.deleteById(id);
 	}

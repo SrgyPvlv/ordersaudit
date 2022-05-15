@@ -21,8 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class UsersController {
 		
-	@Autowired
-	private UsersService usersService;
+	@Autowired private UsersService usersService;
 		
 	@GetMapping("/admin/usersShow") //список всех пользователей
 	public String showUsers(Model model) {
@@ -106,7 +105,7 @@ public class UsersController {
 			
 			return "redirect:/";}else {
 				model.addAttribute("note", "Ошибка ввода данных.Попробуйте еще раз.");
-				return "noUpload";}
+				return "noLoad";}
 		}		
 		
 	}

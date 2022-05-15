@@ -1,15 +1,10 @@
 @charset "UTF-8";
-.listItems{
-	width:100%;
-	border:2px solid;
-	border-collapse: collapse;
-}
-.listItemsPrice{
-	width:100%;
-	border:2px solid;
-	border-collapse: collapse;
-}
 
+.listItems,.listItemsPrice,.listItemsPrice_searchPriceItems,.listItems_showOrders{
+	width:100%;
+	border:2px solid;
+	border-collapse: collapse;
+}
 
 th,td{
 		padding: 6px; 
@@ -133,9 +128,15 @@ position: fixed; /* Фиксированное положение */
 	padding:10px;
 	background:white;
 	border-bottom: 1px solid #000000;
-	z-index: 1;
+	z-index: 2;
 }
-.pricesControl {
+.pricesControl_priceItems {
+	background:#FFFACD;
+	padding:10px;
+	border-bottom: 2px solid #FFFFFF;
+	height:30px;
+}
+.pricesControl_prices {
 	background:#FFFACD;
 	padding:10px;
 	border-bottom: 2px solid #FFFFFF;
@@ -165,6 +166,9 @@ position: fixed; /* Фиксированное положение */
 .col2,.col161 {
 	width: 5%;
 }
+.col3 {
+	width: 30%;
+}
 .col162{
 	width: 5%;
 	color:red;
@@ -187,7 +191,7 @@ position: fixed; /* Фиксированное положение */
 	width: 14%;
 }
 .col21 {
-	width: 18%;
+	width: 280px;
 }
 .col211 {
 	width: 10%;
@@ -206,12 +210,20 @@ position: fixed; /* Фиксированное положение */
 	float:right;
 	margin-right:15px;
 }
-#ordersshow1,#header1 {
+#ordersshowLeft,#ordersshow1,#header1 {
 	float: left;
 	width: 880px;
 }
-#ordersshow2,#header2 {
+#header2 {
 	margin-left: 900px;
+	margin-right:15px;
+	text-align:right;
+}
+#ordersshowCenter {
+	margin-left: 900px;
+}
+#ordersshowRight,#ordersshow2 {
+	float:right;
 	margin-right:15px;
 	text-align:right;
 }
@@ -366,9 +378,15 @@ a.ref:hover,a.remedyhref:hover {
   background:white;
 }
 .test2{
-  margin: 330px auto 0 auto;
+  margin: 270px auto 0 auto;
   width: 100%;
   padding: 10px;
+}
+
+.items_searchPriceItems{
+  margin: 100px auto 0 auto;
+  width: 100%;
+  padding: 10px;	
 }
 
 .progress-container {
@@ -385,18 +403,34 @@ a.ref:hover,a.remedyhref:hover {
 .listItemsPrice th{
   position: -webkit-sticky;
   position: sticky;
-  top:360px;
+  top:300px;
   z-index: 1;
 }
+.listItems_showOrders th{
+  position: -webkit-sticky;
+  position: sticky;
+  top:220px;
+  z-index: 1;
+}
+
+.listItemsPrice_searchPriceItems th{
+  position: -webkit-sticky;
+  position: sticky;
+  top:130px;
+  z-index: 1;
+}
+
 .smetaDispOrder{
   margin: 30px auto 0 auto;
   width: 100%;
   padding: 10px;
 }
 .ordersShowOrders{
-  margin: 230px auto 0 auto;
+  margin: 220px auto 0 auto;
   width: 100%;
   padding: 10px;
+  background:white;
+  z-index: 1;
 }
 input#ordernumber:invalid+i:after,input#bsnumber:invalid+i:after,input#send:invalid+i:after,input#start:invalid+i:after,
 input#end:invalid+i:after,input#remedy:invalid+i:after,input#author:invalid+i:after,input#worktype:invalid+i:after{
@@ -416,13 +450,13 @@ input#end:valid+i:after,input#remedy:valid+i:after,input#author:valid+i:after,in
 .i_reqinputs{
 	color:red;
 }
-a.up:link,a.down:link{
+a.up:link,a.down:link,a.searchPricesItems_index:link{
 	color:#8B0000; text-decoration:none;
 }
-a.up:visited,a.down:visited {
+a.up:visited,a.down:visited,a.searchPricesItems_index:visited {
 	color:#8B0000; text-decoration:none;
 }
-a.up:hover,a.down:hover {
+a.up:hover,a.down:hover,a.searchPricesItems_index:hover {
 	color:blue; text-decoration:underline;
 }
 input[type="submit"],input[type="button"]{
@@ -478,4 +512,15 @@ input[type="submit"]:hover,input[type="button"]:hover{
 }
 .remark{
 	color:red;
+}
+
+.searchPricesItems_index{
+	font-size: 22px;
+	font-style:italic;
+}
+.load_allOrdersAdmin{
+	margin-top: 40px;
+}
+.load2_allOrdersAdmin{
+	margin-top: 30px;
 } 

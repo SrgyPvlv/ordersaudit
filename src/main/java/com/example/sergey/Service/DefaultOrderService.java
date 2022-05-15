@@ -60,5 +60,10 @@ public class DefaultOrderService implements OrderService {
 		int nextNumber=lastNumber+1;
 		return nextNumber;
 	}
+	
+	@Override
+	public void deleteAllOrdersByContractNumber(String contractnumber) {
+		orderRepository.deleteAllByContractnumber(contractnumber);
+	}
 
 }
