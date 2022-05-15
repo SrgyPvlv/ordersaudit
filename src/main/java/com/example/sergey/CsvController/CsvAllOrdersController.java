@@ -51,7 +51,7 @@ public class CsvAllOrdersController { //скачивает из БД все за
 	      String username = MyDbConnection.username;
 	      String password = MyDbConnection.password;
 	      Connection conn = null;
-	      String myQuery="COPY (select * from orderlist order by ordernumber) TO STDOUT WITH (FORMAT CSV, HEADER)";
+	      String myQuery="COPY (select ordernumber,bsnumber,bsaddress,send,start,endtime,sumwithoutnds,nds,sumwithnds,report,cedr,status,worktype,orderlistcomment,contractnumber,contractdate,remedy,arenda,comment,author,cart,contractor,contractname from orderlist order by ordernumber) TO STDOUT WITH (FORMAT CSV, HEADER)";
 	      InputStreamResource file;
 	      
 	      try {  
@@ -90,7 +90,7 @@ public class CsvAllOrdersController { //скачивает из БД все за
 	      String username = MyDbConnection.username;
 	      String password = MyDbConnection.password;
 	      Connection conn = null;
-	      String myQuery="COPY orderlist FROM STDIN WITH CSV";
+	      String myQuery="COPY orderlist(ordernumber,bsnumber,bsaddress,send,start,endtime,sumwithoutnds,nds,sumwithnds,report,cedr,status,worktype,orderlistcomment,contractnumber,contractdate,remedy,arenda,comment,author,cart,contractor,contractname) FROM STDIN WITH CSV";
 	      
 	      try {  
 	    	  conn = DriverManager.getConnection(urls, username, password);
@@ -128,7 +128,7 @@ public class CsvAllOrdersController { //скачивает из БД все за
 	      String username = MyDbConnection.username;
 	      String password = MyDbConnection.password;
 	      Connection conn = null;
-	      String myQuery="COPY (select * from orderlist where contractnumber like '"+contractnumber+"' order by ordernumber) TO STDOUT WITH (FORMAT CSV, HEADER)";
+	      String myQuery="COPY (select ordernumber,bsnumber,bsaddress,send,start,endtime,sumwithoutnds,nds,sumwithnds,report,cedr,status,worktype,orderlistcomment,contractnumber,contractdate,remedy,arenda,comment,author,cart,contractor,contractname from orderlist where contractnumber like '"+contractnumber+"' order by ordernumber) TO STDOUT WITH (FORMAT CSV, HEADER)";
 	      InputStreamResource file;
 	      
 	      try {  

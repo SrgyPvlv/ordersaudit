@@ -86,10 +86,16 @@ public class Order {
 	@Column
 	private String cart; //корзина в формате json
 	
+	@Column
+	private String contractor; //логин подрядчика
+	
+	@Column
+	private String contractname; //название подрядчика
+	
 	public Order(int ordernumber,String bsnumber,String bsaddress,String send,String start,String endtime,
 			double sumwithoutnds,double nds,double sumwithnds,String report,String cedr,String status,
 			String worktype,String orderlistcomment,String contractnumber,String contractdate,String remedy,
-			String arenda,String comment,String author,String cart) {
+			String arenda,String comment,String author,String cart,String contractor,String contractname) {
 		this.ordernumber=ordernumber;
 		this.bsnumber=bsnumber;
 		this.bsaddress=bsaddress;
@@ -111,5 +117,7 @@ public class Order {
 		this.comment=comment;
 		this.author=author;
 		this.cart=cart;
+		this.contractor=contractor;
+		this.contractname=contractname;
 	}
 }

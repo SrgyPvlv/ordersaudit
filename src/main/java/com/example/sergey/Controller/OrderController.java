@@ -62,6 +62,7 @@ public class OrderController {
 			@RequestParam(name="status",defaultValue="",required=false)String status,
 			@RequestParam(name="orderlistcomment",defaultValue="",required=false)String orderlistcomment,
 			@RequestParam(name="report",defaultValue="нет",required=false)String report,@RequestParam(name="cedr",defaultValue="нет",required=false)String cedr,
+			@RequestParam(name="contractor") String contractor,@RequestParam(name="contractname") String contractname,
 			RedirectAttributes redirectAttr,Model model) {
 		sumWithOutNds=0;
 		Nds=0;
@@ -95,11 +96,12 @@ public class OrderController {
 			orderOld.setWorktype(worktype);orderOld.setOrderlistcomment(orderlistcomment);orderOld.setContractnumber(contractnumber);
 			orderOld.setContractdate(contractdate);orderOld.setRemedy(remedy);orderOld.setArenda(arenda);
 			orderOld.setComment(comment);orderOld.setAuthor(author);orderOld.setCart(cartJsonStr);
+			orderOld.setContractor(contractor);orderOld.setContractname(contractname);
 			orderService.editOrder(orderOld);} else {
 				
 				Order order=new Order(ordernumber, bsnumber, bsaddress, send, start, end, 
 						sumWithOutNds, Nds, sumWithNds, report, cedr, status, worktype, orderlistcomment, 
-						contractnumber, contractdate, remedy, arenda, comment, author, cartJsonStr);
+						contractnumber, contractdate, remedy, arenda, comment, author, cartJsonStr, contractor, contractname);
 		orderService.createOrder(order);}
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
