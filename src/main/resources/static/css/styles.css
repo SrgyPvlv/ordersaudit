@@ -242,6 +242,7 @@ position: fixed; /* Фиксированное положение */
 }
 .contractorstable {
 	border-collapse: collapse;
+	margin-top: 30px;
 }
 .bslisttable {
 	border-collapse: collapse;
@@ -522,5 +523,8 @@ input[type="submit"]:hover,input[type="button"]:hover{
 	margin-top: 40px;
 }
 .load2_allOrdersAdmin{
-	margin-top: 30px;
+	margin-top: 50px;
+}
+.remark_contractors{
+	margin-top: 20px;
 } 
