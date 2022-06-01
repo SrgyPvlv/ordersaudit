@@ -88,11 +88,21 @@
 <tr><td>"___"__________________202_ г.</td></tr>
 </table>
 </div>
+<div id="roadMapWrapper">
 <h3 style="text-align:center;margin-top:60px;">Проходка на объект.</h3>
-<div class="roadMap" id="roadMap" name="roadMap" contenteditable="true" placeholder="... Скопируйте в это поле из Silvia текст Проходки на БС ..."></div>
+<div class="roadMap" id="roadMap" contenteditable="true" placeholder="... Скопируйте в это поле из Silvia текст Проходки на БС ..."></div>
+</div>
 </div>
 <script>
-function saving(){window.print();}
+function saving(){
+	var content=document.getElementById("roadMap").innerHTML;
+	var roadDiv=document.getElementById("roadMapWrapper");
+	
+	if (content==""){roadDiv.classList.add("noprint");}
+	else if(roadDiv.classList.contains("noprint")){roadDiv.classList.remove("noprint");};
+	
+	window.print();
+}
 save_pdf.addEventListener("click",saving);
 </script>
 </body>
