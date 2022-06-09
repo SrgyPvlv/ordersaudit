@@ -43,6 +43,14 @@
 </td></tr>
 </table>
 
+<table>
+<tr><th>Организация</th><th>Сумма, руб.</th><th>Процент работ, %</th><th>Фактический Процент работ, %</th></tr>
+<tr th:each="countSumContractorAfu: ${countSumContractorAfu}">
+    <td th:text="${countSumContractorAfu.getContractor}">Организация</td>
+    <td th:text="${countSumContractorAfu.getSumWithOutNds}">Сумма, руб.</td>
+    <td th:text="${countSumContractorAfu.getWork}">Процент работ, %</td>
+    <td th:text="${countSumContractorAfu.getProcent}">Процент работ, %</td>
+</table>
 
 <br><br>
 <div th:replace="footer :: footer"></div>
