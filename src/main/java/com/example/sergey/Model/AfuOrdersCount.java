@@ -6,15 +6,25 @@ public class AfuOrdersCount { //класс для запроса из бд за�
     private String contractor;
     private double sumWithOutNds;
     private String work;
-    private String procent;
+    private String procentAfu;
+    private String name;
+    private String number;
+    private String date;
+    private String contractend;
+    
     
     DecimalFormat dF = new DecimalFormat("##");
     
-    public AfuOrdersCount (String contractor, double sumWithOutNds, String work, double result) {
+    public AfuOrdersCount (String contractor, double sumWithOutNds, String work, double result, String name, String number,
+    		String date, String contractend) {
         this.contractor = contractor; 
         this.sumWithOutNds = sumWithOutNds;
         this.work=work;
-        this.procent=dF.format(Math.round((sumWithOutNds/result)*100))+"%"; 
+        this.procentAfu=dF.format(Math.round((sumWithOutNds/result)*100))+"%";
+        this.name=name;
+        this.number=number;
+        this.date=date;
+        this.contractend=contractend;
     }
     
     public AfuOrdersCount (String contractor, double sumWithOutNds, String work) {
@@ -39,8 +49,8 @@ public class AfuOrdersCount { //класс для запроса из бд за�
         return sumWithOutNds;
     }
         
-    public String getProcent(){
-        return procent; 
+    public String getProcentAfu(){
+        return procentAfu; 
     }
     
     public void setWork(String work){
@@ -50,4 +60,29 @@ public class AfuOrdersCount { //класс для запроса из бд за�
     public String getWork(){
         return work; 
     }
+    
+    public void setNumber(String number) {
+		this.number=number;
+	}
+	public String getNumber() {
+		return number;
+	}
+	public void setDate(String date) {
+		this.date=date;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setName(String name) {
+		this.name=name;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setContractEnd(String contractend) {
+		this.contractend=contractend;
+	}
+	public String getContractEnd() {
+		return contractend;
+	}
 }

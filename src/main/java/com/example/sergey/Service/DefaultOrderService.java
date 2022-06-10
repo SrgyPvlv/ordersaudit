@@ -82,8 +82,12 @@ public class DefaultOrderService implements OrderService {
 			String contractor=count2.getContractor();
 			double sumwithoutnds=count2.getSumWithOutNds();
 			String work=count2.getWork();
+			String name=count2.getName();
+			String number=count2.getNumber();
+			String date=count2.getDate();
+			String contractend=count2.getContractend();
 			
-			countSumContractorAfu.add(new AfuOrdersCount(contractor,sumwithoutnds,work,result));
+			countSumContractorAfu.add(new AfuOrdersCount(contractor,sumwithoutnds,work,result,name,number,date,contractend));
 		}
 		return countSumContractorAfu;
 	}

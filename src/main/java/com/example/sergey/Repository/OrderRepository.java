@@ -38,7 +38,11 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
 	public void deleteAllByContractnumber(String contractnumber);
 	
 	//подсчет расходов каждого подрядчика по заказам АФУ 
-	@Query(value="select o.contractor as contractor,sum(o.sumwithoutnds) as sumWithOutNds,c.work as work from orderlist as o join contractor as c on o.contractor=c.contractor where lower(o.worktype) similar to '%(афу|азим|автовыш|юстиро|ррл|ррс|радио|трубосто|антен|трос|фидер|джамп|опти|пита|кабел|кожух|комбайн|репитер|ксв|телекоммуник|кросс|rru|sfp|ret|odu|idu|gps|utp)%' and lower(c.work) similar to '%(афу)%' group by (o.contractor,c.work)",nativeQuery=true)
+	@Query(value="select o.contractor as contractor,sum(o.sumwithoutnds) as sumWithOutNds,c.work as work,c.name as name,c.number as number,"
+			+ "c.date as date,c.contractend as contractend from orderlist as o join contractor as c on o.contractor=c.contractor "
+			+ "where lower(o.worktype) similar to '%(афу|азим|автовыш|юстиро|ррл|ррс|радио|трубосто|антен|трос|фидер|джамп|опти|пита|"
+			+ "кабел|кожух|комбайн|репитер|ксв|телекоммуник|кросс|rru|sfp|ret|odu|idu|gps|utp)%' and lower(c.work) "
+			+ "similar to '%(афу)%' group by (o.contractor,c.work,c.name,c.number,c.date,c.contractend)",nativeQuery=true)
 	public List<IAfuOrdersCount> countSumContractorAfu();
 	
 }
