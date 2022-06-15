@@ -12,7 +12,7 @@
 
 <br><br>
 <h1 style="color:red;">Проверка / Создание Заказов подрядных организаций</h1>
-
+<!-- 
 <br>
 <table class=listPoTable>
 <tr><th>Организация</th><th></th><th></th><th>Виды работ (объем)</th><th>Срок действия договора: до</th></tr>
@@ -42,7 +42,7 @@
 <a th:href="@{/searchPriceItemsThroughAllContractors}" class="searchPricesItems_index">- Поиск работы по таблицам ТЦП всех подрядных организаций -</a>
 </td></tr>
 </table>
-
+ -->
 <br>
 <table class=listPoTable>
 <tr><th>Организация</th><th></th><th></th><th>Виды работ (объем)</th><th>Срок действия договора: до</th></tr>
@@ -79,7 +79,7 @@
     <td th:text="${countSumContractorAfu.getContractor}">Организация</td>
     <td th:text="${countSumContractorAfu.getSumWithOutNds}">Сумма, руб.</td>
     <td th:text="${countSumContractorAfu.getWork}">Процент работ, %</td>
-    <td th:text="${countSumContractorAfu.getProcent}">Процент работ, %</td>
+    <td th:text="${countSumContractorAfu.getProcentAfu}">Процент работ, %</td>
 </table>
 
 <br><br>

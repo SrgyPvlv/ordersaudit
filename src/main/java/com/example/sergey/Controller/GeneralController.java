@@ -28,12 +28,12 @@ public class GeneralController {
 	@GetMapping("/") //переход на страницу index (главную) с передачей данных о подрядчиках
 	public String index(Model model) {
 				
-		List<Contractor> contractors=contractorService.getAllContractorsWithOutText();
-		List<AfuOrdersCount> countSumContractorAfu=orderService.countSumContractorAfu();
+		//List<Contractor> contractors=contractorService.getAllContractorsWithOutText();
+		List<AfuOrdersCount> countSumContractorAfu=contractorService.countSumContractorAfu();
 		
 	    Date contractEndDate = null;
 		
-		for(Contractor contractor:contractors) {
+		/*for(Contractor contractor:contractors) {
 			SimpleDateFormat formatterStringToDate=new SimpleDateFormat("yyyy-MM-dd");
 			
 			try {contractEndDate=formatterStringToDate.parse(contractor.getContractEnd());} catch (ParseException e) {e.printStackTrace();}
@@ -41,9 +41,19 @@ public class GeneralController {
 			SimpleDateFormat formatterDateToString=new SimpleDateFormat("dd.MM.yyyy");
 			String contractEndString=formatterDateToString.format(contractEndDate);
 			contractor.setContractEnd(contractEndString);
-		}
+		}*/
+	    
+	    for(AfuOrdersCount countSumContractorAfuItem:countSumContractorAfu) {
+		SimpleDateFormat formatterStringToDate=new SimpleDateFormat("yyyy-MM-dd");
 		
-		model.addAttribute("contractors", contractors);
+		try {contractEndDate=formatterStringToDate.parse(countSumContractorAfuItem.getContractEnd());} catch (ParseException e) {e.printStackTrace();}
+		
+		SimpleDateFormat formatterDateToString=new SimpleDateFormat("dd.MM.yyyy");
+		String contractEndString=formatterDateToString.format(contractEndDate);
+		countSumContractorAfuItem.setContractEnd(contractEndString);
+	}
+		
+		//model.addAttribute("contractors", contractors);
 		model.addAttribute("countSumContractorAfu", countSumContractorAfu);
 		return "index";
 	}

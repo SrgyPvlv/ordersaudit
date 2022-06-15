@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.sergey.Model.AfuOrdersCount;
 import com.example.sergey.Model.Order;
 
 public interface OrderService {
@@ -36,8 +35,5 @@ public interface OrderService {
 	//удалить Все заказы данного подрядчика
 	@Transactional
 	public void deleteAllOrdersByContractNumber(String contractnumber);
-	
-	//расчет процентов по работам афу по подрядчикам, у которых договор по таким работам
-	public List<AfuOrdersCount> countSumContractorAfu();
 	
 }

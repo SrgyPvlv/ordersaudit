@@ -1,13 +1,16 @@
 package com.example.sergey.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.example.sergey.Model.AfuOrdersCount;
 import com.example.sergey.Model.Contractor;
 import com.example.sergey.Repository.ContractorRepository;
+import com.example.sergey.Repository.IAfuOrdersCount;
 
 @Service
 public class ContractorService {
@@ -46,5 +49,32 @@ public class ContractorService {
 	}
 	public Contractor getContractorByContractNumberWithOutText(String number) { //извлечение подрядчика по номеру договора из БД без поля "текст договора"
 		return contractorRepository.getContractorByContractNumberWithOutText(number);
+	}
+	
+	public List<AfuOrdersCount> countSumContractorAfu() { //расчет процентов по работам афу по подрядчикам, у которых договор по таким работам
+		List<IAfuOrdersCount> ICountSumContractorAfu=contractorRepository.countSumContractorAfu();
+		List<IAfuOrdersCount> ICountSumContractorAfuInfra=contractorRepository.countSumContractorAfuInfra();
+		List<AfuOrdersCount> countSumContractorAfu=new ArrayList<>();
+		double result = 0;
+		double sumwithoutnds;
+		for (IAfuOrdersCount count: ICountSumContractorAfu){
+			Double getSumWithOutNds=count.getSumWithOutNds();
+			if(getSumWithOutNds==null) result+=0; else result+=count.getSumWithOutNds();
+		}
+		for (IAfuOrdersCount count2: ICountSumContractorAfu){
+			String contractor=count2.getContractor();
+			
+			Double getSumWithOutNds2=count2.getSumWithOutNds();
+			if(getSumWithOutNds2==null) sumwithoutnds=0; else sumwithoutnds=count2.getSumWithOutNds();
+			
+			String work=count2.getWork();
+			String name=count2.getName();
+			String number=count2.getNumber();
+			String date=count2.getDate();
+			String contractend=count2.getContractend();
+			
+			countSumContractorAfu.add(new AfuOrdersCount(contractor,sumwithoutnds,work,result,name,number,date,contractend));
+		}
+		return countSumContractorAfu;
 	}
 }

@@ -1,14 +1,11 @@
 package com.example.sergey.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.sergey.Model.AfuOrdersCount;
 import com.example.sergey.Model.Order;
-import com.example.sergey.Repository.IAfuOrdersCount;
 import com.example.sergey.Repository.OrderRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -69,27 +66,4 @@ public class DefaultOrderService implements OrderService {
 	public void deleteAllOrdersByContractNumber(String contractnumber) {
 		orderRepository.deleteAllByContractnumber(contractnumber);
 	}
-	
-	@Override
-	public List<AfuOrdersCount> countSumContractorAfu() {
-		List<IAfuOrdersCount> ICountSumContractorAfu=orderRepository.countSumContractorAfu();
-		List<AfuOrdersCount> countSumContractorAfu=new ArrayList<>();
-		double result=0;
-		for (IAfuOrdersCount count: ICountSumContractorAfu){
-		result+=count.getSumWithOutNds();
-		}
-		for (IAfuOrdersCount count2: ICountSumContractorAfu){
-			String contractor=count2.getContractor();
-			double sumwithoutnds=count2.getSumWithOutNds();
-			String work=count2.getWork();
-			String name=count2.getName();
-			String number=count2.getNumber();
-			String date=count2.getDate();
-			String contractend=count2.getContractend();
-			
-			countSumContractorAfu.add(new AfuOrdersCount(contractor,sumwithoutnds,work,result,name,number,date,contractend));
-		}
-		return countSumContractorAfu;
-	}
-
 }
