@@ -71,13 +71,17 @@ public class ContractorService {
 			if(getSumWithOutNds2==null) sumwithoutnds=0; else sumwithoutnds=count2.getSumWithOutNds();
 			
 			Double getSumWithOutNdsAll=count2.getSumWithOutNdsAll();
-			if(getSumWithOutNdsAll==null) sumwithoutndsall=0; else sumwithoutndsall=count2.getSumWithOutNds();
+			if(getSumWithOutNdsAll==null) sumwithoutndsall=0; else sumwithoutndsall=count2.getSumWithOutNdsAll();
 			
 			String work=count2.getWork();
 			String name=count2.getName();
 			String number=count2.getNumber();
 			String date=count2.getDate();
 			String contractend=count2.getContractend();
+			
+			System.out.printf("sumwithoutnds = %.2f \n", sumwithoutnds);
+			System.out.printf("sumwithoutndsall = %.2f \n", sumwithoutndsall);
+			System.out.printf("resultAll = %.2f \n", resultAll);
 			
 			countSumContractorAfuInfra.add(new AfuOrdersCount(contractor,sumwithoutnds,sumwithoutndsall,work,result,resultAll,name,number,date,contractend));
 		}

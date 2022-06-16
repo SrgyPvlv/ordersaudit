@@ -24,7 +24,7 @@ public class AfuOrdersCount { //класс для запроса из бд за�
         this.sumWithOutNdsAll = sumWithOutNdsAll;
         this.work=work;
         this.procentAfu=dF.format(Math.round((sumWithOutNdsAfu/result)*100))+"%";
-        this.procentInfra=dF.format(Math.round(((sumWithOutNdsAll-sumWithOutNdsAfu)/resultAll)*100))+"%";
+        if(sumWithOutNdsAll==0) this.procentInfra=dF.format(0); else this.procentInfra=dF.format(Math.round(((sumWithOutNdsAll-sumWithOutNdsAfu)/resultAll)*100))+"%";
         this.name=name;
         this.number=number;
         this.date=date;

@@ -22,7 +22,16 @@ public interface ContractorRepository extends JpaRepository<Contractor,Long> {
 	public List<Contractor> getAllContractorsWithOutText();
 	
 	//подсчет Всех расходов каждого подрядчика и расходов по заказам АФУ,если в его договоре есть работы по АФУ и Инфраструктуре 
-	@Query(value="with mytable1 as (select c.id,c.contractor,c.work,c.name,c.number,c.date,c.contractend,sum(o.sumwithoutnds) as sumWithOutNds from contractor as c left join orderlist as o on c.contractor=o.contractor and lower(o.worktype) similar to '%(афу|азим|автовыш|юстиро|ррл|ррс|радио|трубосто|антен|трос|фидер|джамп|опти|пита|кабел|кожух|комбайн|репитер|ксв|телекоммуник|кросс|rru|sfp|ret|odu|idu|gps|utp)%' and lower(c.work) similar to '%(афу)%' group by (c.id,c.contractor,c.work,c.name,c.number,c.date,c.contractend)),mytable2 as (select c.contractor,c.work,c.name,c.number,c.date,c.contractend,sum(o.sumwithoutnds) as sumWithOutNdsAll from contractor as c left join orderlist as o on c.contractor=o.contractor and lower(c.work) similar to '%(афу)%' and lower(c.work) similar to '%(инфраструктур)%'  group by (c.contractor,c.work,c.name,c.number,c.date,c.contractend)) select mytable1.id,mytable1.contractor,mytable1.work,mytable1.name,mytable1.number,mytable1.date,mytable1.contractend,mytable1.sumWithOutNds,mytable2.sumWithOutNdsAll from mytable1 left join mytable2 on mytable1.contractor=mytable2.contractor order by mytable1.id;",nativeQuery=true)
+	@Query(value="with mytable1 as (select c.id,c.contractor,c.work,c.name,c.number,c.date,c.contractend,sum(o.sumwithoutnds) as sumWithOutNds from contractor as c "
+			+ "left join orderlist as o on c.contractor=o.contractor and lower(o.worktype) similar to '%(афу|азим|автовыш|юстиро|ррл|ррс|радио|трубосто|антен|трос|"
+			+ "фидер|джамп|опти|пита|кабел|кожух|комбайн|репитер|ксв|телекоммуник|кросс|rru|sfp|ret|odu|idu|gps|utp)%' and lower(c.work) similar to '%(афу)%' "
+			+ "group by (c.id,c.contractor,c.work,c.name,c.number,c.date,c.contractend)),mytable2 as (select c.contractor,c.work,c.name,c.number,"
+			+ "c.date,c.contractend,sum(o.sumwithoutnds) as sumWithOutNdsAll from contractor as c left join orderlist as o on "
+			+ "c.contractor=o.contractor and lower(c.work) similar to '%(афу)%' and lower(c.work) similar to '%(инфраструктур)%'  "
+			+ "group by (c.contractor,c.work,c.name,c.number,c.date,c.contractend)) select mytable1.id,mytable1.contractor,"
+			+ "mytable1.work,mytable1.name,mytable1.number,mytable1.date,mytable1.contractend,mytable1.sumWithOutNds,"
+			+ "mytable2.sumWithOutNdsAll from mytable1 left join mytable2 on mytable1.contractor=mytable2.contractor "
+			+ "order by mytable1.id;",nativeQuery=true)
 		public List<IAfuOrdersCount> countSumContractorAfuInfra();
 	
 	//извлечение подрядчика по id из БД без поля "текст договора"
