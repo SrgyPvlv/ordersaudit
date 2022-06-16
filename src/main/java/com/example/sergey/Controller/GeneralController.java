@@ -19,7 +19,6 @@ import com.example.sergey.Service.DefaultOrderService;
 public class GeneralController {
 
 	@Autowired private ContractorService contractorService;
-	@Autowired private DefaultOrderService orderService;
 	
 	@GetMapping("/login")
 	public String login() {
@@ -29,7 +28,7 @@ public class GeneralController {
 	public String index(Model model) {
 				
 		//List<Contractor> contractors=contractorService.getAllContractorsWithOutText();
-		List<AfuOrdersCount> countSumContractorAfu=contractorService.countSumContractorAfu();
+		List<AfuOrdersCount> countSumContractorAfuInfra=contractorService.countSumContractorAfuInfra();
 		
 	    Date contractEndDate = null;
 		
@@ -43,18 +42,18 @@ public class GeneralController {
 			contractor.setContractEnd(contractEndString);
 		}*/
 	    
-	    for(AfuOrdersCount countSumContractorAfuItem:countSumContractorAfu) {
+	    for(AfuOrdersCount countSumContractorAfuInfraItem:countSumContractorAfuInfra) {
 		SimpleDateFormat formatterStringToDate=new SimpleDateFormat("yyyy-MM-dd");
 		
-		try {contractEndDate=formatterStringToDate.parse(countSumContractorAfuItem.getContractEnd());} catch (ParseException e) {e.printStackTrace();}
+		try {contractEndDate=formatterStringToDate.parse(countSumContractorAfuInfraItem.getContractEnd());} catch (ParseException e) {e.printStackTrace();}
 		
 		SimpleDateFormat formatterDateToString=new SimpleDateFormat("dd.MM.yyyy");
 		String contractEndString=formatterDateToString.format(contractEndDate);
-		countSumContractorAfuItem.setContractEnd(contractEndString);
+		countSumContractorAfuInfraItem.setContractEnd(contractEndString);
 	}
 		
 		//model.addAttribute("contractors", contractors);
-		model.addAttribute("countSumContractorAfu", countSumContractorAfu);
+		model.addAttribute("countSumContractorAfuInfra", countSumContractorAfuInfra);
 		return "index";
 	}
 	

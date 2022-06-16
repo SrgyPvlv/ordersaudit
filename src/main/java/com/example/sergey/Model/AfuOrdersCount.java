@@ -2,11 +2,13 @@ package com.example.sergey.Model;
 
 import java.text.DecimalFormat;
 
-public class AfuOrdersCount { //класс для запроса из бд затрат на афу каждым подрядчиком
+public class AfuOrdersCount { //класс для запроса из бд затрат на АФУ и Инфраструктуры каждым подрядчиком
     private String contractor;
-    private double sumWithOutNds;
+    private double sumWithOutNdsAfu;
+    private double sumWithOutNdsAll;
     private String work;
     private String procentAfu;
+    private String procentInfra;
     private String name;
     private String number;
     private String date;
@@ -15,24 +17,20 @@ public class AfuOrdersCount { //класс для запроса из бд за�
     
     DecimalFormat dF = new DecimalFormat("##");
     
-    public AfuOrdersCount (String contractor, double sumWithOutNds, String work, double result, String name, String number,
-    		String date, String contractend) {
+    public AfuOrdersCount (String contractor, double sumWithOutNdsAfu,double sumWithOutNdsAll,String work,double result,double resultAll,String name,String number,
+    		String date,String contractend) {
         this.contractor = contractor; 
-        this.sumWithOutNds = sumWithOutNds;
+        this.sumWithOutNdsAfu = sumWithOutNdsAfu;
+        this.sumWithOutNdsAll = sumWithOutNdsAll;
         this.work=work;
-        this.procentAfu=dF.format(Math.round((sumWithOutNds/result)*100))+"%";
+        this.procentAfu=dF.format(Math.round((sumWithOutNdsAfu/result)*100))+"%";
+        this.procentInfra=dF.format(Math.round(((sumWithOutNdsAll-sumWithOutNdsAfu)/resultAll)*100))+"%";
         this.name=name;
         this.number=number;
         this.date=date;
         this.contractend=contractend;
     }
-    
-    public AfuOrdersCount (String contractor, double sumWithOutNds, String work) {
-        this.contractor = contractor; 
-        this.sumWithOutNds = sumWithOutNds;
-        this.work=work;
-    }
-    
+        
     public void setContractor(String contractor) {
         this.contractor=contractor;
     }
@@ -41,16 +39,28 @@ public class AfuOrdersCount { //класс для запроса из бд за�
         return contractor;
     }
     
-    public void setSumWithOutNds(double sumWithOutNds) {
-        this.sumWithOutNds=sumWithOutNds;
+    public void setSumWithOutNdsAfu(double sumWithOutNdsAfu) {
+        this.sumWithOutNdsAfu=sumWithOutNdsAfu;
     }
 
-    public double getSumWithOutNds() {
-        return sumWithOutNds;
+    public double getSumWithOutNdsAfu() {
+        return sumWithOutNdsAfu;
+    }
+    
+    public void setSumWithOutNdsAll(double sumWithOutNdsAll) {
+        this.sumWithOutNdsAll=sumWithOutNdsAll;
+    }
+
+    public double getSumWithOutNdsAll() {
+        return sumWithOutNdsAll;
     }
         
     public String getProcentAfu(){
         return procentAfu; 
+    }
+    
+    public String getProcentInfra(){
+        return procentInfra; 
     }
     
     public void setWork(String work){
