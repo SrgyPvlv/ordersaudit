@@ -62,7 +62,7 @@ public class ContractorService {
 			Double getSumWithOutNds=count.getSumWithOutNds();
 			Double getSumWithOutNdsAll=count.getSumWithOutNdsAll();
 			if(getSumWithOutNds==null) result+=0; else result+=count.getSumWithOutNds();
-			if(getSumWithOutNdsAll==null) resultAll+=0; else resultAll+=count.getSumWithOutNdsAll();
+			if(getSumWithOutNdsAll==null) resultAll+=0; else resultAll+=count.getSumWithOutNdsAll()-count.getSumWithOutNds();
 		}
 		for (IAfuOrdersCount count2: ICountSumContractorAfuInfra){
 			String contractor=count2.getContractor();
@@ -78,10 +78,6 @@ public class ContractorService {
 			String number=count2.getNumber();
 			String date=count2.getDate();
 			String contractend=count2.getContractend();
-			
-			System.out.printf("sumwithoutnds = %.2f \n", sumwithoutnds);
-			System.out.printf("sumwithoutndsall = %.2f \n", sumwithoutndsall);
-			System.out.printf("resultAll = %.2f \n", resultAll);
 			
 			countSumContractorAfuInfra.add(new AfuOrdersCount(contractor,sumwithoutnds,sumwithoutndsall,work,result,resultAll,name,number,date,contractend));
 		}
