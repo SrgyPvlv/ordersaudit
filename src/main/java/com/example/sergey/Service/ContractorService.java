@@ -1,5 +1,6 @@
 package com.example.sergey.Service;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,20 +59,24 @@ public class ContractorService {
 		double resultAll= 0;
 		double sumwithoutnds;
 		double sumwithoutndsall;
+		DecimalFormat dF = new DecimalFormat("##");
 		for (IAfuOrdersCount count: ICountSumContractorAfuInfra){
-			Double getSumWithOutNds=count.getSumWithOutNds();
+			Double getSumWithOutNds=count.getSumWithOutNdsAfu();
 			Double getSumWithOutNdsAll=count.getSumWithOutNdsAll();
-			if(getSumWithOutNds==null) result+=0; else result+=count.getSumWithOutNds();
-			if(getSumWithOutNdsAll==null) resultAll+=0; else resultAll+=count.getSumWithOutNdsAll()-count.getSumWithOutNds();
+			if(getSumWithOutNds==null) result+=0; else result+=count.getSumWithOutNdsAfu();
+			if(getSumWithOutNdsAll==null) resultAll+=0; else resultAll+=count.getSumWithOutNdsAll()-count.getSumWithOutNdsAfu();
 		}
 		for (IAfuOrdersCount count2: ICountSumContractorAfuInfra){
 			String contractor=count2.getContractor();
 			
-			Double getSumWithOutNds2=count2.getSumWithOutNds();
-			if(getSumWithOutNds2==null) sumwithoutnds=0; else sumwithoutnds=count2.getSumWithOutNds();
+			Double getSumWithOutNds2=count2.getSumWithOutNdsAfu();
+			if(getSumWithOutNds2==null) sumwithoutnds=0; else sumwithoutnds=count2.getSumWithOutNdsAfu();
+			String procentAfu=dF.format(Math.round((sumwithoutnds/result)*100))+"%";
 			
 			Double getSumWithOutNdsAll=count2.getSumWithOutNdsAll();
 			if(getSumWithOutNdsAll==null) sumwithoutndsall=0; else sumwithoutndsall=count2.getSumWithOutNdsAll();
+			String procentInfra;
+			if(sumwithoutndsall==0) procentInfra=dF.format(0); else procentInfra=dF.format(Math.round(((sumwithoutndsall-sumwithoutnds)/resultAll)*100))+"%";
 			
 			String work=count2.getWork();
 			String name=count2.getName();
@@ -79,7 +84,7 @@ public class ContractorService {
 			String date=count2.getDate();
 			String contractend=count2.getContractend();
 			
-			countSumContractorAfuInfra.add(new AfuOrdersCount(contractor,sumwithoutnds,sumwithoutndsall,work,result,resultAll,name,number,date,contractend));
+			countSumContractorAfuInfra.add(new AfuOrdersCount(contractor,procentAfu,procentInfra,work,name,number,date,contractend));
 		}
 		return countSumContractorAfuInfra;
 	}

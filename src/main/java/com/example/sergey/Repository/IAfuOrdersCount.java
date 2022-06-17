@@ -8,7 +8,6 @@ public interface IAfuOrdersCount {
     String getNumber();
     String getDate();
     String getContractend();
-    Double getSumWithOutNds();
-    Double getSumWithOutNdsAll();
-    
+    Double getSumWithOutNdsAfu();
+    Double getSumWithOutNdsAll();   
 }

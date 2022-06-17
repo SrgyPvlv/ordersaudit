@@ -1,11 +1,7 @@
 package com.example.sergey.Model;
 
-import java.text.DecimalFormat;
-
 public class AfuOrdersCount { //класс для запроса из бд затрат на АФУ и Инфраструктуры каждым подрядчиком
     private String contractor;
-    private double sumWithOutNdsAfu;
-    private double sumWithOutNdsAll;
     private String work;
     private String procentAfu;
     private String procentInfra;
@@ -14,17 +10,12 @@ public class AfuOrdersCount { //класс для запроса из бд за�
     private String date;
     private String contractend;
     
-    
-    DecimalFormat dF = new DecimalFormat("##");
-    
-    public AfuOrdersCount (String contractor, double sumWithOutNdsAfu,double sumWithOutNdsAll,String work,double result,double resultAll,String name,String number,
+    public AfuOrdersCount (String contractor, String procentAfu,String procentInfra,String work,String name,String number,
     		String date,String contractend) {
         this.contractor = contractor; 
-        this.sumWithOutNdsAfu = sumWithOutNdsAfu;
-        this.sumWithOutNdsAll = sumWithOutNdsAll;
         this.work=work;
-        this.procentAfu=dF.format(Math.round((sumWithOutNdsAfu/result)*100))+"%";
-        if(sumWithOutNdsAll==0) this.procentInfra=dF.format(0); else this.procentInfra=dF.format(Math.round(((sumWithOutNdsAll-sumWithOutNdsAfu)/resultAll)*100))+"%";
+        this.procentAfu=procentAfu;
+        this.procentInfra=procentInfra;
         this.name=name;
         this.number=number;
         this.date=date;
@@ -34,43 +25,27 @@ public class AfuOrdersCount { //класс для запроса из бд за�
     public void setContractor(String contractor) {
         this.contractor=contractor;
     }
-    
     public String getContractor() {
         return contractor;
     }
-    
-    public void setSumWithOutNdsAfu(double sumWithOutNdsAfu) {
-        this.sumWithOutNdsAfu=sumWithOutNdsAfu;
-    }
-
-    public double getSumWithOutNdsAfu() {
-        return sumWithOutNdsAfu;
-    }
-    
-    public void setSumWithOutNdsAll(double sumWithOutNdsAll) {
-        this.sumWithOutNdsAll=sumWithOutNdsAll;
-    }
-
-    public double getSumWithOutNdsAll() {
-        return sumWithOutNdsAll;
-    }
-        
+    public void setProcentAfu(String procentAfu) {
+        this.procentAfu=procentAfu;
+    }   
     public String getProcentAfu(){
         return procentAfu; 
     }
-    
+    public void setProcentInfra(String procentInfra) {
+        this.procentInfra=procentInfra;
+    }
     public String getProcentInfra(){
         return procentInfra; 
     }
-    
     public void setWork(String work){
         this.work=work; 
     }
-    
     public String getWork(){
         return work; 
     }
-    
     public void setNumber(String number) {
 		this.number=number;
 	}
