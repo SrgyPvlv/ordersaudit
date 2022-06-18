@@ -34,7 +34,19 @@
        <input type="submit" name="submit" class="bd_index" value="БД Заявок">
        </form>
     </td>
-    <td th:text="${countSumContractorAfuInfra.getWork+' (Инфраструктура факт - '+countSumContractorAfuInfra.getProcentInfra+', АФУ факт - '+countSumContractorAfuInfra.getProcentAfu+')'}">Виды работ (объем)</td>
+    
+<td>
+<table>
+<tr><td th:text="${countSumContractorAfuInfra.getWork}">Виды работ (объем)</td></tr>
+<tr>
+<td>
+<span th:text="${countSumContractorAfuInfra.getProcentInfra !='0%'} ? 'Инфраструктура факт-'+${countSumContractorAfuInfra.getProcentInfra} : ''"></span> &nbsp
+<span th:text="${countSumContractorAfuInfra.getProcentAfu !='0%'} ? 'АФУ факт-'+${countSumContractorAfuInfra.getProcentAfu} : ''"></span>
+</td>
+</tr>
+</table>
+</td>
+    
     <td th:text="${countSumContractorAfuInfra.getContractEnd}">Срок действия договора: до</td></tr>
 </table>
 <table class=listPoTable style="margin-top:40px">

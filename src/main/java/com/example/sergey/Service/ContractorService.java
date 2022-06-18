@@ -76,7 +76,7 @@ public class ContractorService {
 			Double getSumWithOutNdsAll=count2.getSumWithOutNdsAll();
 			if(getSumWithOutNdsAll==null) sumwithoutndsall=0; else sumwithoutndsall=count2.getSumWithOutNdsAll();
 			String procentInfra;
-			if(sumwithoutndsall==0) procentInfra=dF.format(0); else procentInfra=dF.format(Math.round(((sumwithoutndsall-sumwithoutnds)/resultAll)*100))+"%";
+			if(sumwithoutndsall==0) procentInfra=dF.format(0)+"%"; else procentInfra=dF.format(Math.round(((sumwithoutndsall-sumwithoutnds)/resultAll)*100))+"%";
 			
 			String work=count2.getWork();
 			String name=count2.getName();
