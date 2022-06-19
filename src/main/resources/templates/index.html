@@ -35,19 +35,13 @@
        </form>
     </td>
     
-<td>
-<table>
-<tr><td th:text="${countSumContractorAfuInfra.getWork}">Виды работ (объем)</td></tr>
-<tr>
-<td>
-<span th:text="${countSumContractorAfuInfra.getProcentInfra !='0%'} ? 'Инфраструктура факт-'+${countSumContractorAfuInfra.getProcentInfra} : ''"></span> &nbsp
-<span th:text="${countSumContractorAfuInfra.getProcentAfu !='0%'} ? 'АФУ факт-'+${countSumContractorAfuInfra.getProcentAfu} : ''"></span>
-</td>
-</tr>
-</table>
+<td class=countAfuInfraTd>
+<span th:text="${countSumContractorAfuInfra.getWork}">Виды работ (объем)</span>
+<span class=countAfuInfra th:text="${countSumContractorAfuInfra.getProcentInfra !='0%'} ? 'Инфраструктура факт-'+${countSumContractorAfuInfra.getProcentInfra} : ''"></span> &nbsp
+<span class=countAfuInfra th:text="${countSumContractorAfuInfra.getProcentAfu !='0%'} ? 'АФУ факт-'+${countSumContractorAfuInfra.getProcentAfu} : ''"></span>
 </td>
     
-    <td th:text="${countSumContractorAfuInfra.getContractEnd}">Срок действия договора: до</td></tr>
+    <td style="text-align:centre;" th:text="${countSumContractorAfuInfra.getContractEnd}">Срок действия договора: до</td></tr>
 </table>
 <table class=listPoTable style="margin-top:40px">
 <tr><td>
