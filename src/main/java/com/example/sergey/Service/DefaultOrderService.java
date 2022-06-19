@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.example.sergey.Model.Order;
 import com.example.sergey.Repository.OrderRepository;
 
@@ -12,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class DefaultOrderService implements OrderService {
-	
+		
 	@Autowired
 	private final OrderRepository orderRepository;
 	
@@ -65,5 +66,4 @@ public class DefaultOrderService implements OrderService {
 	public void deleteAllOrdersByContractNumber(String contractnumber) {
 		orderRepository.deleteAllByContractnumber(contractnumber);
 	}
-
 }
