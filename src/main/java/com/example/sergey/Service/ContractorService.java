@@ -1,13 +1,17 @@
 package com.example.sergey.Service;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.example.sergey.Model.AfuOrdersCount;
 import com.example.sergey.Model.Contractor;
 import com.example.sergey.Repository.ContractorRepository;
+import com.example.sergey.Repository.IAfuOrdersCount;
 
 @Service
 public class ContractorService {
@@ -46,5 +50,42 @@ public class ContractorService {
 	}
 	public Contractor getContractorByContractNumberWithOutText(String number) { //извлечение подрядчика по номеру договора из БД без поля "текст договора"
 		return contractorRepository.getContractorByContractNumberWithOutText(number);
+	}
+	
+	public List<AfuOrdersCount> countSumContractorAfuInfra() { //расчет процентов по работам АФУ и Инфраструктуры по подрядчикам, у которых договор по таким работам
+		List<IAfuOrdersCount> ICountSumContractorAfuInfra=contractorRepository.countSumContractorAfuInfra();
+		List<AfuOrdersCount> countSumContractorAfuInfra=new ArrayList<>();
+		double result = 0;
+		double resultAll= 0;
+		double sumwithoutnds;
+		double sumwithoutndsall;
+		DecimalFormat dF = new DecimalFormat("##");
+		for (IAfuOrdersCount count: ICountSumContractorAfuInfra){
+			Double getSumWithOutNds=count.getSumWithOutNdsAfu();
+			Double getSumWithOutNdsAll=count.getSumWithOutNdsAll();
+			if(getSumWithOutNds==null) result+=0; else result+=count.getSumWithOutNdsAfu();
+			if(getSumWithOutNdsAll==null) resultAll+=0; else resultAll+=count.getSumWithOutNdsAll()-count.getSumWithOutNdsAfu();
+		}
+		for (IAfuOrdersCount count2: ICountSumContractorAfuInfra){
+			String contractor=count2.getContractor();
+			
+			Double getSumWithOutNds2=count2.getSumWithOutNdsAfu();
+			if(getSumWithOutNds2==null) sumwithoutnds=0; else sumwithoutnds=count2.getSumWithOutNdsAfu();
+			String procentAfu=dF.format(Math.round((sumwithoutnds/result)*100))+"%";
+			
+			Double getSumWithOutNdsAll=count2.getSumWithOutNdsAll();
+			if(getSumWithOutNdsAll==null) sumwithoutndsall=0; else sumwithoutndsall=count2.getSumWithOutNdsAll();
+			String procentInfra;
+			if(sumwithoutndsall==0) procentInfra=dF.format(0)+"%"; else procentInfra=dF.format(Math.round(((sumwithoutndsall-sumwithoutnds)/resultAll)*100))+"%";
+			
+			String work=count2.getWork();
+			String name=count2.getName();
+			String number=count2.getNumber();
+			String date=count2.getDate();
+			String contractend=count2.getContractend();
+			
+			countSumContractorAfuInfra.add(new AfuOrdersCount(contractor,procentAfu,procentInfra,work,name,number,date,contractend));
+		}
+		return countSumContractorAfuInfra;
 	}
 }

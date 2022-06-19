@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
 <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
 <title>Главная страница</title>
@@ -17,32 +18,37 @@
 <table class=listPoTable>
 <tr><th>Организация</th><th></th><th></th><th>Виды работ (объем)</th><th>Срок действия договора: до</th></tr>
 
-<tr th:each="contractor: ${contractors}">
-    <td th:text="${contractor.getName}" style="color:#00008B;font-weight:bold"></td>
+<tr th:each="countSumContractorAfuInfra: ${countSumContractorAfuInfra}">
+    <td th:text="${countSumContractorAfuInfra.getName}" style="color:#00008B;font-weight:bold"></td>
     <td>
     <form id="orderPage2" th:action="@{/priceItems}" method="get">
-       <input type="hidden" name="contractor" th:value="${contractor.getContractor}">
-       <input type="hidden" name="contractnumber" th:value="${contractor.getNumber}">
-       <input type="hidden" name="contractdate" th:value="${contractor.getDate}">
-       <input type="hidden" name="contractname" th:value="${contractor.getName}">
+       <input type="hidden" name="contractor" th:value="${countSumContractorAfuInfra.getContractor}">
+       <input type="hidden" name="contractnumber" th:value="${countSumContractorAfuInfra.getNumber}">
+       <input type="hidden" name="contractdate" th:value="${countSumContractorAfuInfra.getDate}">
+       <input type="hidden" name="contractname" th:value="${countSumContractorAfuInfra.getName}">
        <input type="submit" name="submit" class="tcp_index" value="ТЦП">
        </form>
     </td>
     <td>
     <form id="orderPage2" th:action="@{/orders/showAllOrders}" method="get">
-       <input type="hidden" name="contractnumber" th:value="${contractor.getNumber}">
+       <input type="hidden" name="contractnumber" th:value="${countSumContractorAfuInfra.getNumber}">
        <input type="submit" name="submit" class="bd_index" value="БД Заявок">
        </form>
     </td>
-    <td th:text="${contractor.getWork}">Виды работ (объем)</td>
-    <td th:text="${contractor.getContractEnd}">Срок действия договора: до</td></tr>
+    
+<td class=countAfuInfraTd>
+<span th:text="${countSumContractorAfuInfra.getWork}">Виды работ (объем)</span>
+<span class=countAfuInfra th:text="${countSumContractorAfuInfra.getProcentInfra !='0%'} ? 'Инфраструктура факт-'+${countSumContractorAfuInfra.getProcentInfra} : ''"></span> &nbsp
+<span class=countAfuInfra th:text="${countSumContractorAfuInfra.getProcentAfu !='0%'} ? 'АФУ факт-'+${countSumContractorAfuInfra.getProcentAfu} : ''"></span>
+</td>
+    
+    <td style="text-align:centre;" th:text="${countSumContractorAfuInfra.getContractEnd}">Срок действия договора: до</td></tr>
 </table>
 <table class=listPoTable style="margin-top:40px">
 <tr><td>
-<a th:href="@{/searchPriceItemsThroughAllContractors}" class="searchPricesItems_index">- Поиск работы по таблицам ТЦП всех подрядных организаций -</a>
+<a th:href="@{/searchPriceItemsThroughAllContractors}" class="searchPricesItems_index"> &#10155 Поиск работы по таблицам ТЦП всех подрядных организаций...</a>
 </td></tr>
 </table>
-
 
 <br><br>
 <div th:replace="footer :: footer"></div>
