@@ -342,5 +342,60 @@ public class OrderController {
 		redirectAttr.addAttribute("contractnumber", contractnumber);
 		
 		return "redirect:/orders/showAllOrders";
-	}	
+	}
+	@GetMapping("/orders/showMyOrders") //все заявки по подрядчику(т.е. номеру договора) по возрастанию номера заявки, 
+                                        //а также фильтрованные по аккаунту текущего пользователя
+public String showMyOrders(@RequestParam(name="contractnumber") String contractnumber, Model model) {
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String login=auth.getName();
+		String author=userService.findUsersByLogin(login).getFullName();
+		
+List<Order> listOrders = null;
+listOrders=orderService.findByAuthorAndContractnumberOrderByOrdernumberAsc(author,contractnumber);
+
+Date sendDate = null;
+Date startDate = null;
+Date endDate = null;
+
+for(Order order: listOrders) {
+SimpleDateFormat formatterStringToDate=new SimpleDateFormat("yyyy-MM-dd");
+
+try {sendDate=formatterStringToDate.parse(order.getSend());
+startDate=formatterStringToDate.parse(order.getStart());
+endDate=formatterStringToDate.parse(order.getEndtime());}
+catch (ParseException e) {e.printStackTrace();}
+
+SimpleDateFormat formatterDateToString=new SimpleDateFormat("dd.MM.yyyy");
+String sendString=formatterDateToString.format(sendDate);
+String startString=formatterDateToString.format(startDate);
+String endString=formatterDateToString.format(endDate);
+order.setSend(sendString);
+order.setStart(startString);
+order.setEndtime(endString);
+}
+
+Contractor contractor1=contractorService.getContractorByContractNumberWithOutText(contractnumber);
+String email1=contractor1.getEmail1();
+String email2=contractor1.getEmail2();
+String email3=contractor1.getEmail3();
+String email11=contractor1.getEmail11();
+String email12=contractor1.getEmail12();
+String email13=contractor1.getEmail13();
+String contractname=contractor1.getName();
+String contractor=contractor1.getContractor();
+model.addAttribute("listOrders", listOrders);
+model.addAttribute("contractor", contractor);
+model.addAttribute("contractnumber", contractnumber);
+model.addAttribute("contractname", contractname);
+model.addAttribute("email1", email1);
+model.addAttribute("email2", email2);
+model.addAttribute("email3", email3);
+model.addAttribute("email11", email11);
+model.addAttribute("email12", email12);
+model.addAttribute("email13", email13);
+
+return "showOrders";
+}
+	
 }
