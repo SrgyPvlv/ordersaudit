@@ -343,6 +343,7 @@ public class OrderController {
 		
 		return "redirect:/orders/showAllOrders";
 	}
+	
 	@GetMapping("/orders/showMyOrders") //все заявки по подрядчику(т.е. номеру договора) по возрастанию номера заявки, 
                                         //а также фильтрованные по аккаунту текущего пользователя
 public String showMyOrders(@RequestParam(name="contractnumber") String contractnumber, Model model) {
@@ -350,7 +351,7 @@ public String showMyOrders(@RequestParam(name="contractnumber") String contractn
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String login=auth.getName();
 		String author=userService.findUsersByLogin(login).getFullName();
-		
+				
 List<Order> listOrders = null;
 listOrders=orderService.findByAuthorAndContractnumberOrderByOrdernumberAsc(author,contractnumber);
 
