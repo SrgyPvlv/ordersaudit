@@ -34,12 +34,17 @@
      ${email13 !=null ? email13 : ''}+';'"><img src="/images/envelope.jpg" alt="mail" title="Отправка Заявки" width="25" height="25" style="border: none"></a>
      </span>
      <br><br>  
-     <form th:action="@{/orders/showAllOrders}" th:method="get">
+     <form th:action="@{/orders/showAllOrders}" th:method="get" style="display:inline;">
        <label>Поиск по № БС</label> &nbsp&nbsp
        <input type="text" name="bsNumberSearch" placeholder="Код '78-' указывать необязательно" style="width:220px" required>
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
        <input type="submit" value="Найти" >  
-     </form>  
+     </form> &nbsp&nbsp | &nbsp&nbsp
+     <form th:action="@{/orders/showMyOrders}" th:method="get" style="display:inline;">
+       <label style="color:#006400">Мои Заявки</label> &nbsp&nbsp
+       <input type="hidden" name="contractnumber" th:value="${contractnumber}">
+       <input type="submit" value="Показать" style="background-color:#4CAF50;color:white;">  
+     </form>       
   </div>
   <div id="ordersshowRight">
   <h3 th:text="${contractname}" style="color:#8B4513"></h3>

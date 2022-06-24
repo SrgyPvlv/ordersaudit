@@ -53,7 +53,13 @@ public class DefaultOrderService implements OrderService {
 		List<Order> ordersList=orderRepository.findByBsName(bsnumber, contractnumber);
 		return ordersList;
 	}
-
+	
+	@Override
+	public List<Order> findByAuthorAndContractnumberOrderByOrdernumberAsc(String author, String contractnumber) {
+		List<Order> ordersList=orderRepository.findByAuthorAndContractnumberOrderByOrdernumberAsc(author, contractnumber);
+		return ordersList;
+	}
+	
 	@Override
 	public int showNextOrderNumber(String contractnumber) {
 		int lastNumber;
