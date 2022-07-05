@@ -399,4 +399,50 @@ model.addAttribute("email13", email13);
 return "showOrders";
 }
 	
+	@GetMapping("/orders/searchOrdersThroughAllContractors") //поиск заявок по различным фильтрам, без возможности их редактирования
+public String searchOrdersThroughAllContractors(@RequestParam(name="ordernumber",required=false) String ordernumber,
+		@RequestParam(name="author",required=false) String author,@RequestParam(name="contractname",required=false) String contractname,
+		@RequestParam(name="bsnumber",required=false) String bsnumber,@RequestParam(name="worktype",required=false) String worktype,Model model) {
+
+/*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+String login=auth.getName();
+String author=userService.findUsersByLogin(login).getFullName();*/
+
+List<Order> listOrders = null;
+listOrders=orderService.findByOrdernumberAndAuthorAndContractnameAndBsnumberAndWorktypeOrderByOrdernumberAsc(ordernumber,
+		author,contractname,bsnumber,worktype);
+
+Date sendDate = null;
+Date startDate = null;
+Date endDate = null;
+
+for(Order order: listOrders) {
+SimpleDateFormat formatterStringToDate=new SimpleDateFormat("yyyy-MM-dd");
+
+try {sendDate=formatterStringToDate.parse(order.getSend());
+startDate=formatterStringToDate.parse(order.getStart());
+endDate=formatterStringToDate.parse(order.getEndtime());}
+catch (ParseException e) {e.printStackTrace();}
+
+SimpleDateFormat formatterDateToString=new SimpleDateFormat("dd.MM.yyyy");
+String sendString=formatterDateToString.format(sendDate);
+String startString=formatterDateToString.format(startDate);
+String endString=formatterDateToString.format(endDate);
+order.setSend(sendString);
+order.setStart(startString);
+order.setEndtime(endString);
+}
+
+Contractor contractor1=contractorService.getContractorByContractNumberWithOutText(contractnumber);
+
+String contractname=contractor1.getName();
+String contractor=contractor1.getContractor();
+model.addAttribute("listOrders", listOrders);
+model.addAttribute("contractor", contractor);
+model.addAttribute("contractnumber", contractnumber);
+model.addAttribute("contractname", contractname);
+
+return "searchOrders";
+}
+	
 }
