@@ -400,17 +400,16 @@ return "showOrders";
 }
 	
 	@GetMapping("/orders/searchOrdersThroughAllContractors") //поиск заявок по различным фильтрам, без возможности их редактирования
-public String searchOrdersThroughAllContractors(@RequestParam(name="ordernumber",required=false) String ordernumber,
-		@RequestParam(name="author",required=false) String author,@RequestParam(name="contractname",required=false) String contractname,
-		@RequestParam(name="bsnumber",required=false) String bsnumber,@RequestParam(name="worktype",required=false) String worktype,Model model) {
+public String searchOrdersThroughAllContractors(@RequestParam(name="ordernumber",defaultValue="0",required=false) Integer ordernumber,
+		@RequestParam(name="author",defaultValue="",required=false) String author,@RequestParam(name="contractname",defaultValue="",required=false) String contractname,
+		@RequestParam(name="bsnumber",defaultValue="",required=false) String bsnumber,@RequestParam(name="worktype",defaultValue="",required=false) String worktype,Model model) {
 
 /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 String login=auth.getName();
 String author=userService.findUsersByLogin(login).getFullName();*/
 
 List<Order> listOrders = null;
-listOrders=orderService.findByOrdernumberAndAuthorAndContractnameAndBsnumberAndWorktypeOrderByOrdernumberAsc(ordernumber,
-		author,contractname,bsnumber,worktype);
+listOrders=orderService.searchOrdersThroughAllContractors(ordernumber,author,contractname,bsnumber,worktype);
 
 Date sendDate = null;
 Date startDate = null;
@@ -433,14 +432,7 @@ order.setStart(startString);
 order.setEndtime(endString);
 }
 
-Contractor contractor1=contractorService.getContractorByContractNumberWithOutText(contractnumber);
-
-String contractname=contractor1.getName();
-String contractor=contractor1.getContractor();
 model.addAttribute("listOrders", listOrders);
-model.addAttribute("contractor", contractor);
-model.addAttribute("contractnumber", contractnumber);
-model.addAttribute("contractname", contractname);
 
 return "searchOrders";
 }

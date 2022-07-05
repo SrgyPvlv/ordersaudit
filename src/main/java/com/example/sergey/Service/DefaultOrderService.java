@@ -72,4 +72,10 @@ public class DefaultOrderService implements OrderService {
 	public void deleteAllOrdersByContractNumber(String contractnumber) {
 		orderRepository.deleteAllByContractnumber(contractnumber);
 	}
+	
+	@Override
+	public List<Order> searchOrdersThroughAllContractors(Integer ordernumber, String author, String contractname, String bsnumber, String worktype) {
+		List<Order> ordersList=orderRepository.findByOrdernumberAndAuthorAndContractnameAndBsnumberAndWorktypeOrderByOrdernumberAsc(ordernumber, author, contractname, bsnumber, worktype);
+		return ordersList;
+	}
 }

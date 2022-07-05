@@ -14,23 +14,24 @@
 
 <p id="up"><a href="#down" class="up">В конец страницы ↓</a></p>
 
-<div class="find" id="find">
-  <div id="ordersshowLeft">         
+<div class="findOrdersSearch" id="find">
+  <div id="orderssearchLeft">         
      <form th:action="@{/orders/searchOrdersThroughAllContractors}" th:method="get">
-       <label>Поиск по № Заказа  </label> &nbsp&nbsp
+       <label>№ Заказа  </label> &nbsp&nbsp
        <input type="number" name="ordernumber" min="0"> &nbsp&nbsp | &nbsp&nbsp
-     
-       <label>Поиск по Инициатору  </label> &nbsp&nbsp
-       <input type="text" name="author"> &nbsp&nbsp | &nbsp&nbsp
-    
-       <label>Поиск по Подрядчику  </label> &nbsp&nbsp
-       <input type="text" name="contractname"> &nbsp&nbsp | &nbsp&nbsp
-       <br><br>  
-     
-       <label>Поиск по № БС</label> &nbsp&nbsp
+       
+       <label>№ БС</label> &nbsp&nbsp
        <input type="text" name="bsnumber" placeholder="Код '78-' указывать необязательно" style="width:220px"> &nbsp&nbsp | &nbsp&nbsp
+       
+       <label>Подрядчик  </label> &nbsp&nbsp
+       <input type="text" name="contractname"> &nbsp&nbsp | &nbsp&nbsp
      
-       <label>Поиск по Виду работ</label> &nbsp&nbsp
+       <label>Инициатор  </label> &nbsp&nbsp
+       <input type="text" name="author">
+       
+       <br><br>  
+          
+       <label>Вид работ</label> &nbsp&nbsp
        <input type="text" name="worktype" style="width:220px">
        <br><br>
        
@@ -39,7 +40,7 @@
   </div> 
 </div>
 </div>
-<div class="ordersShowOrders">
+<div class="ordersSearchOrders">
 <table class="listItems_showOrders">
 <tr>
 <th class="col11">№ Заказа</th><th class="col12">№ БС</th><th class="col13">Дата ТЗ</th><th class="col14">Стоимость без|c НДС</th>
@@ -55,22 +56,12 @@
 <td th:text="${listOrder.getStatus}" class="col17"></td><td th:text="${listOrder.getEndtime}" class="col18"></td>
 <td th:text="${listOrder.getWorktype}" th:title="${listOrder.getComment}" class="col19"></td><td th:text="${listOrder.getOrderlistcomment}" class="col20"></td>
 <td class="col21">
-<form th:action="@{/orders/orderEdit}" method="get" style="display:inline;">
-<input type="hidden" name="id" th:value="${listOrder.getId}">
-<input type="hidden" name="contractor" th:value="${contractor}">
-<input type="hidden" name="contractname" th:value="${contractname}">
-<input type="submit" name="submit" value="Редактировать" style="background:#98FB98;">
-</form> &nbsp | &nbsp
-<form th:action="@{/superadmin/orderDelete}" method="get" style="display:inline;">
-<input type="hidden" name="id" th:value="${listOrder.getId}">
-<input type="hidden" name="contractnumber" th:value="${contractnumber}">
-<input type="submit" name="submit" value="Удалить" style="background:#FF0000; color:white;">
-</form>
-<br><br>
+<p th:text="${listOrder.getContractname}"></p>
+<br>
 <form th:action="@{/orders/orderCopy}" method="get" style="display:inline;">
 <input type="hidden" name="id" th:value="${listOrder.getId}">
-<input type="hidden" name="contractor" th:value="${contractor}">
-<input type="hidden" name="contractname" th:value="${contractname}">
+<input type="hidden" name="contractor" th:value="${listOrder.getContractor}">
+<input type="hidden" name="contractname" th:value="${listOrder.getContractname}">
 <input type="submit" name="submit" value="Создать копию" style="background:#808080; color:white;">
 </form> &nbsp | &nbsp
 <form th:action="@{/orders/orderPage}" method="get" target="_blank" style="display:inline;">

@@ -39,4 +39,7 @@ public interface OrderService {
 	@Transactional
 	public void deleteAllOrdersByContractNumber(String contractnumber);
 	
+	//поиск заявок по различным фильтрам
+	public List<Order> searchOrdersThroughAllContractors(Integer ordernumber, String author, String contractname, String bsnumber, String worktype);
+	
 }
