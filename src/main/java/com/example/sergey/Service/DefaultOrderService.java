@@ -75,7 +75,19 @@ public class DefaultOrderService implements OrderService {
 	
 	@Override
 	public List<Order> searchOrdersThroughAllContractors(Integer ordernumber, String author, String contractname, String bsnumber, String worktype) {
-		List<Order> ordersList=orderRepository.findByOrdernumberAndAuthorAndContractnameAndBsnumberAndWorktypeOrderByOrdernumberAsc(ordernumber, author, contractname, bsnumber, worktype);
+		
+		String worktype1;
+		String worktype2;
+		String[] words=worktype.split("\\s");
+		if (words.length==1) {
+			worktype1=words[0];
+			worktype2="";}
+		else {
+			worktype1=words[0];
+			worktype2=words[1];
+		}
+		
+		List<Order> ordersList=orderRepository.searchOrdersThroughAllContractors(ordernumber, author, contractname, bsnumber, worktype, worktype1, worktype2);
 		return ordersList;
 	}
 }

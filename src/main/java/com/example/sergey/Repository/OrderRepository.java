@@ -34,6 +34,11 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
 	public void deleteAllByContractnumber(String contractnumber);
 	
 	//поиск заявок по различным фильтрам
-	public List<Order> findByOrdernumberAndAuthorAndContractnameAndBsnumberAndWorktypeOrderByOrdernumberAsc(Integer ordernumber, String author, String contractname, String bsnumber, String worktype);
+	@Query(value="select * from orderlist where ordernumber in(:ordernum) and lower(author) like lower(concat('%',:avtor,'%'))"
+			+ " and lower(contractname) like lower(concat('%',:contractname,'%')) and lower(bsnumber) like concat('%',:bsnum,'%')"
+			+ " and (lower(worktype) like concat('%',:filter,'%') or lower(worktype) like concat('%',:filter1,'%',:filter2,'%') or lower(worktype) like concat('%',:filter2,'%',:filter1,'%')) order by ordernumber",nativeQuery=true)
+	public List<Order> searchOrdersThroughAllContractors(@Param("ordernum") Integer ordernumber, @Param("avtor") String author,
+			@Param("contractname") String contractname, @Param("bsnum") String bsnumber,
+			@Param("filter") String filter,@Param("filter1") String filter1,@Param("filter2") String filter2);
 	
 }
