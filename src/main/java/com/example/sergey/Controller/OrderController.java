@@ -398,18 +398,26 @@ model.addAttribute("email13", email13);
 
 return "showOrders";
 }
+	@GetMapping("/orders/searchOrdersThroughAllContractorsIndex")//переход на страницу поиска заявок по различным фильтрам по всем подрядчикам
+	public String searchOrdersThroughAllContractorsIndex(Model model) {
+		List<Order> listOrders = null;
+		model.addAttribute("listOrders", listOrders);
+
+		return "searchOrders";
+	}
 	
 	@GetMapping("/orders/searchOrdersThroughAllContractors") //поиск заявок по различным фильтрам, без возможности их редактирования
-public String searchOrdersThroughAllContractors(@RequestParam(name="ordernumber",defaultValue="0",required=false) Integer ordernumber,
-		@RequestParam(name="author",defaultValue="",required=false) String author,@RequestParam(name="contractname",defaultValue="",required=false) String contractname,
-		@RequestParam(name="bsnumber",defaultValue="",required=false) String bsnumber,@RequestParam(name="worktype",defaultValue="",required=false) String worktype,Model model) {
+    public String searchOrdersThroughAllContractors(
+		@RequestParam(name="author",defaultValue="%",required=false) String author,@RequestParam(name="contractname",defaultValue="%",required=false) String contractname,
+		@RequestParam(name="bsnumber",defaultValue="%",required=false) String bsnumber,@RequestParam(name="worktype",defaultValue="%",required=false) String worktype,
+		@RequestParam(name="worktcp",defaultValue="%",required=false) String worktcp,Model model) {
 
 /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 String login=auth.getName();
 String author=userService.findUsersByLogin(login).getFullName();*/
 
 List<Order> listOrders = null;
-listOrders=orderService.searchOrdersThroughAllContractors(ordernumber,author,contractname,bsnumber,worktype);
+listOrders=orderService.searchOrdersThroughAllContractors(author,contractname,bsnumber,worktype,worktcp);
 
 Date sendDate = null;
 Date startDate = null;

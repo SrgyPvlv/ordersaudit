@@ -17,9 +17,7 @@
 <div class="findOrdersSearch" id="find">
   <div id="orderssearchLeft">         
      <form th:action="@{/orders/searchOrdersThroughAllContractors}" th:method="get">
-       <label>№ Заказа  </label> &nbsp&nbsp
-       <input type="number" name="ordernumber" min="0"> &nbsp&nbsp | &nbsp&nbsp
-       
+              
        <label>№ БС</label> &nbsp&nbsp
        <input type="text" name="bsnumber" placeholder="Код '78-' указывать необязательно" style="width:220px"> &nbsp&nbsp | &nbsp&nbsp
        
@@ -27,21 +25,24 @@
        <input type="text" name="contractname"> &nbsp&nbsp | &nbsp&nbsp
      
        <label>Инициатор  </label> &nbsp&nbsp
-       <input type="text" name="author">
-       
-       <br><br>  
+       <input type="text" name="author"> &nbsp&nbsp | &nbsp&nbsp
           
        <label>Вид работ</label> &nbsp&nbsp
        <input type="text" name="worktype" style="width:220px">
        <br><br>
        
-       <input type="submit" value="Найти" >  
+       <label>Наименование (или № п/п) работы из ТЦП</label> &nbsp&nbsp
+       <input type="text" name="worktcp" style="width:220px"> &nbsp&nbsp | &nbsp&nbsp
+        
+       <input type="submit" value="Найти" style="background-color: #98FB98"> &nbsp&nbsp
+       <input type="reset" value="Очистить" style="background-color: #FFC0CB">
+         
      </form>       
   </div> 
 </div>
 </div>
 <div class="ordersSearchOrders">
-<table class="listItems_showOrders">
+<table class="listItems_searchOrders">
 <tr>
 <th class="col11">№ Заказа</th><th class="col12">№ БС</th><th class="col13">Дата ТЗ</th><th class="col14">Стоимость без|c НДС</th>
 <th class="15">ИД</th><th class="col16">Внесено в Кедр</th><th class="col17">Статус Заказа</th>
@@ -56,8 +57,7 @@
 <td th:text="${listOrder.getStatus}" class="col17"></td><td th:text="${listOrder.getEndtime}" class="col18"></td>
 <td th:text="${listOrder.getWorktype}" th:title="${listOrder.getComment}" class="col19"></td><td th:text="${listOrder.getOrderlistcomment}" class="col20"></td>
 <td class="col21">
-<p th:text="${listOrder.getContractname}"></p>
-<br>
+<p th:text="${listOrder.getContractname}" style="color:#8B4513"></p>
 <form th:action="@{/orders/orderCopy}" method="get" style="display:inline;">
 <input type="hidden" name="id" th:value="${listOrder.getId}">
 <input type="hidden" name="contractor" th:value="${listOrder.getContractor}">

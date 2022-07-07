@@ -74,10 +74,12 @@ public class DefaultOrderService implements OrderService {
 	}
 	
 	@Override
-	public List<Order> searchOrdersThroughAllContractors(Integer ordernumber, String author, String contractname, String bsnumber, String worktype) {
+	public List<Order> searchOrdersThroughAllContractors(String author, String contractname, String bsnumber, String worktype, String worktcp) {
 		
 		String worktype1;
 		String worktype2;
+		String worktcp1;
+		String worktcp2;
 		String[] words=worktype.split("\\s");
 		if (words.length==1) {
 			worktype1=words[0];
@@ -87,7 +89,17 @@ public class DefaultOrderService implements OrderService {
 			worktype2=words[1];
 		}
 		
-		List<Order> ordersList=orderRepository.searchOrdersThroughAllContractors(ordernumber, author, contractname, bsnumber, worktype, worktype1, worktype2);
+		String[] words1=worktcp.split("\\s");
+		if (words1.length==1) {
+			worktcp1=words1[0];
+			worktcp2="";}
+		else {
+			worktcp1=words1[0];
+			worktcp2=words1[1];
+		}
+		
+		List<Order> ordersList=orderRepository.searchOrdersThroughAllContractors(author, contractname, bsnumber, worktype, worktype1, worktype2,
+				worktcp, worktcp1,worktcp2);
 		return ordersList;
 	}
 }
