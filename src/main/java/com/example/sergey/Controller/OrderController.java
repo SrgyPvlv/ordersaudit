@@ -401,7 +401,12 @@ return "showOrders";
 	@GetMapping("/orders/searchOrdersThroughAllContractorsIndex")//переход на страницу поиска заявок по различным фильтрам по всем подрядчикам
 	public String searchOrdersThroughAllContractorsIndex(Model model) {
 		List<Order> listOrders = null;
+		List<Contractor> contractors=contractorService.getAllContractorsWithOutText();
+		int listOrdersSize=0;
+		
 		model.addAttribute("listOrders", listOrders);
+		model.addAttribute("contractors", contractors);
+		model.addAttribute("listOrdersSize", listOrdersSize);
 
 		return "searchOrders";
 	}
@@ -418,6 +423,8 @@ String author=userService.findUsersByLogin(login).getFullName();*/
 
 List<Order> listOrders = null;
 listOrders=orderService.searchOrdersThroughAllContractors(author,contractname,bsnumber,worktype,worktcp);
+List<Contractor> contractors=contractorService.getAllContractorsWithOutText();
+int listOrdersSize=listOrders.size();
 
 Date sendDate = null;
 Date startDate = null;
@@ -441,6 +448,8 @@ order.setEndtime(endString);
 }
 
 model.addAttribute("listOrders", listOrders);
+model.addAttribute("contractors", contractors);
+model.addAttribute("listOrdersSize", listOrdersSize);
 
 return "searchOrders";
 }

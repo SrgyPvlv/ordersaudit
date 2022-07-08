@@ -19,23 +19,27 @@
      <form th:action="@{/orders/searchOrdersThroughAllContractors}" th:method="get">
               
        <label>№ БС</label> &nbsp&nbsp
-       <input type="text" name="bsnumber" placeholder="Код '78-' указывать необязательно" style="width:220px"> &nbsp&nbsp | &nbsp&nbsp
-       
-       <label>Подрядчик  </label> &nbsp&nbsp
-       <input type="text" name="contractname"> &nbsp&nbsp | &nbsp&nbsp
+       <input type="text" name="bsnumber" id="bsnumber_searchOrders" placeholder="Все" style="width:220px"> &nbsp&nbsp | &nbsp&nbsp
+              
+       <label>Подрядчик</label> &nbsp&nbsp
+       <select name="contractname" id="contractname_searchOrders">
+       <option selected value="%">Все</option>
+       <option th:each="contractor: ${contractors}" th:text="${contractor.getName}" th:value="${contractor.getName}"></option>
+       </select> &nbsp&nbsp | &nbsp&nbsp
      
-       <label>Инициатор  </label> &nbsp&nbsp
-       <input type="text" name="author"> &nbsp&nbsp | &nbsp&nbsp
+       <label>Инициатор</label> &nbsp&nbsp
+       <input type="text" name="author" id="author_searchOrders" placeholder="Все"> &nbsp&nbsp | &nbsp&nbsp
           
        <label>Вид работ</label> &nbsp&nbsp
-       <input type="text" name="worktype" style="width:220px">
+       <input type="text" name="worktype" id="worktype_searchOrders" placeholder="Все" style="width:220px">
        <br><br>
        
        <label>Наименование (или № п/п) работы из ТЦП</label> &nbsp&nbsp
-       <input type="text" name="worktcp" style="width:220px"> &nbsp&nbsp | &nbsp&nbsp
+       <input type="text" name="worktcp" id="worktcp_searchOrders" placeholder="Все" style="width:220px"> &nbsp&nbsp | &nbsp&nbsp
         
-       <input type="submit" value="Найти" style="background-color: #98FB98"> &nbsp&nbsp
-       <input type="reset" value="Очистить" style="background-color: #FFC0CB">
+       <input type="submit" value="Найти" id="search_searchOrders" style="background-color: #98FB98"> &nbsp&nbsp
+       <input type="reset" value="Очистить" style="background-color: #FFC0CB"> &nbsp&nbsp | &nbsp&nbsp
+       <span th:text="'Найдено записей: '+${listOrdersSize}" style="color:#8B4513"></span>
          
      </form>       
   </div> 
@@ -73,5 +77,37 @@
 </table>
 </div>
 <p id="down"><a href="#up1" class="down">В начало страницы ↑</a></p>
+
+<script type="text/javascript">
+document.getElementById("search_searchOrders").addEventListener("click", saveOldData);
+document.addEventListener("DOMContentLoaded", readyLoadPage);
+document.getElementById("main").addEventListener("click", resetData);
+function saveOldData(){
+var oldBsnumberScript=document.getElementById("bsnumber_searchOrders").value;
+var oldContractNameScript=document.getElementById("contractname_searchOrders").value;
+var oldAuthorScript=document.getElementById("author_searchOrders").value;
+var oldWorkTypeScript=document.getElementById("worktype_searchOrders").value;
+var oldWorkTcpScript=document.getElementById("worktcp_searchOrders").value;
+sessionStorage.setItem("bsnumber_searchOrders",oldBsnumberScript);
+sessionStorage.setItem("contractname_searchOrders",oldContractNameScript);
+sessionStorage.setItem("author_searchOrders",oldAuthorScript);
+sessionStorage.setItem("worktype_searchOrders",oldWorkTypeScript);
+sessionStorage.setItem("worktcp_searchOrders",oldWorkTcpScript);};
+function readyLoadPage(){
+	document.getElementById("bsnumber_searchOrders").value=sessionStorage.getItem("bsnumber_searchOrders");
+	document.getElementById("contractname_searchOrders").value=sessionStorage.getItem("contractname_searchOrders");
+	document.getElementById("author_searchOrders").value=sessionStorage.getItem("author_searchOrders");
+	document.getElementById("worktype_searchOrders").value=sessionStorage.getItem("worktype_searchOrders");
+	document.getElementById("worktcp_searchOrders").value=sessionStorage.getItem("worktcp_searchOrders");	
+};
+function resetData(){
+	sessionStorage.setItem("bsnumber_searchOrders","");
+	sessionStorage.setItem("contractname_searchOrders","");
+	sessionStorage.setItem("author_searchOrders","");
+	sessionStorage.setItem("worktype_searchOrders","");
+	sessionStorage.setItem("worktcp_searchOrders","");
+};
+</script>
+
 </body>
 </html>
