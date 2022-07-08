@@ -398,5 +398,60 @@ model.addAttribute("email13", email13);
 
 return "showOrders";
 }
+	@GetMapping("/orders/searchOrdersThroughAllContractorsIndex")//переход на страницу поиска заявок по различным фильтрам по всем подрядчикам
+	public String searchOrdersThroughAllContractorsIndex(Model model) {
+		List<Order> listOrders = null;
+		List<Contractor> contractors=contractorService.getAllContractorsWithOutText();
+		int listOrdersSize=0;
+		
+		model.addAttribute("listOrders", listOrders);
+		model.addAttribute("contractors", contractors);
+		model.addAttribute("listOrdersSize", listOrdersSize);
+
+		return "searchOrders";
+	}
+	
+	@GetMapping("/orders/searchOrdersThroughAllContractors") //поиск заявок по различным фильтрам, без возможности их редактирования
+    public String searchOrdersThroughAllContractors(
+		@RequestParam(name="author",defaultValue="%",required=false) String author,@RequestParam(name="contractname",defaultValue="%",required=false) String contractname,
+		@RequestParam(name="bsnumber",defaultValue="%",required=false) String bsnumber,@RequestParam(name="worktype",defaultValue="%",required=false) String worktype,
+		@RequestParam(name="worktcp",defaultValue="%",required=false) String worktcp,Model model) {
+
+/*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+String login=auth.getName();
+String author=userService.findUsersByLogin(login).getFullName();*/
+
+List<Order> listOrders = null;
+listOrders=orderService.searchOrdersThroughAllContractors(author,contractname,bsnumber,worktype,worktcp);
+List<Contractor> contractors=contractorService.getAllContractorsWithOutText();
+int listOrdersSize=listOrders.size();
+
+Date sendDate = null;
+Date startDate = null;
+Date endDate = null;
+
+for(Order order: listOrders) {
+SimpleDateFormat formatterStringToDate=new SimpleDateFormat("yyyy-MM-dd");
+
+try {sendDate=formatterStringToDate.parse(order.getSend());
+startDate=formatterStringToDate.parse(order.getStart());
+endDate=formatterStringToDate.parse(order.getEndtime());}
+catch (ParseException e) {e.printStackTrace();}
+
+SimpleDateFormat formatterDateToString=new SimpleDateFormat("dd.MM.yyyy");
+String sendString=formatterDateToString.format(sendDate);
+String startString=formatterDateToString.format(startDate);
+String endString=formatterDateToString.format(endDate);
+order.setSend(sendString);
+order.setStart(startString);
+order.setEndtime(endString);
+}
+
+model.addAttribute("listOrders", listOrders);
+model.addAttribute("contractors", contractors);
+model.addAttribute("listOrdersSize", listOrdersSize);
+
+return "searchOrders";
+}
 	
 }
