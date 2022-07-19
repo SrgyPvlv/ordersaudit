@@ -62,6 +62,18 @@
 <td th:text="${listOrder.getWorktype}" th:title="${listOrder.getComment}" class="col19"></td><td th:text="${listOrder.getOrderlistcomment}" class="col20"></td>
 <td class="col21">
 <p th:text="${listOrder.getContractname}" style="color:#8B4513"></p>
+<form th:action="@{/orders/orderEdit}" method="get" target="_blank" style="display:inline;">
+<input type="hidden" name="id" th:value="${listOrder.getId}">
+<input type="hidden" name="contractor" th:value="${listOrder.getContractor}">
+<input type="hidden" name="contractname" th:value="${listOrder.getContractname}">
+<input type="submit" name="submit" value="Редактировать" style="background:#98FB98;">
+</form> &nbsp | &nbsp
+<form th:action="@{/superadmin/orderDelete}" method="get" target="_blank" style="display:inline;">
+<input type="hidden" name="id" th:value="${listOrder.getId}">
+<input type="hidden" name="contractnumber" th:value="${listOrder.getContractnumber}">
+<input type="submit" name="submit" value="Удалить" style="background:#FF0000; color:white;">
+</form>
+<br><br>
 <form th:action="@{/orders/orderCopy}" method="get" style="display:inline;">
 <input type="hidden" name="id" th:value="${listOrder.getId}">
 <input type="hidden" name="contractor" th:value="${listOrder.getContractor}">
