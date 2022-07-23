@@ -164,6 +164,7 @@ public class OrderController {
 		String email13=contractor1.getEmail13();
 		String contractname=contractor1.getName();
 		String contractor=contractor1.getContractor();
+		int listOrdersSize=listOrders.size();
 		model.addAttribute("listOrders", listOrders);
 		model.addAttribute("contractor", contractor);
 		model.addAttribute("contractnumber", contractnumber);
@@ -174,6 +175,7 @@ public class OrderController {
 		model.addAttribute("email11", email11);
 		model.addAttribute("email12", email12);
 		model.addAttribute("email13", email13);
+		model.addAttribute("listOrdersSize", listOrdersSize);
 	
 		return "showOrders";
 	}
@@ -385,6 +387,7 @@ String email12=contractor1.getEmail12();
 String email13=contractor1.getEmail13();
 String contractname=contractor1.getName();
 String contractor=contractor1.getContractor();
+int listOrdersSize=listOrders.size();
 model.addAttribute("listOrders", listOrders);
 model.addAttribute("contractor", contractor);
 model.addAttribute("contractnumber", contractnumber);
@@ -395,7 +398,7 @@ model.addAttribute("email3", email3);
 model.addAttribute("email11", email11);
 model.addAttribute("email12", email12);
 model.addAttribute("email13", email13);
-
+model.addAttribute("listOrdersSize", listOrdersSize);
 return "showOrders";
 }
 	@GetMapping("/orders/searchOrdersThroughAllContractorsIndex")//переход на страницу поиска заявок по различным фильтрам по всем подрядчикам

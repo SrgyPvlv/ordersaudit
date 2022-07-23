@@ -19,10 +19,11 @@
 </div>
 <div>
  <table class="contractorstable" border="1">
- <caption align="top"><h3>Список Подрядчиков &nbsp&nbsp&nbsp&nbsp
+ <caption align="top" style="margin-bottom:15px;"><h3 style="display:inline;">Список Подрядчиков</h3> &nbsp&nbsp&nbsp
+   <span th:text="'Найдено записей: '+${contractorsSize}" style="color:#8B4513;display:inline;"></span>&nbsp&nbsp&nbsp&nbsp
    <form th:action="@{/admin/contractorCreate}" method="get" style="display:inline;">
    <input type="submit" value="Добавить подрядчика" style="border-color:blue;">
-   </form></h3>
+   </form>
  </caption>
         <tr>
           <th>Название</th> <th>Логин</th> <th>Номер договора</th> <th>Дата договора</th>

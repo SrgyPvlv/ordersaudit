@@ -12,7 +12,8 @@ import com.example.sergey.Model.Users;
 @Repository
 public interface UsersRepository extends JpaRepository<Users,Integer> {
 	
-	public Users findByLogin(String login);//поиск пользователя по логину
+	//поиск пользователя по логину
+	public Users findByLogin(String login);
 	
 	//поиск логина по имени пользователя(автора заявки)
 	@Query(value="select (login) from users where lower(fullname) like lower(concat('%',:avtor,'%'))",nativeQuery=true)
