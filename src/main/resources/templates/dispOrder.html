@@ -66,7 +66,7 @@
           <input type="hidden" name="contractnumber" th:value="${contractnumber}">
           <input type="hidden" name="contractdate" th:value="${contractdate}">
           <input type="hidden" name="contractname" th:value="${contractname}">
-          <input type="submit" name="submit" value="Получить номер Заявки" class="ordnum">
+          <input type="submit" id="takeOrderNumber" name="submit" value="Получить номер Заявки" class="ordnum">
           </form>
    <p><label for="bsnumber">№ Базовой стации: </label>
       <input form ="orderPage" type="text" id="bsnumber" name="bsnumber" th:value="*{bsnumber !=null} ? *{bsnumber} : '' " placeholder="78-12345 (5-значный) " pattern="78-\d{5}" title="Номер БС должен быть 5-значным." required><i></i></p>
@@ -110,5 +110,53 @@
 
 <br><br><br><br>
 <div th:replace="footer :: footer"></div>
+
+<script type="text/javascript">
+document.getElementById("takeOrderNumber").addEventListener("click", saveOldData);
+document.addEventListener("DOMContentLoaded", readyLoadPage);
+document.getElementById("saveOrder_dispOrder").addEventListener("click", resetData);
+
+function saveOldData(){
+var oldBsNumberScript=document.getElementById("bsnumber").value;
+var oldSendScript=document.getElementById("send").value;
+var oldStartScript=document.getElementById("start").value;
+var oldEndScript=document.getElementById("end").value;
+var oldRemedyScript=document.getElementById("remedy").value;
+var oldAuthorScript=document.getElementById("author").value;
+var oldArendaScript=document.getElementById("arenda").value;
+var oldWorkTypeScript=document.getElementById("worktype").value;
+var oldCommentScript=document.getElementById("comment").value;
+sessionStorage.setItem("bsnumber_dispOrder",oldBsNumberScript);
+sessionStorage.setItem("send_dispOrder",oldSendScript);
+sessionStorage.setItem("start_dispOrder",oldStartScript);
+sessionStorage.setItem("end_dispOrder",oldEndScript);
+sessionStorage.setItem("remedy_dispOrder",oldRemedyScript);
+sessionStorage.setItem("author_dispOrder",oldAuthorScript);
+sessionStorage.setItem("arenda_dispOrder",oldArendaScript);
+sessionStorage.setItem("worktype_dispOrder",oldWorkTypeScript);
+sessionStorage.setItem("comment_dispOrder",oldCommentScript);};
+function readyLoadPage(){
+	document.getElementById("bsnumber").value=sessionStorage.getItem("bsnumber_dispOrder");
+	document.getElementById("send").value=sessionStorage.getItem("send_dispOrder");
+	document.getElementById("start").value=sessionStorage.getItem("start_dispOrder");
+	document.getElementById("end").value=sessionStorage.getItem("end_dispOrder");
+	document.getElementById("remedy").value=sessionStorage.getItem("remedy_dispOrder");
+	document.getElementById("author").value=sessionStorage.getItem("author_dispOrder");
+	document.getElementById("arenda").value=sessionStorage.getItem("arenda_dispOrder");
+	document.getElementById("worktype").value=sessionStorage.getItem("worktype_dispOrder");
+	document.getElementById("comment").value=sessionStorage.getItem("comment_dispOrder");
+};
+function resetData(){
+	sessionStorage.setItem("bsnumber_dispOrder","");
+	sessionStorage.setItem("send_dispOrder","");
+	sessionStorage.setItem("start_dispOrder","");
+	sessionStorage.setItem("end_dispOrder","");
+	sessionStorage.setItem("remedy_dispOrder","");
+	sessionStorage.setItem("author_dispOrder","");
+	sessionStorage.setItem("arenda_dispOrder","");
+	sessionStorage.setItem("worktype_dispOrder","");
+	sessionStorage.setItem("comment_dispOrder","");
+};
+</script>
 </body>
 </html>
