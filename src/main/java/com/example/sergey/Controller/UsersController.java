@@ -78,7 +78,8 @@ public class UsersController {
 	public String findUserByFullName(@RequestParam("userFullNameSearch") String userFullNameSearch, 
 			Model model) throws IOException{
 		
-		List<Users> users=usersService.findUserByFullName(userFullNameSearch);
+		String userFullNameSearchLower=userFullNameSearch.toLowerCase();
+		List<Users> users=usersService.findUserByFullName(userFullNameSearchLower);
 		
 		model.addAttribute("users", users);
 		return "users";
