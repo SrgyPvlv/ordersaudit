@@ -44,7 +44,8 @@
        <label style="color:#006400">Мои Заявки</label> &nbsp&nbsp
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
        <input type="submit" value="Показать" style="background-color:#4CAF50;color:white;">  
-     </form>       
+     </form> &nbsp&nbsp | &nbsp&nbsp
+     <span th:text="'Найдено записей: '+${listOrdersSize}" style="color:#8B4513"></span>       
   </div>
   <div id="ordersshowRight">
   <h3 th:text="${contractname}" style="color:#8B4513"></h3>

@@ -81,7 +81,10 @@ public class ContractorController {
 		@GetMapping("/admin/contractorsShow") //список всех подрядчиков по увеличению id (текст договора не подгружается)
 		public String showContractors(Model model) {
 			List<Contractor> contractors=contractorService.getAllContractorsWithOutText();
+			int contractorsSize=contractors.size();
+			
 			model.addAttribute("contractors", contractors);
+			model.addAttribute("contractorsSize", contractorsSize);
 			return "contractors";
 		}
 		
