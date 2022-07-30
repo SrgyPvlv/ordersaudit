@@ -300,6 +300,11 @@ public class OrderController {
 		end=formatter1.format(dateEnd);
 		contractDateString=formatter1.format(contractDateDate);
 		
+		String getBsNumber=orderDb.getBsnumber();
+		StringBuffer getBsNumberBuffer=new StringBuffer(getBsNumber);
+		getBsNumberBuffer.delete(2, 4);
+		String bsNumberRed=getBsNumberBuffer.toString(); System.out.println(bsNumberRed);
+				
 		model.addAttribute("cart", cartArrayList);
 		model.addAttribute("sumWithOutNds", orderDb.getSumwithoutnds());
 		model.addAttribute("Nds", orderDb.getNds());
@@ -316,6 +321,7 @@ public class OrderController {
 		model.addAttribute("remedy", orderDb.getRemedy());
 		model.addAttribute("arenda", orderDb.getArenda());
 		model.addAttribute("comment", orderDb.getComment());
+		model.addAttribute("bsNumberRed", bsNumberRed);
 		return"orderPage";
 	}
 		
