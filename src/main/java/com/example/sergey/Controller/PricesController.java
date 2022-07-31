@@ -24,6 +24,7 @@ import com.example.sergey.Model.Prices;
 import com.example.sergey.Model.PricesSelect;
 import com.example.sergey.Service.UsersService;
 import com.example.sergey.Service.PricesService;
+import com.example.sergey.Service.RedService;
 
 @Controller
 @SessionScope
@@ -45,6 +46,7 @@ public class PricesController {
 	@Autowired private PricesService pricesService;
 	@Autowired private OrderCart orderCart;
 	@Autowired private UsersService userService;
+	@Autowired private RedService redService;
 	
 	@GetMapping("/priceItems") //показать все пункты тцп по конкретному подрядчику для добавления в заявку, без возможности редактирования (для users)
 	public String getAllPriceItems(@RequestParam(name="contractor") String contractor,
@@ -215,6 +217,7 @@ public class PricesController {
 		sumWithOutNds=0;
 		Nds=0;
 		sumWithNds=0;
+		String ipAddressRemedy;
 		if(id!=0) this.id=id;
 		if(ordernumber!=0) this.ordernumber=ordernumber;
 		if(!bsnumber.isEmpty()) this.bsnumber=bsnumber;
@@ -253,6 +256,8 @@ public class PricesController {
 		Users user=userService.findUsersByLogin(login);
 		String username=user.getFullName();
 		
+		try {ipAddressRemedy=redService.findByBdname("remedy").getIpAddress();} catch (Exception e) {ipAddressRemedy="urlForRemedyUndefinedInBdOfThisApp";}
+		
 		//String contractname=contractTextService.getContractTextName(this.contractnumber);
 		
 		model.addAttribute("cart", cart);
@@ -279,6 +284,7 @@ public class PricesController {
 		model.addAttribute("orderlistcomment", this.orderlistcomment);
 		model.addAttribute("contractname", contractname);
 		model.addAttribute("contractor", contractor);
+		model.addAttribute("ipAddressRemedy", ipAddressRemedy);
 		
 		return"dispOrder";
 	}

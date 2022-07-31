@@ -14,6 +14,9 @@
 <input type="button" id="save_pdf" value="Сохранить как PDF">
 <p class="remark">*Принтер: выбрать "Сохранить как PDF"</p>
 <p class="remark">*Дополнительные настройки: убрать колонтитулы.</p>
+<div class="openRed">
+<a th:href="${ipAddressRed}+${bsNumberRed}" class="noprinterHref" target="_blank"> Открыть Проходку в Red </a>
+</div>
 </div>
 <div class="parent_order">
 <table class="head">
@@ -89,9 +92,9 @@
 <tr><td>"___"__________________202_ г.</td></tr>
 </table>
 </div>
-<div id="roadMapWrapper">
-<h3 style="text-align:center;margin-top:60px;">Проходка на объект.</h3>
-<div class="roadMap" id="roadMap" contenteditable="true" placeholder="... Скопируйте в это поле из Silvia текст Проходки на БС ..."></div>
+<div id="roadMapWrapper" style="margin-top:60px;">
+<h3 style="text-align:center">Проходка на объект.</h3>
+<div class="roadMap" id="roadMap" contenteditable="true" placeholder="... Скопируйте в это поле из Red текст Проходки на БС ..."></div>
 </div>
 </div>
 <script>

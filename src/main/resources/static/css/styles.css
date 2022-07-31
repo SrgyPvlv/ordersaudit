@@ -510,7 +510,7 @@ input[type="submit"]:hover,input[type="button"]:hover{
   transform:none !important;
 }
 @media print{
-	.noprint,.no-print,.no-print *
+	.noprint,.noprinter,.no-print,.no-print *
 	{
 	display: none !important;
 	}
@@ -546,4 +546,22 @@ input[type="submit"]:hover,input[type="button"]:hover{
 	font-style:italic;
 	color:grey;
 	height:17;
+}
+.openRed {
+  margin-top:15px;
+  border-top: 1px solid #000000;
+}
+a.noprinterHref:link,a.noprinterHref:visited,a.noprinterHref:active {
+  color: white;
+  background-color: #f44336;
+  text-decoration:none;
+  display: inline-block;
+  margin-top:15px;
+  text-align:center;
+  font-size: 18px;
+  padding: 5px 10px;
+}
+a.noprinterHref:hover {
+  color: white;text-decoration:none;
+  padding: 10px 20px;
 }
