@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+<link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
+<title>Список записей БД</title>
+</head>
+<body>
+
+<div th:replace="header :: header"></div>
+
+<div class="find1"> 
+  <a th:href="@{/admin/redCreate}" style="display:inline;">Добавить запись новой БД</a>  &nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp
+  <a th:href="@{/admin/redsShow}">Показать записи всех БД</a>
+</div>      
+<div>
+ <table class="userstable" border="1">
+ <caption align="top" style="margin-bottom:15px;"><p style="font-size:19px;font-weight:bold;display:inline;">Список Записей БД</p>&nbsp&nbsp&nbsp<span th:text="'Найдено записей: '+${redsSize}" style="color:#8B4513;display:inline;"></span></caption>
+        <tr>
+          <th> Название БД </th> <th>URL БД</th> <th>Редактирование/удаление (admin)</th>
+        </tr>
+         
+        <tr th:each="red : ${reds}">
+           <td th:text="${red.getBdName} ">Название БД</td><td th:text="${red.getIpAddress} ">URL БД</td>
+           <td>
+           <form th:action="@{/admin/redEdit}" method="get" style="display:inline;">
+                 <input type="hidden" name="id" th:value="${red.getId}">
+                 <input type="submit" value="Редактировать" style="background:#98FB98;">
+           </form> &nbsp | &nbsp 
+           <form th:action="@{/admin/redDelete}" method="get" style="display:inline;">
+                 <input type="hidden" name="id" th:value="${red.getId}">
+                 <input type="submit" value="Удалить" style="background:#FF0000; color:white;">
+            </form>
+            </td>        
+        </tr>          
+    </table>
+</div>
+<br><br>
+    
+<div th:replace="footer :: footer"></div>
+</body>
+</html>

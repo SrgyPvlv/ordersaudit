@@ -28,6 +28,7 @@ import com.example.sergey.Model.PricesSelect;
 import com.example.sergey.Service.BsListService;
 import com.example.sergey.Service.ContractorService;
 import com.example.sergey.Service.OrderService;
+import com.example.sergey.Service.RedService;
 import com.example.sergey.Service.UsersService;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -48,6 +49,7 @@ public class OrderController {
 	@Autowired private BsListService bsListService;
 	@Autowired private ContractorService contractorService;
 	@Autowired private OrderService orderService;
+	@Autowired private RedService redService;
 	@Autowired private PricesController pricesController;
 		
 	private static final Logger logger=LoggerFactory.getLogger(OrderController.class);
@@ -273,6 +275,7 @@ public class OrderController {
 		Date dateStart = null;
 		Date dateEnd = null;
 		Date contractDateDate = null;
+		String ipAddressRed;
 		
 		Order orderDb=orderService.getOrderById(id);
 		String cartJsonStr=orderDb.getCart();
@@ -300,10 +303,12 @@ public class OrderController {
 		end=formatter1.format(dateEnd);
 		contractDateString=formatter1.format(contractDateDate);
 		
+		try {ipAddressRed=redService.findByBdname("red").getIpAddress();} catch (Exception e) {ipAddressRed="urlForRedUndefinedInBdOfThisApp";}
+		
 		String getBsNumber=orderDb.getBsnumber();
 		StringBuffer getBsNumberBuffer=new StringBuffer(getBsNumber);
 		getBsNumberBuffer.delete(2, 4);
-		String bsNumberRed=getBsNumberBuffer.toString(); System.out.println(bsNumberRed);
+		String bsNumberRed=getBsNumberBuffer.toString();
 				
 		model.addAttribute("cart", cartArrayList);
 		model.addAttribute("sumWithOutNds", orderDb.getSumwithoutnds());
@@ -322,6 +327,7 @@ public class OrderController {
 		model.addAttribute("arenda", orderDb.getArenda());
 		model.addAttribute("comment", orderDb.getComment());
 		model.addAttribute("bsNumberRed", bsNumberRed);
+		model.addAttribute("ipAddressRed", ipAddressRed);
 		return"orderPage";
 	}
 		

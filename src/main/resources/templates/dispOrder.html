@@ -77,7 +77,7 @@
    <p><label for="end">Окончание выполнения работ: </label>
       <input form ="orderPage" type="date" id="end" name="end" th:value="*{endtime !=null} ? *{endtime} : '' " required><i></i></p>
    <p style="display:inline;"><label for="remedy">№ Инцидента/работы в Remedy: </label>
-      <input form ="orderPage" type="text" id="remedy" name="remedy" th:value="*{remedy !=null} ? *{remedy} : '' " placeholder="MSK000010717602"  required><i></i></p> &nbsp&nbsp | &nbsp&nbsp <a href="http://remedy/arsys/shared/login.jsp" class="remedyhref" target="_blank" style="display:inline;"> Открыть Remedy </a>
+      <input form ="orderPage" type="text" id="remedy" name="remedy" th:value="*{remedy !=null} ? *{remedy} : '' " placeholder="MSK000010717602"  required><i></i></p> &nbsp&nbsp | &nbsp&nbsp <a th:href="${ipAddressRemedy}" class="remedyhref" target="_blank" style="display:inline;"> Открыть Remedy </a>
    <p><label for="author">Инициатор заявки: ФИО(телефон): </label>
       <input form ="orderPage" type="text" id="author" name="author" th:value="*{author !=null} ? *{author} : ${username}" style="width:250px;" required><i></i></p>
    <p><label for="arenda">Контакт арендодателя: ФИО(телефон): </label>
