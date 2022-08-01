@@ -307,7 +307,7 @@ public class OrderController {
 		
 		String getBsNumber=orderDb.getBsnumber();
 		StringBuffer getBsNumberBuffer=new StringBuffer(getBsNumber);
-		getBsNumberBuffer.delete(2, 4);
+		getBsNumberBuffer.deleteCharAt(2);
 		String bsNumberRed=getBsNumberBuffer.toString();
 				
 		model.addAttribute("cart", cartArrayList);
