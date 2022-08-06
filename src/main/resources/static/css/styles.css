@@ -549,11 +549,11 @@ input[type="submit"]:hover,input[type="button"]:hover{
 }
 .openRed {
   margin-top:15px;
-  border-top: 2px solid #000000;
+  border-top: 1px solid #000000;
 }
 .openRedOpposite{
   margin-top:15px;
-  border-top: 2px solid #000000;
+  border-top: 1px solid #000000;
   padding-top: 15px;
 }
 .idFind_orderPage{
