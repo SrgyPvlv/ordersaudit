@@ -551,6 +551,24 @@ input[type="submit"]:hover,input[type="button"]:hover{
   margin-top:15px;
   border-top: 1px solid #000000;
 }
+.openRedOpposite{
+  margin-top:15px;
+  border-top: 1px solid #000000;
+  padding-top: 15px;
+}
+.idFind_orderPage{
+	color: white;
+	background-color: #ff8000;
+	border:1px solid #ff8000;
+	text-align:center;
+    font-size: 16px;
+    padding: 5px 10px;
+    margin-top:10px;
+}
+.bsNumberSearch_orderPage{
+    font-size: 16px;
+    border:1px solid #8B4513;
+}
 a.noprinterHref:link,a.noprinterHref:visited,a.noprinterHref:active {
   color: white;
   background-color: #f44336;

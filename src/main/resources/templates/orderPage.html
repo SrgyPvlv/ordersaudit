@@ -17,6 +17,12 @@
 <div class="openRed">
 <a th:href="${ipAddressRed}+${bsNumberRed}" class="noprinterHref" target="_blank"> Открыть Проходку в Red </a>
 </div>
+<div class="openRedOpposite">
+  <label style="color:#8B4513;font-size:18px;">№ БС Ответки</label> &nbsp&nbsp
+  <input type="text" id="idBsNumberSearch" class="bsNumberSearch_orderPage" name="bsNumberSearch" placeholder="78xxxxx" title="7-значный формат: 78xxxxx" style="width:100px">
+  <br>
+  <input type="submit" id="idFind" class="idFind_orderPage" value="Открыть Проходку в Red">  
+</div>
 </div>
 <div class="parent_order">
 <table class="head">
@@ -97,7 +103,8 @@
 <div class="roadMap" id="roadMap" contenteditable="true" placeholder="... Скопируйте в это поле из Red текст Проходки на БС ..."></div>
 </div>
 </div>
-<script>
+<script th:inline="javascript">
+/*<![CDATA[*/
 function saving(){
 	var content=document.getElementById("roadMap").innerHTML;
 	var roadDiv=document.getElementById("roadMapWrapper");
@@ -107,7 +114,17 @@ function saving(){
 	
 	window.print();
 }
+function showRedOpposite(){
+	var bsNumberOpposite=document.getElementById("idBsNumberSearch").value;
+	var urlRed = /*[[${ipAddressRed}]]*/ 'urlForRedUndefinedInBdOfThisApp';
+	var urlRedBsNumberOpposite=urlRed+bsNumberOpposite;
+	console.log(urlRedBsNumberOpposite);
+	window.open(urlRedBsNumberOpposite,'_blank');
+	
+}
 save_pdf.addEventListener("click",saving);
+document.getElementById("idFind").addEventListener("click",showRedOpposite);
+/*]]>*/
 </script>
 </body>
 </html>
