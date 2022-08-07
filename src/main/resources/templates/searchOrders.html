@@ -39,7 +39,8 @@
         
        <input type="submit" value="Найти" id="search_searchOrders" style="background-color: #98FB98"> &nbsp&nbsp
        <input type="reset" value="Очистить" style="background-color: #FFC0CB"> &nbsp&nbsp | &nbsp&nbsp
-       <span th:text="'Найдено записей: '+${listOrdersSize}" style="color:#8B4513"></span>
+       <span th:text="'Найдено записей: '+${listOrdersSize}" style="color:#8B4513"></span> &nbsp&nbsp
+       <span th:text="'На сумму (без НДС): '+${listOrderSumm}+' руб.'" style="color:#8B4513"></span>
          
      </form>       
   </div> 

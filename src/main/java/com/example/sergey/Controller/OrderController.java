@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -418,10 +417,12 @@ return "showOrders";
 		List<Order> listOrders = null;
 		List<Contractor> contractors=contractorService.getAllContractorsWithOutText();
 		int listOrdersSize=0;
+		double listOrderSumm=0.00;
 		
 		model.addAttribute("listOrders", listOrders);
 		model.addAttribute("contractors", contractors);
 		model.addAttribute("listOrdersSize", listOrdersSize);
+		model.addAttribute("listOrderSumm", listOrderSumm);
 
 		return "searchOrders";
 	}
@@ -429,7 +430,9 @@ return "showOrders";
 	@GetMapping("/orders/searchOrdersThroughAllContractors") //поиск заявок по различным фильтрам, без возможности их редактирования
     public String searchOrdersThroughAllContractors(
 		@RequestParam(name="author",defaultValue="%",required=false) String author,@RequestParam(name="contractname",defaultValue="%",required=false) String contractname,
-		@RequestParam(name="bsnumber",defaultValue="%",required=false) String bsnumber,@RequestParam(name="worktype",defaultValue="%",required=false) String worktype,
+		@RequestParam(name="bsnumber",defaultValue="%",required=false) String bsnumber,@RequestParam(name="report",defaultValue="%",required=false) String report,
+		@RequestParam(name="cedr",defaultValue="%",required=false) String cedr,@RequestParam(name="status",defaultValue="%",required=false) String status,
+		@RequestParam(name="comment",defaultValue="%",required=false) String comment,@RequestParam(name="worktype",defaultValue="%",required=false) String worktype,
 		@RequestParam(name="worktcp",defaultValue="%",required=false) String worktcp,Model model) {
 
 /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -437,10 +440,15 @@ String login=auth.getName();
 String author=userService.findUsersByLogin(login).getFullName();*/
 
 List<Order> listOrders = null;
-listOrders=orderService.searchOrdersThroughAllContractors(author,contractname,bsnumber,worktype,worktcp);
+listOrders=orderService.searchOrdersThroughAllContractors(author,contractname,bsnumber,report,cedr,status,comment,worktype,worktcp);
 List<Contractor> contractors=contractorService.getAllContractorsWithOutText();
 int listOrdersSize=listOrders.size();
-
+double listOrderSumm;
+if(listOrders.isEmpty()) {listOrderSumm=0.00;} else {
+	listOrderSumm=listOrders.stream().map(Order::getSumwithoutnds).reduce((x,y)->x+y).get().doubleValue();
+	BigDecimal bd = new BigDecimal(listOrderSumm).setScale(2, RoundingMode.HALF_UP);
+	listOrderSumm = bd.doubleValue();
+}
 Date sendDate = null;
 Date startDate = null;
 Date endDate = null;
@@ -465,6 +473,7 @@ order.setEndtime(endString);
 model.addAttribute("listOrders", listOrders);
 model.addAttribute("contractors", contractors);
 model.addAttribute("listOrdersSize", listOrdersSize);
+model.addAttribute("listOrderSumm", listOrderSumm);
 
 return "searchOrders";
 }
