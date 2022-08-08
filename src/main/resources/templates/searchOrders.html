@@ -36,10 +36,31 @@
        
        <label>Наименование (или № п/п) работы из ТЦП</label> &nbsp&nbsp
        <input type="text" name="worktcp" id="worktcp_searchOrders" placeholder="Все" style="width:220px"> &nbsp&nbsp | &nbsp&nbsp
+       
+       <label>Наличие ИД</label> &nbsp&nbsp
+       <select name="report" id="report_searchOrders" style="width:100px">
+       <option value="%" selected> Все </option>
+       <option value="да"> Да </option>
+       <option value="нет"> Нет </option> 
+       </select>&nbsp&nbsp | &nbsp&nbsp
+       
+       <label>Внесено в Кедр</label> &nbsp&nbsp
+       <select name="cedr" id="cedr_searchOrders" style="width:100px">
+       <option value="%" selected> Все </option>
+       <option value="да"> Да </option>
+       <option value="нет"> Нет </option> 
+       </select>
+       <br><br>
+       
+       <label>Статус Заказа</label> &nbsp&nbsp
+       <input type="text" name="status" id="status_searchOrders" placeholder="Все" style="width:220px"> &nbsp&nbsp | &nbsp&nbsp
+       
+       <label>Комментарии</label> &nbsp&nbsp
+       <input type="text" name="comment" id="comment_searchOrders" placeholder="Все" style="width:220px"> &nbsp&nbsp | &nbsp&nbsp
         
        <input type="submit" value="Найти" id="search_searchOrders" style="background-color: #98FB98"> &nbsp&nbsp
        <input type="reset" value="Очистить" style="background-color: #FFC0CB"> &nbsp&nbsp | &nbsp&nbsp
-       <span th:text="'Найдено записей: '+${listOrdersSize}" style="color:#8B4513"></span> &nbsp&nbsp
+       <span th:text="'Найдено записей: '+${listOrdersSize}" style="color:#8B4513"></span> &nbsp&nbsp&nbsp
        <span th:text="'На сумму (без НДС): '+${listOrderSumm}+' руб.'" style="color:#8B4513"></span>
          
      </form>       
@@ -101,17 +122,29 @@ var oldContractNameScript=document.getElementById("contractname_searchOrders").v
 var oldAuthorScript=document.getElementById("author_searchOrders").value;
 var oldWorkTypeScript=document.getElementById("worktype_searchOrders").value;
 var oldWorkTcpScript=document.getElementById("worktcp_searchOrders").value;
+var oldReportScript=document.getElementById("report_searchOrders").value;
+var oldCedrScript=document.getElementById("cedr_searchOrders").value;
+var oldStatusScript=document.getElementById("status_searchOrders").value;
+var oldCommentScript=document.getElementById("comment_searchOrders").value;
 sessionStorage.setItem("bsnumber_searchOrders",oldBsnumberScript);
 sessionStorage.setItem("contractname_searchOrders",oldContractNameScript);
 sessionStorage.setItem("author_searchOrders",oldAuthorScript);
 sessionStorage.setItem("worktype_searchOrders",oldWorkTypeScript);
-sessionStorage.setItem("worktcp_searchOrders",oldWorkTcpScript);};
+sessionStorage.setItem("worktcp_searchOrders",oldWorkTcpScript);
+sessionStorage.setItem("report_searchOrders",oldReportScript);
+sessionStorage.setItem("cedr_searchOrders",oldCedrScript);
+sessionStorage.setItem("status_searchOrders",oldStatusScript);
+sessionStorage.setItem("comment_searchOrders",oldCommentScript);};
 function readyLoadPage(){
 	document.getElementById("bsnumber_searchOrders").value=sessionStorage.getItem("bsnumber_searchOrders");
 	document.getElementById("contractname_searchOrders").value=sessionStorage.getItem("contractname_searchOrders");
 	document.getElementById("author_searchOrders").value=sessionStorage.getItem("author_searchOrders");
 	document.getElementById("worktype_searchOrders").value=sessionStorage.getItem("worktype_searchOrders");
-	document.getElementById("worktcp_searchOrders").value=sessionStorage.getItem("worktcp_searchOrders");	
+	document.getElementById("worktcp_searchOrders").value=sessionStorage.getItem("worktcp_searchOrders");
+	document.getElementById("report_searchOrders").value=sessionStorage.getItem("report_searchOrders");
+	document.getElementById("cedr_searchOrders").value=sessionStorage.getItem("cedr_searchOrders");
+	document.getElementById("status_searchOrders").value=sessionStorage.getItem("status_searchOrders");
+	document.getElementById("comment_searchOrders").value=sessionStorage.getItem("comment_searchOrders");
 };
 function resetData(){
 	sessionStorage.setItem("bsnumber_searchOrders","");
@@ -119,6 +152,10 @@ function resetData(){
 	sessionStorage.setItem("author_searchOrders","");
 	sessionStorage.setItem("worktype_searchOrders","");
 	sessionStorage.setItem("worktcp_searchOrders","");
+	sessionStorage.setItem("report_searchOrders","");
+	sessionStorage.setItem("cedr_searchOrders","");
+	sessionStorage.setItem("status_searchOrders","");
+	sessionStorage.setItem("comment_searchOrders","");
 };
 </script>
 

@@ -308,8 +308,14 @@ a.ref:hover,a.remedyhref:hover {
 	height: 30px;
 	font-size:18px;
 }
-.find,.findOrdersSearch{
+.find{
 	height: 80px;
+	border:2px solid red;
+	padding: 9px;
+	margin-bottom:10px;
+}
+.findOrdersSearch{
+	height: 110px;
 	border:2px solid red;
 	padding: 9px;
 	margin-bottom:10px;
@@ -416,7 +422,7 @@ a.ref:hover,a.remedyhref:hover {
 .listItems_searchOrders th{
   position: -webkit-sticky;
   position: sticky;
-  top:220px;
+  top:250px;
   z-index: 1;
 }
 
@@ -440,7 +446,7 @@ a.ref:hover,a.remedyhref:hover {
   z-index: 1;
 }
 .ordersSearchOrders{
-  margin: 220px auto 0 auto;
+  margin: 250px auto 0 auto;
   width: 100%;
   padding: 10px;
   background:white;
