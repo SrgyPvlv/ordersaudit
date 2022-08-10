@@ -432,7 +432,7 @@ return "showOrders";
 		@RequestParam(name="author",defaultValue="%",required=false) String author,@RequestParam(name="contractname",defaultValue="%",required=false) String contractname,
 		@RequestParam(name="bsnumber",defaultValue="%",required=false) String bsnumber,@RequestParam(name="report",defaultValue="%",required=false) String report,
 		@RequestParam(name="cedr",defaultValue="%",required=false) String cedr,@RequestParam(name="status",defaultValue="%",required=false) String status,
-		@RequestParam(name="comment",defaultValue="%",required=false) String comment,@RequestParam(name="worktype",defaultValue="%",required=false) String worktype,
+		@RequestParam(name="orderlistcomment",defaultValue="%",required=false) String orderlistcomment,@RequestParam(name="worktype",defaultValue="%",required=false) String worktype,
 		@RequestParam(name="worktcp",defaultValue="%",required=false) String worktcp,Model model) {
 
 /*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -440,7 +440,7 @@ String login=auth.getName();
 String author=userService.findUsersByLogin(login).getFullName();*/
 
 List<Order> listOrders = null;
-listOrders=orderService.searchOrdersThroughAllContractors(author,contractname,bsnumber,report,cedr,status,comment,worktype,worktcp);
+listOrders=orderService.searchOrdersThroughAllContractors(author,contractname,bsnumber,report,cedr,status,orderlistcomment,worktype,worktcp);
 List<Contractor> contractors=contractorService.getAllContractorsWithOutText();
 int listOrdersSize=listOrders.size();
 double listOrderSumm;

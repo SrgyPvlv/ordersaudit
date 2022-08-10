@@ -16,14 +16,14 @@
 
 <div class="findOrdersSearch" id="find">
   <div id="orderssearchLeft">         
-     <form th:action="@{/orders/searchOrdersThroughAllContractors}" th:method="get">
+     <form th:action="@{/orders/searchOrdersThroughAllContractors}" id="searchForm_searchOrders" th:method="get">
               
        <label>№ БС</label> &nbsp&nbsp
        <input type="text" name="bsnumber" id="bsnumber_searchOrders" placeholder="Все" style="width:220px"> &nbsp&nbsp | &nbsp&nbsp
               
        <label>Подрядчик</label> &nbsp&nbsp
        <select name="contractname" id="contractname_searchOrders">
-       <option selected value="%">Все</option>
+       <option value="%" selected>Все</option>
        <option th:each="contractor: ${contractors}" th:text="${contractor.getName}" th:value="${contractor.getName}"></option>
        </select> &nbsp&nbsp | &nbsp&nbsp
      
@@ -56,7 +56,7 @@
        <input type="text" name="status" id="status_searchOrders" placeholder="Все" style="width:220px"> &nbsp&nbsp | &nbsp&nbsp
        
        <label>Комментарии</label> &nbsp&nbsp
-       <input type="text" name="comment" id="comment_searchOrders" placeholder="Все" style="width:220px"> &nbsp&nbsp | &nbsp&nbsp
+       <input type="text" name="orderlistcomment" id="orderlistcomment_searchOrders" placeholder="Все" style="width:220px"> &nbsp&nbsp | &nbsp&nbsp
         
        <input type="submit" value="Найти" id="search_searchOrders" style="background-color: #98FB98"> &nbsp&nbsp
        <input type="reset" value="Очистить" style="background-color: #FFC0CB"> &nbsp&nbsp | &nbsp&nbsp
@@ -125,7 +125,7 @@ var oldWorkTcpScript=document.getElementById("worktcp_searchOrders").value;
 var oldReportScript=document.getElementById("report_searchOrders").value;
 var oldCedrScript=document.getElementById("cedr_searchOrders").value;
 var oldStatusScript=document.getElementById("status_searchOrders").value;
-var oldCommentScript=document.getElementById("comment_searchOrders").value;
+var oldOrderListCommentScript=document.getElementById("orderlistcomment_searchOrders").value;
 sessionStorage.setItem("bsnumber_searchOrders",oldBsnumberScript);
 sessionStorage.setItem("contractname_searchOrders",oldContractNameScript);
 sessionStorage.setItem("author_searchOrders",oldAuthorScript);
@@ -134,7 +134,7 @@ sessionStorage.setItem("worktcp_searchOrders",oldWorkTcpScript);
 sessionStorage.setItem("report_searchOrders",oldReportScript);
 sessionStorage.setItem("cedr_searchOrders",oldCedrScript);
 sessionStorage.setItem("status_searchOrders",oldStatusScript);
-sessionStorage.setItem("comment_searchOrders",oldCommentScript);};
+sessionStorage.setItem("orderlistcomment_searchOrders",oldOrderListCommentScript);};
 function readyLoadPage(){
 	document.getElementById("bsnumber_searchOrders").value=sessionStorage.getItem("bsnumber_searchOrders");
 	document.getElementById("contractname_searchOrders").value=sessionStorage.getItem("contractname_searchOrders");
@@ -144,7 +144,7 @@ function readyLoadPage(){
 	document.getElementById("report_searchOrders").value=sessionStorage.getItem("report_searchOrders");
 	document.getElementById("cedr_searchOrders").value=sessionStorage.getItem("cedr_searchOrders");
 	document.getElementById("status_searchOrders").value=sessionStorage.getItem("status_searchOrders");
-	document.getElementById("comment_searchOrders").value=sessionStorage.getItem("comment_searchOrders");
+	document.getElementById("orderlistcomment_searchOrders").value=sessionStorage.getItem("orderlistcomment_searchOrders");
 };
 function resetData(){
 	sessionStorage.setItem("bsnumber_searchOrders","");
@@ -155,7 +155,7 @@ function resetData(){
 	sessionStorage.setItem("report_searchOrders","");
 	sessionStorage.setItem("cedr_searchOrders","");
 	sessionStorage.setItem("status_searchOrders","");
-	sessionStorage.setItem("comment_searchOrders","");
+	sessionStorage.setItem("orderlistcomment_searchOrders","");
 };
 </script>
 

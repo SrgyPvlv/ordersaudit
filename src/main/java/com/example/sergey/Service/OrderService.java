@@ -41,6 +41,6 @@ public interface OrderService {
 	
 	//поиск заявок по различным фильтрам
 	public List<Order> searchOrdersThroughAllContractors(String author, String contractname, String bsnumber, 
-			String report, String cedr, String status, String comment, String worktype, String worktcp);
+			String report, String cedr, String status, String orderlistcomment, String worktype, String worktcp);
 	
 }
