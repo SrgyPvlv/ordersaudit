@@ -431,7 +431,7 @@ return "showOrders";
     public String searchOrdersThroughAllContractors(
 		@RequestParam(name="author",defaultValue="%",required=false) String author,@RequestParam(name="contractname",defaultValue="%",required=false) String contractname,
 		@RequestParam(name="bsnumber",defaultValue="%",required=false) String bsnumber,@RequestParam(name="report",defaultValue="%",required=false) String report,
-		@RequestParam(name="cedr",defaultValue="%",required=false) String cedr,@RequestParam(name="status",defaultValue="%",required=false) String status,
+		@RequestParam(name="cedr",defaultValue="%",required=false) String cedr,@RequestParam(name="status",defaultValue="xyz999",required=false) String status,
 		@RequestParam(name="orderlistcomment",defaultValue="%",required=false) String orderlistcomment,@RequestParam(name="worktype",defaultValue="%",required=false) String worktype,
 		@RequestParam(name="worktcp",defaultValue="%",required=false) String worktcp,Model model) {
 

@@ -53,7 +53,11 @@
        <br><br>
        
        <label>Статус Заказа</label> &nbsp&nbsp
-       <input type="text" name="status" id="status_searchOrders" placeholder="Все" style="width:220px"> &nbsp&nbsp | &nbsp&nbsp
+       <select name="status" id="status_searchOrders" style="width:120px">
+       <option value="xyz999" selected> Все </option>
+       <option value="(оплачен|сторнир|отмен)"> Не оплачен </option>
+       <option value="(оплачен|сторнир|отмен|отправ|№|ип)"> Не известен </option> 
+       </select> &nbsp&nbsp | &nbsp&nbsp
        
        <label>Комментарии</label> &nbsp&nbsp
        <input type="text" name="orderlistcomment" id="orderlistcomment_searchOrders" placeholder="Все" style="width:220px"> &nbsp&nbsp | &nbsp&nbsp
