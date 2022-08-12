@@ -35,7 +35,7 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
 	
 	//поиск заявок по различным фильтрам
 	@Query(value="select * from orderlist where lower(author) like lower(concat('%',:avtor,'%'))"
-			+ " and contractname like lower(concat('%',:contractname,'%')) and bsnumber like concat('%',:bsnum,'%')"
+			+ " and lower(contractname) like lower(concat('%',:contractname,'%')) and bsnumber like concat('%',:bsnum,'%')"
 			+ " and report like (:report) and cedr like (:cedr) and lower(status) not similar to concat('%',:status,'%')"
 			+ " and lower(orderlistcomment) similar to concat('%',:orderlistcomment,'%')"
 			+ " and (lower(worktype) like concat('%',:filter,'%') or lower(worktype) like concat('%',:filter1,'%',:filter2,'%') or lower(worktype) like concat('%',:filter2,'%',:filter1,'%'))"

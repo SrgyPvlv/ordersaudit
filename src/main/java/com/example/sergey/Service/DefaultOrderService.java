@@ -80,6 +80,7 @@ public class DefaultOrderService implements OrderService {
 		String authorLower=author.toLowerCase();
 		String statusLower=status.toLowerCase();
 		String orderlistcommentLower=orderlistcomment.toLowerCase();
+		String contractnameLower=contractname.toLowerCase();
 		String worktype1;
 		String worktype2;
 		String worktypeLower=worktype.toLowerCase();
@@ -105,7 +106,7 @@ public class DefaultOrderService implements OrderService {
 			worktcp2=words1[1];
 		}
 		
-		List<Order> ordersList=orderRepository.searchOrdersThroughAllContractors(authorLower, contractname, bsnumber, report,
+		List<Order> ordersList=orderRepository.searchOrdersThroughAllContractors(authorLower, contractnameLower, bsnumber, report,
 				cedr, statusLower, orderlistcommentLower, worktypeLower, worktype1, worktype2, worktcpLower, worktcp1, worktcp2);
 		return ordersList;
 	}

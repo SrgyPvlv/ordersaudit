@@ -418,12 +418,14 @@ a.ref:hover,a.remedyhref:hover {
   position: sticky;
   top:220px;
   z-index: 1;
+  cursor: pointer;
 }
 .listItems_searchOrders th{
   position: -webkit-sticky;
   position: sticky;
   top:250px;
   z-index: 1;
+  cursor: pointer;
 }
 
 .listItemsPrice_searchPriceItems th{
