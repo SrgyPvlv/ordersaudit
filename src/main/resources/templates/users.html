@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+<script th:src="@{/js/charSortUsers.js}"></script>
 <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
 <title>Список Пользователей</title>
 </head>
@@ -37,10 +38,11 @@
      </div>
 </div>      
 <div>
- <table class="userstable" border="1">
+ <table class="userstable" id="userstable" border="1">
  <caption align="top" style="margin-bottom:15px;"><p style="font-size:19px;font-weight:bold;display:inline;">Список Пользователей</p>&nbsp&nbsp&nbsp<span th:text="'Найдено записей: '+${usersSize}" style="color:#8B4513;display:inline;"></span></caption>
         <tr>
-          <th> Логин </th> <th>Пароль</th> <th>Права</th> <th>Фамилия И.О. телефон</th> <th>Редактирование/удаление (admin)</th>
+          <th onclick="sortTable_users(0)"> Логин &#8597; </th> <th>Пароль</th> <th onclick="sortTable_users(2)">Права &#8597;</th>
+           <th onclick="sortTable_users(3)">Фамилия И.О. телефон &#8597;</th> <th>Редактирование/удаление (admin)</th>
         </tr>
          
         <tr th:each="user : ${users}">

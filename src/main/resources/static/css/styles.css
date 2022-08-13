@@ -239,6 +239,7 @@ position: fixed; /* Фиксированное положение */
 .userstable{
 	border-collapse: collapse;
     width: 60%;
+    cursor: pointer;
 }
 .contractorstable {
 	border-collapse: collapse;
