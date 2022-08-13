@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+<script th:src="@{/js/charSort.js}"></script>
+<script th:src="@{/js/digitSort.js}"></script>
 <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
 <title>БД Заявок</title>
 </head>
@@ -16,7 +18,7 @@
 
 <div class="findOrdersSearch" id="find">
   <div id="orderssearchLeft">         
-     <form th:action="@{/orders/searchOrdersThroughAllContractors}" th:method="get">
+     <form th:action="@{/orders/searchOrdersThroughAllContractors}" id="searchForm_searchOrders" th:method="get">
               
        <label>№ БС</label> &nbsp&nbsp
        <input type="text" name="bsnumber" id="bsnumber_searchOrders" placeholder="Все" style="width:220px"> &nbsp&nbsp | &nbsp&nbsp
@@ -36,22 +38,48 @@
        
        <label>Наименование (или № п/п) работы из ТЦП</label> &nbsp&nbsp
        <input type="text" name="worktcp" id="worktcp_searchOrders" placeholder="Все" style="width:220px"> &nbsp&nbsp | &nbsp&nbsp
+       
+       <label>Наличие ИД</label> &nbsp&nbsp
+       <select name="report" id="report_searchOrders" style="width:100px">
+       <option value="%" selected> Все </option>
+       <option value="да"> Да </option>
+       <option value="нет"> Нет </option> 
+       </select>&nbsp&nbsp | &nbsp&nbsp
+       
+       <label>Внесено в Кедр</label> &nbsp&nbsp
+       <select name="cedr" id="cedr_searchOrders" style="width:100px">
+       <option value="%" selected> Все </option>
+       <option value="да"> Да </option>
+       <option value="нет"> Нет </option> 
+       </select>
+       <br><br>
+              
+       <label>Статус Заказа</label> &nbsp&nbsp
+       <select name="status" id="status_searchOrders" style="width:120px">
+       <option value="xyz999" selected> Все </option>
+       <option value="(оплачен|сторнир|отмен)"> Не оплачен </option>
+       <option value="(оплачен|сторнир|отмен|отправ|№|ип)"> Не известен </option> 
+       </select> &nbsp&nbsp | &nbsp&nbsp
+       
+       <label>Комментарии</label> &nbsp&nbsp
+       <input type="text" name="orderlistcomment" id="orderlistcomment_searchOrders" placeholder="Все" style="width:220px"> &nbsp&nbsp | &nbsp&nbsp
         
        <input type="submit" value="Найти" id="search_searchOrders" style="background-color: #98FB98"> &nbsp&nbsp
        <input type="reset" value="Очистить" style="background-color: #FFC0CB"> &nbsp&nbsp | &nbsp&nbsp
-       <span th:text="'Найдено записей: '+${listOrdersSize}" style="color:#8B4513"></span>
+       <span th:text="'Найдено записей: '+${listOrdersSize}" style="color:#8B4513"></span> &nbsp&nbsp&nbsp
+       <span th:text="'На сумму (без НДС): '+${listOrderSumm}+' руб.'" style="color:#8B4513"></span>
          
      </form>       
   </div> 
 </div>
 </div>
 <div class="ordersSearchOrders">
-<table class="listItems_searchOrders">
+<table class="listItems_searchOrders" id="listItems_searchOrders">
 <tr>
-<th class="col11">№ Заказа</th><th class="col12">№ БС</th><th class="col13">Дата ТЗ</th><th class="col14">Стоимость без|c НДС</th>
-<th class="15">ИД</th><th class="col16">Внесено в Кедр</th><th class="col17">Статус Заказа</th>
+<th class="col11" onclick="digitSortTable_searchOrders(0)">№ Заказа &#8597;</th><th class="col12">№ БС</th><th class="col13">Дата ТЗ</th><th class="col14">Стоимость без|c НДС</th>
+<th class="15" onclick="sortTable_searchOrders(4)">ИД &#8597;</th><th class="col16" onclick="sortTable_searchOrders(5)">Внесено в Кедр &#8597;</th><th class="col17" onclick="sortTable_searchOrders(6)">Статус Заказа &#8597;</th>
 <th class="col18">Срок по ТЗ</th><th class="col19">Вид работ</th>
-<th class="col20">Комментарии (статус/проверка/приемка)</th><th class="col21"></th>
+<th class="col20" onclick="sortTable_searchOrders(9)">Комментарии (статус/проверка/приемка) &#8597;</th><th class="col21"></th>
 </tr>
 <tr th:each="listOrder : ${listOrders}">
 <td th:text="${listOrder.getOrdernumber}" class="col11"></td><td th:text="${listOrder.getBsnumber}" th:title="${listOrder.getBsaddress}" class="col12"></td>
@@ -100,17 +128,29 @@ var oldContractNameScript=document.getElementById("contractname_searchOrders").v
 var oldAuthorScript=document.getElementById("author_searchOrders").value;
 var oldWorkTypeScript=document.getElementById("worktype_searchOrders").value;
 var oldWorkTcpScript=document.getElementById("worktcp_searchOrders").value;
+var oldReportScript=document.getElementById("report_searchOrders").value;
+var oldCedrScript=document.getElementById("cedr_searchOrders").value;
+var oldStatusScript=document.getElementById("status_searchOrders").value;
+var oldOrderListCommentScript=document.getElementById("orderlistcomment_searchOrders").value;
 sessionStorage.setItem("bsnumber_searchOrders",oldBsnumberScript);
 sessionStorage.setItem("contractname_searchOrders",oldContractNameScript);
 sessionStorage.setItem("author_searchOrders",oldAuthorScript);
 sessionStorage.setItem("worktype_searchOrders",oldWorkTypeScript);
-sessionStorage.setItem("worktcp_searchOrders",oldWorkTcpScript);};
+sessionStorage.setItem("worktcp_searchOrders",oldWorkTcpScript);
+sessionStorage.setItem("report_searchOrders",oldReportScript);
+sessionStorage.setItem("cedr_searchOrders",oldCedrScript);
+sessionStorage.setItem("status_searchOrders",oldStatusScript);
+sessionStorage.setItem("orderlistcomment_searchOrders",oldOrderListCommentScript);};
 function readyLoadPage(){
 	document.getElementById("bsnumber_searchOrders").value=sessionStorage.getItem("bsnumber_searchOrders");
 	document.getElementById("contractname_searchOrders").value=sessionStorage.getItem("contractname_searchOrders");
 	document.getElementById("author_searchOrders").value=sessionStorage.getItem("author_searchOrders");
 	document.getElementById("worktype_searchOrders").value=sessionStorage.getItem("worktype_searchOrders");
-	document.getElementById("worktcp_searchOrders").value=sessionStorage.getItem("worktcp_searchOrders");	
+	document.getElementById("worktcp_searchOrders").value=sessionStorage.getItem("worktcp_searchOrders");
+	document.getElementById("report_searchOrders").value=sessionStorage.getItem("report_searchOrders");
+	document.getElementById("cedr_searchOrders").value=sessionStorage.getItem("cedr_searchOrders");
+	document.getElementById("status_searchOrders").value=sessionStorage.getItem("status_searchOrders");
+	document.getElementById("orderlistcomment_searchOrders").value=sessionStorage.getItem("orderlistcomment_searchOrders");
 };
 function resetData(){
 	sessionStorage.setItem("bsnumber_searchOrders","");
@@ -118,8 +158,11 @@ function resetData(){
 	sessionStorage.setItem("author_searchOrders","");
 	sessionStorage.setItem("worktype_searchOrders","");
 	sessionStorage.setItem("worktcp_searchOrders","");
+	sessionStorage.setItem("report_searchOrders","");
+	sessionStorage.setItem("cedr_searchOrders","");
+	sessionStorage.setItem("status_searchOrders","");
+	sessionStorage.setItem("orderlistcomment_searchOrders","");
 };
 </script>
-
 </body>
 </html>

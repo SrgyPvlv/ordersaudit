@@ -13,7 +13,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>vetex</name>
-	<description>Spring Boot+thymeleaf</description>
+	<description>App for making orders</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>

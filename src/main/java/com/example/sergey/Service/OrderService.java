@@ -40,6 +40,7 @@ public interface OrderService {
 	public void deleteAllOrdersByContractNumber(String contractnumber);
 	
 	//поиск заявок по различным фильтрам
-	public List<Order> searchOrdersThroughAllContractors(String author, String contractname, String bsnumber, String worktype, String worktcp);
+	public List<Order> searchOrdersThroughAllContractors(String author, String contractname, String bsnumber, 
+			String report, String cedr, String status, String orderlistcomment, String worktype, String worktcp);
 	
 }
