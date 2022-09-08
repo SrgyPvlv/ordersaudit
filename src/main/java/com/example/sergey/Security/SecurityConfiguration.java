@@ -41,7 +41,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
               .permitAll()
               .and()
               .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
-              .and().rememberMe().key("webservice").alwaysRemember(true);
+              .and().rememberMe().key("webservice").alwaysRemember(true)
+              .and()
+              .sessionManagement()
+              .maximumSessions(1)
+              .expiredUrl("/login?invalid-session=true");
     }
     
 }
