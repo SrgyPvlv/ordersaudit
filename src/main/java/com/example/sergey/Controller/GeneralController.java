@@ -10,6 +10,5 @@ public class GeneralController {
 	@GetMapping("/") //переход на страницу index (главную) с передачей данных о подрядчиках
 	public String index(Model model) {
 		return "index";
-	}
-	
+	}	
 }
