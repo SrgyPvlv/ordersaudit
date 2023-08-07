@@ -8,6 +8,7 @@ import java.math.RoundingMode;
 
 public class PricesSelect implements Comparable<PricesSelect>{
 	
+	private int tablenumber; //номер таблицы ТЦП (номера пунктов могут повторяться в разных таблицах)
 	private String ppnumber; //номер пункта ТЦП
 	private String workname; //название пункта
 	private String unitmeasure; //единица измерения пункта
@@ -17,7 +18,8 @@ public class PricesSelect implements Comparable<PricesSelect>{
 	private double quantity; //количество, установленное пользователем
 	private double endprice; //конечная цена, т.е. кол-во*цена пункта
 
-	public PricesSelect(String ppnumber,String workname,String unitmeasure,double price, String comment, String contractor, double quantity) {
+	public PricesSelect(int tablenumber,String ppnumber,String workname,String unitmeasure,double price, String comment, String contractor, double quantity) {
+		this.tablenumber=tablenumber;
 		this.ppnumber=ppnumber;
 		this.workname=workname;
 		this.unitmeasure=unitmeasure;
@@ -28,6 +30,13 @@ public class PricesSelect implements Comparable<PricesSelect>{
 		this.endprice=this.price*this.quantity;
 		BigDecimal bd = new BigDecimal(this.endprice).setScale(2, RoundingMode.HALF_UP);
 		this.endprice = bd.doubleValue();
+	}
+	
+	public void setTableNumber(int tablenumber) {
+		this.tablenumber=tablenumber;
+	}
+	public int getTableNumber() {
+		return tablenumber;
 	}
 	
 	public void setPpNumber(String ppnumber) {

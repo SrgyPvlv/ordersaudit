@@ -18,6 +18,8 @@
 <fieldset style="border-color:#FFEBCD;text-align: center">
 <form th:action="@{/admin/editPriceItem}" th:method="post">
 <input type="hidden" name="id" th:value="${item.getId}">
+<label>№ таблицы</label><br>
+<input type="number" name="tablenumber" step="1" min="1" style="text-align: center" required ><br><br>
 <label>№ пп</label><br>
 <input type="text" name="pp" style="text-align: center" th:value="${item.getPpNumber}" required ><br><br>
 <label>Наименование работ</label><br>

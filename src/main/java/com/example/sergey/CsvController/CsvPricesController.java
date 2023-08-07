@@ -55,7 +55,7 @@ public class CsvPricesController {
 	      String username = MyDbConnection.username;
 	      String password = MyDbConnection.password;
 	      Connection conn = null;
-	      String myQuery="COPY prices (ppnumber,workname,unitmeasure,price,comment,contractor,contractname) FROM STDIN WITH CSV";
+	      String myQuery="COPY prices (tablenumber,ppnumber,workname,unitmeasure,price,comment,contractor,contractname) FROM STDIN WITH CSV";
 	      
 	      try {  
 	    	  conn = DriverManager.getConnection(urls, username, password);
@@ -91,7 +91,7 @@ public class CsvPricesController {
 	      String username = MyDbConnection.username;
 	      String password = MyDbConnection.password;
 	      Connection conn = null;
-	      String myQuery="COPY (select ppnumber,workname,unitmeasure,price,comment,contractor,contractname from prices where contractor like '"+contractor+
+	      String myQuery="COPY (select tablenumber,ppnumber,workname,unitmeasure,price,comment,contractor,contractname from prices where contractor like '"+contractor+
 	     "') TO STDOUT WITH (FORMAT CSV, HEADER)";
 	      InputStreamResource file;
 	      
