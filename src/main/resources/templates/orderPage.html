@@ -62,7 +62,7 @@
 </tr>
 <tr th:each="order: ${cart}">
 
-<td th:text="${order.getPpNumber}"></td><td th:text="${order.getWorkName}"></td><td th:text="${order.getUnitMeasure}"></td>
+<td th:text="'Табл.'+${order.getTableNumber}+', п.'+${order.getPpNumber}"></td><td th:text="${order.getWorkName}"></td><td th:text="${order.getUnitMeasure}"></td>
 <td th:text="${order.getPrice}"></td><td th:text="${order.getQuantity}"></td><td th:text="${order.getEndPrice}"></td>
 </tr>
 
