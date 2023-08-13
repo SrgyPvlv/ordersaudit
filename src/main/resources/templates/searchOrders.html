@@ -96,7 +96,7 @@
 <input type="hidden" name="contractname" th:value="${listOrder.getContractname}">
 <input type="submit" name="submit" value="Редактировать" style="background:#98FB98;">
 </form> &nbsp | &nbsp
-<form th:action="@{/superadmin/orderDelete}" method="get" target="_blank" style="display:inline;">
+<form th:action="@{/superadmin/orderDelete}" method="get" style="display:inline;">
 <input type="hidden" name="id" th:value="${listOrder.getId}">
 <input type="hidden" name="contractnumber" th:value="${listOrder.getContractnumber}">
 <input type="submit" name="submit" value="Удалить" style="background:#FF0000; color:white;">

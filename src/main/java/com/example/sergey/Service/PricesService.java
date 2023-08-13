@@ -14,8 +14,8 @@ public class PricesService {
 
 	@Autowired PricesRepository pricesRepository;
 	
-	public List<Prices> findAllPriceItemsByContractor(String contractor){ //поиск всех пунктов тцп по подрядчику (сортированных по номеру пункта)
-		return pricesRepository.findByContractorOrderByPpnumber(contractor);
+	public List<Prices> findAllPriceItemsByContractor(String contractor){ //поиск всех пунктов тцп по подрядчику (сортированных по номеру таблицы и пункта)
+		return pricesRepository.findByContractorOrderByTablenumberAscPpnumberAsc(contractor);
 	}
 	
 	public Prices findPriceItemById(long id) { //поиск пункта тцп по id
@@ -30,7 +30,7 @@ public class PricesService {
 		return pricesRepository.findPriceItemByPpNumber(contractor, pp);
 	}
 	
-	public List<Prices> findPriceItemByWorkName(String contractor,String workname) { //поиск пуктов тцп по фильтрам в названии (и подрядчику)
+	public List<Prices> findPriceItemByWorkName(String contractor,String workname) { //поиск пуктов тцп по фильтрам в названии (и подрядчику), сортированные по номеру таблицы и номеру пункта
 		
 		String worknameLower=workname.toLowerCase();
 		String workname1;
