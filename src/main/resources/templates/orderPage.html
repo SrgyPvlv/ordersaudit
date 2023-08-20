@@ -60,9 +60,11 @@
 <th>№ п/п</th><th>Наименование работ</th><th>Ед. изм.</th><th>Цена за ед., руб. без НДС</th><th>Кол-во</th>
 <th>Стоимость</th>
 </tr>
-<tr th:each="order: ${cart}">
+<tr th:each="order,iterStat: ${cart}">
 
-<td th:text="'Табл.'+${order.getTableNumber}+', п.'+${order.getPpNumber}"></td><td th:text="${order.getWorkName}"></td><td th:text="${order.getUnitMeasure}"></td>
+<td th:text="${iterStat.index}+1"></td>
+<td th:utext="'Прил.'+${order.getAppendNumber}+', Табл.'+${order.getTableNumber}+', п.'+${order.getPpNumber}+'<br>'+${order.getWorkName}" style="text-align:left"></td>
+<td th:text="${order.getUnitMeasure}"></td>
 <td th:text="${order.getPrice}"></td><td th:text="${order.getQuantity}"></td><td th:text="${order.getEndPrice}"></td>
 </tr>
 

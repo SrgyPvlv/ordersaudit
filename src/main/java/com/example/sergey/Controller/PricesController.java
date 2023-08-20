@@ -119,12 +119,12 @@ public class PricesController {
 	}
 	
 	@PostMapping("/admin/newPriceItemCreate") //сохранение нового пункта тцп и возврат на страницу тцп данного подрядчика
-	public String newPriceItemCreate(@RequestParam("tablenumber") int tablenumber,@RequestParam("pp") String pp,
+	public String newPriceItemCreate(@RequestParam("appendnumber") int appendnumber,@RequestParam("tablenumber") int tablenumber,@RequestParam("pp") String pp,
 			@RequestParam("workname") String workname,
 			@RequestParam("unitmeasure") String unitmeasure,@RequestParam("price") double price,@RequestParam("comment") String comment,
 			@RequestParam("contractor") String contractor,@RequestParam("contractname") String contractname,RedirectAttributes redirectAttr) throws IOException{
 		
-		Prices newPriceItem=new Prices(tablenumber,pp,workname,unitmeasure,price,comment,contractor,contractname);
+		Prices newPriceItem=new Prices(appendnumber,tablenumber,pp,workname,unitmeasure,price,comment,contractor,contractname);
 		try {
 			pricesService.savePriceItem(newPriceItem);
 		}catch (Exception e) {}
@@ -161,12 +161,13 @@ public class PricesController {
 	}
 	
 	@PostMapping ("/admin/editPriceItem") //сохранение редактирования конкретного пункта тцп для данного подрядчика
-	public String editPriceItem(@RequestParam("id") long id,@RequestParam("tablenumber") int tablenumber,
+	public String editPriceItem(@RequestParam("id") long id,@RequestParam("appendnumber") int appendnumber,@RequestParam("tablenumber") int tablenumber,
 			@RequestParam("pp") String pp,@RequestParam("workname") String workname,
 	@RequestParam("unitmeasure") String unitmeasure,@RequestParam("price") double price,@RequestParam("comment") String comment,
 	@RequestParam("contractor") String contractor,@RequestParam("contractname") String contractname,RedirectAttributes redirectAttr) throws IOException{
 		
 		Prices item=pricesService.findPriceItemById(id);
+		item.setAppendNumber(appendnumber);
 		item.setTableNumber(tablenumber);
 		item.setPpNumber(pp);
 		item.setWorkName(workname);
@@ -187,6 +188,7 @@ public class PricesController {
 			@RequestParam(name="contractdate") String contractdate, @RequestParam(name="contractname") String contractname,RedirectAttributes redirectAttr) {
 		
 		Prices item=pricesService.findPriceItemById(id);
+		int appendnumber=item.getAppendNumber();
 		int tablenumber=item.getTableNumber();
 		String ppnumber=item.getPpNumber();
 		String workname=item.getWorkName();
@@ -195,7 +197,7 @@ public class PricesController {
 		String comment=item.getComment();
 		String contractorGet=item.getContractor();
 
-		PricesSelect pricesSelect=new PricesSelect(tablenumber,ppnumber,workname,unitmeasure,price,comment,contractorGet,quantity);
+		PricesSelect pricesSelect=new PricesSelect(appendnumber,tablenumber,ppnumber,workname,unitmeasure,price,comment,contractorGet,quantity);
 		orderCart.addItem(pricesSelect);
 		
 		redirectAttr.addAttribute("contractor", contractor);

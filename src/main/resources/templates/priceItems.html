@@ -29,7 +29,7 @@
 <div class="search">
        <div id="search1">
        <form th:action="@{/priceItems}" th:method="get" >
-       <label>Поиск по № ТЦП (№ п/п)</label> &nbsp&nbsp
+       <label>Поиск по № п.ТЦП</label> &nbsp&nbsp
        <input type="hidden" name="contractor" th:value="${contractor}">
        <input type="text" name="ppsearch" required>
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
@@ -93,7 +93,7 @@
 <div class="test2" id="test2">
 <table class="listItemsPrice">
 <tr>
-<th class="col1">Добавить в Корзину</th><th class="col2">№ п/п</th><th class="col3">Наименование работ</th><th class="col4">Ед. изм.</th>
+<th class="col1">Добавить в Корзину</th><th class="col2">№ п.ТЦП</th><th class="col3">Наименование работ</th><th class="col4">Ед. изм.</th>
 <th class="col5">Цена за ед., руб. без НДС</th><th class="col6">Описание позиции</th>
 </tr>
 <tr th:each="listitem: ${listitems}">

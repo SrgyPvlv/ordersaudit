@@ -17,9 +17,11 @@
 <h3>Добавление нового пункта ТЦП</h3>
 <fieldset style="border-color:#FFEBCD;text-align: center">
 <form th:action="@{/admin/newPriceItemCreate}" th:method="post">
+<label>№ Приложения</label><br>
+<input type="number" name="appendnumber" step="1" min="1" style="text-align: center" required ><br><br>
 <label>№ таблицы</label><br>
 <input type="number" name="tablenumber" step="1" min="1" style="text-align: center" required ><br><br>
-<label>№ пп</label><br>
+<label>№ п.ТЦП</label><br>
 <input type="text" name="pp" style="text-align: center" required ><br><br>
 <label>Наименование работ</label><br>
 <input type="text" name="workname" style="text-align: center" required ><br><br>

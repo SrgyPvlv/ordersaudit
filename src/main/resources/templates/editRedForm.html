@@ -18,10 +18,10 @@
  <fieldset style="border-color:#FFEBCD;text-align: center">
   <form id="useredit" th:action="@{/admin/redEdit}" method="post">
         <input type="hidden" name="id" th:value="${id}">
-        <label>№ БС</label><br>
+        <label>Название БД</label><br>
         <input type="text" name="bdname" th:value="${bdname}" style="text-align: center"/>
         <br><br>
-        <label>Адрес БС</label><br>
+        <label>URL БД</label><br>
         <input type="text" name="ipaddress" th:value="${ipaddress}" style="text-align: center;width: 700px;"/>
         <br><br>
 	    <input type="submit" value="Сохранить" style="width: 100px; height: 40px; background-color: #98FB98;">
