@@ -63,7 +63,7 @@
 <tr th:each="order,iterStat: ${cart}">
 
 <td th:text="${iterStat.index}+1"></td>
-<td th:utext="'Прил.'+${order.getAppendNumber}+', Табл.'+${order.getTableNumber}+', п.'+${order.getPpNumber}+'<br>'+${order.getWorkName}" style="text-align:left"></td>
+<td th:utext="${order.getAppendNumber!=0 ? 'Прил.'+order.getAppendNumber+', ' : '' }+${order.getTableNumber!=0 ? 'Табл.'+order.getTableNumber+', ' : ''}+'п.'+${order.getPpNumber}+'<br>'+${order.getWorkName}" style="text-align:left"></td>
 <td th:text="${order.getUnitMeasure}"></td>
 <td th:text="${order.getPrice}"></td><td th:text="${order.getQuantity}"></td><td th:text="${order.getEndPrice}"></td>
 </tr>
