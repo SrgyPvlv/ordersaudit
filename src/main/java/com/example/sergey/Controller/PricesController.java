@@ -24,6 +24,7 @@ import com.example.sergey.Model.Prices;
 import com.example.sergey.Model.PricesSelect;
 import com.example.sergey.Service.UsersService;
 import com.example.sergey.Service.PricesService;
+import com.example.sergey.Service.RedService;
 
 @Controller
 @SessionScope
@@ -45,6 +46,7 @@ public class PricesController {
 	@Autowired private PricesService pricesService;
 	@Autowired private OrderCart orderCart;
 	@Autowired private UsersService userService;
+	@Autowired private RedService redService;
 	
 	@GetMapping("/priceItems") //показать все пункты тцп по конкретному подрядчику для добавления в заявку, без возможности редактирования (для users)
 	public String getAllPriceItems(@RequestParam(name="contractor") String contractor,
@@ -117,11 +119,12 @@ public class PricesController {
 	}
 	
 	@PostMapping("/admin/newPriceItemCreate") //сохранение нового пункта тцп и возврат на страницу тцп данного подрядчика
-	public String newPriceItemCreate(@RequestParam("pp") String pp,@RequestParam("workname") String workname,
+	public String newPriceItemCreate(@RequestParam("appendnumber") int appendnumber,@RequestParam("tablenumber") int tablenumber,@RequestParam("pp") String pp,
+			@RequestParam("workname") String workname,
 			@RequestParam("unitmeasure") String unitmeasure,@RequestParam("price") double price,@RequestParam("comment") String comment,
 			@RequestParam("contractor") String contractor,@RequestParam("contractname") String contractname,RedirectAttributes redirectAttr) throws IOException{
 		
-		Prices newPriceItem=new Prices(pp,workname,unitmeasure,price,comment,contractor,contractname);
+		Prices newPriceItem=new Prices(appendnumber,tablenumber,pp,workname,unitmeasure,price,comment,contractor,contractname);
 		try {
 			pricesService.savePriceItem(newPriceItem);
 		}catch (Exception e) {}
@@ -158,11 +161,14 @@ public class PricesController {
 	}
 	
 	@PostMapping ("/admin/editPriceItem") //сохранение редактирования конкретного пункта тцп для данного подрядчика
-	public String editPriceItem(@RequestParam("id") long id,@RequestParam("pp") String pp,@RequestParam("workname") String workname,
+	public String editPriceItem(@RequestParam("id") long id,@RequestParam("appendnumber") int appendnumber,@RequestParam("tablenumber") int tablenumber,
+			@RequestParam("pp") String pp,@RequestParam("workname") String workname,
 	@RequestParam("unitmeasure") String unitmeasure,@RequestParam("price") double price,@RequestParam("comment") String comment,
 	@RequestParam("contractor") String contractor,@RequestParam("contractname") String contractname,RedirectAttributes redirectAttr) throws IOException{
 		
 		Prices item=pricesService.findPriceItemById(id);
+		item.setAppendNumber(appendnumber);
+		item.setTableNumber(tablenumber);
 		item.setPpNumber(pp);
 		item.setWorkName(workname);
 		item.setUnitMeasure(unitmeasure);
@@ -182,6 +188,8 @@ public class PricesController {
 			@RequestParam(name="contractdate") String contractdate, @RequestParam(name="contractname") String contractname,RedirectAttributes redirectAttr) {
 		
 		Prices item=pricesService.findPriceItemById(id);
+		int appendnumber=item.getAppendNumber();
+		int tablenumber=item.getTableNumber();
 		String ppnumber=item.getPpNumber();
 		String workname=item.getWorkName();
 		String unitmeasure=item.getUnitMeasure();
@@ -189,7 +197,7 @@ public class PricesController {
 		String comment=item.getComment();
 		String contractorGet=item.getContractor();
 
-		PricesSelect pricesSelect=new PricesSelect(ppnumber,workname,unitmeasure,price,comment,contractorGet,quantity);
+		PricesSelect pricesSelect=new PricesSelect(appendnumber,tablenumber,ppnumber,workname,unitmeasure,price,comment,contractorGet,quantity);
 		orderCart.addItem(pricesSelect);
 		
 		redirectAttr.addAttribute("contractor", contractor);
@@ -215,6 +223,7 @@ public class PricesController {
 		sumWithOutNds=0;
 		Nds=0;
 		sumWithNds=0;
+		String ipAddressRemedy;
 		if(id!=0) this.id=id;
 		if(ordernumber!=0) this.ordernumber=ordernumber;
 		if(!bsnumber.isEmpty()) this.bsnumber=bsnumber;
@@ -253,6 +262,8 @@ public class PricesController {
 		Users user=userService.findUsersByLogin(login);
 		String username=user.getFullName();
 		
+		try {ipAddressRemedy=redService.findByBdname("remedy").getIpAddress();} catch (Exception e) {ipAddressRemedy="urlForRemedyUndefinedInBdOfThisApp";}
+		
 		//String contractname=contractTextService.getContractTextName(this.contractnumber);
 		
 		model.addAttribute("cart", cart);
@@ -279,6 +290,7 @@ public class PricesController {
 		model.addAttribute("orderlistcomment", this.orderlistcomment);
 		model.addAttribute("contractname", contractname);
 		model.addAttribute("contractor", contractor);
+		model.addAttribute("ipAddressRemedy", ipAddressRemedy);
 		
 		return"dispOrder";
 	}

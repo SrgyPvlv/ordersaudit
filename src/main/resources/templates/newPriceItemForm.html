@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
 <title>Добавление ТЦП</title>
 </head>
@@ -16,7 +17,11 @@
 <h3>Добавление нового пункта ТЦП</h3>
 <fieldset style="border-color:#FFEBCD;text-align: center">
 <form th:action="@{/admin/newPriceItemCreate}" th:method="post">
-<label>№ пп</label><br>
+<label>№ Приложения</label><br>
+<input type="number" name="appendnumber" step="1" min="0" style="text-align: center" required ><br><br>
+<label>№ таблицы</label><br>
+<input type="number" name="tablenumber" step="1" min="0" style="text-align: center" required ><br><br>
+<label>№ п.ТЦП</label><br>
 <input type="text" name="pp" style="text-align: center" required ><br><br>
 <label>Наименование работ</label><br>
 <input type="text" name="workname" style="text-align: center" required ><br><br>

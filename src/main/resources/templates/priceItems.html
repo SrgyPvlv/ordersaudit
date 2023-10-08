@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
 <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
 <title>Список ТЦП</title>
@@ -28,7 +29,7 @@
 <div class="search">
        <div id="search1">
        <form th:action="@{/priceItems}" th:method="get" >
-       <label>Поиск по № ТЦП (№ п/п)</label> &nbsp&nbsp
+       <label>Поиск по № п.ТЦП</label> &nbsp&nbsp
        <input type="hidden" name="contractor" th:value="${contractor}">
        <input type="text" name="ppsearch" required>
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
@@ -92,7 +93,7 @@
 <div class="test2" id="test2">
 <table class="listItemsPrice">
 <tr>
-<th class="col1">Добавить в Корзину</th><th class="col2">№ п/п</th><th class="col3">Наименование работ</th><th class="col4">Ед. изм.</th>
+<th class="col1">Добавить в Корзину</th><th class="col2">№ п.ТЦП</th><th class="col3">Наименование работ</th><th class="col4">Ед. изм.</th>
 <th class="col5">Цена за ед., руб. без НДС</th><th class="col6">Описание позиции</th>
 </tr>
 <tr th:each="listitem: ${listitems}">
@@ -107,7 +108,7 @@
 <input type="submit" name="submit" value="+ в Корзину">
 </form>
 </td>
-<td th:text="${listitem.getPpNumber}" class="col2"></td><td th:text="${listitem.getWorkName}" class="col3"></td><td th:text="${listitem.getUnitMeasure}" class="col4"></td>
+<td th:text="${listitem.getTableNumber!=0 ? 'Табл.'+listitem.getTableNumber+', ' : ''}+'п.'+${listitem.getPpNumber}" class="col2"></td><td th:text="${listitem.getWorkName}" class="col3"></td><td th:text="${listitem.getUnitMeasure}" class="col4"></td>
 <td th:text="${listitem.getPrice}" class="col5"></td><td th:text="${listitem.getComment}" class="col6"></td>
 </tr>
 </table>

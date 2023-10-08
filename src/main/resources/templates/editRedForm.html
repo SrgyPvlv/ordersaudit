@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
-<title>Редактирование БС</title>
+<title>Редактирование записи БД</title>
 </head>
 <body>
 
@@ -14,15 +14,15 @@
  <div class="parent1">
  
  <div>
- <h3 style="text-align: center"> Форма редактирования БС</h3>
+ <h3 style="text-align: center"> Форма редактирования записи БД</h3>
  <fieldset style="border-color:#FFEBCD;text-align: center">
-  <form id="useredit" th:action="@{/admin/bsEdit}" method="post">
+  <form id="useredit" th:action="@{/admin/redEdit}" method="post">
         <input type="hidden" name="id" th:value="${id}">
-        <label>№ БС</label><br>
-        <input type="text" name="bsnumber" th:value="${bsnumber}" style="text-align: center"/>
+        <label>Название БД</label><br>
+        <input type="text" name="bdname" th:value="${bdname}" style="text-align: center"/>
         <br><br>
-        <label>Адрес БС</label><br>
-        <input type="text" name="bsaddress" th:value="${bsaddress}" style="text-align: center;width: 700px;"/>
+        <label>URL БД</label><br>
+        <input type="text" name="ipaddress" th:value="${ipaddress}" style="text-align: center;width: 700px;"/>
         <br><br>
 	    <input type="submit" value="Сохранить" style="width: 100px; height: 40px; background-color: #98FB98;">
  </form>

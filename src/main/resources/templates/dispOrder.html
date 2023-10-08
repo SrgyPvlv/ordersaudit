@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
 <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
 <title>Корзина Заказа</title>
@@ -14,7 +15,7 @@
 <div class="smetaDispOrder">
 <table class="listItems">
 <tr>
-<th class="col4"></th><th class="col2">№ пп</th><th>Наименование работ</th><th class="col4">Ед. изм.</th><th class="col5">Цена за ед., руб. без НДС</th><th class="col8">Кол-во</th>
+<th class="col4"></th><th class="col2">№ п.ТЦП</th><th>Наименование работ</th><th class="col4">Ед. изм.</th><th class="col5">Цена за ед., руб. без НДС</th><th class="col8">Кол-во</th>
 <th class="col1">Стоимость</th>
 </tr>
 <tr th:each="order: ${cart}">
@@ -29,7 +30,7 @@
 <input type="submit" name="submit" value="Удалить">
 </form>
 </td>
-<td th:text="${order.getPpNumber}" class="col2"></td><td th:text="${order.getWorkName}"></td><td th:text="${order.getUnitMeasure}" class="col4"></td>
+<td th:text="${order.getTableNumber!=0 ? 'Табл.'+order.getTableNumber+', ' : ''}+'п.'+${order.getPpNumber}" class="col2"></td><td th:text="${order.getWorkName}"></td><td th:text="${order.getUnitMeasure}" class="col4"></td>
 <td th:text="${order.getPrice}" class="col5"></td>
 <td class="col8">
 <form th:action="@{/savePriceItemQuantityChanges}" id="saveQuantity" method="get" style="display:inline;">
@@ -56,7 +57,7 @@
 <div>
 <fieldset name="order">
    <legend> Данные для создания Заявки </legend>
-   <p class="p_reqinputs"> <i class="i_reqinputs">*</i> - Обязательные поля. Начинай с получения номера Заявки.</p>
+   <p class="p_reqinputs"> <i class="i_reqinputs">*</i> - Обязательные поля.  <i class="i_reqinputs">Начинай с получения номера Заявки!</i></p>
 <div id="ordersshow1">
    <p style="display:inline;"><label for="ordernumber">№ Заявки: </label>
       <input form ="orderPage" type="number" id="ordernumber" name="ordernumber" th:value="*{ordernumber !=0} ? *{ordernumber} : '' "  min="1" required><i></i></p> &nbsp&nbsp ← | ← &nbsp&nbsp 
@@ -65,7 +66,7 @@
           <input type="hidden" name="contractnumber" th:value="${contractnumber}">
           <input type="hidden" name="contractdate" th:value="${contractdate}">
           <input type="hidden" name="contractname" th:value="${contractname}">
-          <input type="submit" name="submit" value="Получить номер Заявки" class="ordnum">
+          <input type="submit" id="takeOrderNumber" name="submit" value="Получить номер Заявки" class="ordnum">
           </form>
    <p><label for="bsnumber">№ Базовой стации: </label>
       <input form ="orderPage" type="text" id="bsnumber" name="bsnumber" th:value="*{bsnumber !=null} ? *{bsnumber} : '' " placeholder="78-12345 (5-значный) " pattern="78-\d{5}" title="Номер БС должен быть 5-значным." required><i></i></p>
@@ -76,7 +77,7 @@
    <p><label for="end">Окончание выполнения работ: </label>
       <input form ="orderPage" type="date" id="end" name="end" th:value="*{endtime !=null} ? *{endtime} : '' " required><i></i></p>
    <p style="display:inline;"><label for="remedy">№ Инцидента/работы в Remedy: </label>
-      <input form ="orderPage" type="text" id="remedy" name="remedy" th:value="*{remedy !=null} ? *{remedy} : '' " placeholder="MSK000010717602"  required><i></i></p> &nbsp&nbsp | &nbsp&nbsp <a href="http://remedy/arsys/shared/login.jsp" class="remedyhref" target="_blank" style="display:inline;"> Открыть Remedy </a>
+      <input form ="orderPage" type="text" id="remedy" name="remedy" th:value="*{remedy !=null} ? *{remedy} : '' " placeholder="MSK000010717602"  required><i></i></p> &nbsp&nbsp | &nbsp&nbsp <a th:href="${ipAddressRemedy}" class="remedyhref" target="_blank" style="display:inline;"> Открыть Remedy </a>
    <p><label for="author">Инициатор заявки: ФИО(телефон): </label>
       <input form ="orderPage" type="text" id="author" name="author" th:value="*{author !=null} ? *{author} : ${username}" style="width:250px;" required><i></i></p>
    <p><label for="arenda">Контакт арендодателя: ФИО(телефон): </label>
@@ -109,5 +110,6 @@
 
 <br><br><br><br>
 <div th:replace="footer :: footer"></div>
+
 </body>
 </html>

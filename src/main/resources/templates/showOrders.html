@@ -2,7 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+<script th:src="@{/js/charSort.js}"></script>
+<script th:src="@{/js/digitSort.js}"></script>
 <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
 <title>БД Заявок</title>
 </head>
@@ -22,7 +25,7 @@
        <input type="submit" value="Найти" >
      </form> &nbsp&nbsp | &nbsp&nbsp
      <form th:action="@{/orders/showAllOrders}" method="get" style="display:inline;">
-       <label>Показать все Заявки</label> &nbsp&nbsp
+       <label>Все Заявки</label> &nbsp&nbsp
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
        <input type="submit" name="submit" value="Показать">
      </form> &nbsp&nbsp | &nbsp&nbsp
@@ -33,12 +36,18 @@
      ${email13 !=null ? email13 : ''}+';'"><img src="/images/envelope.jpg" alt="mail" title="Отправка Заявки" width="25" height="25" style="border: none"></a>
      </span>
      <br><br>  
-     <form th:action="@{/orders/showAllOrders}" th:method="get">
+     <form th:action="@{/orders/showAllOrders}" th:method="get" style="display:inline;">
        <label>Поиск по № БС</label> &nbsp&nbsp
        <input type="text" name="bsNumberSearch" placeholder="Код '78-' указывать необязательно" style="width:220px" required>
        <input type="hidden" name="contractnumber" th:value="${contractnumber}">
        <input type="submit" value="Найти" >  
-     </form>  
+     </form> &nbsp&nbsp | &nbsp&nbsp
+     <form th:action="@{/orders/showMyOrders}" th:method="get" style="display:inline;">
+       <label style="color:#006400">Мои Заявки</label> &nbsp&nbsp
+       <input type="hidden" name="contractnumber" th:value="${contractnumber}">
+       <input type="submit" value="Показать" style="background-color:#4CAF50;color:white;">  
+     </form> &nbsp&nbsp | &nbsp&nbsp
+     <span th:text="'Найдено записей: '+${listOrdersSize}" style="color:#8B4513"></span>       
   </div>
   <div id="ordersshowRight">
   <h3 th:text="${contractname}" style="color:#8B4513"></h3>
@@ -60,12 +69,12 @@
 </div>
 </div>
 <div class="ordersShowOrders">
-<table class="listItems_showOrders">
+<table class="listItems_showOrders" id="listItems_showOrders">
 <tr>
-<th class="col11">№ Заказа</th><th class="col12">№ БС</th><th class="col13">Дата ТЗ</th><th class="col14">Стоимость без|c НДС</th>
-<th class="15">ИД</th><th class="col16">Внесено в Кедр</th><th class="col17">Статус Заказа</th>
+<th class="col11" onclick="digitSortTable_showOrders(0)">№ Заказа &#8597;</th><th class="col12">№ БС</th><th class="col13">Дата ТЗ</th><th class="col14">Стоимость без|c НДС</th>
+<th class="15" onclick="sortTable_showOrders(4)">ИД &#8597;</th><th class="col16" onclick="sortTable_showOrders(5)">Внесено в Кедр &#8597;</th><th class="col17" onclick="sortTable_showOrders(6)">Статус Заказа &#8597;</th>
 <th class="col18">Срок по ТЗ</th><th class="col19">Вид работ</th>
-<th class="col20">Комментарии (статус/проверка/приемка)</th><th class="col21"></th>
+<th class="col20" onclick="sortTable_showOrders(9)">Комментарии (статус/проверка/приемка) &#8597;</th><th class="col21"></th>
 </tr>
 <tr th:each="listOrder : ${listOrders}">
 <td th:text="${listOrder.getOrdernumber}" class="col11"></td><td th:text="${listOrder.getBsnumber}" th:title="${listOrder.getBsaddress}" class="col12"></td>

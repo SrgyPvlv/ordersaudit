@@ -26,7 +26,9 @@ public class UsersController {
 	@GetMapping("/admin/usersShow") //список всех пользователей
 	public String showUsers(Model model) {
 		List<Users> users=usersService.findAllUsers();
+		int usersSize=users.size();
 		model.addAttribute("users", users);
+		model.addAttribute("usersSize", usersSize);
 		return "users";
 	}
 	
@@ -78,9 +80,12 @@ public class UsersController {
 	public String findUserByFullName(@RequestParam("userFullNameSearch") String userFullNameSearch, 
 			Model model) throws IOException{
 		
-		List<Users> users=usersService.findUserByFullName(userFullNameSearch);
+		String userFullNameSearchLower=userFullNameSearch.toLowerCase();
+		List<Users> users=usersService.findUserByFullName(userFullNameSearchLower);
+		int usersSize=users.size();
 		
 		model.addAttribute("users", users);
+		model.addAttribute("usersSize", usersSize);
 		return "users";
 	}
 	@GetMapping("/passwordChange") // переход на форму изменения пароля

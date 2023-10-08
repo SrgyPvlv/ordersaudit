@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
  <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
 <title>Создание пользователя</title>
 </head>
@@ -26,6 +27,7 @@
         <label>Роль</label><br>
         <select id="role" name="role">
         <option value="USER" selected>USER</option>
+        <option value="READER">READER</option>
         <option value="ADMIN">ADMIN</option>
         <option value="CONTRACTOR">CONTRACTOR</option>
         <option value="SUPERADMIN">SUPERADMIN</option>

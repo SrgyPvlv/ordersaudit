@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-.listItems,.listItemsPrice,.listItemsPrice_searchPriceItems,.listItems_showOrders{
+.listItems,.listItemsPrice,.listItemsPrice_searchPriceItems,.listItems_showOrders,.listItems_searchOrders{
 	width:100%;
 	border:2px solid;
 	border-collapse: collapse;
@@ -239,9 +239,11 @@ position: fixed; /* Фиксированное положение */
 .userstable{
 	border-collapse: collapse;
     width: 60%;
+    cursor: pointer;
 }
 .contractorstable {
 	border-collapse: collapse;
+	margin-top: 30px;
 }
 .bslisttable {
 	border-collapse: collapse;
@@ -309,6 +311,12 @@ a.ref:hover,a.remedyhref:hover {
 }
 .find{
 	height: 80px;
+	border:2px solid red;
+	padding: 9px;
+	margin-bottom:10px;
+}
+.findOrdersSearch{
+	height: 110px;
 	border:2px solid red;
 	padding: 9px;
 	margin-bottom:10px;
@@ -411,6 +419,14 @@ a.ref:hover,a.remedyhref:hover {
   position: sticky;
   top:220px;
   z-index: 1;
+  cursor: pointer;
+}
+.listItems_searchOrders th{
+  position: -webkit-sticky;
+  position: sticky;
+  top:250px;
+  z-index: 1;
+  cursor: pointer;
 }
 
 .listItemsPrice_searchPriceItems th{
@@ -427,6 +443,13 @@ a.ref:hover,a.remedyhref:hover {
 }
 .ordersShowOrders{
   margin: 220px auto 0 auto;
+  width: 100%;
+  padding: 10px;
+  background:white;
+  z-index: 1;
+}
+.ordersSearchOrders{
+  margin: 250px auto 0 auto;
   width: 100%;
   padding: 10px;
   background:white;
@@ -496,7 +519,7 @@ input[type="submit"]:hover,input[type="button"]:hover{
   transform:none !important;
 }
 @media print{
-	.no-print,.no-print *
+	.noprint,.noprinter,.no-print,.no-print *
 	{
 	display: none !important;
 	}
@@ -522,5 +545,50 @@ input[type="submit"]:hover,input[type="button"]:hover{
 	margin-top: 40px;
 }
 .load2_allOrdersAdmin{
-	margin-top: 30px;
-} 
+	margin-top: 50px;
+}
+.remark_contractors{
+	margin-top: 20px;
+}
+.countAfuInfra{
+	font-size: 16px;
+	font-style:italic;
+	color:grey;
+	height:17;
+}
+.openRed {
+  margin-top:15px;
+  border-top: 1px solid #000000;
+}
+.openRedOpposite{
+  margin-top:15px;
+  border-top: 1px solid #000000;
+  padding-top: 15px;
+}
+.idFind_orderPage{
+	color: white;
+	background-color: #ff8000;
+	border:1px solid #ff8000;
+	text-align:center;
+    font-size: 16px;
+    padding: 5px 10px;
+    margin-top:10px;
+}
+.bsNumberSearch_orderPage{
+    font-size: 16px;
+    border:1px solid #8B4513;
+}
+a.noprinterHref:link,a.noprinterHref:visited,a.noprinterHref:active {
+  color: white;
+  background-color: #f44336;
+  text-decoration:none;
+  display: inline-block;
+  margin-top:15px;
+  text-align:center;
+  font-size: 18px;
+  padding: 5px 10px;
+}
+a.noprinterHref:hover {
+  color: white;text-decoration:none;
+  padding: 10px 20px;
+}

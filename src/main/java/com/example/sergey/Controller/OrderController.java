@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,7 @@ import com.example.sergey.Model.PricesSelect;
 import com.example.sergey.Service.BsListService;
 import com.example.sergey.Service.ContractorService;
 import com.example.sergey.Service.OrderService;
+import com.example.sergey.Service.RedService;
 import com.example.sergey.Service.UsersService;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -48,6 +48,7 @@ public class OrderController {
 	@Autowired private BsListService bsListService;
 	@Autowired private ContractorService contractorService;
 	@Autowired private OrderService orderService;
+	@Autowired private RedService redService;
 	@Autowired private PricesController pricesController;
 		
 	private static final Logger logger=LoggerFactory.getLogger(OrderController.class);
@@ -164,6 +165,7 @@ public class OrderController {
 		String email13=contractor1.getEmail13();
 		String contractname=contractor1.getName();
 		String contractor=contractor1.getContractor();
+		int listOrdersSize=listOrders.size();
 		model.addAttribute("listOrders", listOrders);
 		model.addAttribute("contractor", contractor);
 		model.addAttribute("contractnumber", contractnumber);
@@ -174,6 +176,7 @@ public class OrderController {
 		model.addAttribute("email11", email11);
 		model.addAttribute("email12", email12);
 		model.addAttribute("email13", email13);
+		model.addAttribute("listOrdersSize", listOrdersSize);
 	
 		return "showOrders";
 	}
@@ -271,6 +274,7 @@ public class OrderController {
 		Date dateStart = null;
 		Date dateEnd = null;
 		Date contractDateDate = null;
+		String ipAddressRed;
 		
 		Order orderDb=orderService.getOrderById(id);
 		String cartJsonStr=orderDb.getCart();
@@ -298,6 +302,13 @@ public class OrderController {
 		end=formatter1.format(dateEnd);
 		contractDateString=formatter1.format(contractDateDate);
 		
+		try {ipAddressRed=redService.findByBdname("red").getIpAddress();} catch (Exception e) {ipAddressRed="urlForRedUndefinedInBdOfThisApp";}
+		
+		String getBsNumber=orderDb.getBsnumber();
+		StringBuffer getBsNumberBuffer=new StringBuffer(getBsNumber);
+		getBsNumberBuffer.deleteCharAt(2);
+		String bsNumberRed=getBsNumberBuffer.toString();
+				
 		model.addAttribute("cart", cartArrayList);
 		model.addAttribute("sumWithOutNds", orderDb.getSumwithoutnds());
 		model.addAttribute("Nds", orderDb.getNds());
@@ -314,6 +325,8 @@ public class OrderController {
 		model.addAttribute("remedy", orderDb.getRemedy());
 		model.addAttribute("arenda", orderDb.getArenda());
 		model.addAttribute("comment", orderDb.getComment());
+		model.addAttribute("bsNumberRed", bsNumberRed);
+		model.addAttribute("ipAddressRed", ipAddressRed);
 		return"orderPage";
 	}
 		
@@ -342,5 +355,127 @@ public class OrderController {
 		redirectAttr.addAttribute("contractnumber", contractnumber);
 		
 		return "redirect:/orders/showAllOrders";
-	}	
+	}
+	
+	@GetMapping("/orders/showMyOrders") //все заявки по подрядчику(т.е. номеру договора) по возрастанию номера заявки, 
+                                        //а также фильтрованные по аккаунту текущего пользователя
+public String showMyOrders(@RequestParam(name="contractnumber") String contractnumber, Model model) {
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String login=auth.getName();
+		String author=userService.findUsersByLogin(login).getFullName();
+				
+List<Order> listOrders = null;
+listOrders=orderService.findByAuthorAndContractnumberOrderByOrdernumberAsc(author,contractnumber);
+
+Date sendDate = null;
+Date startDate = null;
+Date endDate = null;
+
+for(Order order: listOrders) {
+SimpleDateFormat formatterStringToDate=new SimpleDateFormat("yyyy-MM-dd");
+
+try {sendDate=formatterStringToDate.parse(order.getSend());
+startDate=formatterStringToDate.parse(order.getStart());
+endDate=formatterStringToDate.parse(order.getEndtime());}
+catch (ParseException e) {e.printStackTrace();}
+
+SimpleDateFormat formatterDateToString=new SimpleDateFormat("dd.MM.yyyy");
+String sendString=formatterDateToString.format(sendDate);
+String startString=formatterDateToString.format(startDate);
+String endString=formatterDateToString.format(endDate);
+order.setSend(sendString);
+order.setStart(startString);
+order.setEndtime(endString);
+}
+
+Contractor contractor1=contractorService.getContractorByContractNumberWithOutText(contractnumber);
+String email1=contractor1.getEmail1();
+String email2=contractor1.getEmail2();
+String email3=contractor1.getEmail3();
+String email11=contractor1.getEmail11();
+String email12=contractor1.getEmail12();
+String email13=contractor1.getEmail13();
+String contractname=contractor1.getName();
+String contractor=contractor1.getContractor();
+int listOrdersSize=listOrders.size();
+model.addAttribute("listOrders", listOrders);
+model.addAttribute("contractor", contractor);
+model.addAttribute("contractnumber", contractnumber);
+model.addAttribute("contractname", contractname);
+model.addAttribute("email1", email1);
+model.addAttribute("email2", email2);
+model.addAttribute("email3", email3);
+model.addAttribute("email11", email11);
+model.addAttribute("email12", email12);
+model.addAttribute("email13", email13);
+model.addAttribute("listOrdersSize", listOrdersSize);
+return "showOrders";
+}
+	@GetMapping("/orders/searchOrdersThroughAllContractorsIndex")//переход на страницу поиска заявок по различным фильтрам по всем подрядчикам
+	public String searchOrdersThroughAllContractorsIndex(Model model) {
+		List<Order> listOrders = null;
+		List<Contractor> contractors=contractorService.getAllContractorsWithOutText();
+		int listOrdersSize=0;
+		double listOrderSumm=0.00;
+		
+		model.addAttribute("listOrders", listOrders);
+		model.addAttribute("contractors", contractors);
+		model.addAttribute("listOrdersSize", listOrdersSize);
+		model.addAttribute("listOrderSumm", listOrderSumm);
+
+		return "searchOrders";
+	}
+	
+	@GetMapping("/orders/searchOrdersThroughAllContractors") //поиск заявок по различным фильтрам, без возможности их редактирования
+    public String searchOrdersThroughAllContractors(
+		@RequestParam(name="author",defaultValue="%",required=false) String author,@RequestParam(name="contractname",defaultValue="%",required=false) String contractname,
+		@RequestParam(name="bsnumber",defaultValue="%",required=false) String bsnumber,@RequestParam(name="report",defaultValue="%",required=false) String report,
+		@RequestParam(name="cedr",defaultValue="%",required=false) String cedr,@RequestParam(name="status",defaultValue="xyz999",required=false) String status,
+		@RequestParam(name="orderlistcomment",defaultValue="%",required=false) String orderlistcomment,@RequestParam(name="worktype",defaultValue="%",required=false) String worktype,
+		@RequestParam(name="worktcp",defaultValue="%",required=false) String worktcp,Model model) {
+
+/*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+String login=auth.getName();
+String author=userService.findUsersByLogin(login).getFullName();*/
+
+List<Order> listOrders = null;
+listOrders=orderService.searchOrdersThroughAllContractors(author,contractname,bsnumber,report,cedr,status,orderlistcomment,worktype,worktcp);
+List<Contractor> contractors=contractorService.getAllContractorsWithOutText();
+int listOrdersSize=listOrders.size();
+double listOrderSumm;
+if(listOrders.isEmpty()) {listOrderSumm=0.00;} else {
+	listOrderSumm=listOrders.stream().map(Order::getSumwithoutnds).reduce((x,y)->x+y).get().doubleValue();
+	BigDecimal bd = new BigDecimal(listOrderSumm).setScale(2, RoundingMode.HALF_UP);
+	listOrderSumm = bd.doubleValue();
+}
+Date sendDate = null;
+Date startDate = null;
+Date endDate = null;
+
+for(Order order: listOrders) {
+SimpleDateFormat formatterStringToDate=new SimpleDateFormat("yyyy-MM-dd");
+
+try {sendDate=formatterStringToDate.parse(order.getSend());
+startDate=formatterStringToDate.parse(order.getStart());
+endDate=formatterStringToDate.parse(order.getEndtime());}
+catch (ParseException e) {e.printStackTrace();}
+
+SimpleDateFormat formatterDateToString=new SimpleDateFormat("dd.MM.yyyy");
+String sendString=formatterDateToString.format(sendDate);
+String startString=formatterDateToString.format(startDate);
+String endString=formatterDateToString.format(endDate);
+order.setSend(sendString);
+order.setStart(startString);
+order.setEndtime(endString);
+}
+
+model.addAttribute("listOrders", listOrders);
+model.addAttribute("contractors", contractors);
+model.addAttribute("listOrdersSize", listOrdersSize);
+model.addAttribute("listOrderSumm", listOrderSumm);
+
+return "searchOrders";
+}
+	
 }
