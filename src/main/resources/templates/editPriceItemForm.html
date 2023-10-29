@@ -19,9 +19,9 @@
 <form th:action="@{/admin/editPriceItem}" th:method="post">
 <input type="hidden" name="id" th:value="${item.getId}">
 <label>№ Приложения</label><br>
-<input type="number" name="appendnumber" step="1" min="0" style="text-align: center" th:value="${item.getAppendNumber}" required ><br><br>
+<input type="text" name="appendnumber" style="text-align: center" th:value="${item.getAppendNumber}" required ><br><br>
 <label>№ таблицы</label><br>
-<input type="number" name="tablenumber" step="1" min="0" style="text-align: center" th:value="${item.getTableNumber}" required ><br><br>
+<input type="text" name="tablenumber" style="text-align: center" th:value="${item.getTableNumber}" required ><br><br>
 <label>№ п.ТЦП</label><br>
 <input type="text" name="pp" style="text-align: center" th:value="${item.getPpNumber}" required ><br><br>
 <label>Наименование работ</label><br>
