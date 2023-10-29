@@ -30,7 +30,7 @@
 <input type="submit" name="submit" value="Удалить">
 </form>
 </td>
-<td th:text="${order.getTableNumber!=0 ? 'Табл.'+order.getTableNumber+', ' : ''}+'п.'+${order.getPpNumber}" class="col2"></td><td th:text="${order.getWorkName}"></td><td th:text="${order.getUnitMeasure}" class="col4"></td>
+<td th:text="${order.getTableNumber!=null ? 'Табл.'+order.getTableNumber+', ' : ''}+'п.'+${order.getPpNumber}" class="col2"></td><td th:text="${order.getWorkName}"></td><td th:text="${order.getUnitMeasure}" class="col4"></td>
 <td th:text="${order.getPrice}" class="col5"></td>
 <td class="col8">
 <form th:action="@{/savePriceItemQuantityChanges}" id="saveQuantity" method="get" style="display:inline;">
