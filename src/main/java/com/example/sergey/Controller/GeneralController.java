@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.example.sergey.Model.AfuOrdersCount;
+import com.example.sergey.Model.ProcentOrdersOfContractor;
 import com.example.sergey.Service.ContractorService;
 
 @Controller
@@ -25,18 +25,18 @@ public class GeneralController {
 	@GetMapping("/") //переход на страницу index (главную) с передачей данных о подрядчиках
 	public String index(Model model) {
 				
-		List<AfuOrdersCount> countSumContractorAfuInfra=contractorService.countSumContractorAfuInfra();
+		List<ProcentOrdersOfContractor> countSumContractorAfuInfra=contractorService.countSumContractorAfuInfra();
 		
 	    Date contractEndDate = null;
 			    
-	    for(AfuOrdersCount countSumContractorAfuInfraItem:countSumContractorAfuInfra) {
+	    for(ProcentOrdersOfContractor countSumContractorAfuInfraItem:countSumContractorAfuInfra) {
 		SimpleDateFormat formatterStringToDate=new SimpleDateFormat("yyyy-MM-dd");
 		
-		try {contractEndDate=formatterStringToDate.parse(countSumContractorAfuInfraItem.getContractEnd());} catch (ParseException e) {e.printStackTrace();}
+		try {contractEndDate=formatterStringToDate.parse(countSumContractorAfuInfraItem.getContractend());} catch (ParseException e) {e.printStackTrace();}
 		
 		SimpleDateFormat formatterDateToString=new SimpleDateFormat("dd.MM.yyyy");
 		String contractEndString=formatterDateToString.format(contractEndDate);
-		countSumContractorAfuInfraItem.setContractEnd(contractEndString);
+		countSumContractorAfuInfraItem.setContractend(contractEndString);
 	}
 		
 		model.addAttribute("countSumContractorAfuInfra", countSumContractorAfuInfra);

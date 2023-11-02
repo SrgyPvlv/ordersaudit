@@ -315,6 +315,7 @@ public class OrderController {
 		model.addAttribute("sumWithNds", orderDb.getSumwithnds());
 		model.addAttribute("ordernumber", orderDb.getOrdernumber());
 		model.addAttribute("contractnumber", orderDb.getContractnumber());
+		model.addAttribute("contractname", orderDb.getContractname());
 		model.addAttribute("contractdate", contractDateString);
 		model.addAttribute("send", send);
 		model.addAttribute("author", orderDb.getAuthor());

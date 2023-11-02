@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.example.sergey.Model.AfuOrdersCount;
 import com.example.sergey.Model.Contractor;
+import com.example.sergey.Model.ProcentOrdersOfContractor;
 import com.example.sergey.Repository.ContractorRepository;
 import com.example.sergey.Repository.IAfuOrdersCount;
+import com.example.sergey.Repository.IProcentOrdersOfContractor;
 
 @Service
 public class ContractorService {
@@ -52,7 +54,7 @@ public class ContractorService {
 		return contractorRepository.getContractorByContractNumberWithOutText(number);
 	}
 	
-	public List<AfuOrdersCount> countSumContractorAfuInfra() { //расчет процентов по работам АФУ и Инфраструктуры по подрядчикам, у которых договор по таким работам
+/*	public List<AfuOrdersCount> countSumContractorAfuInfra() { //расчет процентов по работам АФУ и Инфраструктуры по подрядчикам, у которых договор по таким работам
 		List<IAfuOrdersCount> ICountSumContractorAfuInfra=contractorRepository.countSumContractorAfuInfra();
 		List<AfuOrdersCount> countSumContractorAfuInfra=new ArrayList<>();
 		double result = 0;
@@ -85,6 +87,36 @@ public class ContractorService {
 			String contractend=count2.getContractend();
 			
 			countSumContractorAfuInfra.add(new AfuOrdersCount(contractor,procentAfu,procentInfra,work,name,number,date,contractend));
+		}
+		return countSumContractorAfuInfra;
+	} */
+	
+	public List<ProcentOrdersOfContractor> countSumContractorAfuInfra() { //расчет процентов по работам АФУ и Инфраструктуры по подрядчикам, у которых договор по таким работам
+		List<IProcentOrdersOfContractor> ICountSumContractorAfuInfra=contractorRepository.countSumContractorAfuAndInfrastructure();
+		List<ProcentOrdersOfContractor> countSumContractorAfuInfra=new ArrayList<>();
+		double result = 0;
+		double sumwithoutnds;
+		DecimalFormat dF = new DecimalFormat("##");
+		
+		for (IProcentOrdersOfContractor count: ICountSumContractorAfuInfra){
+			Double getSumWithOutNds=count.getSumWithOutNds();
+			//Double getSumWithOutNdsAll=count.getSumWithOutNdsAll();
+			if(getSumWithOutNds==null) result+=0; else result+=count.getSumWithOutNds();
+		}
+		for (IProcentOrdersOfContractor count2: ICountSumContractorAfuInfra){
+			String contractor=count2.getContractor();
+			
+			Double getSumWithOutNds2=count2.getSumWithOutNds();
+			if(getSumWithOutNds2==null) sumwithoutnds=0; else sumwithoutnds=count2.getSumWithOutNds();
+			String procentOrders=dF.format(Math.round((sumwithoutnds/result)*100))+"%";
+			
+			String work=count2.getWork();
+			String name=count2.getName();
+			String number=count2.getNumber();
+			String date=count2.getDate();
+			String contractend=count2.getContractend();
+			
+			countSumContractorAfuInfra.add(new ProcentOrdersOfContractor(contractor,work,procentOrders,name,number,date,contractend));
 		}
 		return countSumContractorAfuInfra;
 	}
