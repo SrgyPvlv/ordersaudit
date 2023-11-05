@@ -8,11 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.example.sergey.Model.AfuOrdersCount;
 import com.example.sergey.Model.Contractor;
 import com.example.sergey.Model.ProcentOrdersOfContractor;
 import com.example.sergey.Repository.ContractorRepository;
-import com.example.sergey.Repository.IAfuOrdersCount;
 import com.example.sergey.Repository.IProcentOrdersOfContractor;
 
 @Service
