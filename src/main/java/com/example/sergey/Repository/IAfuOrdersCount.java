@@ -1,6 +1,6 @@
 package com.example.sergey.Repository;
 
-public interface IAfuOrdersCount {
+public interface IAfuOrdersCount {//интерфейс объекта полученного из БД, содержащего нужные пункты для последующей передачи на стр. index 
     int getId();
     String getContractor();
     String getWork();

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProcentOrdersOfContractor {
+public class ProcentOrdersOfContractor { //класс для запроса из бд затрат на АФУ + Инфраструктуры каждым подрядчиком
 
 	private String contractor;
     private String work;

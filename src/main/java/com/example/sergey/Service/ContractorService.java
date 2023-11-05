@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.example.sergey.Model.AfuOrdersCount;
 import com.example.sergey.Model.Contractor;
 import com.example.sergey.Model.ProcentOrdersOfContractor;
 import com.example.sergey.Repository.ContractorRepository;
+import com.example.sergey.Repository.IAfuOrdersCount;
 import com.example.sergey.Repository.IProcentOrdersOfContractor;
 
 @Service
@@ -52,7 +54,7 @@ public class ContractorService {
 		return contractorRepository.getContractorByContractNumberWithOutText(number);
 	}
 	
-/*	public List<AfuOrdersCount> countSumContractorAfuInfra() { //расчет процентов по работам АФУ и Инфраструктуры по подрядчикам, у которых договор по таким работам
+    /* public List<AfuOrdersCount> countSumContractorAfuAndInfra() { //расчет процентов по работам АФУ и Инфраструктуры по подрядчикам, у которых договор по таким работам
 		List<IAfuOrdersCount> ICountSumContractorAfuInfra=contractorRepository.countSumContractorAfuInfra();
 		List<AfuOrdersCount> countSumContractorAfuInfra=new ArrayList<>();
 		double result = 0;
@@ -89,7 +91,7 @@ public class ContractorService {
 		return countSumContractorAfuInfra;
 	} */
 	
-	public List<ProcentOrdersOfContractor> countSumContractorAfuInfra() { //расчет процентов по работам АФУ и Инфраструктуры по подрядчикам, у которых договор по таким работам
+	public List<ProcentOrdersOfContractor> countSumContractorAfuInfra() { //расчет процентов по работам АФУ + Инфраструктуры по подрядчикам, у которых договор по таким работам
 		List<IProcentOrdersOfContractor> ICountSumContractorAfuInfra=contractorRepository.countSumContractorAfuAndInfrastructure();
 		List<ProcentOrdersOfContractor> countSumContractorAfuInfra=new ArrayList<>();
 		double result = 0;
