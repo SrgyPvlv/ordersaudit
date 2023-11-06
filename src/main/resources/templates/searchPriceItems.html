@@ -33,7 +33,7 @@
 <th class="col5">Цена за ед., руб. без НДС</th><th class="col6">Описание позиции</th><th class="col7">Подрядчик</th>
 </tr>
 <tr th:each="listitem: ${listitems}">
-<td th:text="${listitem.getTableNumber!=null ? 'Табл.'+listitem.getTableNumber+', ' : ''}+'п.'+${listitem.getPpNumber}" class="col2"></td><td th:text="${listitem.getWorkName}" class="col3"></td><td th:text="${listitem.getUnitMeasure}" class="col4"></td>
+<td th:text="${listitem.getTableNumber!=null && listitem.getTableNumber!='0' ? 'Табл.'+listitem.getTableNumber+', ' : ''}+'п.'+${listitem.getPpNumber}" class="col2"></td><td th:text="${listitem.getWorkName}" class="col3"></td><td th:text="${listitem.getUnitMeasure}" class="col4"></td>
 <td th:text="${listitem.getPrice}" class="col5"></td><td th:text="${listitem.getComment}" class="col6"></td>
 <td th:text="${listitem.getContractName}" class="col7"></td>
 </tr>
