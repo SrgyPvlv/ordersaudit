@@ -37,7 +37,7 @@ public interface ContractorRepository extends JpaRepository<Contractor,Long> {
 	//подсчет Всех расходов каждого подрядчика по заказам АФУ и Инфраструктуре,если в его договоре есть работы по АФУ и Инфраструктуре и это Договор на 2023-2025 гг.
 		@Query(value="select c.id,c.contractor,c.work,c.name,c.number,c.date,c.contractend,sum(o.sumwithoutnds) as sumWithOutNds from contractor as c "
 				+ "left join orderlist as o on c.contractor=o.contractor and lower(c.work) similar to '%(афу)%' and lower(c.work) similar to '%(инфраструктур)%'"
-				+ " and lower(c.work) similar to '%(2023-2025)%' "
+				+ " and lower(c.work) similar to '%(новый)%' "
 				+ "group by (c.id,c.contractor,c.work,c.name,c.number,c.date,c.contractend)",nativeQuery=true)
 	     public List<IProcentOrdersOfContractor> countSumContractorAfuAndInfrastructure();
 	
