@@ -1,5 +1,7 @@
 package com.example.sergey.Model;
 
+import java.time.LocalDate;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,4 +18,13 @@ public class ProcentOrdersOfContractor { //класс для запроса из
     private String number;
     private String date;
     private String contractend;
+    
+    public int getDateValid() {
+    	LocalDate today = LocalDate.now();
+		LocalDate contractEndDate = null;
+		String [] contractendMassive = this.contractend.split("[.]");
+		String contractendFormatted = contractendMassive[2] + "-" + contractendMassive[1] + "-" + contractendMassive[0];
+		try {contractEndDate=LocalDate.parse(contractendFormatted);} catch (Exception e) {e.printStackTrace();}
+		return contractEndDate.compareTo(today);
+    }
 }

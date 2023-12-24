@@ -592,3 +592,22 @@ a.noprinterHref:hover {
   color: white;text-decoration:none;
   padding: 10px 20px;
 }
+.datecontractvalid{
+	text-align:center
+}
+.datecontractinvalid{
+	text-align:center;
+	color:red
+}
+.contractnamevalid{
+	color:#00008B;
+	font-weight:bold
+}
+.contractnameinvalid{
+	color:#00008B;
+	font-weight:bold;
+	text-decoration: line-through
+}
+.endred{
+	color:red
+}
