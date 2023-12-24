@@ -34,11 +34,11 @@ public interface ContractorRepository extends JpaRepository<Contractor,Long> {
 			+ "order by mytable1.id;",nativeQuery=true)
 		public List<IAfuOrdersCount> countSumContractorAfuInfra();
 	
-	//подсчет Всех расходов каждого подрядчика по заказам АФУ и Инфраструктуре,если в его договоре есть работы по АФУ и Инфраструктуре и это Договор на 2023-2025 гг.
+	//подсчет Всех расходов каждого подрядчика по заказам АФУ и Инфраструктуре,если в его договоре есть работы по АФУ и Инфраструктуре и это Договор на 2023-2025 гг (есть слово Новый в названии работ).
 		@Query(value="select c.id,c.contractor,c.work,c.name,c.number,c.date,c.contractend,sum(o.sumwithoutnds) as sumWithOutNds from contractor as c "
 				+ "left join orderlist as o on c.contractor=o.contractor and lower(c.work) similar to '%(афу)%' and lower(c.work) similar to '%(инфраструктур)%'"
 				+ " and lower(c.work) similar to '%(новый)%' "
-				+ "group by (c.id,c.contractor,c.work,c.name,c.number,c.date,c.contractend)",nativeQuery=true)
+				+ "group by (c.id,c.contractor,c.work,c.name,c.number,c.date,c.contractend) order by c.contractend DESC, c.work DESC",nativeQuery=true)
 	     public List<IProcentOrdersOfContractor> countSumContractorAfuAndInfrastructure();
 	
 	//извлечение подрядчика по id из БД без поля "текст договора"

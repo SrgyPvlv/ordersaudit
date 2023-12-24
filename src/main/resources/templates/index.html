@@ -19,7 +19,10 @@
 <tr><th>Организация</th><th></th><th></th><th>Виды работ (объем)</th><th>Срок действия договора: до</th></tr>
 
 <tr th:each="countSumContractorAfuInfra: ${countSumContractorAfuInfra}">
-    <td th:text="${countSumContractorAfuInfra.getName}" style="color:#00008B;font-weight:bold"></td>
+    <td>
+    <span th:classappend="${{countSumContractorAfuInfra.getDateValid < 0} ? 'contractnameinvalid' : 'contractnamevalid'}" th:text="${countSumContractorAfuInfra.getName}"></span>
+    <sup th:text="${{countSumContractorAfuInfra.getDateValid < 0} ? 'Закончился' : ''}" class=endred></sup>
+    </td>
     <td>
     <form id="orderPage2" th:action="@{/priceItems}" method="get">
        <input type="hidden" name="contractor" th:value="${countSumContractorAfuInfra.getContractor}">
@@ -47,7 +50,7 @@
 <span class=countAfuInfra th:text="${countSumContractorAfuInfra.getProcentOrders !='0%'} ? 'Факт-'+${countSumContractorAfuInfra.getProcentOrders} : ''"></span>
 </td>
     
-    <td style="text-align:centre;" th:text="${countSumContractorAfuInfra.getContractend}">Срок действия договора: до</td></tr>
+    <td th:classappend="${{countSumContractorAfuInfra.getDateValid < 0} ? 'datecontractinvalid' : 'datecontractvalid'}" th:text="${countSumContractorAfuInfra.getContractend}">Срок действия договора: до</td></tr>
 </table>
 <table class=listPoTable style="margin-top:40px">
 <tr><td>
@@ -60,5 +63,13 @@
 
 <br><br>
 <div th:replace="footer :: footer"></div>
+
+<script type="text/javascript">
+var today = new Date();
+var todayDay = today.getDate();
+var todayMonth = today.getMonth()+1;
+var todayYear = today.getFullYear;
+</script>
+
 </body>
 </html>
