@@ -75,7 +75,7 @@ public class DefaultOrderService implements OrderService {
 	
 	@Override
 	public List<Order> searchOrdersThroughAllContractors(String author, String contractname, String bsnumber, String report, 
-			String cedr, String status, String orderlistcomment, String worktype, String worktcp) {
+			String cedr, String status, String orderlistcomment, String worktype, String worktcp, String comment) {
 		
 		String authorLower=author.toLowerCase();
 		String statusLower=status.toLowerCase();
@@ -87,6 +87,7 @@ public class DefaultOrderService implements OrderService {
 		String worktcp1;
 		String worktcp2;
 		String worktcpLower=worktcp.toLowerCase();
+		String commentLower=comment.toLowerCase();
 		
 		String[] words=worktypeLower.split("\\s");
 		if (words.length==1) {
@@ -107,7 +108,7 @@ public class DefaultOrderService implements OrderService {
 		}
 		
 		List<Order> ordersList=orderRepository.searchOrdersThroughAllContractors(authorLower, contractnameLower, bsnumber, report,
-				cedr, statusLower, orderlistcommentLower, worktypeLower, worktype1, worktype2, worktcpLower, worktcp1, worktcp2);
+				cedr, statusLower, orderlistcommentLower, worktypeLower, worktype1, worktype2, worktcpLower, worktcp1, worktcp2, commentLower);
 		return ordersList;
 	}
 }
