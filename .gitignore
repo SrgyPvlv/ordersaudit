@@ -32,3 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 /ordersaudit.log
+/ordersaudit.log.2023-12-24.0.gz
