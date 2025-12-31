@@ -77,7 +77,7 @@ public class OrderController {
 			BigDecimal bd = new BigDecimal(this.sumWithOutNds).setScale(2, RoundingMode.HALF_UP);
 			this.sumWithOutNds = bd.doubleValue();
 		}
-		this.Nds=this.sumWithOutNds*0.2;
+		this.Nds=this.sumWithOutNds*0.22;
 		BigDecimal bd1 = new BigDecimal(this.Nds).setScale(2, RoundingMode.HALF_UP);
 		this.Nds = bd1.doubleValue();
 		
