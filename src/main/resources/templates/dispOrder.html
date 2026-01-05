@@ -48,7 +48,7 @@
 </tr>
 
 <tr><td colspan="6" style="text-align:right">Итоговая стоимость работ без НДС, руб.</td><td th:text="${sumWithOutNds}"></td></tr>
-<tr><td colspan="6" style="text-align:right">НДС % - по ставке в соответствии с законодательством, руб.</td><td th:text="${Nds}"></td></tr>
+<tr><td colspan="6" style="text-align:right"><input form ="orderPage" type="number" id="nds" name="nds" min="0.2" max="0.22" step="0.02" th:value="*{nds !=0} ? *{nds} : 0.22 " style="border: 2px solid red;" required> НДС % - по ставке в соответствии с законодательством, руб.</td><td th:text="${Nds}"></td></tr>
 <tr><td colspan="6" style="text-align:right">Итоговая стоимость с НДС, руб.</td><td th:text="${sumWithNds}"></td></tr>
 </table>
 </div>

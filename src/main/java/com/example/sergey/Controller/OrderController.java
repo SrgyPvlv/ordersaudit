@@ -57,7 +57,7 @@ public class OrderController {
 	public String createOrder(@RequestParam(name="id",required=false,defaultValue="0")Long id,@RequestParam("ordernumber")int ordernumber,@RequestParam("send")String send,
 			@RequestParam("author")String author,@RequestParam("bsnumber")String bsnumber,
 			@RequestParam("start")String start,@RequestParam("end")String end,@RequestParam("remedy")String remedy,
-			@RequestParam("arenda")String arenda,@RequestParam("worktype")String worktype,@RequestParam("comment")String comment,
+			@RequestParam("arenda")String arenda,@RequestParam("worktype")String worktype,@RequestParam("comment")String comment,@RequestParam("nds")double nds,
 			@RequestParam(name="contractnumber") String contractnumber,
 			@RequestParam(name="contractdate") String contractdate,
 			@RequestParam(name="status",defaultValue="",required=false)String status,
@@ -77,7 +77,7 @@ public class OrderController {
 			BigDecimal bd = new BigDecimal(this.sumWithOutNds).setScale(2, RoundingMode.HALF_UP);
 			this.sumWithOutNds = bd.doubleValue();
 		}
-		this.Nds=this.sumWithOutNds*0.22;
+		this.Nds=this.sumWithOutNds*nds;
 		BigDecimal bd1 = new BigDecimal(this.Nds).setScale(2, RoundingMode.HALF_UP);
 		this.Nds = bd1.doubleValue();
 		
