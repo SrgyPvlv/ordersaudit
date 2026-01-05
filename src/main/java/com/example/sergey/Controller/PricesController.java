@@ -218,7 +218,7 @@ public class PricesController {
 			@RequestParam(name="orderlistcomment",defaultValue="",required=false)String orderlistcomment,
 			@RequestParam(name="report",defaultValue="",required=false)String report,@RequestParam(name="cedr",defaultValue="",required=false)String cedr,
 			@RequestParam(name="contractnumber",defaultValue="",required=false)String contractnumber,@RequestParam(name="contractdate",defaultValue="",required=false)String contractdate,
-			@RequestParam(name="comment",defaultValue="",required=false)String comment,
+			@RequestParam(name="comment",defaultValue="",required=false)String comment,@RequestParam(name="nds",defaultValue="0.22",required=false)double nds,
 			@RequestParam(name="contractname")String contractname,@RequestParam(name="contractor") String contractor,Model model) {
 		sumWithOutNds=0;
 		Nds=0;
@@ -249,7 +249,7 @@ public class PricesController {
 			BigDecimal bd = new BigDecimal(this.sumWithOutNds).setScale(2, RoundingMode.HALF_UP);
 			this.sumWithOutNds = bd.doubleValue();
 		}
-		this.Nds=this.sumWithOutNds*0.22;
+		this.Nds=this.sumWithOutNds*nds;
 		BigDecimal bd1 = new BigDecimal(this.Nds).setScale(2, RoundingMode.HALF_UP);
 		this.Nds = bd1.doubleValue();
 		
@@ -291,6 +291,7 @@ public class PricesController {
 		model.addAttribute("contractname", contractname);
 		model.addAttribute("contractor", contractor);
 		model.addAttribute("ipAddressRemedy", ipAddressRemedy);
+		model.addAttribute("nds", nds);
 		
 		return"dispOrder";
 	}
